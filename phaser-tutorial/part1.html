@@ -27,7 +27,7 @@ function preload() {
 	if ( assets[k].length == 0 ) {
 	    game.load.image(k, assets[k]);
 	} else {
-	    game.load.spritesheet.apply(([k] + assets[k]));
+	    game.load.spritesheet(k, assets[k][0], assets[k][1], assets[k][2]);
 	}
     }
 }
