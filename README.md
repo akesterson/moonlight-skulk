@@ -24,6 +24,14 @@ There needs to be 2 classes of AI : AI that runs from you, and AI that chases yo
 
 See above, the AI should only react to you when you are within an FOV cone in front of them (90 degrees, centered on their (x,y) center, extending infinitely, pointing forward)
 
+## TODO : Animated sprites
+
+All of the different AI types need to have animated sprites for their various states (standing, running, walking, left, right, up, down, etc).
+
+## TODO : AI 'Emotion' effects
+
+When an AI is emotionally affected (scaredby the player, alerted to the player, relieved the player is gone, disappointed the player has escaped, etc), they should show "emotion" - sweat beads, anger bubbles, whatever.
+
 ## TODO : "Run away" AI reports you to "Chase" AI types
 
 The "Run Away" AI type should continue running away until it finds a "Chase" AI type to report you to, or until a certain amount of time has passed since the last time they saw you
