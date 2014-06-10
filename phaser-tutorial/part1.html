@@ -18,10 +18,10 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create
 
 function preload() {
     assets = {
-	'sky' = ['assets/sky.png'],
-	'ground' = ['assets/platform.png'],
-	'star' = ['assets/star.png'],
-	'dude' = ['assets/dude.png', 32, 48]
+	'sky' : ['assets/sky.png'],
+	'ground' : ['assets/platform.png'],
+	'star' : ['assets/star.png'],
+	'dude' : ['assets/dude.png', 32, 48]
     };
     for (var k in assets) {
 	if ( assets[k].length == 0 ) {
