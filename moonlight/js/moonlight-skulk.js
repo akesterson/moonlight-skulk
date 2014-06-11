@@ -336,5 +336,5 @@ Gamestate.prototype.update = function()
     this.updateShadowTexture();
 }
 
-var game = new Phaser.Game(640, 480, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+var game = new Phaser.Game(640, 480, Phaser.AUTO, '');
 game.state.add('game', GameState, true);
