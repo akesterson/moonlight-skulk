@@ -251,8 +251,8 @@ GameState.prototype.create = function()
 		 )
 	);
     }
-    this.movingLight = new Torch(game, game.width/2, game.height/2);
-    this.lights.add(this.movingLight);
+    //this.movingLight = new Torch(game, game.width/2, game.height/2);
+    //this.lights.add(this.movingLight);
 }
 
 GameState.prototype.updateShadowTexture = function() {
@@ -351,8 +351,8 @@ GameState.prototype.update = function()
 
     this.check_input();
     this.physics.arcade.collide(player, layer);
-    this.movingLight.x = player.x;
-    this.movingLight.y = player.y;
+    //this.movingLight.x = player.x;
+    //this.movingLight.y = player.y;
     this.updateShadowTexture();
 }
 
