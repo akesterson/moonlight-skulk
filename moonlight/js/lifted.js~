@@ -1,0 +1,33 @@
+// All lights are additive because it's less work for me!
+
+LIGHT_SOLID = 0
+LIGHT_FLICKERING = 1
+
+// Lifted from http://gamemechanicexplorer.com/#lighting-4
+
+/*
+ * game - game object
+ * x, y - x and y to put the light at
+ * type - LIGHT_SOLID | LIGHT_FLICKERING
+ * maskimage - The image of the solid bitmap to use for the base light
+ * blursprite - The 'glow' object
+ * /
+
+var Light = function(game, x, y, type, maskimage, blursprite) {
+    Phaser.Sprite.call(this, game, x, y, spritename);
+	
+    // Set the pivot point for this sprite to the center
+    this.anchor.setTo(0.5, 0.5);
+
+    // Add a child image that is the glow of the torchlight
+    this.glow = this.game.add.image(x, y, blurimage);
+    this.glow.anchor.setTo(0.5, 0.5);
+
+    // Set the blendmode of the glow to ADD. This blendmode
+    // has the effect of adding the color of the glow to anything
+    // underneath it, brightening it.
+    this.glow.blendMode = Phaser.blendModes.ADD;
+
+    // Set the transparency to a low value so decrease the brightness
+    this.glow.alpha = 0.5;
+};

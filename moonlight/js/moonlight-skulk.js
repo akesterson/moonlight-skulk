@@ -1,4 +1,5 @@
-var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+
+var game = new Phaser.Game(640, 480, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
 var moonlightSettings = {
     'map' : {
@@ -14,6 +15,10 @@ var moonlightSettings = {
 	'path': 'gfx/junkmap.json'
     },
     'images': [
+	{
+	    'name': 'simplelight',
+	    'path': 'gfx/lights/light-white-256px.png'
+	}
     ],
     'spritesheets': [
 	{
@@ -134,7 +139,7 @@ var moonlightSettings = {
 	    'frames': [10, 11, 9],
 	    'speed': 12,
 	    'loop': true
-	} 
+	}
     }
 };
 
@@ -145,7 +150,7 @@ function addAnimation(obj, anim)
 }
 
 function preload()
-{    
+{
     for (var k in moonlightSettings['map']['tilesets']) {
 	var ts = moonlightSettings['map']['tilesets'][k];
 	this.load.image(ts['name'], ts['path']);
@@ -158,9 +163,9 @@ function preload()
 	var s = moonlightSettings['spritesheets'][k]
 	game.load.spritesheet(s['name'], s['path'], s['width'], s['height'], s['frames'])
     }
-    this.load.tilemap('map', 
-		      moonlightSettings['map']['path'], 
-		      null, 
+    this.load.tilemap('map',
+		      moonlightSettings['map']['path'],
+		      null,
 		      Phaser.Tilemap.TILED_JSON);
 }
 
@@ -179,6 +184,8 @@ function create()
     );
 
     player = this.add.sprite(10, 10, 'player');
+    this.physics.arcade.enable(player);
+    player.body.collideWorldBounds = true;
 
     addAnimation(player, 'bipedwalkleft');
     addAnimation(player, 'bipedwalkright');
@@ -189,10 +196,78 @@ function create()
     addAnimation(player, 'bipedrunup');
     addAnimation(player, 'bipedrundown');
 
-    this.physics.arcade.enable(player);
     this.camera.follow(player, Phaser.Camera.FOLLOW_TOPDOWN);
     controls = game.input.keyboard.createCursorKeys();
+
+    this.game.time.advancedTiming = true;
+    this.fpsText = this.game.add.text(
+        20, 20, '', { font: '16px Arial', fill: '#ffffff' }
+    );
+
+    this.shadowTexture = game.add.bitmapData(game.width, game.height);
+
+    // Create an object that will use the bitmap as a texture
+    this.lightSprite = game.add.image(0, 0, this.shadowTexture);
+
+    // Set the blend mode to MULTIPLY. This will darken the colors of
+    // everything below this sprite.
+    this.lightSprite.blendMode = Phaser.blendModes.MULTIPLY;
+
+    // Create the lights
+    this.lights = game.add.group();
+    this.movingLight = new Torch(game, game.width/2, game.height/2);
+    this.lights.add(this.movingLight);
+
+    this.updateShadowTexture = updateShadowTexture
 }
+
+updateShadowTexture = function() {
+    // This function updates the shadow texture (this.shadowTexture).
+    // First, it fills the entire texture with a dark shadow color.
+    // Then it draws a white circle centered on the pointer position.
+    // Because the texture is drawn to the screen using the MULTIPLY
+    // blend mode, the dark areas of the texture make all of the colors
+    // underneath it darker, while the white area is unaffected.
+
+    // Draw shadow
+    this.shadowTexture.context.fillStyle = 'rgb(100, 100, 100)';
+    this.shadowTexture.context.fillRect(0, 0, game.width, game.height);
+
+    // Iterate through each of the lights and draw the glow
+    this.lights.forEach(function(light) {
+        // Randomly change the radius each frame
+        var radius = 64 + game.rnd.integerInRange(1,10);
+
+        // Draw circle of light with a soft edge
+        var gradient =
+            this.shadowTexture.context.createRadialGradient(
+                light.x, light.y, 64 * 0.25,
+                light.x, light.y, radius);
+        gradient.addColorStop(0, 'rgba(255, 255, 255, 1.0)');
+        gradient.addColorStop(1, 'rgba(255, 255, 255, 0.0)');
+
+        this.shadowTexture.context.beginPath();
+        this.shadowTexture.context.fillStyle = gradient;
+        this.shadowTexture.context.arc(light.x, light.y, radius, 0, Math.PI*2);
+        this.shadowTexture.context.fill();
+    }, this);
+
+    // This just tells the engine it should update the texture cache
+    this.shadowTexture.dirty = true;
+};
+
+// Create torch objects
+// Torch constructor
+var Torch = function(game, x, y) {
+    Phaser.Sprite.call(this, game, x, y, 'player');
+
+    // Set the pivot point for this sprite to the center
+    this.anchor.setTo(0.5, 0.5);
+};
+
+// Torches are a type of Phaser.Sprite
+Torch.prototype = Object.create(Phaser.Sprite.prototype);
+Torch.prototype.constructor = Torch;
 
 function setSpriteMovement(spr, running, dir)
 {
@@ -226,14 +301,6 @@ function setSpriteMovement(spr, running, dir)
 
 function check_input()
 {
-    if ( player.body.x < 0 )
-	player.body.x = 0;
-    if ( player.body.y < 0 )
-	player.body.y = 0;
-    if ( (player.body.x + player.body.width) > game.world.width )
-	player.body.x = ( game.world.width - player.body.width);
-    if ( (player.body.y + player.body.height) > game.world.height )
-	player.body.y = ( game.world.height - player.body.height);
 
     player.body.velocity.x = 0;
     player.body.velocity.y = 0;
@@ -256,6 +323,15 @@ function check_input()
 
 function update()
 {
+    if (game.time.fps !== 0) {
+        this.fpsText.setText(game.time.fps + ' FPS');
+    }
+
     check_input();
     this.physics.arcade.collide(player, layer);
+    this.lightSprite.x = game.camera.x;
+    this.lightSprite.y = game.camera.y;
+    this.movingLight.x = player.x;
+    this.movingLight.y = player.y;
+    this.updateShadowTexture();
 }
