@@ -154,7 +154,7 @@ var Torch = function(game, x, y) {
 Torch.prototype = Object.create(Phaser.Sprite.prototype);
 Torch.prototype.constructor = Torch;
 
-var Gamestate = function(game) {
+var GameState = function(game) {
 }
 
 Gamestate.prototype.addAnimation = function(obj, anim)
