@@ -217,6 +217,7 @@ GameState.prototype.create = function()
     this.fpsText = this.game.add.text(
         20, 20, '', { font: '16px Arial', fill: '#ffffff' }
     );
+    this.fpsText.fixedToCamera = true;
 
     this.shadowTexture = game.add.bitmapData(game.world.width, game.world.height);
 
