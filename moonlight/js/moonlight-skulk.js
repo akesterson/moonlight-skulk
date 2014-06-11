@@ -157,13 +157,13 @@ Torch.prototype.constructor = Torch;
 var GameState = function(game) {
 }
 
-Gamestate.prototype.addAnimation = function(obj, anim)
+GameState.prototype.addAnimation = function(obj, anim)
 {
     a = moonlightSettings['animations'][anim]
     obj.animations.add(anim, a['frames'], a['speed'], a['loop'])
 }
 
-Gamestate.prototype.preload = function()
+GameState.prototype.preload = function()
 {
     for (var k in moonlightSettings['map']['tilesets']) {
 	var ts = moonlightSettings['map']['tilesets'][k];
@@ -183,7 +183,7 @@ Gamestate.prototype.preload = function()
 		      Phaser.Tilemap.TILED_JSON);
 }
 
-Gamestate.prototype.create = function()
+GameState.prototype.create = function()
 {
     map = this.add.tilemap('map');
     for (var k in moonlightSettings['map']['tilesets']) {
@@ -234,7 +234,7 @@ Gamestate.prototype.create = function()
 
 }
 
-Gamestate.prototype.updateShadowTexture = function() {
+GameState.prototype.updateShadowTexture = function() {
     // This function updates the shadow texture (this.shadowTexture).
     // First, it fills the entire texture with a dark shadow color.
     // Then it draws a white circle centered on the pointer position.
@@ -269,7 +269,7 @@ Gamestate.prototype.updateShadowTexture = function() {
     this.shadowTexture.dirty = true;
 };
 
-Gamestate.prototype.setSpriteMovement = function(spr, running, dir)
+GameState.prototype.setSpriteMovement = function(spr, running, dir)
 {
     var x = 0;
     var y = 0;
@@ -299,7 +299,7 @@ Gamestate.prototype.setSpriteMovement = function(spr, running, dir)
     }
 }
 
-Gamestate.prototype.check_input = function()
+GameState.prototype.check_input = function()
 {
 
     player.body.velocity.x = 0;
@@ -321,7 +321,7 @@ Gamestate.prototype.check_input = function()
     }
 }
 
-Gamestate.prototype.update = function()
+GameState.prototype.update = function()
 {
     if (game.time.fps !== 0) {
         this.fpsText.setText(game.time.fps + ' FPS');
