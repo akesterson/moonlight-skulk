@@ -265,7 +265,7 @@ GameState.prototype.updateShadowTexture = function() {
 
         this.shadowTexture.context.beginPath();
         this.shadowTexture.context.fillStyle = gradient;
-        this.shadowTexture.context.arc(light.x, light.y, radius, 0, Math.PI*2);
+        this.shadowTexture.context.arc(light.x + 16, light.y + 16, radius, 0, Math.PI*2);
         this.shadowTexture.context.fill();
     }, this);
 
