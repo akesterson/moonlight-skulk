@@ -218,7 +218,7 @@ GameState.prototype.create = function()
         20, 20, '', { font: '16px Arial', fill: '#ffffff' }
     );
 
-    this.shadowTexture = game.add.bitmapData(game.world.width, game.world.height);
+    this.shadowTexture = game.add.bitmapData(game.world.width + 100, game.world.height + 100);
 
     // Create an object that will use the bitmap as a texture
     this.shadowSprite = game.add.image(0, 0, this.shadowTexture);
@@ -244,7 +244,10 @@ GameState.prototype.updateShadowTexture = function() {
 
     // Draw shadow
     this.shadowTexture.context.fillStyle = 'rgb(100, 100, 100)';
-    this.shadowTexture.context.fillRect(0, 0, game.width, game.height);
+    this.shadowTexture.context.fillRect(game.camera.x - 50,
+					game.camera.y - 50,
+					game.width + 50,
+					game.height + 50);
 
     // Iterate through each of the lights and draw the glow
     this.lights.forEach(function(light) {
