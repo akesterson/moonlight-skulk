@@ -309,13 +309,13 @@ GameState.prototype.check_input = function()
     runningSpeed = {true: 150, false: 75}
 
     if ( controls.up.isDown) {
-	setSpriteMovement(player, controls.up.shiftKey, 'up');
+	this.setSpriteMovement(player, controls.up.shiftKey, 'up');
     } else if ( controls.down.isDown ) {
-	setSpriteMovement(player, controls.up.shiftKey, 'down');
+	this.setSpriteMovement(player, controls.up.shiftKey, 'down');
     } else if ( controls.left.isDown ) {
-	setSpriteMovement(player, controls.up.shiftKey, 'left');
+	this.setSpriteMovement(player, controls.up.shiftKey, 'left');
     } else if ( controls.right.isDown ) {
-	setSpriteMovement(player, controls.up.shiftKey, 'right');
+	this.setSpriteMovement(player, controls.up.shiftKey, 'right');
     } else {
 	player.animations.stop(null, true);
     }
