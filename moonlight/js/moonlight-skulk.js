@@ -218,7 +218,7 @@ GameState.prototype.create = function()
         20, 20, '', { font: '16px Arial', fill: '#ffffff' }
     );
 
-    this.shadowTexture = game.add.bitmapData(game.world.width + 100, game.world.height + 100);
+    this.shadowTexture = game.add.bitmapData(game.world.width, game.world.height);
 
     // Create an object that will use the bitmap as a texture
     this.shadowSprite = game.add.image(0, 0, this.shadowTexture);
