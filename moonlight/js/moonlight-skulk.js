@@ -265,6 +265,7 @@ GameState.prototype.updateShadowTexture = function() {
     // Iterate through each of the lights and draw the glow
     this.lights.forEach(function(light) {
         // Randomly change the radius each frame
+	console.log(light);
         var radius = light.radius + game.rnd.integerInRange(1,10);
 
         // Draw circle of light with a soft edge
