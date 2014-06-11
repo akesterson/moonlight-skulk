@@ -232,7 +232,7 @@ GameState.prototype.create = function()
     this.lights = game.add.group();
     for (i = 0; i < 20 ; i++ ) {
 	this.lights.add(
-	    Torch(game,
+	    new Torch(game,
 		  game.rnd.integerInRange(0, game.width),
 		  game.rnd.integerInRange(0, game.heighh)
 		 )
