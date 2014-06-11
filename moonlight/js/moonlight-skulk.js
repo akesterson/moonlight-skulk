@@ -231,11 +231,15 @@ GameState.prototype.create = function()
     // Create the lights
     this.lights = game.add.group();
     for (i = 0; i < 20 ; i++ ) {
-	this.lights.add(Torch(game, game.rnd.integerInRange(0, game.width), game.rnd.integerInRange(1,game.height)));
+	this.lights.add(
+	    Torch(game,
+		  game.rnd.integerInRange(0, game.width),
+		  game.rnd.integerInRange(0, game.heighh)
+		 )
+	);
     }
     this.movingLight = new Torch(game, game.width/2, game.height/2);
     this.lights.add(this.movingLight);
-
 }
 
 GameState.prototype.updateShadowTexture = function() {
