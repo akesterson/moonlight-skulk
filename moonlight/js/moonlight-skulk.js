@@ -151,7 +151,8 @@ var Torch = function(game, x, y, radius, fade, color) {
 
     // Set the pivot point for this sprite to the center
     this.anchor.setTo(0.5, 0.5);
-    this.color = color
+    this.color = color;
+    this.radius = radius;
     this.fade = radius * fade
 };
 
