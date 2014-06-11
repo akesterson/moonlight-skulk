@@ -234,7 +234,7 @@ GameState.prototype.create = function()
 	this.lights.add(
 	    new Torch(game,
 		  game.rnd.integerInRange(0, game.width),
-		  game.rnd.integerInRange(0, game.heighh)
+		  game.rnd.integerInRange(0, game.height)
 		 )
 	);
     }
