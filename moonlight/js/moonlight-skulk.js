@@ -258,8 +258,8 @@ GameState.prototype.updateShadowTexture = function() {
         // Draw circle of light with a soft edge
         var gradient =
             this.shadowTexture.context.createRadialGradient(
-                light.x, light.y, 64 * 0.25,
-                light.x, light.y, radius);
+                light.x + 16, light.y + 16, 64 * 0.25,
+                light.x + 16, light.y + 16, radius);
         gradient.addColorStop(0, 'rgba(255, 255, 255, 1.0)');
         gradient.addColorStop(1, 'rgba(255, 255, 255, 0.0)');
 
