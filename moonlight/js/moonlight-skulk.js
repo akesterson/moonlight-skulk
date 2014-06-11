@@ -239,8 +239,15 @@ GameState.prototype.create = function()
     for (i = 0; i < 20 ; i++ ) {
 	this.lights.add(
 	    new Torch(game,
-		  game.rnd.integerInRange(0, game.width),
-		  game.rnd.integerInRange(0, game.height)
+		      game.rnd.integerInRange(0, game.width),
+		      game.rnd.integerInRange(0, game.height),
+		      game.rnd.integerInRange(0, 128),
+		      game.rnd.realInRange(0.0, 1.0),
+		      [
+			  game.rnd.integerInRange(0, 255),
+			  game.rnd.integerInRange(0, 255),
+			  game.rnd.integerInRange(0, 255)
+		      ]
 		 )
 	);
     }
