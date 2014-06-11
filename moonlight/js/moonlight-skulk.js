@@ -218,14 +218,14 @@ GameState.prototype.create = function()
         20, 20, '', { font: '16px Arial', fill: '#ffffff' }
     );
 
-    this.shadowTexture = game.add.bitmapData(game.width, game.height);
+    this.shadowTexture = game.add.bitmapData(game.world.width, game.world.height);
 
     // Create an object that will use the bitmap as a texture
-    this.lightSprite = game.add.image(0, 0, this.shadowTexture);
+    this.shadowSprite = game.add.image(0, 0, this.shadowTexture);
 
     // Set the blend mode to MULTIPLY. This will darken the colors of
     // everything below this sprite.
-    this.lightSprite.blendMode = Phaser.blendModes.MULTIPLY;
+    this.shadowSprite.blendMode = Phaser.blendModes.MULTIPLY;
 
     // Create the lights
     this.lights = game.add.group();
@@ -329,8 +329,6 @@ GameState.prototype.update = function()
 
     this.check_input();
     this.physics.arcade.collide(player, layer);
-    this.lightSprite.x = game.camera.x;
-    this.lightSprite.y = game.camera.y;
     this.movingLight.x = player.x;
     this.movingLight.y = player.y;
     this.updateShadowTexture();
