@@ -1,6 +1,4 @@
 
-var game = new Phaser.Game(640, 480, Phaser.AUTO, '', { preload: preload, create: create, update: update });
-
 var moonlightSettings = {
     'map' : {
 	'tilesets': [
@@ -143,13 +141,29 @@ var moonlightSettings = {
     }
 };
 
-function addAnimation(obj, anim)
+// Create torch objects
+// Torch constructor
+var Torch = function(game, x, y) {
+    Phaser.Sprite.call(this, game, x, y, 'player');
+
+    // Set the pivot point for this sprite to the center
+    this.anchor.setTo(0.5, 0.5);
+};
+
+// Torches are a type of Phaser.Sprite
+Torch.prototype = Object.create(Phaser.Sprite.prototype);
+Torch.prototype.constructor = Torch;
+
+var Gamestate = function(game) {
+}
+
+Gamestate.prototype.addAnimation = function(obj, anim)
 {
     a = moonlightSettings['animations'][anim]
     obj.animations.add(anim, a['frames'], a['speed'], a['loop'])
 }
 
-function preload()
+Gamestate.prototype.preload = function()
 {
     for (var k in moonlightSettings['map']['tilesets']) {
 	var ts = moonlightSettings['map']['tilesets'][k];
@@ -169,7 +183,7 @@ function preload()
 		      Phaser.Tilemap.TILED_JSON);
 }
 
-function create()
+Gamestate.prototype.create = function()
 {
     map = this.add.tilemap('map');
     for (var k in moonlightSettings['map']['tilesets']) {
@@ -218,10 +232,9 @@ function create()
     this.movingLight = new Torch(game, game.width/2, game.height/2);
     this.lights.add(this.movingLight);
 
-    this.updateShadowTexture = updateShadowTexture
 }
 
-updateShadowTexture = function() {
+Gamestate.prototype.updateShadowTexture = function() {
     // This function updates the shadow texture (this.shadowTexture).
     // First, it fills the entire texture with a dark shadow color.
     // Then it draws a white circle centered on the pointer position.
@@ -256,20 +269,7 @@ updateShadowTexture = function() {
     this.shadowTexture.dirty = true;
 };
 
-// Create torch objects
-// Torch constructor
-var Torch = function(game, x, y) {
-    Phaser.Sprite.call(this, game, x, y, 'player');
-
-    // Set the pivot point for this sprite to the center
-    this.anchor.setTo(0.5, 0.5);
-};
-
-// Torches are a type of Phaser.Sprite
-Torch.prototype = Object.create(Phaser.Sprite.prototype);
-Torch.prototype.constructor = Torch;
-
-function setSpriteMovement(spr, running, dir)
+Gamestate.prototype.setSpriteMovement = function(spr, running, dir)
 {
     var x = 0;
     var y = 0;
@@ -299,7 +299,7 @@ function setSpriteMovement(spr, running, dir)
     }
 }
 
-function check_input()
+Gamestate.prototype.check_input = function()
 {
 
     player.body.velocity.x = 0;
@@ -321,7 +321,7 @@ function check_input()
     }
 }
 
-function update()
+Gamestate.prototype.update = function()
 {
     if (game.time.fps !== 0) {
         this.fpsText.setText(game.time.fps + ' FPS');
@@ -335,3 +335,6 @@ function update()
     this.movingLight.y = player.y;
     this.updateShadowTexture();
 }
+
+var game = new Phaser.Game(640, 480, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+game.state.add('game', GameState, true);
