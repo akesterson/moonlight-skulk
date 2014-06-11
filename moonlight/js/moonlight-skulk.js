@@ -201,14 +201,14 @@ GameState.prototype.create = function()
     this.physics.arcade.enable(player);
     player.body.collideWorldBounds = true;
 
-    addAnimation(player, 'bipedwalkleft');
-    addAnimation(player, 'bipedwalkright');
-    addAnimation(player, 'bipedwalkup');
-    addAnimation(player, 'bipedwalkdown');
-    addAnimation(player, 'bipedrunleft');
-    addAnimation(player, 'bipedrunright');
-    addAnimation(player, 'bipedrunup');
-    addAnimation(player, 'bipedrundown');
+    this.addAnimation(player, 'bipedwalkleft');
+    this.addAnimation(player, 'bipedwalkright');
+    this.addAnimation(player, 'bipedwalkup');
+    this.addAnimation(player, 'bipedwalkdown');
+    this.addAnimation(player, 'bipedrunleft');
+    this.addAnimation(player, 'bipedrunright');
+    this.addAnimation(player, 'bipedrunup');
+    this.addAnimation(player, 'bipedrundown');
 
     this.camera.follow(player, Phaser.Camera.FOLLOW_TOPDOWN);
     controls = game.input.keyboard.createCursorKeys();
@@ -327,7 +327,7 @@ GameState.prototype.update = function()
         this.fpsText.setText(game.time.fps + ' FPS');
     }
 
-    check_input();
+    this.check_input();
     this.physics.arcade.collide(player, layer);
     this.lightSprite.x = game.camera.x;
     this.lightSprite.y = game.camera.y;
