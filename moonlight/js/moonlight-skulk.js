@@ -144,9 +144,9 @@ var moonlightSettings = {
 // Create torch objects
 // Torch constructor
 var Torch = function(game, x, y, radius, fade, color) {
-    color = typeof color !== undefined ? [255, 255, 255] : color;
-    fade = typeof fade !== undefined ? 0.25 : fade;
-    radius = typeof radius !== undefined ? 64 : radius;
+    color = ( typeof color == undefined ? [255, 255, 255] : color );
+    fade = ( typeof fade == undefined ? 0.25 : fade );
+    radius = ( typeof radius == undefined ? 64 : radius );
     Phaser.Sprite.call(this, game, x, y, null);
 
     // Set the pivot point for this sprite to the center
