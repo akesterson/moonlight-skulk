@@ -265,10 +265,7 @@ GameState.prototype.updateShadowTexture = function() {
 
     // Draw shadow
     this.shadowTexture.context.fillStyle = 'rgb(50, 50, 50)';
-    this.shadowTexture.context.fillRect(game.camera.x - 50,
-					game.camera.y - 50,
-					game.width + 50,
-					game.height + 50);
+    this.shadowTexture.context.fillRect(0, 0, game.width, game.height);
 
     // Iterate through each of the lights and draw the glow
     this.lights.forEach(function(light) {
