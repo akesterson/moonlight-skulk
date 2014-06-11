@@ -143,11 +143,16 @@ var moonlightSettings = {
 
 // Create torch objects
 // Torch constructor
-var Torch = function(game, x, y) {
+var Torch = function(game, x, y, radius, fade, color) {
+    color = typeof color !== undefined ? color : [255, 255, 255];
+    fade = typeof fade !== undefined ? fade : 0.25;
+    radius = typeof radius !== undefined ? radius : 64;
     Phaser.Sprite.call(this, game, x, y, null);
 
     // Set the pivot point for this sprite to the center
     this.anchor.setTo(0.5, 0.5);
+    this.color = color
+    this.fade = radius * fade
 };
 
 // Torches are a type of Phaser.Sprite
@@ -260,15 +265,15 @@ GameState.prototype.updateShadowTexture = function() {
     // Iterate through each of the lights and draw the glow
     this.lights.forEach(function(light) {
         // Randomly change the radius each frame
-        var radius = 64 + game.rnd.integerInRange(1,10);
+        var radius = light.radius + game.rnd.integerInRange(1,10);
 
         // Draw circle of light with a soft edge
         var gradient =
             this.shadowTexture.context.createRadialGradient(
-                light.x + 16, light.y + 16, 64 * 0.25,
+                light.x + 16, light.y + 16, light.fade,
                 light.x + 16, light.y + 16, radius);
-        gradient.addColorStop(0, 'rgba(255, 255, 255, 1.0)');
-        gradient.addColorStop(1, 'rgba(255, 255, 255, 0.0)');
+        gradient.addColorStop(0, 'rgba(' + light.color[0] + ',' + light.color[1] + ',' + light.color[2] +', 1.0)');
+        gradient.addColorStop(1, 'rgba(' + light.color[0] + ',' + light.color[1] + ',' + light.color[2] +', 0.0)');
 
         this.shadowTexture.context.beginPath();
         this.shadowTexture.context.fillStyle = gradient;
