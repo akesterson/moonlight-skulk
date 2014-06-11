@@ -144,7 +144,7 @@ var moonlightSettings = {
 // Create torch objects
 // Torch constructor
 var Torch = function(game, x, y) {
-    Phaser.Sprite.call(this, game, x, y, 'player');
+    Phaser.Sprite.call(this, game, x, y, null);
 
     // Set the pivot point for this sprite to the center
     this.anchor.setTo(0.5, 0.5);
