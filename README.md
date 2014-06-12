@@ -40,14 +40,6 @@ The Chase AI should stop chasing you if it has not seen you for a certain amount
 
 See above, once the Chase AI loses you, it should look for you for some time before giving up
 
-## TODO : Random dialogue from people around the map
-
-I really liked how Thief would let you sit aroud and voyeuristically listen in on people you were about to pillage/bop across the bonce. This should have similar effects, but in keeping with its 2D JRPG roots, it should be done with word bubbles or some other text based display that doesn't interrupt the play and doesn't rely on voice actors I don't have.
-
-## TODO : Random dialog for different AI states
-
-The "Chase", "Run", and "Looking" AI states need to all have different lines of dialog that they spout.
-
 ## TODO : Make player harder to "see" when they are in shadows or far away
 
 The dynamic lighting effect will make certain areas of the map "darker" than others. When the player stands in them, they get darker as well. This "darkness" factor, as well as how far away the player is, should be taken into account when determining if an AI can "see" the player
