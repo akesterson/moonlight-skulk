@@ -378,11 +378,19 @@ var AISprite = function(game, x, y, spritetype) {
 	text = mylines[game.rnd.integerInRange(0, mylines.length)];
 	style = {font: '14px Arial Bold', fill: '#ffffff', align: 'center'}
 	this.text_size = stringSize(text, style['font']);
-	this.bubble = game.add.text(this.x + (this.text_size[0]/2) + (this.body.width / 2), this.y - (this.text_size[1] / 2), text, style);
+	this.bubble = game.add.text(this.x, this.y, text, style);
+	this.bubble_offsets = [ (this.text_size[0]/2) + (this.body.width / 2), ( this.text_size[1]/2) ];
+	this.snap_bubble_position();
 
 	timer = game.time.create(false);
 	timerev = timer.add(5000, this.clearWordBubble, this);
 	timer.start()
+    }
+
+    this.snap_bubble_position = function()
+    {
+	this.bubble.position.x = this.x + this.bubble_offsets[0];
+	this.bubble.position.y = this.y + this.bubble_offsets[1];
     }
 
     this.update = function()
@@ -402,8 +410,7 @@ var AISprite = function(game, x, y, spritetype) {
 		this.bubble = null;
 		this.clear_bubble = false;
 	    } else {
-		this.bubble.position.x = this.x;
-		this.bubble.position.y = this.y - 20;
+		this.snap_bubble_position();
 	    }
 	}
 
