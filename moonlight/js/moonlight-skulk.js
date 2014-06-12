@@ -546,7 +546,7 @@ var AISprite = function(game, x, y, spritetype) {
 
     this.setWordBubble = function()
     {
-	if ( this.bubble !== null || this.sprite_group == undefined || this.word_bubble_enabled == false) {
+	if ( this.bubble !== null || this.sprite_group == undefined || this.enable_word_bubble == false) {
 	    return;
 	}
 	aistate = this.state & ( STATE_UNAWARE | STATE_CONCERNED | STATE_ALERTED | STATE_LOSTHIM );
