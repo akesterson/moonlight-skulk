@@ -453,13 +453,11 @@ GameState.prototype.update = function()
     this.check_input();
     this.physics.arcade.collide(player, layer);
     
-    function _inner_collidewith(x) {
+    function _inner_collidelayer(x) {
 	this.physics.arcade.collide(x, layer);
     }
 
-    this.wanderingSprites.iterate('exists', true, _inner_collidewith);
-    //this.movingLight.x = player.x;
-    //this.movingLight.y = player.y;
+    this.wanderingSprites.forEach(_inner_collidelayer, this);
     this.updateShadowTexture();
 }
 
