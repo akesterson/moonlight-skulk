@@ -189,7 +189,7 @@ var WanderingSprite = function(game, x, y, spritetype) {
 	'townsfolk-guard-2'
     ];
     Phaser.Sprite.call(this, game, x, y, spritenames_by_type[spritetype]); 
-    this.body.collideWorldBounds = true;
+    this.body.checkWorldBounds = true;
 }
 
 WanderingSprite.prototype.update = function()
