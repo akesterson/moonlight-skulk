@@ -308,7 +308,8 @@ var AISprite = function(game, x, y, spritetype) {
     {
 	if ( game.rnd.integerInRange(0, 100) < 95 )
 	    return;
-
+	this.bubble.x = this.x;
+	this.bubble.y = this.y - this.bubble.height;
 	var running = false;
 	if ( game.rnd.integerInRange(0, 100) > 90 ) {
 	    running = true;
