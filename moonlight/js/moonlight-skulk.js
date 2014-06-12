@@ -353,12 +353,7 @@ var AISprite = function(game, x, y, spritetype) {
 	this.bubble_style = {font: '12px Arial Bold', fill: '#ffffff', align: 'center'}
 	this.bubble = game.add.text(this.x, this.y - 20, this.bubble_text, this.bubble_style);
 	
-	function destroybubble() {
-	    this.bubble.destroy();
-	    this.bubble = null;
-	}
-
-	setTimeout(destroybubble, 20000);
+	setTimeout(function(){this.clear_bubble = true;}, 20000);
     }
 
     this.update = function()
@@ -376,7 +371,12 @@ var AISprite = function(game, x, y, spritetype) {
 
 	if ( this.bubble !== null ) {
 	    this.bubble.destroy();
-	    this.bubble = game.add.text(this.x, this.y - 20, this.bubble_text, this.bubble_style);
+	    if ( this.clear_bubble == true ) {
+		this.bubble = null;
+		this.clear_bubble = false;
+	    } else {
+		this.bubble = game.add.text(this.x, this.y - 20, this.bubble_text, this.bubble_style);
+	    }
 	}
 
 	switch ( game.rnd.integerInRange(0, 4) ) {
@@ -411,6 +411,8 @@ var AISprite = function(game, x, y, spritetype) {
 	'townsfolk-guard-2'
     ];
     this.bubble = null;
+    this.clear_bubble = false;
+
     this.state = STATE_UNAWARE;
     Phaser.Sprite.call(this, game, x, y, spritenames_by_type[spritetype]); 
     game.physics.arcade.enable(this);
