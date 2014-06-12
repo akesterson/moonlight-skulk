@@ -175,18 +175,18 @@ var moonlightDialog = {
 		"Oi? I don’t want no tomfoolery; come out if you’re there!",
 		"Must be them darned kids again.",
 		"What’s that?",
-		"Did you see that?",
+		"Did you see that?"
 	    ],
 	    STATE_ALERTED : [
-		"Don't you come no closer, you hear?"
-		"Egads!"
-		"I'm getting’ outta here!" 
-		"What's going on?!"
-		"Holy bejeezus!"
-		"Did you see that?"
-		"What're you doing?!"
-		"Get away!"
-		"Get away from me!"
+		"Don't you come no closer, you hear?",
+		"Egads!",
+		"I'm getting’ outta here!",
+		"What's going on?!",
+		"Holy bejeezus!",
+		"Did you see that?",
+		"What're you doing?!",
+		"Get away!",
+		"Get away from me!",
 		"Stay away! I know Kung-fu! ... but that would require bravery I don't have",
 		"Guards! GUARDS!"
 	    ],
