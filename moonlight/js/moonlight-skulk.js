@@ -267,7 +267,7 @@ Light.prototype.constructor = Light;
 var AISprite = function(game, x, y, spritetype) {
     this.setWordBubble = function()
     {
-	if ( this.bubble != null ) {
+	if ( this.bubble != null || this.sprite_group == undefined) {
 	    return;
 	}
 	//this.bubble = game.add.group()
