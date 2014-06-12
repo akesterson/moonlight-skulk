@@ -298,6 +298,20 @@ var moonlightDialog = {
     }
 };
 
+function stringSize(str, font)
+{
+  var f = font || '12px arial',
+    o = $('<div>' + str + '</div>')
+        .css({'position': 'absolute', 'float': 'left', 'white-space': 'nowrap', 'visibility': 'hidden', 'font': f})
+        .appendTo($('body')),
+    w = o.width(),
+    h = o.height():
+
+  o.remove();
+
+  return [w, h];
+}
+
 // Create torch objects
 // Light constructor
 var Light = function(game, x, y, radius, fade, color, flicker) {
@@ -339,7 +353,7 @@ var AISprite = function(game, x, y, spritetype) {
 	if ( this.bubble !== null || this.sprite_group == undefined || this.word_bubble_enabled == false) {
 	    return;
 	}
-	//this.bubble = game.add.group()
+
 	aistate = this.state & ( STATE_UNAWARE | STATE_CONCERNED | STATE_ALERTED | STATE_LOSTHIM );
 	switch ( aistate ) {
 	    case STATE_UNAWARE: {
@@ -361,9 +375,10 @@ var AISprite = function(game, x, y, spritetype) {
 	}
 
 	var mylines = moonlightDialog['status'][this.sprite_group][aistate];
-	this.bubble_text = mylines[game.rnd.integerInRange(0, mylines.length)];
-	this.bubble_style = {font: '16px Arial Bold', fill: '#ffffff', align: 'center'}
-	this.bubble = game.add.text(this.x, this.y - 20, this.bubble_text, this.bubble_style);
+	text = mylines[game.rnd.integerInRange(0, mylines.length)];
+	style = {font: '14px Arial Bold', fill: '#ffffff', align: 'center'}
+	this.text_size = stringSize(text, style);
+	this.bubble_text = game.add.text(this.x + (this.text_size[0]/2) + (this.body.width / 2), this.y - (this.text_size[1] / 2), text, style);
 
 	timer = game.time.create(false);
 	timerev = timer.add(5000, this.clearWordBubble, this);
@@ -382,14 +397,11 @@ var AISprite = function(game, x, y, spritetype) {
 	}
 
 	if ( this.bubble !== null ) {
-	    //this.bubble.destroy();
 	    if ( this.clear_bubble == true ) {
 		this.bubble.destroy();
 		this.bubble = null;
 		this.clear_bubble = false;
-		console.log("Cleared bubble");
 	    } else {
-		//this.bubble = game.add.text(this.x, this.y - 20, this.bubble_text, this.bubble_style);
 		this.bubble.position.x = this.x;
 		this.bubble.position.y = this.y - 20;
 	    }
@@ -438,7 +450,6 @@ var AISprite = function(game, x, y, spritetype) {
     this.body.collideWorldBounds = true;
 
     var ARGH = spritenames_by_type[spritetype];
-    console.log(ARGH);
     ARGH = ARGH.split("-");
     this.sprite_group = ARGH[0] + "-" + ARGH[1];
 
