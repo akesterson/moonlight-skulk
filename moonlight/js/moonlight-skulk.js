@@ -358,7 +358,7 @@ var AISprite = function(game, x, y, spritetype) {
 	    console.log("GOFUCKYERSELF fired");
 	}
 
-	setTimeout(GOFUCKYERSELF, 20000);
+	setTimeout(GOFUCKYERSELF, 5000);
     }
 
     this.update = function()
