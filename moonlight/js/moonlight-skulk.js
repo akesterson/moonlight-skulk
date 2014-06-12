@@ -418,9 +418,8 @@ var AISprite = function(game, x, y, spritetype) {
     game.physics.arcade.enable(this);
     this.body.collideWorldBounds = true;
 
-    this.sprite_group = ['townsfolk-male', 
-			 'townsfolk-female',
-			 'townsfolk-guard'][Math.round(spritetype / 4) - 1];
+    var ARGH = spritenames_by_type[spritetype].split("-")
+    this.sprite_group = ARGH[0] + "-" + ARGH[1];
 
     addAnimation(this, 'bipedwalkleft');
     addAnimation(this, 'bipedwalkright');
