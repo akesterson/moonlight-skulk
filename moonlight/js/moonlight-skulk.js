@@ -662,10 +662,6 @@ GameState.prototype.check_input = function()
 
 GameState.prototype.update = function()
 {
-    if (game.time.fps !== 0) {
-        this.fpsText.setText(game.time.fps + ' FPS');
-    }
-
     this.check_input();
     this.physics.arcade.collide(player, layer);
     
@@ -676,6 +672,10 @@ GameState.prototype.update = function()
 
     this.aiSprites.forEach(_inner_collide, this);
     this.updateShadowTexture();
+    if (game.time.fps !== 0) {
+        this.fpsText.setText(game.time.fps + ' FPS');
+	this.fpsText.bringToTop();
+    }
 }
 
 var game = new Phaser.Game(640, 480, Phaser.AUTO, '');
