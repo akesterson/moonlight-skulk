@@ -440,7 +440,7 @@ GameState.prototype.update = function()
     this.check_input();
     this.physics.arcade.collide(player, layer);
     
-    this.wanderingSprites.iterate(exists, true, function(x) {
+    this.wanderingSprites.iterate('exists', true, function(x) {
 	this.physics.arcade.collide(x);
     });
     //this.movingLight.x = player.x;
