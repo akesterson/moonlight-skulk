@@ -230,6 +230,7 @@ GameState.prototype.create = function()
     this.fpsText.fixedToCamera = true;
 
     this.shadowTexture = game.add.bitmapData(game.world.width, game.world.height);
+    this.shadowTextureColor = 'rgb(10, 10, 10)';
 
     // Create an object that will use the bitmap as a texture
     this.shadowSprite = game.add.image(0, 0, this.shadowTexture);
@@ -269,11 +270,12 @@ GameState.prototype.updateShadowTexture = function() {
     // underneath it darker, while the white area is unaffected.
 
     // Draw shadow
-    this.shadowTexture.context.fillStyle = 'rgb(50, 50, 50)';
+    this.shadowTexture.context.fillStyle = this.shadowTextureColor;
     this.shadowTexture.context.fillRect(0, 0, game.world.width, game.world.height);
 
     // Iterate through each of the lights and draw the glow
     this.staticLights.forEach(function(light) {
+	// Don't draw lights that aren't on screen
 	var r1 = new Phaser.Rectangle(this.game.camera.x, 
 				      this.game.camera.y, 
 				      this.game.camera.width, 
@@ -281,8 +283,9 @@ GameState.prototype.updateShadowTexture = function() {
 	if ( ! light.rect.intersects(r1) ) {
 	    return;
 	}
-        // Randomly change the radius each frame
+
 	if ( light.flicker ) {
+            // Randomly change the radius each frame
             var radius = light.radius + game.rnd.integerInRange(1,10);
 	} else {
 	    var radius = light.radius;
