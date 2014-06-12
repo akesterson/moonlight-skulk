@@ -358,7 +358,7 @@ var AISprite = function(game, x, y, spritetype) {
 	this.bubble_style = {font: '12px Arial Bold', fill: '#ffffff', align: 'center'}
 	this.bubble = game.add.text(this.x, this.y - 20, this.bubble_text, this.bubble_style);
 	
-	timer = new Phaser.Timer(game);
+	timer = game.time.create(false);
 	timerev = timer.add(5000, this.GOFUCKYERSELF, this);
 	timer.start()
     }
