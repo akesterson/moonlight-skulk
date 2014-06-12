@@ -572,7 +572,6 @@ var AISprite = function(game, x, y, spritetype) {
 
 	var mylines = moonlightDialog['status'][this.sprite_group][aistate];
 	var myline = mylines[game.rnd.integerInRange(0, mylines.length)]
-	console.log(myline)
 	this.bubble = game.add.sprite(this.x, this.y, myline);
 	game.physics.arcade.enable(this.bubble);
 	
@@ -646,7 +645,6 @@ var AISprite = function(game, x, y, spritetype) {
     this.body.collideWorldBounds = true;
 
     var ARGH = spritenames_by_type[spritetype];
-    console.log(ARGH);
     ARGH = ARGH.split("-");
     this.sprite_group = ARGH[0] + "-" + ARGH[1];
 
