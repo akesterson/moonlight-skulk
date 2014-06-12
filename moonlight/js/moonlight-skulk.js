@@ -322,12 +322,6 @@ Light.prototype = Object.create(Phaser.Sprite.prototype);
 Light.prototype.constructor = Light;
 
 var AISprite = function(game, x, y, spritetype) {
-    this.clearWordBubble = function()
-    {
-	this.bubble.destroy();
-	this.bubble = null;
-    }
-
     this.setWordBubble = function()
     {
 	if ( this.bubble != null || this.sprite_group == undefined) {
@@ -359,7 +353,12 @@ var AISprite = function(game, x, y, spritetype) {
 	this.bubble_style = {font: '12px Arial Bold', fill: '#ffffff', align: 'center'}
 	this.bubble = game.add.text(this.x, this.y - 20, this.bubble_text, this.bubble_style);
 	
-	setTimeout(function(){this.clearWordBubble();}, 20000);
+	function destroybubble() {
+	    this.bubble.destroy();
+	    this.bubble = null;
+	}
+
+	setTimeout(destroybubble, 20000);
     }
 
     this.update = function()
@@ -504,8 +503,8 @@ GameState.prototype.create = function()
     for ( i = 0; i < 20 ; i++ ) {
 	this.aiSprites.add(
 	    new AISprite(game,
-				game.rnd.integerInRange(0, game.world.width),
-				game.rnd.integerInRange(0, game.world.height),
+				game.rnd.integerInRange(0, game.width),
+				game.rnd.integerInRange(0, game.height),
 				game.rnd.integerInRange(0, 10)
 			       )
 	);
