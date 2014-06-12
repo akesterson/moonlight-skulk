@@ -357,7 +357,7 @@ var AISprite = function(game, x, y, spritetype) {
 
     this.sprite_group = ['townsfolk-male', 
 			 'townsfolk-female',
-			 'townsfolk-guard'][Math.round(1 + (spritetype / 4))];
+			 'townsfolk-guard'][Math.round(spritetype / 4)];
 
     addAnimation(this, 'bipedwalkleft');
     addAnimation(this, 'bipedwalkright');
