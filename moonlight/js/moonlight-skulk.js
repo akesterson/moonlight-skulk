@@ -536,11 +536,12 @@ var AISprite = function(game, x, y, spritetype) {
     }
 
     this.clearWordBubble = function() {
-	this.bubble.destroy();
+	if ( this.bubble !== null )
+	    this.bubble.destroy();
 	this.bubble = null;
 	this.enable_word_bubble = false;
 	timer = game.time.create(false);
-	timerev = timer.add(10000, this.enableWordBubble, this);
+	timerev = timer.add(10000 + (game.rnd.integerInRange(0, 10) * 1000), this.enableWordBubble, this);
 	timer.start()
     }
 
@@ -635,7 +636,7 @@ var AISprite = function(game, x, y, spritetype) {
 	'townsfolk-guard-1',
 	'townsfolk-guard-2'
     ];
-    this.bubble = null;
+    this.clearWordBubble();
 
     this.state = STATE_UNAWARE;
     Phaser.Sprite.call(this, game, x, y, spritenames_by_type[spritetype]); 
