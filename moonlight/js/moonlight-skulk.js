@@ -160,12 +160,12 @@ var moonlightDialog = {
     "status": {
 	"townsfolk-male": {
 	    STATE_UNAWARE : [
-		“I’d rather be fishing.”,
+		“I'd rather be fishing.”,
 		“Different day, same old stuff.”,
-		“Oi! Where’d that trouble run off to now then?”,
+		“Oi! Where'd that trouble run off to now then?”,
 		“"The missus is off shoppin', and here I am sittin' on me Jack Jones.",
 		"Oy I'm gonna have a butcher’s at that new tailor's knickers he has for sale.",
-		“I’m off to the pub to see the lads and chew the fat.”,
+		“I'm off to the pub to see the lads and chew the fat.”,
 		“♪ ♫ Whistling ♪ ♫”
 	    ],
 	    STATE_CONCERNED : [],
