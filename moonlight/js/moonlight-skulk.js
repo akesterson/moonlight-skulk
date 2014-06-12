@@ -305,7 +305,7 @@ function stringSize(str, font)
         .css({'position': 'absolute', 'float': 'left', 'white-space': 'nowrap', 'visibility': 'hidden', 'font': f})
         .appendTo($('body')),
     w = o.width(),
-    h = o.height():
+    h = o.height();
 
   o.remove();
 
