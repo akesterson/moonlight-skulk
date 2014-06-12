@@ -324,7 +324,7 @@ Light.prototype.constructor = Light;
 var AISprite = function(game, x, y, spritetype) {
     this.GOFUCKYERSELF = function() {
 	this.clear_bubble = true;
-	    console.log("GOFUCKYERSELF fired");
+	console.log("GOFUCKYERSELF fired");
     }
 
     this.setWordBubble = function()
