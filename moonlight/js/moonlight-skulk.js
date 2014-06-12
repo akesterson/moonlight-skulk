@@ -324,7 +324,7 @@ Light.prototype.constructor = Light;
 var AISprite = function(game, x, y, spritetype) {
     this.setWordBubble = function()
     {
-	if ( this.bubble != null || this.sprite_group == undefined) {
+	if ( this.bubble !== null || this.sprite_group == undefined) {
 	    return;
 	}
 	//this.bubble = game.add.group()
@@ -379,6 +379,7 @@ var AISprite = function(game, x, y, spritetype) {
 	    if ( this.clear_bubble == true ) {
 		this.bubble = null;
 		this.clear_bubble = false;
+		console.log("Cleared bubble");
 	    } else {
 		this.bubble = game.add.text(this.x, this.y - 20, this.bubble_text, this.bubble_style);
 	    }
