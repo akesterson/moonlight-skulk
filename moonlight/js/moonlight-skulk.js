@@ -322,6 +322,12 @@ Light.prototype = Object.create(Phaser.Sprite.prototype);
 Light.prototype.constructor = Light;
 
 var AISprite = function(game, x, y, spritetype) {
+    this.clearWordBubble = function()
+    {
+	this.bubble.destroy();
+	this.bubble = null;
+    }
+
     this.setWordBubble = function()
     {
 	if ( this.bubble != null || this.sprite_group == undefined) {
@@ -354,12 +360,6 @@ var AISprite = function(game, x, y, spritetype) {
 	this.bubble = game.add.text(this.x, this.y - 20, this.bubble_text, this.bubble_style);
 	
 	setTimeout(function(){this.clearWordBubble();}, 20000);
-    }
-
-    this.clearWordBubble = function()
-    {
-	this.bubble.destroy();
-	this.bubble = null;
     }
 
     this.update = function()
