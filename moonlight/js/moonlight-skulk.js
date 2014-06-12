@@ -541,11 +541,11 @@ GameState.prototype.create = function()
 
     // Create the lights
     this.staticLights = game.add.group();
-    for (i = 0; i < 20 ; i++ ) {
+    for (i = 0; i < 50 ; i++ ) {
     	this.staticLights.add(
     	    new Light(game,
-    		      game.rnd.integerInRange(0, game.width),
-    		      game.rnd.integerInRange(0, game.height),
+    		      game.rnd.integerInRange(0, game.world.width),
+    		      game.rnd.integerInRange(0, game.world.height),
     		      game.rnd.integerInRange(0, 128),
     		      game.rnd.realInRange(0.0, 1.0),
     		      [
