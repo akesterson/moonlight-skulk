@@ -541,7 +541,7 @@ var AISprite = function(game, x, y, spritetype) {
 	this.bubble = null;
 	this.enable_word_bubble = false;
 	timer = game.time.create(false);
-	timerev = timer.add(10000 + (game.rnd.integerInRange(0, 10) * 1000), this.enableWordBubble, this);
+	timerev = timer.add(20000 + (game.rnd.integerInRange(0, 30) * 1000), this.enableWordBubble, this);
 	timer.start()
     }
 
