@@ -379,7 +379,7 @@ var AISprite = function(game, x, y, spritetype) {
 	style = {font: '14px Arial Bold', fill: '#ffffff', align: 'center'}
 	this.text_size = stringSize(text, style['font']);
 	this.bubble = game.add.text(this.x, this.y, text, style);
-	this.bubble_offsets = [ (this.text_size[0]/2) + (this.body.width / 2), ( this.text_size[1]/2) ];
+	this.bubble_offsets = [ (this.body.width / 2), -( this.text_size[1]/2) ];
 	this.snap_bubble_position();
 
 	timer = game.time.create(false);
