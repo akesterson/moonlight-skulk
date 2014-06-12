@@ -160,17 +160,45 @@ var moonlightDialog = {
     "status": {
 	"townsfolk-male": {
 	    STATE_UNAWARE : [
-		“I'd rather be fishing.”,
-		“Different day, same old stuff.”,
-		“Oi! Where'd that trouble run off to now then?”,
-		“"The missus is off shoppin', and here I am sittin' on me Jack Jones.",
+		"I'd rather be fishing.",
+		"Different day, same old stuff.",
+		"Oi! Where'd that trouble run off to now then?",
+		"The missus is off shoppin', and here I am sittin' on me Jack Jones.",
 		"Oy I'm gonna have a butcher’s at that new tailor's knickers he has for sale.",
-		“I'm off to the pub to see the lads and chew the fat.”,
-		“♪ ♫ Whistling ♪ ♫”
+		"I'm off to the pub to see the lads and chew the fat.",
+		"♪ ♫ Whistling ♪ ♫"
 	    ],
-	    STATE_CONCERNED : [],
-	    STATE_ALERTED : [],
-	    STATE_LOSTHIM: []
+	    STATE_CONCERNED : [
+		"Wha… what’s that? Who’s there?",
+		"Did you hear that?",
+		"Either I’m hearin’ things, or I need to stop drinkin’ midday.",
+		"Oi? I don’t want no tomfoolery; come out if you’re there!",
+		"Must be them darned kids again.",
+		"What’s that?",
+		"Did you see that?",
+	    ],
+	    STATE_ALERTED : [
+		"Don't you come no closer, you hear?"
+		"Egads!"
+		"I'm getting’ outta here!" 
+		"What's going on?!"
+		"Holy bejeezus!"
+		"Did you see that?"
+		"What're you doing?!"
+		"Get away!"
+		"Get away from me!"
+		"Stay away! I know Kung-fu! ... but that would require bravery I don't have",
+		"Guards! GUARDS!"
+	    ],
+	    STATE_LOSTHIM: [
+		"Whew. Glad that’s over.",
+		"I wasn’t scared!",
+		"Must’ve been intimidated by manly physique.",
+		"That’s right! Run away!",
+		"Aye, and don’t-cha come back!",
+		"Spoony Bard...",
+		"Bloody wanker!" 
+	    ]
 	},
 	"townsfolk-female": {
 	    STATE_UNAWARE : [],
