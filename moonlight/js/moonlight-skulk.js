@@ -230,7 +230,7 @@ GameState.prototype.create = function()
     this.fpsText.fixedToCamera = true;
 
     this.shadowTexture = game.add.bitmapData(game.world.width, game.world.height);
-    this.shadowTextureColor = 'rgb(10, 10, 10)';
+    this.shadowTextureColor = 'rgb(25, 25, 25)';
 
     // Create an object that will use the bitmap as a texture
     this.shadowSprite = game.add.image(0, 0, this.shadowTexture);
