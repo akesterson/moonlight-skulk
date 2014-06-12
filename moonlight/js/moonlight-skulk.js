@@ -453,8 +453,9 @@ GameState.prototype.update = function()
     this.check_input();
     this.physics.arcade.collide(player, layer);
     
-    function _inner_collidelayer(x) {
+    function _inner_collide(x) {
 	this.physics.arcade.collide(x, layer);
+	this.physics.arcade.collide(x, player);
     }
 
     this.wanderingSprites.forEach(_inner_collidelayer, this);
