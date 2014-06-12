@@ -362,7 +362,7 @@ var AISprite = function(game, x, y, spritetype) {
 
 	var mylines = moonlightDialog['status'][this.sprite_group][aistate];
 	this.bubble_text = mylines[game.rnd.integerInRange(0, mylines.length)];
-	this.bubble_style = {font: '12px Arial Bold', fill: '#ffffff', align: 'center'}
+	this.bubble_style = {font: '20px Arial Bold', fill: '#ffffff', align: 'center'}
 	this.bubble = game.add.text(this.x, this.y - 20, this.bubble_text, this.bubble_style);
 
 	timer = game.time.create(false);
