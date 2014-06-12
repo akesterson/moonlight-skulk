@@ -171,17 +171,17 @@ var moonlightDialog = {
 	    "unaware" : [
 		"I'd rather be fishing.",
 		"Different day, same old stuff.",
-		"Oi! Where'd that trouble run off to now then?",
-		"The missus is off shoppin', and here I am sittin' on me Jack Jones.",
-		"Oy I'm gonna have a butcher’s at that new tailor's knickers he has for sale.",
-		"I'm off to the pub to see the lads and chew the fat.",
+		"Oi! Where'd that trouble run\noff to now then?",
+		"The missus is off shoppin', and\nhere I am sittin' on\nme Jack Jones.",
+		"Oy I'm gonna have a butcher’s at\nthat new tailor's knickers\nhe has for sale.",
+		"I'm off to the pub to see the\nlads and chew the fat.",
 		"♪ ♫ Whistling ♪ ♫"
 	    ],
 	    "concerned" : [
 		"Wha… what’s that? Who’s there?",
 		"Did you hear that?",
-		"Either I’m hearin’ things, or I need to stop drinkin’ midday.",
-		"Oi? I don’t want no tomfoolery; come out if you’re there!",
+		"Either I’m hearin’ things, or I\nneed to stop drinkin’ midday.",
+		"Oi? I don’t want no tomfoolery;\ncome out if you’re there!",
 		"Must be them darned kids again.",
 		"What’s that?",
 		"Did you see that?"
@@ -196,13 +196,13 @@ var moonlightDialog = {
 		"What're you doing?!",
 		"Get away!",
 		"Get away from me!",
-		"Stay away! I know Kung-fu! ... but that would require bravery I don't have",
+		"Stay away! I know Kung-fu! ... but\nthat would require bravery \nI don't have",
 		"Guards! GUARDS!"
 	    ],
 	    "losthim" : [
 		"Whew. Glad that’s over.",
 		"I wasn’t scared!",
-		"Must’ve been intimidated by manly physique.",
+		"Must’ve been intimidated by\nmy manly physique.",
 		"That’s right! Run away!",
 		"Aye, and don’t-cha come back!",
 		"Spoony Bard...",
@@ -211,18 +211,18 @@ var moonlightDialog = {
 	},
 	"townsfolk-female" : {
 	    "unaware" : [
-		"My retro shake brings all the boys to the yard.",
-		"I'm off to get my Barnet sorted out. I’ll be the best looking lady at the gala.",
-		"It's always all itsy bitsy with them boys at the Rub-a-Dub.",
-		"I need to get this shopping sorted out.",
-		"What a lovely evening. Perfect for skulking"
+		"My retro shake brings all the\nboys to the yard.",
+		"I'm off to get my Barnet sorted\nout. I’ll be the best looking\nlady at the gala.",
+		"It's always all itsy bitsy with\nthem boys at the Rub-a-Dub.",
+		"I need to get this shopping\nsorted out.",
+		"What a lovely evening. Perfect\nfor skulking, I would imagine."
 	    ],
 	    "concerned" : [
 		"Wha… what’s that? Who’s there?",
 		"Did you hear that?",
 		"Martha? Is that you?",
-		"I don't want no tomfoolery. Go away!",
-		"What was that? This is how horror theatre bits start…",
+		"I don't want no tomfoolery.\nGo away!",
+		"What was that? This is how horror\ntheatre bits start…",
 		"What's that?",
 		"Did you see that?"
 	    ],
@@ -235,7 +235,7 @@ var moonlightDialog = {
 		"Help! He's after me virtue!"
 	    ],
 	    "losthim" : [
-		"Good riddance! There’s too many male protagonists in games anyhow!",
+		"Good riddance! There’s too many\nmale protagonists in\ngames anyhow!",
 		"I sure am glad that’s over.",
 		"This town is going straight to hell.",
 		"I hope he doesn’t come back.",
@@ -246,19 +246,19 @@ var moonlightDialog = {
 	    "unaware" : [
 		"Just doing my civic duty.",
 		"Good day, citizens.",
-		"Honor. Liberty. Justice. Oh, and pancakes… I love pancakes.",
+		"Honor. Liberty. Justice.\nOh, and pancakes…\nI love pancakes.",
 		"No loitering.",
 		"I am the law.",
-		"May Evil beware and may Good dress warmly and eat plenty of fresh vegetables.",
+		"May Evil beware and may\nGood dress warmly and\neat plenty of fresh vegetables.",
 		"We're sworn to protect The City."
 	    ],
 	    "concerned" : [
 		"I sense law-breaking abound.",
 		"Did you hear something?",
 		"Did you see that?",
-		"I know you're around here somewhere, rat…",
-		"Don't make me look for you in hard-to-reach places!",
-		"The eyes play tricks like tiny, round devils."
+		"I know you're around here\nsomewhere, rat…",
+		"Don't make me look for\nyou in hard-to-reach places!",
+		"The eyes play tricks\nlike tiny, round devils."
 	    ],
 	    "alerted" : [
 		"Surrender lawbreaker!",
@@ -269,13 +269,13 @@ var moonlightDialog = {
 		"There’s no escaping the law!",
 		"Surrender thief!",
 		"Prepare to taste steel!",
-		"Clear the area! Nobody panic! I'll catch him!"
+		"Clear the area! Nobody\npanic! I'll catch him!"
 	    ],
 	    "losthim" : [
-		"I’ll get you next time, criminal scum.",
+		"I’ll get you next time,\ncriminal scum.",
 		"Defeat is a harsh mistress.",
-		"Evil men may get away, but justice fights another day.",
-		"Wickedness flees, evading the cold steel of righteousness."
+		"Evil men may get away, but\njustice fights another day.",
+		"Wickedness flees, evading the\ncold steel of righteousness."
 	    ]
 	}
     },
