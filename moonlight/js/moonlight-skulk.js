@@ -210,16 +210,73 @@ var moonlightDialog = {
 	    ]
 	},
 	"townsfolk-female" : {
-	    "unaware" : [],
-	    "concerned" : [],
-	    "alerted" : [],
-	    "losthim" : []
+	    "unaware" : [
+		"My retro shake brings all the boys to the yard.",
+		"I'm off to get my Barnet sorted out. I’ll be the best looking lady at the gala.",
+		"It's always all itsy bitsy with them boys at the Rub-a-Dub.",
+		"I need to get this shopping sorted out.",
+		"What a lovely evening. Perfect for skulking"
+	    ],
+	    "concerned" : [
+		"Wha… what’s that? Who’s there?",
+		"Did you hear that?",
+		"Martha? Is that you?",
+		"I don't want no tomfoolery. Go away!",
+		"What was that? This is how horror theatre bits start…",
+		"What's that?",
+		"Did you see that?"
+	    ],
+	    "alerted" : [
+		"Eeeek!",
+		"Stay away from me!",
+		"Guards! Guards!",
+		"What in the nine hells?",
+		"Get back or I'll swoon!",
+		"Help! He's after me virtue!"
+	    ],
+	    "losthim" : [
+		"Good riddance! There’s too many male protagonists in games anyhow!",
+		"I sure am glad that’s over.",
+		"This town is going straight to hell.",
+		"I hope he doesn’t come back.",
+		"I hope he’s caught and hanged!"
+	    ]
 	},
 	"townsfolk-guard" : {
-	    "unaware" : [],
-	    "concerned" : [],
-	    "alerted" : [],
-	    "losthim" : []
+	    "unaware" : [
+		"Just doing my civic duty.",
+		"Good day, citizens.",
+		"Honor. Liberty. Justice. Oh, and pancakes… I love pancakes.",
+		"No loitering.",
+		"I am the law.",
+		"May Evil beware and may Good dress warmly and eat plenty of fresh vegetables.",
+		"We're sworn to protect The City."
+	    ],
+	    "concerned" : [
+		"I sense law-breaking abound.",
+		"Did you hear something?"
+		"Did you see that?"
+		"I know you're around here somewhere, rat…"
+		"Don't make me look for you in hard-to-reach places!"
+		"The eyes play tricks like tiny, round devils."
+	    ],
+	    "alerted" : [
+		"Surrender lawbreaker!",
+		"Halt!",
+		"Halt! In the name of the… umm, er… me!",
+		"Prepare for justice, criminal!",
+		"I am justice!",
+		"There’s no escaping the law!",
+		"Surrender thief!",
+		"Prepare to taste steel!",
+		"Clear the area! Nobody panic! I'll catch him!"
+	    ],
+	    "losthim" : [
+		"I’ll get you next time, criminal scum.",
+		"Defeat is a harsh mistress.",
+		"Evil men may get away, but justice fights another day.",
+		"Wickedness flees, evading the cold steel of righteousness."
+	    ]
 	}
     },
     "conversations": {
