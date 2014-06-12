@@ -269,7 +269,7 @@ GameState.prototype.updateShadowTexture = function() {
 
     // Iterate through each of the lights and draw the glow
     this.staticLights.forEach(function(light) {
-	if ( ! light.intersectRaw(game.camera.x, game.camera.y, game.width, game.height) ) {
+	if ( ! light.intersectsRaw(game.camera.x, game.camera.y, game.width, game.height) ) {
 	    return;
 	}
         // Randomly change the radius each frame
