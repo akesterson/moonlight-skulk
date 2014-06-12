@@ -570,7 +570,7 @@ GameState.prototype.updateShadowTexture = function() {
     // underneath it darker, while the white area is unaffected.
 
     // Draw shadow
-    this.shadowSprite.bringToFront();
+    this.shadowSprite.bringToTop();
     this.shadowTexture.context.fillStyle = this.shadowTextureColor;
     this.shadowTexture.context.fillRect(0, 0, game.world.width, game.world.height);
 
