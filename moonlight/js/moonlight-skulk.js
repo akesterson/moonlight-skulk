@@ -142,11 +142,12 @@ var moonlightSettings = {
 };
 
 // Create torch objects
-// Torch constructor
-var Torch = function(game, x, y, radius, fade, color) {
+// Light constructor
+var Light = function(game, x, y, radius, fade, color, flicker) {
     color = ( typeof color == undefined ? [255, 255, 255] : color );
     fade = ( typeof fade == undefined ? 0.25 : fade );
     radius = ( typeof radius == undefined ? 64 : radius );
+    flicker = ( typeof flicker == undefined ? false : flicker );
     Phaser.Sprite.call(this, game, x, y, null);
 
     // Set the pivot point for this sprite to the center
@@ -155,12 +156,13 @@ var Torch = function(game, x, y, radius, fade, color) {
     this.radius = radius;
     this.fade = radius * fade
     this.rect = new Phaser.Rectangle(this.x, this.y, radius * 2, radius * 2)
+    this.flicker = flicker;
 
 };
 
-// Torches are a type of Phaser.Sprite
-Torch.prototype = Object.create(Phaser.Sprite.prototype);
-Torch.prototype.constructor = Torch;
+// Lightes are a type of Phaser.Sprite
+Light.prototype = Object.create(Phaser.Sprite.prototype);
+Light.prototype.constructor = Light;
 
 var GameState = function(game) {
 }
@@ -240,7 +242,7 @@ GameState.prototype.create = function()
     this.staticLights = game.add.group();
     for (i = 0; i < 20 ; i++ ) {
 	this.staticLights.add(
-	    new Torch(game,
+	    new Light(game,
 		      game.rnd.integerInRange(0, game.width),
 		      game.rnd.integerInRange(0, game.height),
 		      game.rnd.integerInRange(0, 128),
@@ -249,11 +251,12 @@ GameState.prototype.create = function()
 			  game.rnd.integerInRange(0, 255),
 			  game.rnd.integerInRange(0, 255),
 			  game.rnd.integerInRange(0, 255)
-		      ]
+		      ],
+		      flicker = [true, false][game.rnd.integerInRange(0, 1)]
 		 )
 	);
     }
-    //this.movingLight = new Torch(game, game.width/2, game.height/2);
+    //this.movingLight = new Light(game, game.width/2, game.height/2);
     //this.lights.add(this.movingLight);
 }
 
@@ -279,7 +282,11 @@ GameState.prototype.updateShadowTexture = function() {
 	    return;
 	}
         // Randomly change the radius each frame
-        var radius = light.radius + game.rnd.integerInRange(1,10);
+	if ( light.flicker ) {
+            var radius = light.radius + game.rnd.integerInRange(1,10);
+	} else {
+	    var radius = light.radius;
+	}
 
         // Draw circle of light with a soft edge
         var gradient =
