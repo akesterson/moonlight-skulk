@@ -167,8 +167,8 @@ var moonlightSettings = {
 
 var moonlightDialog = {
     "status": {
-	SPRITE_TOWNSFOLK_MALE: {
-	    STATE_UNAWARE : [
+	("" + SPRITE_TOWNSFOLK_MALE) : {
+	    ("" + STATE_UNAWARE) : [
 		"I'd rather be fishing.",
 		"Different day, same old stuff.",
 		"Oi! Where'd that trouble run off to now then?",
@@ -177,7 +177,7 @@ var moonlightDialog = {
 		"I'm off to the pub to see the lads and chew the fat.",
 		"♪ ♫ Whistling ♪ ♫"
 	    ],
-	    STATE_CONCERNED : [
+	    ("" + STATE_CONCERNED) : [
 		"Wha… what’s that? Who’s there?",
 		"Did you hear that?",
 		"Either I’m hearin’ things, or I need to stop drinkin’ midday.",
@@ -186,7 +186,7 @@ var moonlightDialog = {
 		"What’s that?",
 		"Did you see that?"
 	    ],
-	    STATE_ALERTED : [
+	    ("" + STATE_ALERTED) : [
 		"Don't you come no closer, you hear?",
 		"Egads!",
 		"I'm getting’ outta here!",
@@ -199,7 +199,7 @@ var moonlightDialog = {
 		"Stay away! I know Kung-fu! ... but that would require bravery I don't have",
 		"Guards! GUARDS!"
 	    ],
-	    STATE_LOSTHIM: [
+	    ("" + STATE_LOSTHIM): [
 		"Whew. Glad that’s over.",
 		"I wasn’t scared!",
 		"Must’ve been intimidated by manly physique.",
@@ -209,17 +209,17 @@ var moonlightDialog = {
 		"Bloody wanker!" 
 	    ]
 	},
-	SPRITE_TOWNSFOLK_FEMALE: {
-	    STATE_UNAWARE : [],
-	    STATE_CONCERNED : [],
-	    STATE_ALERTED : [],
-	    STATE_LOSTHIM: []
+	("" + SPRITE_TOWNSFOLK_FEMALE): {
+	    ("" + STATE_UNAWARE) : [],
+	    ("" + STATE_CONCERNED) : [],
+	    ("" + STATE_ALERTED) : [],
+	    ("" + STATE_LOSTHIM): []
 	},
 	SPRITE_TOWNSFOLK_GUARD: {
-	    STATE_UNAWARE : [],
-	    STATE_CONCERNED : [],
-	    STATE_ALERTED : [],
-	    STATE_LOSTHIM: []
+	    ("" + STATE_UNAWARE) : [],
+	    ("" + STATE_CONCERNED) : [],
+	    ("" + STATE_ALERTED) : [],
+	    ("" + STATE_LOSTHIM): []
 	}
     },
     "conversations": {
