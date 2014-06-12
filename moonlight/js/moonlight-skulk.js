@@ -636,6 +636,8 @@ var AISprite = function(game, x, y, spritetype) {
 	'townsfolk-guard-1',
 	'townsfolk-guard-2'
     ];
+    this.bubble = null;
+    
     this.clearWordBubble();
 
     this.state = STATE_UNAWARE;
