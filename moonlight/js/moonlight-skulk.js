@@ -322,9 +322,16 @@ Light.prototype = Object.create(Phaser.Sprite.prototype);
 Light.prototype.constructor = Light;
 
 var AISprite = function(game, x, y, spritetype) {
-    this.GOFUCKYERSELF = function() {
+    this.enableWordBubble = function() {
+	this.enable_word_bubble = true;
+    }
+
+    this.clearWordBubble = function() {
 	this.clear_bubble = true;
-	console.log("GOFUCKYERSELF fired");
+	this.enable_word_bubble = false;
+	timer = game.time.create(false);
+	timerev = timer.add(10000, this.enableWordBubble, this);
+	timer.start()
     }
 
     this.setWordBubble = function()
@@ -359,7 +366,7 @@ var AISprite = function(game, x, y, spritetype) {
 	this.bubble = game.add.text(this.x, this.y - 20, this.bubble_text, this.bubble_style);
 	
 	timer = game.time.create(false);
-	timerev = timer.add(5000, this.GOFUCKYERSELF, this);
+	timerev = timer.add(5000, this.clearWordBubble, this);
 	timer.start()
     }
 
