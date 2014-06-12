@@ -164,6 +164,36 @@ var Light = function(game, x, y, radius, fade, color, flicker) {
 Light.prototype = Object.create(Phaser.Sprite.prototype);
 Light.prototype.constructor = Light;
 
+SPRITE_TOWNSFOLK_MALE1 = 1;
+SPRITE_TOWNSFOLK_MALE2 = 2;
+SPRITE_TOWNSFOLK_MALE3 = 3;
+SPRITE_TOWNSFOLK_MALE4 = 4;
+SPRITE_TOWNSFOLK_FEMALE1 = 5;
+SPRITE_TOWNSFOLK_FEMALE2 = 6;
+SPRITE_TOWNSFOLK_FEMALE3 = 7;
+SPRITE_TOWNSFOLK_FEMALE4 = 8;
+SPRITE_TOWNSFOLK_GUARD1 = 9;
+SPRITE_TOWNSFOLK_GUARD2 = 10;
+
+var WanderingSprite = function(game, x, y, spritetype) {
+    var spritenames_by_type = [
+	'townsfolk-male-1',
+	'townsfolk-male-2',
+	'townsfolk-male-3',
+	'townsfolk-male-4',
+	'townsfolk-female-1',
+	'townsfolk-female-2',
+	'townsfolk-female-3',
+	'townsfolk-female-4',
+	'townsfolk-guard-1',
+	'townsfolk-guard-2'
+    ];
+    Phaser.Sprite.call(this, game, x, y, spritenames_by_type[spritetype]); 
+}
+
+WanderingSprite.prototype = Object.create(Phaser.Sprite.prototype);
+WanderingSprite.prototype.constructor = WanderingSprite;
+
 var GameState = function(game) {
 }
 
@@ -238,6 +268,18 @@ GameState.prototype.create = function()
     // Set the blend mode to MULTIPLY. This will darken the colors of
     // everything below this sprite.
     this.shadowSprite.blendMode = Phaser.blendModes.MULTIPLY;
+
+    // Create the wandering sprites
+    this.wanderingSprites = game.add.group();
+    for ( i = 0; i < 20 ; i++ ) {
+	this.wanderingSprites.add(
+	    new WanderingSprite(game,
+				game.rnd.integerInRange(0, game.width),
+				game.rnd.integerInRange(0, game.height),
+				game.rnd.integerInRange(0, 10)
+			       )
+	);
+    }
 
     // Create the lights
     this.staticLights = game.add.group();
