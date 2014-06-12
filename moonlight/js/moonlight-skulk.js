@@ -348,12 +348,12 @@ var AISprite = function(game, x, y, spritetype) {
 	    }
 	}
 
-	console.log(aistate);
-	console.log(this.sprite_group);
 	var mylines = moonlightDialog['status'][this.sprite_group][aistate];
 	this.bubble_text = mylines[game.rnd.integerInRange(0, mylines.length)];
 	this.bubble_style = {font: '12px Arial Bold', fill: '#ffffff', align: 'center'}
 	this.bubble = game.add.text(this.x, this.y - 20, this.bubble_text, this.bubble_style);
+	
+	setTimeout(function(){this.clearWordBubble();}, 20000);
     }
 
     this.clearWordBubble = function()
@@ -371,7 +371,7 @@ var AISprite = function(game, x, y, spritetype) {
 	    running = true;
 	}
 
-	if ( game.rnd.integerInRange(0, 500) > 450 ) {
+	if ( game.rnd.integerInRange(0, 500) > 495 ) {
 	    this.setWordBubble();
 	}
 
@@ -504,8 +504,8 @@ GameState.prototype.create = function()
     for ( i = 0; i < 20 ; i++ ) {
 	this.aiSprites.add(
 	    new AISprite(game,
-				game.rnd.integerInRange(0, game.width),
-				game.rnd.integerInRange(0, game.height),
+				game.rnd.integerInRange(0, game.world.width),
+				game.rnd.integerInRange(0, game.world.height),
 				game.rnd.integerInRange(0, 10)
 			       )
 	);
