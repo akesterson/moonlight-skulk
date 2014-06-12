@@ -154,6 +154,8 @@ var Torch = function(game, x, y, radius, fade, color) {
     this.color = color;
     this.radius = radius;
     this.fade = radius * fade
+    this.rect = new Phaser.Rectangle(this.x, this.y, radius * 2, radius * 2)
+
 };
 
 // Torches are a type of Phaser.Sprite
@@ -269,11 +271,11 @@ GameState.prototype.updateShadowTexture = function() {
 
     // Iterate through each of the lights and draw the glow
     this.staticLights.forEach(function(light) {
-	var intersects =  light.intersectsRaw(this.game.camera.x, 
-					      this.game.camera.x + this.game.camera.width, 
-					      this.game.camera.y, 
-					      this.game.camera.y + this.game.camera.height);
-	if ( ! intersects ) {
+	var r1 = new Phaser.Rectangle(this.game.camera.x, 
+				      this.game.camera.y, 
+				      this.game.camera.width, 
+				      this.game.camera.height);
+	if ( ! light.rect.intersects(r1) ) {
 	    return;
 	}
         // Randomly change the radius each frame
