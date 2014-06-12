@@ -575,6 +575,9 @@ var AISprite = function(game, x, y, spritetype) {
 	this.bubble = game.add.sprite(this.x, this.y, myline);
 	game.physics.arcade.enable(this.bubble);
 	
+	this.bubble.x = this.x - (this.bubble.width / 2);
+	this.bubble.y = this.y - (this.bubble.height);
+
 	timer = game.time.create(false);
 	timerev = timer.add(5000, this.clearWordBubble, this);
 	timer.start()
@@ -594,8 +597,8 @@ var AISprite = function(game, x, y, spritetype) {
 	}
 
 	if ( this.bubble !== null ) {
-	    this.bubble.x = this.x - (this.bubble.width / 2);
-	    this.bubble.y = this.y - (this.bubble.height);
+	    this.bubble.body.velocity.x = this.body.velocity.x;
+	    this.bubble.body.velocity.y = this.body.velocity.y;
 	}
 
 	switch ( game.rnd.integerInRange(0, 4) ) {
