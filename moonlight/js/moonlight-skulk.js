@@ -206,7 +206,7 @@ var moonlightDialog = {
 		"That’s right! Run away!",
 		"Aye, and don’t-cha come back!",
 		"Spoony Bard...",
-		"Bloody wanker!" 
+		"Bloody wanker!"
 	    ]
 	},
 	"townsfolk-female" : {
@@ -295,7 +295,7 @@ var moonlightDialog = {
 	    "townsfolk-female": [],
 	    "townsfolk-guard": []
 	}
-    }	
+    }
 };
 
 // Create torch objects
@@ -364,7 +364,7 @@ var AISprite = function(game, x, y, spritetype) {
 	this.bubble_text = mylines[game.rnd.integerInRange(0, mylines.length)];
 	this.bubble_style = {font: '12px Arial Bold', fill: '#ffffff', align: 'center'}
 	this.bubble = game.add.text(this.x, this.y - 20, this.bubble_text, this.bubble_style);
-	
+
 	timer = game.time.create(false);
 	timerev = timer.add(5000, this.clearWordBubble, this);
 	timer.start()
@@ -384,13 +384,16 @@ var AISprite = function(game, x, y, spritetype) {
 	}
 
 	if ( this.bubble !== null ) {
-	    this.bubble.destroy();
+	    //this.bubble.destroy();
 	    if ( this.clear_bubble == true ) {
+		this.bubble.destroy();
 		this.bubble = null;
 		this.clear_bubble = false;
 		console.log("Cleared bubble");
 	    } else {
-		this.bubble = game.add.text(this.x, this.y - 20, this.bubble_text, this.bubble_style);
+		//this.bubble = game.add.text(this.x, this.y - 20, this.bubble_text, this.bubble_style);
+		this.bubble.position.x = this.x;
+		this.bubble.position.y = this.y - 20;
 	    }
 	}
 
@@ -429,7 +432,7 @@ var AISprite = function(game, x, y, spritetype) {
     this.clear_bubble = false;
 
     this.state = STATE_UNAWARE;
-    Phaser.Sprite.call(this, game, x, y, spritenames_by_type[spritetype]); 
+    Phaser.Sprite.call(this, game, x, y, spritenames_by_type[spritetype]);
     game.physics.arcade.enable(this);
     this.body.collideWorldBounds = true;
 
@@ -577,9 +580,9 @@ GameState.prototype.updateShadowTexture = function() {
     // Iterate through each of the lights and draw the glow
     this.staticLights.forEach(function(light) {
 	// Don't draw lights that aren't on screen
-	var r1 = new Phaser.Rectangle(this.game.camera.x, 
-				      this.game.camera.y, 
-				      this.game.camera.width, 
+	var r1 = new Phaser.Rectangle(this.game.camera.x,
+				      this.game.camera.y,
+				      this.game.camera.width,
 				      this.game.camera.height);
 	if ( ! light.rect.intersects(r1) ) {
 	    return;
@@ -664,7 +667,7 @@ GameState.prototype.update = function()
 {
     this.check_input();
     this.physics.arcade.collide(player, layer);
-    
+
     function _inner_collide(x) {
 	this.physics.arcade.collide(x, layer);
 	this.physics.arcade.collide(x, player);
