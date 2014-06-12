@@ -255,7 +255,7 @@ var Light = function(game, x, y, radius, fade, color, flicker) {
 Light.prototype = Object.create(Phaser.Sprite.prototype);
 Light.prototype.constructor = Light;
 
-var WanderingSprite = function(game, x, y, spritetype) {
+var AISprite = function(game, x, y, spritetype) {
     this.update = function()
     {
 	if ( game.rnd.integerInRange(0, 100) < 95 )
@@ -311,8 +311,8 @@ var WanderingSprite = function(game, x, y, spritetype) {
     addAnimation(this, 'bipedrundown');
 }
 
-WanderingSprite.prototype = Object.create(Phaser.Sprite.prototype);
-WanderingSprite.prototype.constructor = WanderingSprite;
+AISprite.prototype = Object.create(Phaser.Sprite.prototype);
+AISprite.prototype.constructor = AISprite;
 
 var GameState = function(game) {
 }
@@ -380,10 +380,10 @@ GameState.prototype.create = function()
     this.fpsText.fixedToCamera = true;
 
     // Create the wandering sprites
-    this.wanderingSprites = game.add.group();
+    this.aiSprites = game.add.group();
     for ( i = 0; i < 20 ; i++ ) {
-	this.wanderingSprites.add(
-	    new WanderingSprite(game,
+	this.aiSprites.add(
+	    new AISprite(game,
 				game.rnd.integerInRange(0, game.width),
 				game.rnd.integerInRange(0, game.height),
 				game.rnd.integerInRange(0, 10)
@@ -538,7 +538,7 @@ GameState.prototype.update = function()
 	this.physics.arcade.collide(x, player);
     }
 
-    this.wanderingSprites.forEach(_inner_collide, this);
+    this.aiSprites.forEach(_inner_collide, this);
     this.updateShadowTexture();
 }
 
