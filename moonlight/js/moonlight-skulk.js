@@ -290,7 +290,8 @@ var AISprite = function(game, x, y, spritetype) {
 		break;
 	    }
 	}
-
+	console.log(aistate);
+	console.log(this.sprite_group);
 	var mylines = moonlightDialog['status'][this.sprite_group][aistate];
 	var text = mylines[game.rnd.integerInRange(0, mylines.length)];
 	var style = {font: '12px Arial Bold', fill: '#ffffff', align: 'center'}
