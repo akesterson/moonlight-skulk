@@ -185,19 +185,19 @@ var WanderingSprite = function(game, x, y, spritetype) {
 
 	switch ( game.rnd.integerInRange(0, 4) ) {
 	    case 0: {
-		this.setSpriteMovement(this, running, 'up');
+		setSpriteMovement(this, running, 'up');
 		break;
 	    }
 	    case 1: {
-		this.setSpriteMovement(this, running, 'down');
+		setSpriteMovement(this, running, 'down');
 		break;
 	    }
 	    case 2: {
-		this.setSpriteMovement(this, running, 'left');
+		setSpriteMovement(this, running, 'left');
 		break;
 	    }
 	    case 3: {
-		this.setSpriteMovement(this, running, 'right');
+		setSpriteMovement(this, running, 'right');
 	    }
 	}
     }
@@ -379,7 +379,7 @@ GameState.prototype.updateShadowTexture = function() {
     this.shadowTexture.dirty = true;
 };
 
-GameState.prototype.setSpriteMovement = function(spr, running, dir)
+function setSpriteMovement(spr, running, dir)
 {
     var x = 0;
     var y = 0;
@@ -419,13 +419,13 @@ GameState.prototype.check_input = function()
     runningSpeed = {true: 150, false: 75}
 
     if ( controls.up.isDown) {
-	this.setSpriteMovement(player, controls.up.shiftKey, 'up');
+	setSpriteMovement(player, controls.up.shiftKey, 'up');
     } else if ( controls.down.isDown ) {
-	this.setSpriteMovement(player, controls.up.shiftKey, 'down');
+	setSpriteMovement(player, controls.up.shiftKey, 'down');
     } else if ( controls.left.isDown ) {
-	this.setSpriteMovement(player, controls.up.shiftKey, 'left');
+	setSpriteMovement(player, controls.up.shiftKey, 'left');
     } else if ( controls.right.isDown ) {
-	this.setSpriteMovement(player, controls.up.shiftKey, 'right');
+	setSpriteMovement(player, controls.up.shiftKey, 'right');
     } else {
 	player.animations.stop(null, true);
     }
