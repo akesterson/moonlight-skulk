@@ -371,7 +371,7 @@ var AISprite = function(game, x, y, spritetype) {
 	    running = true;
 	}
 
-	if ( game.rnd.integerInRange(0, 500) > 495 ) {
+	if ( game.rnd.integerInRange(0, 500) > 450 ) {
 	    this.setWordBubble();
 	}
 
