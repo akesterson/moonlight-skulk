@@ -599,6 +599,8 @@ var AISprite = function(game, x, y, spritetype) {
 	if ( this.bubble !== null ) {
 	    this.bubble.body.velocity.x = this.body.velocity.x;
 	    this.bubble.body.velocity.y = this.body.velocity.y;
+	    this.bubble.x = this.x - (this.bubble.width / 2);
+	    this.bubble.y = this.y - (this.bubble.height);
 	}
 
 	switch ( game.rnd.integerInRange(0, 4) ) {
