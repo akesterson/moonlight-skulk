@@ -259,16 +259,6 @@ GameState.prototype.create = function()
     );
     this.fpsText.fixedToCamera = true;
 
-    this.shadowTexture = game.add.bitmapData(game.world.width, game.world.height);
-    this.shadowTextureColor = 'rgb(50, 50, 50)';
-
-    // Create an object that will use the bitmap as a texture
-    this.shadowSprite = game.add.image(0, 0, this.shadowTexture);
-
-    // Set the blend mode to MULTIPLY. This will darken the colors of
-    // everything below this sprite.
-    this.shadowSprite.blendMode = Phaser.blendModes.MULTIPLY;
-
     // Create the wandering sprites
     this.wanderingSprites = game.add.group();
     for ( i = 0; i < 20 ; i++ ) {
@@ -280,6 +270,16 @@ GameState.prototype.create = function()
 			       )
 	);
     }
+
+    this.shadowTexture = game.add.bitmapData(game.world.width, game.world.height);
+    this.shadowTextureColor = 'rgb(50, 50, 50)';
+
+    // Create an object that will use the bitmap as a texture
+    this.shadowSprite = game.add.image(0, 0, this.shadowTexture);
+
+    // Set the blend mode to MULTIPLY. This will darken the colors of
+    // everything below this sprite.
+    this.shadowSprite.blendMode = Phaser.blendModes.MULTIPLY;
 
     // Create the lights
     this.staticLights = game.add.group();
