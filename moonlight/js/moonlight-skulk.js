@@ -571,7 +571,8 @@ var AISprite = function(game, x, y, spritetype) {
 	}
 
 	var mylines = moonlightDialog['status'][this.sprite_group][aistate];
-	this.bubble = new Phaser.Sprite(game, this.x, this.y, mylines[game.rnd.integerInRange(0, mylines.length)]);
+	var myline = mylines[game.rnd.integerInRange(0, mylines.length)]
+	this.bubble = new Phaser.Sprite(game, this.x, this.y, myline);
 	game.physics.arcade.enable(this.bubble);
 	
 	timer = game.time.create(false);
