@@ -296,6 +296,7 @@ var AISprite = function(game, x, y, spritetype) {
 	var mylines = moonlightDialog['status'][this.sprite_group][aistate];
 	this.bubble_text = mylines[game.rnd.integerInRange(0, mylines.length)];
 	this.bubble_style = {font: '12px Arial Bold', fill: '#ffffff', align: 'center'}
+	this.bubble = game.add.text(this.x, this.y - 20, this.bubble_text, this.bubble_style);
     }
 
     this.clearWordBubble = function()
@@ -319,8 +320,9 @@ var AISprite = function(game, x, y, spritetype) {
 
 	if ( this.bubble !== null ) {
 	    this.bubble.destroy();
-	    this.bubble = game.add.text(this.x, this.y - 20, text, style);
+	    this.bubble = game.add.text(this.x, this.y - 20, this.bubble_text, this.bubble_style);
 	}
+
 	switch ( game.rnd.integerInRange(0, 4) ) {
 	    case 0: {
 		setSpriteMovement(this, running, 'up');
