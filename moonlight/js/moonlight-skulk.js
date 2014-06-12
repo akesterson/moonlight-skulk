@@ -178,7 +178,7 @@ SPRITE_TOWNSFOLK_GUARD2 = 10;
 var WanderingSprite = function(game, x, y, spritetype) {
     this.update = function()
     {
-	if ( game.rnd.integerInRange(0, 1) == 1 )
+	if ( game.rnd.integerInRange(0, 100) > 80 )
 	    return;
 
 	running = [true, false][game.rnd.integerInRange(0, 1)];
