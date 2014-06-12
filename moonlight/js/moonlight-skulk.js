@@ -418,7 +418,8 @@ var AISprite = function(game, x, y, spritetype) {
     game.physics.arcade.enable(this);
     this.body.collideWorldBounds = true;
 
-    var ARGH = spritenames_by_type[spritetype].split("-")
+    var ARGH = spritenames_by_type[spritetype];
+    ARGH = ARGH.split("-")
     this.sprite_group = ARGH[0] + "-" + ARGH[1];
 
     addAnimation(this, 'bipedwalkleft');
