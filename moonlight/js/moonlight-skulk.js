@@ -336,7 +336,7 @@ var AISprite = function(game, x, y, spritetype) {
 
     this.setWordBubble = function()
     {
-	if ( this.bubble !== null || this.sprite_group == undefined) {
+	if ( this.bubble !== null || this.sprite_group == undefined || this.word_bubble_enabled == false) {
 	    return;
 	}
 	//this.bubble = game.add.group()
