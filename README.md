@@ -24,10 +24,6 @@ There needs to be 2 classes of AI : AI that runs from you, and AI that chases yo
 
 See above, the AI should only react to you when you are within an FOV cone in front of them (90 degrees, centered on their (x,y) center, extending infinitely, pointing forward)
 
-## TODO : Animated sprites
-
-All of the different AI types need to have animated sprites for their various states (standing, running, walking, left, right, up, down, etc).
-
 ## TODO : AI 'Emotion' effects
 
 When an AI is emotionally affected (scaredby the player, alerted to the player, relieved the player is gone, disappointed the player has escaped, etc), they should show "emotion" - sweat beads, anger bubbles, whatever.
@@ -43,10 +39,6 @@ The Chase AI should stop chasing you if it has not seen you for a certain amount
 ## TODO : "Chase" AI should actively "look" for you after it loses you, for a certain amount of time
 
 See above, once the Chase AI loses you, it should look for you for some time before giving up
-
-## TODO : Dynamic lighting
-
-* Dynamic lighting : The project uses Phaser, so this will require a combination of the light masking and raytracing effects described [here](http://www.html5gamedevs.com/topic/6771-masking-to-simulate-light-area/)
 
 ## TODO : Random dialogue from people around the map
 
