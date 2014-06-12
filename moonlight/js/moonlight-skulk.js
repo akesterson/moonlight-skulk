@@ -2,6 +2,15 @@ STATE_UNAWARE = 1 << 1;
 STATE_CONCERNED = 1 << 2;
 STATE_ALERTED = 1 << 3;
 STATE_LOSTHIM = 1 << 4;
+STATE_RUN = 1 << 5;
+STATE_MOVE_LEFT = 1 << 6;
+STATE_MOVE_RIGHT = 1 << 7;
+STATE_MOVE_UP = 1 << 8;
+STATE_MOVE_DOWN = 1 << 9;
+
+SPRITE_TOWNSFOLK_MALE = 1;
+SPRITE_TOWNSFOLK_FEMALE = 5;
+SPRITE_TOWNSFOLK_GUARD = 9;
 
 SPRITE_TOWNSFOLK_MALE1 = 1;
 SPRITE_TOWNSFOLK_MALE2 = 2;
@@ -158,7 +167,7 @@ var moonlightSettings = {
 
 var moonlightDialog = {
     "status": {
-	"townsfolk-male": {
+	SPRITE_TOWNSFOLK_MALE: {
 	    STATE_UNAWARE : [
 		"I'd rather be fishing.",
 		"Different day, same old stuff.",
@@ -200,13 +209,13 @@ var moonlightDialog = {
 		"Bloody wanker!" 
 	    ]
 	},
-	"townsfolk-female": {
+	SPRITE_TOWNSFOLK_FEMALE: {
 	    STATE_UNAWARE : [],
 	    STATE_CONCERNED : [],
 	    STATE_ALERTED : [],
 	    STATE_LOSTHIM: []
 	},
-	"townsfolk-guard": {
+	SPRITE_TOWNSFOLK_GUARD: {
 	    STATE_UNAWARE : [],
 	    STATE_CONCERNED : [],
 	    STATE_ALERTED : [],
@@ -256,6 +265,25 @@ Light.prototype = Object.create(Phaser.Sprite.prototype);
 Light.prototype.constructor = Light;
 
 var AISprite = function(game, x, y, spritetype) {
+    this.setWordBubble = function()
+    {
+	if ( this.bubble != null ) {
+	    return;
+	}
+	//this.bubble = game.add.group()
+	aistate = this.state & ( STATE_UNAWARE | STATE_CONCERNED | STATE_ALERTED | STATE_LOSTHIM );
+	var mylines = moonlightDialog['status'][this.sprite_group][aistate];
+	var text = mylines[game.rnd.integerInRange(0, mylines.length)];
+	var style = {font: '12px Arial Bold', fill: '#ffffff', align: 'center'}
+	this.bubble = game.add.text(this.x, this.y, style);
+    }
+
+    this.clearWordBubble = function()
+    {
+	this.bubble.destroy();
+	this.bubble = null;
+    }
+
     this.update = function()
     {
 	if ( game.rnd.integerInRange(0, 100) < 95 )
@@ -264,6 +292,10 @@ var AISprite = function(game, x, y, spritetype) {
 	var running = false;
 	if ( game.rnd.integerInRange(0, 100) > 90 ) {
 	    running = true;
+	}
+
+	if ( game.rnd.integerInRange(0, 500) > 450 ) {
+	    this.setWordBubble();
 	}
 
 	switch ( game.rnd.integerInRange(0, 4) ) {
@@ -297,9 +329,17 @@ var AISprite = function(game, x, y, spritetype) {
 	'townsfolk-guard-1',
 	'townsfolk-guard-2'
     ];
+    this.bubble = null;
+    this.state = STATE_UNAWARE;
     Phaser.Sprite.call(this, game, x, y, spritenames_by_type[spritetype]); 
     game.physics.arcade.enable(this);
     this.body.collideWorldBounds = true;
+
+    if ( spritetype >= 9 ) {
+	this.sprite_group = 3;
+    } else {
+	this.sprite_group = spritetype / 4;
+    }
 
     addAnimation(this, 'bipedwalkleft');
     addAnimation(this, 'bipedwalkright');
@@ -508,8 +548,6 @@ GameState.prototype.check_input = function()
     player.body.velocity.x = 0;
     player.body.velocity.y = 0;
     velocityMod = 0;
-
-    runningSpeed = {true: 150, false: 75}
 
     if ( controls.up.isDown) {
 	setSpriteMovement(player, controls.up.shiftKey, 'up');
