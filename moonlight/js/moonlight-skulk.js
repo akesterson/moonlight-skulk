@@ -674,7 +674,6 @@ GameState.prototype.update = function()
     this.updateShadowTexture();
     if (game.time.fps !== 0) {
         this.fpsText.setText(game.time.fps + ' FPS');
-	this.fpsText.bringToTop();
     }
 }
 
