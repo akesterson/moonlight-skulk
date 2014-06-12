@@ -235,9 +235,9 @@ GameState.prototype.create = function()
     this.shadowSprite.blendMode = Phaser.blendModes.MULTIPLY;
 
     // Create the lights
-    this.lights = game.add.group();
+    this.staticLights = game.add.group();
     for (i = 0; i < 20 ; i++ ) {
-	this.lights.add(
+	this.staticLights.add(
 	    new Torch(game,
 		      game.rnd.integerInRange(0, game.width),
 		      game.rnd.integerInRange(0, game.height),
