@@ -337,7 +337,7 @@ var AISprite = function(game, x, y, spritetype) {
     game.physics.arcade.enable(this);
     this.body.collideWorldBounds = true;
 
-    this.sprite_group = 1 + (spritetype / 4);
+    this.sprite_group = Math.round(1 + (spritetype / 4));
 
     addAnimation(this, 'bipedwalkleft');
     addAnimation(this, 'bipedwalkright');
