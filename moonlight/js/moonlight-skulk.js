@@ -508,7 +508,7 @@ GameState.prototype.create = function()
 	    new AISprite(game,
 				game.rnd.integerInRange(0, game.width),
 				game.rnd.integerInRange(0, game.height),
-				game.rnd.integerInRange(0, 10)
+				game.rnd.integerInRange(0, 9)
 			       )
 	);
     }
