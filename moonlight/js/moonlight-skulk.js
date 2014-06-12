@@ -377,7 +377,7 @@ var AISprite = function(game, x, y, spritetype) {
 	text = mylines[game.rnd.integerInRange(0, mylines.length)];
 	style = {font: '14px Arial Bold', fill: '#ffffff', align: 'center'}
 	this.text_size = stringSize(text, style['font']);
-	this.bubble_text = game.add.text(this.x + (this.text_size[0]/2) + (this.body.width / 2), this.y - (this.text_size[1] / 2), text, style);
+	this.bubble = game.add.text(this.x + (this.text_size[0]/2) + (this.body.width / 2), this.y - (this.text_size[1] / 2), text, style);
 
 	timer = game.time.create(false);
 	timerev = timer.add(5000, this.clearWordBubble, this);
