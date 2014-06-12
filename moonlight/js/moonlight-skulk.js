@@ -419,6 +419,7 @@ var AISprite = function(game, x, y, spritetype) {
     this.body.collideWorldBounds = true;
 
     var ARGH = spritenames_by_type[spritetype];
+    console.log(ARGH);
     ARGH = ARGH.split("-");
     this.sprite_group = ARGH[0] + "-" + ARGH[1];
 
