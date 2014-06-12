@@ -300,15 +300,16 @@ var moonlightDialog = {
 
 function stringSize(str, font)
 {
-    var f = font;
-    var divsizer = document.getElementById("__stringSize");
-    divsizer.style.position = 'absolute';
-    divsizer.style.float = 'left';
-    divsizer.style.white_space = 'nowrap';
-    divsizer.style.visibility = 'hidden';
-    divsizer.style.font = font;
-    divsizer.innerHTML = str;
-    return [divsizer.clientHeight + 1, divsizer.clientWidth + 1];
+    var f = font || '12px arial',
+    o = $('<div>' + this + '</div>')
+        .css({'position': 'absolute', 'float': 'left', 'white-space': 'nowrap', 'visibility': 'hidden', 'font': f})
+        .appendTo($('body')),
+    w = o.width(),
+    h = o.height();
+
+    o.remove();
+
+    return [w, h];
 }
 
 // Create torch objects
