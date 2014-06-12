@@ -312,7 +312,7 @@ var Light = function(game, x, y, radius, fade, color, flicker) {
     this.color = color;
     this.radius = radius;
     this.fade = radius * fade
-    this.rect = new Phaser.Rectangle(this.x, this.y, radius * 2, radius * 2)
+    this.rect = new Phaser.Rectangle(this.x - radius, this.y - radius, radius * 2, radius * 2)
     this.flicker = flicker;
 
 };
