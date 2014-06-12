@@ -254,10 +254,10 @@ var moonlightDialog = {
 	    ],
 	    "concerned" : [
 		"I sense law-breaking abound.",
-		"Did you hear something?"
-		"Did you see that?"
-		"I know you're around here somewhere, rat…"
-		"Don't make me look for you in hard-to-reach places!"
+		"Did you hear something?",
+		"Did you see that?",
+		"I know you're around here somewhere, rat…",
+		"Don't make me look for you in hard-to-reach places!",
 		"The eyes play tricks like tiny, round devils."
 	    ],
 	    "alerted" : [
