@@ -353,7 +353,12 @@ var AISprite = function(game, x, y, spritetype) {
 	this.bubble_style = {font: '12px Arial Bold', fill: '#ffffff', align: 'center'}
 	this.bubble = game.add.text(this.x, this.y - 20, this.bubble_text, this.bubble_style);
 	
-	setTimeout(function(){this.clear_bubble = true;}, 20000);
+	var GOFUCKYERSELF = function() {
+	    this.clear_bubble = true;
+	    console.log("GOFUCKYERSELF fired");
+	}
+
+	setTimeout(GOFUCKYERSELF, 20000);
     }
 
     this.update = function()
