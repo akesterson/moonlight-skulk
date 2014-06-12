@@ -572,6 +572,7 @@ var AISprite = function(game, x, y, spritetype) {
 
 	var mylines = moonlightDialog['status'][this.sprite_group][aistate];
 	this.bubble = game.add.Sprite(this.x, this.y, mylines[game.rnd.integerInRange(0, mylines.length)]);
+	game.physics.arcade.enable(this.bubble);
 	
 	timer = game.time.create(false);
 	timerev = timer.add(5000, this.clearWordBubble, this);
@@ -591,8 +592,8 @@ var AISprite = function(game, x, y, spritetype) {
 	    this.setWordBubble();
 	}
 
-	this.bubble.x = this.x - (this.bubble.width);
-	this.bubble.y = this.y - (this.bubble.height);
+	this.bubble.x = this.x - (this.bubble.body.width);
+	this.bubble.y = this.y - (this.bubble.body.height);
 	switch ( game.rnd.integerInRange(0, 4) ) {
 	    case 0: {
 		setSpriteMovement(this, running, 'up');
