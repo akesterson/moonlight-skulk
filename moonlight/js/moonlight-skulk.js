@@ -219,7 +219,7 @@ var WanderingSprite = function(game, x, y, spritetype) {
     ];
     Phaser.Sprite.call(this, game, x, y, spritenames_by_type[spritetype]); 
     game.physics.arcade.enable(this);
-    this.body.checkWorldBounds = true;
+    this.body.collideWorldBounds = true;
 
     addAnimation(this, 'bipedwalkleft');
     addAnimation(this, 'bipedwalkright');
@@ -229,7 +229,6 @@ var WanderingSprite = function(game, x, y, spritetype) {
     addAnimation(this, 'bipedrunright');
     addAnimation(this, 'bipedrunup');
     addAnimation(this, 'bipedrundown');
-
 }
 
 WanderingSprite.prototype = Object.create(Phaser.Sprite.prototype);
