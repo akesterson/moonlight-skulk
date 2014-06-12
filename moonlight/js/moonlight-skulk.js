@@ -1,3 +1,19 @@
+STATE_UNAWARE = 1 << 1;
+STATE_CONCERNED = 1 << 2;
+STATE_ALERTED = 1 << 3;
+STATE_LOSTHIM = 1 << 4;
+
+SPRITE_TOWNSFOLK_MALE1 = 1;
+SPRITE_TOWNSFOLK_MALE2 = 2;
+SPRITE_TOWNSFOLK_MALE3 = 3;
+SPRITE_TOWNSFOLK_MALE4 = 4;
+SPRITE_TOWNSFOLK_FEMALE1 = 5;
+SPRITE_TOWNSFOLK_FEMALE2 = 6;
+SPRITE_TOWNSFOLK_FEMALE3 = 7;
+SPRITE_TOWNSFOLK_FEMALE4 = 8;
+SPRITE_TOWNSFOLK_GUARD1 = 9;
+SPRITE_TOWNSFOLK_GUARD2 = 10;
+
 var moonlightSettings = {
     'map' : {
 	'tilesets': [
@@ -210,22 +226,6 @@ var Light = function(game, x, y, radius, fade, color, flicker) {
 // Lightes are a type of Phaser.Sprite
 Light.prototype = Object.create(Phaser.Sprite.prototype);
 Light.prototype.constructor = Light;
-
-STATE_UNAWARE = 1 << 1;
-STATE_CONCERNED = 1 << 2;
-STATE_ALERTED = 1 << 3;
-STATE_LOSTHIM = 1 << 4;
-
-SPRITE_TOWNSFOLK_MALE1 = 1;
-SPRITE_TOWNSFOLK_MALE2 = 2;
-SPRITE_TOWNSFOLK_MALE3 = 3;
-SPRITE_TOWNSFOLK_MALE4 = 4;
-SPRITE_TOWNSFOLK_FEMALE1 = 5;
-SPRITE_TOWNSFOLK_FEMALE2 = 6;
-SPRITE_TOWNSFOLK_FEMALE3 = 7;
-SPRITE_TOWNSFOLK_FEMALE4 = 8;
-SPRITE_TOWNSFOLK_GUARD1 = 9;
-SPRITE_TOWNSFOLK_GUARD2 = 10;
 
 var WanderingSprite = function(game, x, y, spritetype) {
     this.update = function()
