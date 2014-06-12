@@ -593,8 +593,11 @@ var AISprite = function(game, x, y, spritetype) {
 	    this.setWordBubble();
 	}
 
-	this.bubble.x = this.x - (this.bubble.width);
-	this.bubble.y = this.y - (this.bubble.height);
+	if ( this.bubble !== null ) {
+	    this.bubble.x = this.x - (this.bubble.width);
+	    this.bubble.y = this.y - (this.bubble.height);
+	}
+
 	switch ( game.rnd.integerInRange(0, 4) ) {
 	    case 0: {
 		setSpriteMovement(this, running, 'up');
