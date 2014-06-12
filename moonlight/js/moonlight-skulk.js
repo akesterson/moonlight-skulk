@@ -372,8 +372,6 @@ var AISprite = function(game, x, y, spritetype) {
 
     this.update = function()
     {
-	if ( game.rnd.integerInRange(0, 100) < 95 )
-	    return;
 	var running = false;
 	if ( game.rnd.integerInRange(0, 100) > 90 ) {
 	    running = true;
@@ -396,6 +394,9 @@ var AISprite = function(game, x, y, spritetype) {
 		this.bubble.position.y = this.y - 20;
 	    }
 	}
+
+	if ( game.rnd.integerInRange(0, 100) < 95 )
+	    return;
 
 	switch ( game.rnd.integerInRange(0, 4) ) {
 	    case 0: {
