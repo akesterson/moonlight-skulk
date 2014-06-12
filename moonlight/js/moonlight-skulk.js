@@ -585,12 +585,7 @@ var AISprite = function(game, x, y, spritetype) {
 
     this.update = function()
     {
-	if ( game.rnd.integerInRange(0, 100) < 95 )
-	    return;
 	var running = false;
-	if ( game.rnd.integerInRange(0, 100) > 90 ) {
-	    running = true;
-	}
 
 	if ( game.rnd.integerInRange(0, 500) > 450 ) {
 	    this.setWordBubble();
@@ -601,6 +596,12 @@ var AISprite = function(game, x, y, spritetype) {
 	    this.bubble.body.velocity.y = this.body.velocity.y;
 	    this.bubble.x = this.x - (this.bubble.width / 2);
 	    this.bubble.y = this.y - (this.bubble.height);
+	}
+
+	if ( game.rnd.integerInRange(0, 100) < 95 )
+	    return;
+	if ( game.rnd.integerInRange(0, 100) > 90 ) {
+	    running = true;
 	}
 
 	switch ( game.rnd.integerInRange(0, 4) ) {
