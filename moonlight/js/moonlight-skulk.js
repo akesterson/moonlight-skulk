@@ -518,11 +518,11 @@ GameState.prototype.create = function()
 
     // Create the wandering sprites
     this.aiSprites = game.add.group();
-    for ( i = 0; i < 20 ; i++ ) {
+    for ( i = 0; i < 50 ; i++ ) {
 	this.aiSprites.add(
 	    new AISprite(game,
-				game.rnd.integerInRange(0, game.width),
-				game.rnd.integerInRange(0, game.height),
+				game.rnd.integerInRange(0, game.world.width),
+				game.rnd.integerInRange(0, game.world.height),
 				game.rnd.integerInRange(0, 9)
 			       )
 	);
