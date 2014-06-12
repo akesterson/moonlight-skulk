@@ -1,4 +1,3 @@
-
 var moonlightSettings = {
     'map' : {
 	'tilesets': [
@@ -141,6 +140,54 @@ var moonlightSettings = {
     }
 };
 
+var moonlightDialog = {
+    "status": {
+	"townsfolk-male": {
+	    STATE_UNAWARE : [
+		“I’d rather be fishing.”,
+		“Different day, same old stuff.”,
+		“Oi! Where’d that trouble run off to now then?”,
+		“"The missus is off shoppin', and here I am sittin' on me Jack Jones.",
+		"Oy I'm gonna have a butcher’s at that new tailor's knickers he has for sale.",
+		“I’m off to the pub to see the lads and chew the fat.”,
+		“♪ ♫ Whistling ♪ ♫”
+	    ],
+	    STATE_CONCERNED : [],
+	    STATE_ALERTED : [],
+	    STATE_LOSTHIM: []
+	},
+	"townsfolk-female": {
+	    STATE_UNAWARE : [],
+	    STATE_CONCERNED : [],
+	    STATE_ALERTED : [],
+	    STATE_LOSTHIM: []
+	},
+	"townsfolk-guard": {
+	    STATE_UNAWARE : [],
+	    STATE_CONCERNED : [],
+	    STATE_ALERTED : [],
+	    STATE_LOSTHIM: []
+	}
+    },
+    "conversations": {
+	"townsfolk-male": {
+	    "townsfolk-female": [],
+	    "townsfolk-male": [],
+	    "townsfolk-guard": []
+	},
+	"townsfolk-female": {
+	    "townsfolk-male": [],
+	    "townsfolk-female": [],
+	    "townsfolk-guard": [],
+	},
+	"townsfolk-guard": {
+	    "townsfolk-male": [],
+	    "townsfolk-female": [],
+	    "townsfolk-guard": []
+	}
+    }	
+};
+
 // Create torch objects
 // Light constructor
 var Light = function(game, x, y, radius, fade, color, flicker) {
@@ -163,6 +210,11 @@ var Light = function(game, x, y, radius, fade, color, flicker) {
 // Lightes are a type of Phaser.Sprite
 Light.prototype = Object.create(Phaser.Sprite.prototype);
 Light.prototype.constructor = Light;
+
+STATE_UNAWARE = 1 << 1;
+STATE_CONCERNED = 1 << 2;
+STATE_ALERTED = 1 << 3;
+STATE_LOSTHIM = 1 << 4;
 
 SPRITE_TOWNSFOLK_MALE1 = 1;
 SPRITE_TOWNSFOLK_MALE2 = 2;

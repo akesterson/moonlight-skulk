@@ -48,10 +48,6 @@ I really liked how Thief would let you sit aroud and voyeuristically listen in o
 
 The "Chase", "Run", and "Looking" AI states need to all have different lines of dialog that they spout.
 
-## TODO : Apply dynamic lighting effects to the player and other actors, not just the map
-
-Nothing to add here
-
 ## TODO : Make player harder to "see" when they are in shadows or far away
 
 The dynamic lighting effect will make certain areas of the map "darker" than others. When the player stands in them, they get darker as well. This "darkness" factor, as well as how far away the player is, should be taken into account when determining if an AI can "see" the player
