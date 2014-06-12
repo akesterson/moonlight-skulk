@@ -220,6 +220,16 @@ var WanderingSprite = function(game, x, y, spritetype) {
     Phaser.Sprite.call(this, game, x, y, spritenames_by_type[spritetype]); 
     game.physics.arcade.enable(this);
     this.body.checkWorldBounds = true;
+
+    addAnimation(this, 'bipedwalkleft');
+    addAnimation(this, 'bipedwalkright');
+    addAnimation(this, 'bipedwalkup');
+    addAnimation(this, 'bipedwalkdown');
+    addAnimation(this, 'bipedrunleft');
+    addAnimation(this, 'bipedrunright');
+    addAnimation(this, 'bipedrunup');
+    addAnimation(this, 'bipedrundown');
+
 }
 
 WanderingSprite.prototype = Object.create(Phaser.Sprite.prototype);
@@ -228,7 +238,7 @@ WanderingSprite.prototype.constructor = WanderingSprite;
 var GameState = function(game) {
 }
 
-GameState.prototype.addAnimation = function(obj, anim)
+function addAnimation(obj, anim)
 {
     a = moonlightSettings['animations'][anim]
     obj.animations.add(anim, a['frames'], a['speed'], a['loop'])
@@ -272,14 +282,14 @@ GameState.prototype.create = function()
     this.physics.arcade.enable(player);
     player.body.collideWorldBounds = true;
 
-    this.addAnimation(player, 'bipedwalkleft');
-    this.addAnimation(player, 'bipedwalkright');
-    this.addAnimation(player, 'bipedwalkup');
-    this.addAnimation(player, 'bipedwalkdown');
-    this.addAnimation(player, 'bipedrunleft');
-    this.addAnimation(player, 'bipedrunright');
-    this.addAnimation(player, 'bipedrunup');
-    this.addAnimation(player, 'bipedrundown');
+    addAnimation(player, 'bipedwalkleft');
+    addAnimation(player, 'bipedwalkright');
+    addAnimation(player, 'bipedwalkup');
+    addAnimation(player, 'bipedwalkdown');
+    addAnimation(player, 'bipedrunleft');
+    addAnimation(player, 'bipedrunright');
+    addAnimation(player, 'bipedrunup');
+    addAnimation(player, 'bipedrundown');
 
     this.camera.follow(player, Phaser.Camera.FOLLOW_TOPDOWN);
     controls = game.input.keyboard.createCursorKeys();
