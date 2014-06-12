@@ -167,8 +167,8 @@ var moonlightSettings = {
 
 var moonlightDialog = {
     "status": {
-	("" + SPRITE_TOWNSFOLK_MALE) : {
-	    ("" + STATE_UNAWARE) : [
+	"townsfolk-male" : {
+	    "unaware" : [
 		"I'd rather be fishing.",
 		"Different day, same old stuff.",
 		"Oi! Where'd that trouble run off to now then?",
@@ -177,7 +177,7 @@ var moonlightDialog = {
 		"I'm off to the pub to see the lads and chew the fat.",
 		"♪ ♫ Whistling ♪ ♫"
 	    ],
-	    ("" + STATE_CONCERNED) : [
+	    "concerned" : [
 		"Wha… what’s that? Who’s there?",
 		"Did you hear that?",
 		"Either I’m hearin’ things, or I need to stop drinkin’ midday.",
@@ -186,7 +186,7 @@ var moonlightDialog = {
 		"What’s that?",
 		"Did you see that?"
 	    ],
-	    ("" + STATE_ALERTED) : [
+	    "alerted" : [
 		"Don't you come no closer, you hear?",
 		"Egads!",
 		"I'm getting’ outta here!",
@@ -199,7 +199,7 @@ var moonlightDialog = {
 		"Stay away! I know Kung-fu! ... but that would require bravery I don't have",
 		"Guards! GUARDS!"
 	    ],
-	    ("" + STATE_LOSTHIM): [
+	    "losthim" : [
 		"Whew. Glad that’s over.",
 		"I wasn’t scared!",
 		"Must’ve been intimidated by manly physique.",
@@ -209,17 +209,17 @@ var moonlightDialog = {
 		"Bloody wanker!" 
 	    ]
 	},
-	("" + SPRITE_TOWNSFOLK_FEMALE): {
-	    ("" + STATE_UNAWARE) : [],
-	    ("" + STATE_CONCERNED) : [],
-	    ("" + STATE_ALERTED) : [],
-	    ("" + STATE_LOSTHIM): []
+	"townsfolk-female" : {
+	    "unaware" : [],
+	    "concerned" : [],
+	    "alerted" : [],
+	    "losthim" : []
 	},
-	SPRITE_TOWNSFOLK_GUARD: {
-	    ("" + STATE_UNAWARE) : [],
-	    ("" + STATE_CONCERNED) : [],
-	    ("" + STATE_ALERTED) : [],
-	    ("" + STATE_LOSTHIM): []
+	"townsfolk-guard" : {
+	    "unaware" : [],
+	    "concerned" : [],
+	    "alerted" : [],
+	    "losthim" : []
 	}
     },
     "conversations": {
@@ -272,12 +272,25 @@ var AISprite = function(game, x, y, spritetype) {
 	}
 	//this.bubble = game.add.group()
 	aistate = this.state & ( STATE_UNAWARE | STATE_CONCERNED | STATE_ALERTED | STATE_LOSTHIM );
-	console.log(this.sprite_group);
-	console.log(aistate);
-	console.log(moonlightDialog);
-	console.log(moonlightDialog['status']);
-	console.log(moonlightDialog['status'][this.sprite_group]);
-	console.log(moonlightDialog['status'][this.sprite_group][aistate]);
+	switch ( aistate ) {
+	    case STATE_UNAWARE: {
+		aistate = "unaware";
+		break;
+	    }
+	    case STATE_CONCERNED: {
+		aistate = "concerned";
+		break;
+	    }
+	    case STATE_ALERTED: {
+		aistate = "alerted";
+		break;
+	    }
+	    case STATE_LOSTHIM: {
+		aistate = "losthim";
+		break;
+	    }
+	}
+
 	var mylines = moonlightDialog['status'][this.sprite_group][aistate];
 	var text = mylines[game.rnd.integerInRange(0, mylines.length)];
 	var style = {font: '12px Arial Bold', fill: '#ffffff', align: 'center'}
@@ -341,7 +354,9 @@ var AISprite = function(game, x, y, spritetype) {
     game.physics.arcade.enable(this);
     this.body.collideWorldBounds = true;
 
-    this.sprite_group = Math.round(1 + (spritetype / 4));
+    this.sprite_group = ['townsfolk-male', 
+			 'townsfolk-female',
+			 'townsfolk-guard'][Math.round(1 + (spritetype / 4))];
 
     addAnimation(this, 'bipedwalkleft');
     addAnimation(this, 'bipedwalkright');
