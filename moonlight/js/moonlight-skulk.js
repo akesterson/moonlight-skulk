@@ -549,7 +549,6 @@ var AISprite = function(game, x, y, spritetype) {
 	if ( this.bubble !== null || this.sprite_group == undefined || this.word_bubble_enabled == false) {
 	    return;
 	}
-	//this.bubble = game.add.group()
 	aistate = this.state & ( STATE_UNAWARE | STATE_CONCERNED | STATE_ALERTED | STATE_LOSTHIM );
 	switch ( aistate ) {
 	    case STATE_UNAWARE: {
@@ -572,6 +571,7 @@ var AISprite = function(game, x, y, spritetype) {
 
 	var mylines = moonlightDialog['status'][this.sprite_group][aistate];
 	var myline = mylines[game.rnd.integerInRange(0, mylines.length)]
+	console.log(myline)
 	this.bubble = new Phaser.Sprite(game, this.x, this.y, myline);
 	game.physics.arcade.enable(this.bubble);
 	
@@ -593,8 +593,8 @@ var AISprite = function(game, x, y, spritetype) {
 	    this.setWordBubble();
 	}
 
-	this.bubble.x = this.x - (this.bubble.body.width);
-	this.bubble.y = this.y - (this.bubble.body.height);
+	this.bubble.x = this.x - (this.bubble.width);
+	this.bubble.y = this.y - (this.bubble.height);
 	switch ( game.rnd.integerInRange(0, 4) ) {
 	    case 0: {
 		setSpriteMovement(this, running, 'up');
@@ -627,7 +627,6 @@ var AISprite = function(game, x, y, spritetype) {
 	'townsfolk-guard-2'
     ];
     this.bubble = null;
-    this.clear_bubble = false;
 
     this.state = STATE_UNAWARE;
     Phaser.Sprite.call(this, game, x, y, spritenames_by_type[spritetype]); 
