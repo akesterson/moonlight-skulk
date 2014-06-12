@@ -189,6 +189,33 @@ var WanderingSprite = function(game, x, y, spritetype) {
 	'townsfolk-guard-2'
     ];
     Phaser.Sprite.call(this, game, x, y, spritenames_by_type[spritetype]); 
+    this.body.collideWorldBounds = true;
+}
+
+WanderingSprite.prototype.update = function()
+{
+    if ( game.rnd.integerInRange(0, 1) == 1 )
+	return;
+
+    running = [true, false][game.rnd.integerInRange(0, 1)];
+
+    switch ( game.rnd.integerInRange(0, 4) ) {
+	case 0: {
+            this.setSpriteMovement(this, running, 'up');
+	    break;
+	}
+	case 1: {
+	    this.setSpriteMovement(this, running, 'down');
+	    break;
+	}
+	case 2: {
+	    this.setSpriteMovement(this, running, 'left');
+	    break;
+	}
+	case 3: {
+	    this.setSpriteMovement(this, running, 'right');
+	}
+    }
 }
 
 WanderingSprite.prototype = Object.create(Phaser.Sprite.prototype);
