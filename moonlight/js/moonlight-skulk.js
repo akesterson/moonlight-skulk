@@ -830,7 +830,6 @@ GameState.prototype.create = function()
 		player = this.add.sprite((3 * 32), (17 * 32), 'player');
 	    };
 	    if ( lp['collides'] == true ) {
-		layer.debug = true;
 		this.map_collision_layers.push(layer);
 	    }
 	    layer.resizeWorld();
