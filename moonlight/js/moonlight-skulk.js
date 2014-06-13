@@ -644,7 +644,7 @@ var moonlightDialog = {
     }	
 };
 
-var AISprite = function(game, x, y, key, frame, spritetype) {
+var AISprite = function(game, x, y, key, frame) {
     this.enableWordBubble = function() {
 	this.enable_word_bubble = true;
     }
@@ -760,15 +760,8 @@ var AISprite = function(game, x, y, key, frame, spritetype) {
     game.physics.arcade.enable(this);
     this.body.collideWorldBounds = true;
 
-    if ( (typeof spritetype) !== undefined ) {
-	this.sprite_name = spritenames_by_type[spritetype];
-	var ARGH = spritenames_by_type[spritetype];
-	ARGH = ARGH.split("-");
-	this.sprite_group = ARGH[0] + "-" + ARGH[1];
-    } else {
-	this.sprite_name = "townsfolk-male-1";
-	this.sprite_group = "townsfolk-male";
-    }
+    this.sprite_name = "townsfolk-male-1";
+    this.sprite_group = "townsfolk-male";
 
     addAnimation(this, 'bipedwalkleft');
     addAnimation(this, 'bipedwalkright');
