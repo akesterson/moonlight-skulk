@@ -806,7 +806,7 @@ GameState.prototype.create = function()
 	layer.resizeWorld();
     }
 
-    player = this.add.sprite(10, 10, 'player');
+    player = this.add.sprite((3 * 32), (17 * 32), 'player');
     this.physics.arcade.enable(player);
     player.body.collideWorldBounds = true;
 
