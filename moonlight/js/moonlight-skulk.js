@@ -52,7 +52,12 @@ var Light = function(game, x, y, key, frame, radius, fade, color_start, color_st
 Light.prototype = Object.create(Phaser.Sprite.prototype);
 Light.prototype.constructor = Light;
 
-Light.prototype.update_rect = function() {
+Light.prototype.update_new_values = function() {
+    this.color_start = color_start;
+    this.color_stop = color_stop;
+    this.radius = parseInt(this.radius);
+    this.fade = this.radius * parseNumber(this.fade);
+    this.flicker = Boolean(this.flicker);
     this.rect = new Phaser.Rectangle(this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2)
 }
 
@@ -874,7 +879,7 @@ GameState.prototype.create = function()
     this.staticLights = game.add.group();
     this.map.createFromObjects('Lights', 97, 'player', 0, true, false, this.staticLights, Light);
     this.staticLights.forEach(function(light) {
-	light.update_rect();
+	light.update_new_values();
 	console.log(light);
     }, this)
 			     
