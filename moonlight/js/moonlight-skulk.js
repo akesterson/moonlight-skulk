@@ -1040,12 +1040,6 @@ GameState.prototype.update = function()
     }
     
     function _inner_collide(x) {
-	//Fix their Z index while we're here
-	if ( x.y > player.x ) {
-	    x.z = player.z + 1;
-	} else {
-	    x.z = player.z - 1;
-	}
 	for ( var ln in this.map_collision_layers ) {
 	    layer = this.map_collision_layers[ln];
 	    this.physics.arcade.collide(x, layer);
