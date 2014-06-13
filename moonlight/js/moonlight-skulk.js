@@ -29,7 +29,7 @@ var game = new Phaser.Game(640, 480, Phaser.AUTO, '');
 // Light constructor
 var Light = function(game, x, y, key, frame, radius, fade, color_start, color_stop, flicker) {
     color_start = ( typeof color_start == undefined ? color_start : 'rgba(255, 255, 255, 1.0)');
-    color_stop = ( typeof color == undefined ? color_start : 'rgba(255, 255, 255, 0.0)');
+    color_stop = ( typeof color_stop == undefined ? color_stop : 'rgba(255, 255, 255, 0.0)');
     fade = ( typeof fade == undefined ? fade : 0.25);
     radius = ( typeof radius == undefined ? radius : 64);
     flicker = ( typeof flicker == undefined ? flicker : false);
@@ -38,6 +38,7 @@ var Light = function(game, x, y, key, frame, radius, fade, color_start, color_st
 
     // Set the pivot point for this sprite to the center
     this.anchor.setTo(0.5, 0.5);
+
     this.color_start = color_start;
     this.color_stop = color_stop;
     this.radius = radius;
