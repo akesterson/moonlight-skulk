@@ -120,7 +120,7 @@
                      "color_stop":"rgba(239, 49, 60, 0.0)",
                      "fade":"0.1",
                      "flicker":"true",
-                     "radius":"64"
+                     "radius":"128"
                     },
                  "type":"Lights",
                  "visible":true,
