@@ -104,7 +104,7 @@
                  "properties":
                     {
                      "always_render":"true",
-                     "color_start":"rgba(255, 255, 255, 1.0)",
+                     "color_start":"rgba(255, 255, 255, 0.5)",
                      "color_stop":"rgba(239, 49, 60, 0.0)",
                      "fade":"0.1",
                      "flicker":"true",
