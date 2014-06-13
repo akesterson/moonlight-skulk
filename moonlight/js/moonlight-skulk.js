@@ -110,13 +110,13 @@ var moonlightSettings = {
 		'collisionBetween': [0, 9999],
 		'resizeWorld': false
 	    },
-	    '0 - Collide Overlay - Foliage': {
-		'collides': true,
+	    '0 - Collide Overlay - Pathways': {
+		'collides': false,
 		'collisionBetween': [0, 9999],
 		'resizeWorld': false
 	    },
 	    '0 - NonCollide Overlay - Foliage': {
-		'collides': false,
+		'collides': true,
 		'collisionBetween': [0, 9999],
 		'resizeWorld': false
 	    }
