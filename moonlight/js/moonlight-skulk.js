@@ -102,7 +102,7 @@ var moonlightSettings = {
 	'layers': {
 	    '0 - NonCollide Base': {
 		'collides': false,
-		'collisionBetwen': [0, 0]
+		'collisionBetween': [0, 0]
 	    },
 	    '0 - Collide Base': {
 		'collides': true,
@@ -785,7 +785,7 @@ GameState.prototype.create = function()
     this.map_collision_layers = [];
 
     for (var ln in moonlightSettings['map']['layers']) {
-	lp = moonlightSettings['map']['layers']['lp'];
+	lp = moonlightSettings['map']['layers'][ln];
 	layer = map.createLayer(ln);
 	map.setCollisionbetween(
 	    lp['collisionBetween'][0],
