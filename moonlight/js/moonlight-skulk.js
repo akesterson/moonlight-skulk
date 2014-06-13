@@ -816,8 +816,9 @@ GameState.prototype.create = function()
 	    }
 	    layer.resizeWorld();
 	} else if ( lp['type'] == "objects" ) {
-	    console.log("this.map.createFromObjects(" + ln + ", "+ ln +", undefined, 0, true, false, undefined, Light)");
-	    this.map.createFromObjects(ln, lp['gid'], undefined, 0, true, false, undefined, lp['class']);
+	    ogrp = game.add.group();
+	    console.log("this.map.createFromObjects(" + ln + ", "+ lp['gid'] +", null, 0, true, false, undefined, Light)");
+	    this.map.createFromObjects(ln, lp['gid'], null, 0, true, false, ogrp, lp['class']);
 	}
     }
 	
