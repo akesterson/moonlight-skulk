@@ -87,7 +87,7 @@
                     {
                      "color_start":"rgba(255, 255, 255, 1.0)",
                      "color_stop":"rgba(255, 0, 0, 0.0)",
-                     "fade":"0.75",
+                     "fade":"0.15",
                      "flicker":"true",
                      "radius":"128"
                     },
@@ -105,7 +105,7 @@
                     {
                      "color_start":"rgba(255, 255, 255, 1.0)",
                      "color_stop":"rgba(255, 255, 255, 0.0)",
-                     "fade":"0.75",
+                     "fade":"0.50",
                      "flicker":"true",
                      "radius":"128"
                     },
