@@ -862,8 +862,7 @@ GameState.prototype.create = function()
 
     // Create the lights
     this.staticLights = game.add.group();
-    //this.map.createFromObjects('Lights', 97, null, 0, true, false, this.staticLights, Light);
-    this.map.createFromObjects('Lights', 97, 'player', 0);
+    this.map.createFromObjects('Lights', 97, 'player', 0, true, false, this.staticLights, Light);
 
     // for (i = 0; i < 50 ; i++ ) {
     // 	this.staticLights.add(
