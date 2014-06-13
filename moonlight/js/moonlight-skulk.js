@@ -53,7 +53,7 @@ Light.prototype = Object.create(Phaser.Sprite.prototype);
 Light.prototype.constructor = Light;
 
 Light.prototype.update_new_values = function() {
-    this.radius = Integer(this.radius);
+    this.radius = parseInt(this.radius);
     this.fade = this.radius * Number(this.fade);
     this.flicker = Boolean(this.flicker);
     this.rect = new Phaser.Rectangle(this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2)
