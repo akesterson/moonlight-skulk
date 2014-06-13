@@ -1023,7 +1023,7 @@ GameState.prototype.check_input = function()
 	setSpriteMovement(player, controls.up.shiftKey, 'right');
     } else {
 	player.animations.stop(null, true);
-    } else if ( controls.
+    }
 }
 
 GameState.prototype.update = function()
