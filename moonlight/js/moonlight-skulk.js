@@ -102,28 +102,23 @@ var moonlightSettings = {
 	'layers': {
 	    '0 - NonCollide Base': {
 		'collides': false,
-		'collisionBetween': [0, 0],
-		'resizeWorld': true
+		'collisionBetween': [0, 0]
 	    },
 	    '0 - Collide Base': {
 		'collides': true,
-		'collisionBetween': [0, 9999],
-		'resizeWorld': false
+		'collisionBetween': [0, 9999]
 	    },
 	    '0 - NonCollide Overlay - Pathways': {
 		'collides': false,
-		'collisionBetween': [0, 9999],
-		'resizeWorld': false
+		'collisionBetween': [0, 9999]
 	    },
 	    '0 - Collide Overlay - Ground Objects': {
 		'collides': true,
-		'collisionBetween': [0, 9999],
-		'resizeWorld': false
+		'collisionBetween': [0, 9999]
 	    },
 	    '0 - NonCollide Overlay - Ground Objects': {
 		'collides': false,
-		'collisionBetween': [0, 9999],
-		'resizeWorld': false
+		'collisionBetween': [0, 9999]
 	    }
 	},
 	'path': 'gfx/map.json'
@@ -808,8 +803,7 @@ GameState.prototype.create = function()
 	    console.log("Layer " + ln + " collides, saving it for later...");
 	    this.map_collision_layers.push(layer);
 	}
-	if ( lp['resizeWorld'] == true )
-	    layer.resizeWorld();
+	layer.resizeWorld();
     }
 
     player = this.add.sprite(10, 10, 'player');
