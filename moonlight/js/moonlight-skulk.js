@@ -800,6 +800,7 @@ GameState.prototype.create = function()
 	    ln
 	);
 	if ( lp['collides'] == true ) {
+	    layer.debug = true;
 	    this.map_collision_layers.push(layer);
 	}
 	layer.resizeWorld();
