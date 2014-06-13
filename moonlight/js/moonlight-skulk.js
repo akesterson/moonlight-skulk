@@ -27,12 +27,12 @@ var moonlightSettings = {
     'map' : {
 	'tilesets': [
 	    {
-		'name': '009-CastleTown1',
-		'path': 'gfx/tiles/009-CastleTown1.png'
+		'name': '009-CastleTown01',
+		'path': 'gfx/tiles/009-CastleTown01.png'
 	    },
 	    {
 		'name': '010-CastleTown02',
-		'path': 'gfx/tiles/010-CastleTown2.png'
+		'path': 'gfx/tiles/010-CastleTown02.png'
 	    },
 	    {
 		'name': '025-Castle01',
@@ -60,7 +60,7 @@ var moonlightSettings = {
 	    },
 	    {
 		'name': '034-Bridge01',
-		'path': 'gfx/tiles/034-Bridge1.png'
+		'path': 'gfx/tiles/034-Bridge01.png'
 	    },
 	    {
 		'name': '035-Ruins01',
