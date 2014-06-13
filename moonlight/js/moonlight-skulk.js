@@ -33,13 +33,13 @@ var Light = function(game, x, y, key, frame, radius, fade, color_start, color_st
     fade = ( typeof fade == undefined ? fade : 0.25);
     radius = ( typeof radius == undefined ? radius : 64);
     flicker = ( typeof flicker == undefined ? flicker : false);
-    console.log("Making a light : " + [x, y, key, frame, radius, fade, color, flicker]); 
 
     Phaser.Sprite.call(this, game, x, y, null);
 
     // Set the pivot point for this sprite to the center
     this.anchor.setTo(0.5, 0.5);
-    this.color = color;
+    this.color_start = color_start;
+    this.color_stop = color_stop;
     this.radius = radius;
     this.fade = radius * fade
     this.rect = new Phaser.Rectangle(this.x - radius, this.y - radius, radius * 2, radius * 2)
