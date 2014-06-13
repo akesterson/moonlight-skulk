@@ -773,19 +773,20 @@ GameState.prototype.preload = function()
 	game.load.spritesheet(s['name'], s['path'], s['width'], s['height'], s['frames'])
     }
 
-    this.map = this.add.tilemap('map');
     this.load.tilemap('map',
 		      moonlightSettings['map']['path'],
 		      null,
 		      Phaser.Tilemap.TILED_JSON);
-    for (var k in moonlightSettings['map']['tilesets']) {
-	var ts = moonlightSettings['map']['tilesets'][k];
-	this.map.addTilesetImage(ts['name']);
-    }
 }
 
 GameState.prototype.create = function()
 {
+    this.map = this.add.tilemap('map');
+    for (var k in moonlightSettings['map']['tilesets']) {
+	var ts = moonlightSettings['map']['tilesets'][k];
+	this.map.addTilesetImage(ts['name']);
+    }
+
     this.map_collision_layers = [];
 
     for (var ln in moonlightSettings['map']['layers']) {
