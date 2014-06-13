@@ -801,10 +801,13 @@ GameState.prototype.create = function()
 	this.map.setCollisionBetween(
 	    lp['collisionBetween'][0],
 	    lp['collisionBetween'][1],
-	    lp['collides']
+	    lp['collides'],
+	    ln
 	);
-	if ( lp['collides'] == true )
+	if ( lp['collides'] == true ) {
+	    console.log("Layer " + ln + " collides, saving it for later...");
 	    this.map_collision_layers.push(layer);
+	}
 	if ( lp['resizeWorld'] == true )
 	    layer.resizeWorld();
     }
