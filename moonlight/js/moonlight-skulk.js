@@ -738,18 +738,10 @@ var AISprite = function(game, x, y, key, frame) {
     }
 
     this.update_new_values = function() {
-	Phaser.Sprite.call(this, game, x, y, this.sprite_name); 
+	this.loadTexture(this.sprite_name);
 	this.bubble = null;
 	this.clearWordBubble();	
 	this.state = STATE_UNAWARE;
-	addAnimation(this, 'bipedwalkleft');
-	addAnimation(this, 'bipedwalkright');
-	addAnimation(this, 'bipedwalkup');
-	addAnimation(this, 'bipedwalkdown');
-	addAnimation(this, 'bipedrunleft');
-	addAnimation(this, 'bipedrunright');
-	addAnimation(this, 'bipedrunup');
-	addAnimation(this, 'bipedrundown');
     }
 
     var spritenames_by_type = [
@@ -764,12 +756,20 @@ var AISprite = function(game, x, y, key, frame) {
 	'townsfolk-guard-1',
 	'townsfolk-guard-2'
     ];
-    Phaser.Sprite.call(this, game, x, y, null); 
+    Phaser.Sprite.call(this, game, x, y, "townsfolk-male-1"); 
     game.physics.arcade.enable(this);
     this.body.collideWorldBounds = true;
 
     this.sprite_name = "townsfolk-male-1";
     this.sprite_group = "townsfolk-male";
+    addAnimation(this, 'bipedwalkleft');
+    addAnimation(this, 'bipedwalkright');
+    addAnimation(this, 'bipedwalkup');
+    addAnimation(this, 'bipedwalkdown');
+    addAnimation(this, 'bipedrunleft');
+    addAnimation(this, 'bipedrunright');
+    addAnimation(this, 'bipedrunup');
+    addAnimation(this, 'bipedrundown');
     this.update_new_values();
 }
 
