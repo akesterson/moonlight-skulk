@@ -102,23 +102,31 @@ var moonlightSettings = {
 	'layers': {
 	    '0 - NonCollide Base': {
 		'collides': false,
-		'collisionBetween': [0, 0]
+		'collisionBetween': [0, 0],
+		'type': 'tiles'
 	    },
 	    '0 - Collide Base': {
 		'collides': true,
-		'collisionBetween': [0, 9999]
+		'collisionBetween': [0, 9999],
+		'type': 'tiles'
 	    },
 	    '0 - NonCollide Overlay - Pathways': {
 		'collides': false,
-		'collisionBetween': [0, 9999]
+		'collisionBetween': [0, 9999],
+		'type': 'tiles'
 	    },
 	    '0 - Collide Overlay - Ground Objects': {
 		'collides': true,
-		'collisionBetween': [0, 9999]
+		'collisionBetween': [0, 9999],
+		'type': 'tiles'
 	    },
 	    '0 - NonCollide Overlay - Ground Objects': {
 		'collides': false,
-		'collisionBetween': [0, 9999]
+		'collisionBetween': [0, 9999],
+		'type': 'tiles'
+	    },
+	    'Lights': {
+		'type': 'objects'
 	    }
 	},
 	'path': 'gfx/map.json'
@@ -596,7 +604,7 @@ var moonlightDialog = {
 
 // Create torch objects
 // Light constructor
-var Light = function(game, x, y, radius, fade, color, flicker) {
+var Light = function(game, x, y, key, frame, radius, fade, color, flicker) {
     color = ( typeof color == undefined ? [255, 255, 255] : color );
     fade = ( typeof fade == undefined ? 0.25 : fade );
     radius = ( typeof radius == undefined ? 64 : radius );
@@ -789,23 +797,25 @@ GameState.prototype.create = function()
     this.map_collision_layers = [];
 
     for (var ln in moonlightSettings['map']['layers']) {
-	console.log("Preparing layer " + ln);
 	lp = moonlightSettings['map']['layers'][ln];
-	layer = this.map.createLayer(ln);
-	console.log("Setting collisions on " + ln);
-	this.map.setCollisionBetween(
-	    lp['collisionBetween'][0],
-	    lp['collisionBetween'][1],
-	    lp['collides'],
-	    ln
-	);
-	if ( lp['collides'] == true ) {
-	    layer.debug = true;
-	    this.map_collision_layers.push(layer);
+	if ( lp['type'] == "tiles" ) {
+	    layer = this.map.createLayer(ln);
+	    this.map.setCollisionBetween(
+		lp['collisionBetween'][0],
+		lp['collisionBetween'][1],
+		lp['collides'],
+		ln
+	    );
+	    if ( lp['collides'] == true ) {
+		layer.debug = true;
+		this.map_collision_layers.push(layer);
+	    }
+	    layer.resizeWorld();
+	} else if ( lp['type'] == "objects" ) {
+	    this.map.createFromObjects(ln, ln, undefined, 0, true, false, undefined, Light);
 	}
-	layer.resizeWorld();
     }
-
+	
     player = this.add.sprite((3 * 32), (17 * 32), 'player');
     this.physics.arcade.enable(player);
     player.body.center = new Phaser.Point(player.body.width / 2, player.body.height + player.body.halfHeight);
@@ -844,8 +854,8 @@ GameState.prototype.create = function()
 
     this.shadowTexture = game.add.bitmapData(game.world.width, game.world.height);
     // drop this lower to make the map darker
-    //this.shadowTextureColor = 'rgb(50, 50, 50)';
-    this.shadowTextureColor = 'rgb(255, 255, 255)';
+    this.shadowTextureColor = 'rgb(100, 100, 100)';
+    //this.shadowTextureColor = 'rgb(255, 255, 255)';
 
     // Create an object that will use the bitmap as a texture
     this.shadowSprite = game.add.image(0, 0, this.shadowTexture);
