@@ -26,13 +26,97 @@ SPRITE_TOWNSFOLK_GUARD2 = 10;
 var moonlightSettings = {
     'map' : {
 	'tilesets': [
-	    { 'name': 'Macks-tilea2',
-	      'path': 'gfx/Macks-tilea2.png'
+	    {
+		'name': '009-CastleTown1',
+		'path': 'gfx/tiles/009-CastleTown1.png'
 	    },
-	    { 'name': 'Macks-tilea3',
-	      'path': 'gfx/Macks-tilea3.png'
+	    {
+		'name': '010-CastleTown02',
+		'path': 'gfx/tiles/010-CastleTown2.png'
+	    },
+	    {
+		'name': '025-Castle01',
+		'path': 'gfx/tiles/025-Castle01.png'
+	    },
+	    {
+		'name': '026-Castle02',
+		'path': 'gfx/tiles/026-Castle02.png'
+	    },
+	    {
+		'name': '027-Castle03',
+		'path': 'gfx/tiles/027-Castle03.png'
+	    },
+	    {
+		'name': '027-Castle03',
+		'path': 'gfx/tiles/027-Castle03.png'
+	    },
+	    {
+		'name': '028-Church01',
+		'path': 'gfx/tiles/028-Church01.png'
+	    },
+	    {
+		'name': '029-Church02',
+		'path': 'gfx/tiles/029-Church02.png'
+	    },
+	    {
+		'name': '034-Bridge01',
+		'path': 'gfx/tiles/034-Bridge1.png'
+	    },
+	    {
+		'name': '035-Ruins01',
+		'path': 'gfx/tiles/035-Ruins01.png'
+	    },
+	    {
+		'name': '037-Fort01',
+		'path': 'gfx/tiles/037-Fort01.png'
+	    },
+	    {
+		'name': '038-Fort02',
+		'path': 'gfx/tiles/038-Fort02.png'
+	    },
+	    {
+		'name': '039-Tower01',
+		'path': 'gfx/tiles/039-Tower01.png'
+	    },
+	    {
+		'name': '040-Tower02',
+		'path': 'gfx/tiles/040-Tower02.png'
+	    },
+	    {
+		'name': '041-EvilCastle01',
+		'path': 'gfx/tiles/041-EvilCastle01.png'
+	    },
+	    {
+		'name': '042-EvilCastle02',
+		'path': 'gfx/tiles/042-EvilCastle02.png'
+	    },
+	    {
+		'name': '048-Sewer01',
+		'path': 'gfx/tiles/048-Sewer01.png'
+	    },
+	    {
+		'name': '004-Mountain01',
+		'path': 'gfx/tiles/004-Mountain01.png'
 	    }
 	],
+	'layers': {
+	    '0 - NonCollide Base': {
+		'collides': false,
+		'collisionBetwen': [0, 0]
+	    },
+	    '0 - Collide Base': {
+		'collides': true,
+		'collisionBetween': [0, 9999]
+	    },
+	    '0 - Collide Overlay - Foliage': {
+		'collides': true,
+		'collisionBetween': [0, 9999]
+	    },
+	    '0 - NonCollide Overlay - Foliage': {
+		'collides': false,
+		'collisionBetween': [0, 9999]
+	    }
+	},
 	'collisionRange': [385, 512],
 	'path': 'gfx/junkmap.json'
     },
@@ -697,12 +781,22 @@ GameState.prototype.create = function()
 	var ts = moonlightSettings['map']['tilesets'][k];
 	map.addTilesetImage(ts['name']);
     }
-    layer = map.createLayer('Tile Layer 1');
-    layer.resizeWorld();
-    map.setCollisionBetween(
-	moonlightSettings['map']['collisionRange'][0],
-	moonlightSettings['map']['collisionRange'][1]
-    );
+
+    this.map_collision_layers = [];
+
+    for (var ln in moonlightSettings['map']['layers']) {
+	lp = moonlightSettings['map']['layers']['lp'];
+	layer = map.createLayer(ln);
+	map.setCollisionbetween(
+	    lp['collisionBetween'][0],
+	    lp['collisionBetween'][1],
+	    lp['collides']
+	);
+	if ( lp['collides'] == true )
+	    this.map_collision_layers.push(layer);
+	if ( lp['resizeWorld'] == true )
+	    layer.resizeWorld();
+    }
 
     player = this.add.sprite(10, 10, 'player');
     this.physics.arcade.enable(player);
@@ -852,7 +946,6 @@ function setSpriteMovement(spr, running, dir)
 
 GameState.prototype.check_input = function()
 {
-
     player.body.velocity.x = 0;
     player.body.velocity.y = 0;
     velocityMod = 0;
@@ -873,10 +966,15 @@ GameState.prototype.check_input = function()
 GameState.prototype.update = function()
 {
     this.check_input();
-    this.physics.arcade.collide(player, layer);
+    
+    for (var layer in this.map_collision_layers ) {
+	this.physics.arcade.collide(player, layer);
+    }
     
     function _inner_collide(x) {
-	this.physics.arcade.collide(x, layer);
+	for ( var layer in this.map_collision_layers ) {
+	    this.physics.arcade.collide(x, layer);
+	}
 	this.physics.arcade.collide(x, player);
     }
 
