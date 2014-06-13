@@ -988,7 +988,7 @@ function setSpriteMovement(spr, running, dir)
 	spr.body.velocity.x = 0;
 	spr.body.velocity.y = y;
     }
-    player.body.setSize(spr.body.width/2, spr.body.height/4, spr.body.width/4, (spr.body.height * 0.75)
+    player.body.setSize(spr.body.width/2, spr.body.height/4, spr.body.width/4, (spr.body.height * 0.75);
 
 }
 
