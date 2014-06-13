@@ -115,14 +115,18 @@ var moonlightSettings = {
 		'collisionBetween': [0, 9999],
 		'resizeWorld': false
 	    },
-	    '0 - NonCollide Overlay - Foliage': {
+	    '0 - Collide Overlay - Ground Objects': {
 		'collides': true,
 		'collisionBetween': [0, 9999],
 		'resizeWorld': false
 	    }
+	    '0 - NonCollide Overlay - Ground Objects': {
+		'collides': false,
+		'collisionBetween': [0, 9999],
+		'resizeWorld': false
+	    }
 	},
-	'collisionRange': [385, 512],
-	'path': 'gfx/junkmap.json'
+	'path': 'gfx/map.json'
     },
     'images': [
 	{
