@@ -23,7 +23,7 @@ SPRITE_TOWNSFOLK_FEMALE4 = 8;
 SPRITE_TOWNSFOLK_GUARD1 = 9;
 SPRITE_TOWNSFOLK_GUARD2 = 10;
 
-var game = new Phaser.Game(640, 480, Phaser.AUTO, '');
+var game = new Phaser.Game(800, 600, Phaser.AUTO, '');
 
 // Create torch objects
 // Light constructor
@@ -1040,6 +1040,12 @@ GameState.prototype.update = function()
     }
     
     function _inner_collide(x) {
+	//Fix their Z index while we're here
+	if ( x.y > player.x ) {
+	    x.z = player.z + 1;
+	} else {
+	    x.z = player.z - 1;
+	}
 	for ( var ln in this.map_collision_layers ) {
 	    layer = this.map_collision_layers[ln];
 	    this.physics.arcade.collide(x, layer);
