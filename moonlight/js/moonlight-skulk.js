@@ -836,19 +836,20 @@ GameState.prototype.create = function()
 
     // Create the wandering sprites
     this.aiSprites = game.add.group();
-    for ( i = 0; i < 50 ; i++ ) {
-	this.aiSprites.add(
-	    new AISprite(game,
-				game.rnd.integerInRange(0, game.world.width),
-				game.rnd.integerInRange(0, game.world.height),
-				game.rnd.integerInRange(0, 9)
-			       )
-	);
-    }
+    // for ( i = 0; i < 50 ; i++ ) {
+    // 	this.aiSprites.add(
+    // 	    new AISprite(game,
+    // 				game.rnd.integerInRange(0, game.world.width),
+    // 				game.rnd.integerInRange(0, game.world.height),
+    // 				game.rnd.integerInRange(0, 9)
+    // 			       )
+    // 	);
+    // }
 
     this.shadowTexture = game.add.bitmapData(game.world.width, game.world.height);
     // drop this lower to make the map darker
-    this.shadowTextureColor = 'rgb(50, 50, 50)';
+    //this.shadowTextureColor = 'rgb(50, 50, 50)';
+    this.shadowTexturColor = 'rgb(255, 255, 255)';
 
     // Create an object that will use the bitmap as a texture
     this.shadowSprite = game.add.image(0, 0, this.shadowTexture);
@@ -859,22 +860,22 @@ GameState.prototype.create = function()
 
     // Create the lights
     this.staticLights = game.add.group();
-    for (i = 0; i < 50 ; i++ ) {
-    	this.staticLights.add(
-    	    new Light(game,
-    		      game.rnd.integerInRange(0, game.world.width),
-    		      game.rnd.integerInRange(0, game.world.height),
-    		      game.rnd.integerInRange(0, 128),
-    		      game.rnd.realInRange(0.0, 1.0),
-    		      [
-    			  game.rnd.integerInRange(0, 255),
-    			  game.rnd.integerInRange(0, 255),
-    			  game.rnd.integerInRange(0, 255)
-    		      ],
-    		      flicker = [true, false][game.rnd.integerInRange(0, 1)]
-    		 )
-    	);
-    }
+    // for (i = 0; i < 50 ; i++ ) {
+    // 	this.staticLights.add(
+    // 	    new Light(game,
+    // 		      game.rnd.integerInRange(0, game.world.width),
+    // 		      game.rnd.integerInRange(0, game.world.height),
+    // 		      game.rnd.integerInRange(0, 128),
+    // 		      game.rnd.realInRange(0.0, 1.0),
+    // 		      [
+    // 			  game.rnd.integerInRange(0, 255),
+    // 			  game.rnd.integerInRange(0, 255),
+    // 			  game.rnd.integerInRange(0, 255)
+    // 		      ],
+    // 		      flicker = [true, false][game.rnd.integerInRange(0, 1)]
+    // 		 )
+    // 	);
+    // }
     //this.movingLight = new Light(game, game.width/2, game.height/2);
     //this.lights.add(this.movingLight);
 }
@@ -982,6 +983,7 @@ GameState.prototype.update = function()
     this.check_input();
     
     for (var layer in this.map_collision_layers ) {
+	console.log("Colliding player with " + layer);
 	this.physics.arcade.collide(player, layer);
     }
     
