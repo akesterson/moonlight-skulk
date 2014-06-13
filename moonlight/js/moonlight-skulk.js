@@ -976,13 +976,15 @@ GameState.prototype.update = function()
 {
     this.check_input();
     
-    for (var layer in this.map_collision_layers ) {
+    for (var ln in this.map_collision_layers ) {
+	layer = this.map_collision_layers[ln];
 	console.log("Colliding player with " + layer);
 	this.physics.arcade.collide(player, layer);
     }
     
     function _inner_collide(x) {
-	for ( var layer in this.map_collision_layers ) {
+	for ( var ln in this.map_collision_layers ) {
+	    layer = this.map_collision_layers[ln];
 	    this.physics.arcade.collide(x, layer);
 	}
 	this.physics.arcade.collide(x, player);
