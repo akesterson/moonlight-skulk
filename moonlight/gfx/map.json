@@ -82,12 +82,12 @@
                 {
                  "gid":97,
                  "height":0,
-                 "name":"",
+                 "name":"id",
                  "properties":
                     {
 
                     },
-                 "type":"",
+                 "type":"Lights",
                  "visible":true,
                  "width":0,
                  "x":244,
