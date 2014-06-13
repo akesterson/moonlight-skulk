@@ -47,13 +47,14 @@ var Light = function(game, x, y, key, frame, radius, fade, color_start, color_st
     console.log(this);
 };
 
+// Lightes are a type of Phaser.Sprite
+Light.prototype = Object.create(Phaser.Sprite.prototype);
+Light.prototype.constructor = Light;
+
 Light.prototype.update_rect = function() {
     this.rect = new Phaser.Rectangle(this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2)
 }
 
-// Lightes are a type of Phaser.Sprite
-Light.prototype = Object.create(Phaser.Sprite.prototype);
-Light.prototype.constructor = Light;
 
 var moonlightSettings = {
     'map' : {
