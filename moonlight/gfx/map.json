@@ -145,14 +145,14 @@
                  "name":"FountainGuard",
                  "properties":
                     {
-                     "sprite_group":"townsfolk-guard",
-                     "sprite_name":"townsfolk-guard-1"
+                     "sprite_group":"townsfolk-female",
+                     "sprite_name":"townsfolk-female-3"
                     },
                  "type":"AISprites",
                  "visible":true,
                  "width":0,
-                 "x":863,
-                 "y":680
+                 "x":824,
+                 "y":953
                 }, 
                 {
                  "gid":3544,
