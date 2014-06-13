@@ -119,7 +119,7 @@ var moonlightSettings = {
 		'collides': true,
 		'collisionBetween': [0, 9999],
 		'resizeWorld': false
-	    }
+	    },
 	    '0 - NonCollide Overlay - Ground Objects': {
 		'collides': false,
 		'collisionBetween': [0, 9999],
