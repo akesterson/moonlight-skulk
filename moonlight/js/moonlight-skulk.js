@@ -757,9 +757,9 @@ var AISprite = function(game, x, y, key, frame, spritetype) {
 	'townsfolk-guard-2'
     ];
     Phaser.Sprite.call(this, game, x, y, null); 
-
     game.physics.arcade.enable(this);
     this.body.collideWorldBounds = true;
+
     if ( (typeof spritetype) !== undefined ) {
 	this.sprite_name = spritenames_by_type[spritetype];
 	var ARGH = spritenames_by_type[spritetype];
