@@ -839,7 +839,6 @@ GameState.prototype.create = function()
     this.physics.arcade.enable(player);
     player.body.center = new Phaser.Point(player.body.width / 2, player.body.height + player.body.halfHeight);
     player.body.collideWorldBounds = true;
-    player.body.debug = true;
 
     addAnimation(player, 'bipedwalkleft');
     addAnimation(player, 'bipedwalkright');
@@ -989,6 +988,8 @@ function setSpriteMovement(spr, running, dir)
 	spr.body.velocity.x = 0;
 	spr.body.velocity.y = y;
     }
+    player.body.setSize(spr.body.width/2, spr.body.height/4, spr.body.width/4, (spr.body.height * 0.75)
+
 }
 
 GameState.prototype.check_input = function()
