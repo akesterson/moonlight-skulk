@@ -874,6 +874,7 @@ GameState.prototype.create = function()
     this.map.createFromObjects('Lights', 97, 'player', 0, true, false, this.staticLights, Light);
     this.staticLights.forEach(function(light) {
 	light.update_rect();
+	console.log(light);
     }, this)
 			     
     // for (i = 0; i < 50 ; i++ ) {
