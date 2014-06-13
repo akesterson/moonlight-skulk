@@ -800,7 +800,6 @@ GameState.prototype.create = function()
 	    ln
 	);
 	if ( lp['collides'] == true ) {
-	    console.log("Layer " + ln + " collides, saving it for later...");
 	    this.map_collision_layers.push(layer);
 	}
 	layer.resizeWorld();
@@ -978,7 +977,6 @@ GameState.prototype.update = function()
     
     for (var ln in this.map_collision_layers ) {
 	layer = this.map_collision_layers[ln];
-	console.log("Colliding player with " + layer);
 	this.physics.arcade.collide(player, layer);
     }
     
