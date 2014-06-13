@@ -86,7 +86,7 @@
                  "properties":
                     {
                      "color_start":"rgba(50, 50, 50, 1.0)",
-                     "color_stop":"rgba(0, 0, 0, 0.0)",
+                     "color_stop":"rgba(255, 255, 255, 0.0)",
                      "fade":"0.15",
                      "flicker":"true",
                      "radius":"128"
