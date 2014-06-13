@@ -123,6 +123,32 @@
          "width":50,
          "x":0,
          "y":0
+        }, 
+        {
+         "height":50,
+         "name":"AI",
+         "objects":[
+                {
+                 "gid":3544,
+                 "height":0,
+                 "name":"FountainGuard",
+                 "properties":
+                    {
+                     "sprite_group":"townsfolk-guard",
+                     "sprite_name":"townsfolk-guard-1"
+                    },
+                 "type":"AISprites",
+                 "visible":true,
+                 "width":0,
+                 "x":863,
+                 "y":680
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "width":50,
+         "x":0,
+         "y":0
         }],
  "orientation":"orthogonal",
  "properties":

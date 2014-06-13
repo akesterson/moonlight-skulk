@@ -644,7 +644,7 @@ var moonlightDialog = {
     }	
 };
 
-var AISprite = function(game, x, y, spritetype) {
+var AISprite = function(game, x, y, key, frame, spritetype) {
     this.enableWordBubble = function() {
 	this.enable_word_bubble = true;
     }
@@ -737,6 +737,13 @@ var AISprite = function(game, x, y, spritetype) {
 	}
     }
 
+    this.update_new_values = function() {
+	this.loadTexture(this.sprite_group, 0);
+	this.bubble = null;
+	this.clearWordBubble();	
+	this.state = STATE_UNAWARE;
+    }
+
     var spritenames_by_type = [
 	'townsfolk-male-1',
 	'townsfolk-male-2',
@@ -749,18 +756,18 @@ var AISprite = function(game, x, y, spritetype) {
 	'townsfolk-guard-1',
 	'townsfolk-guard-2'
     ];
-    this.bubble = null;
-    
-    this.clearWordBubble();
+    Phaser.Sprite.call(this, game, x, y, null); 
 
-    this.state = STATE_UNAWARE;
-    Phaser.Sprite.call(this, game, x, y, spritenames_by_type[spritetype]); 
     game.physics.arcade.enable(this);
     this.body.collideWorldBounds = true;
-
     var ARGH = spritenames_by_type[spritetype];
     ARGH = ARGH.split("-");
     this.sprite_group = ARGH[0] + "-" + ARGH[1];
+    if ( (typeof this.sprite_name) !== undefined ) {
+	this.sprite_name = spritenames_by_type[spritetype];
+    } else {
+	this.sprite_name = "townsfolk-male-1"
+    }
 
     addAnimation(this, 'bipedwalkleft');
     addAnimation(this, 'bipedwalkright');
@@ -770,6 +777,8 @@ var AISprite = function(game, x, y, spritetype) {
     addAnimation(this, 'bipedrunright');
     addAnimation(this, 'bipedrunup');
     addAnimation(this, 'bipedrundown');
+
+    this.update_new_values();
 }
 
 AISprite.prototype = Object.create(Phaser.Sprite.prototype);
@@ -828,6 +837,12 @@ GameState.prototype.create = function()
 	    if ( lp['inject_sprites'] == true ) {
 		this.aiSprites = game.add.group();
 		player = this.add.sprite((20 * 32), (25 * 32), 'player');
+
+		this.map.createFromObjects('AI', 3544, 'player', 0, true, false, this.aiSprites, AISprite);
+		this.aiSprites.forEach(function(spr) {
+		    spr.update_new_values();
+		    console.log(spr);
+		}, this)
 	    };
 	    if ( lp['collides'] == true ) {
 		this.map_collision_layers.push(layer);
@@ -858,7 +873,6 @@ GameState.prototype.create = function()
     );
     this.fpsText.fixedToCamera = true;
 
-    // Create the wandering sprites
     // for ( i = 0; i < 50 ; i++ ) {
     // 	this.aiSprites.add(
     // 	    new AISprite(game,
@@ -871,6 +885,7 @@ GameState.prototype.create = function()
 
     this.shadowTexture = game.add.bitmapData(game.world.width, game.world.height);
     // drop this lower to make the map darker
+    this.shadowTexturColor_Base = 30;
     this.shadowTextureColor = 'rgb(30, 30, 30)';
     //this.shadowTextureColor = 'rgb(255, 255, 255)';
 
@@ -1008,7 +1023,7 @@ GameState.prototype.check_input = function()
 	setSpriteMovement(player, controls.up.shiftKey, 'right');
     } else {
 	player.animations.stop(null, true);
-    }
+    } else if ( controls.
 }
 
 GameState.prototype.update = function()
