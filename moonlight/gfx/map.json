@@ -82,14 +82,14 @@
                 {
                  "gid":97,
                  "height":0,
-                 "name":"Lights",
+                 "name":"streetlight",
                  "properties":
                     {
-                     "light_color":"[128, 128, 255]",
-                     "light_fade":"0.25",
-                     "light_flicker":"true",
-                     "light_radius":"128",
-                     "light_recreate":"true"
+                     "rcolor_start":"rgba(255, 255, 255, 1.0)",
+                     "rcolor_stop":"rgba(255, 0, 0, 0.0)",
+                     "rfade":"0.75",
+                     "rflicker":"true",
+                     "rradius":"128"
                     },
                  "type":"Lights",
                  "visible":true,
