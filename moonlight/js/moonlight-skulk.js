@@ -792,6 +792,7 @@ GameState.prototype.create = function()
 	console.log("Preparing layer " + ln);
 	lp = moonlightSettings['map']['layers'][ln];
 	layer = map.createLayer(ln);
+	console.log("Setting collisions on " + ln);
 	map.setCollisionBetween(
 	    lp['collisionBetween'][0],
 	    lp['collisionBetween'][1],
