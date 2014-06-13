@@ -818,6 +818,8 @@ GameState.prototype.create = function()
 	}
     }
 	
+    this.staticLights = game.add.group();
+
     this.map.createFromObjects('Lights', 97, null, 0, true, false, this.staticLights, lp['class']);
 
     player = this.add.sprite((3 * 32), (17 * 32), 'player');
@@ -869,7 +871,6 @@ GameState.prototype.create = function()
     this.shadowSprite.blendMode = Phaser.blendModes.MULTIPLY;
 
     // Create the lights
-    this.staticLights = game.add.group();
     // for (i = 0; i < 50 ; i++ ) {
     // 	this.staticLights.add(
     // 	    new Light(game,
