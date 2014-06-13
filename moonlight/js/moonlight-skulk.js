@@ -23,6 +23,8 @@ SPRITE_TOWNSFOLK_FEMALE4 = 8;
 SPRITE_TOWNSFOLK_GUARD1 = 9;
 SPRITE_TOWNSFOLK_GUARD2 = 10;
 
+var game = new Phaser.Game(640, 480, Phaser.AUTO, '');
+
 // Create torch objects
 // Light constructor
 var Light = function(game, x, y, key, frame, radius, fade, color, flicker) {
@@ -1008,5 +1010,4 @@ GameState.prototype.update = function()
     }
 }
 
-var game = new Phaser.Game(640, 480, Phaser.AUTO, '');
 game.state.add('game', GameState, true);
