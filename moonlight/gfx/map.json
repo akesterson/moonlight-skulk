@@ -124,7 +124,7 @@
                      "always_render":"true",
                      "color_start":"rgba(255, 255, 255, 1.0)",
                      "color_stop":"rgba(239, 49, 60, 0.0)",
-                     "fade":"0.9",
+                     "fade":"0.1",
                      "flicker":"true",
                      "radius":"256"
                     },
