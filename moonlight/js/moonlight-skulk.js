@@ -760,7 +760,7 @@ var AISprite = function(game, x, y, key, frame, spritetype) {
 
     game.physics.arcade.enable(this);
     this.body.collideWorldBounds = true;
-    if ( (typeof this.sprite_name) !== undefined ) {
+    if ( (typeof spritetype) !== undefined ) {
 	this.sprite_name = spritenames_by_type[spritetype];
 	var ARGH = spritenames_by_type[spritetype];
 	ARGH = ARGH.split("-");
