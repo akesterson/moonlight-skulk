@@ -813,7 +813,7 @@ GameState.prototype.create = function()
 	    layer.resizeWorld();
 	} else if ( lp['type'] == "objects" ) {
 	    console.log("this.map.createFromObjects(" + ln + ", "+ ln +", undefined, 0, true, false, undefined, Light)");
-	    this.map.createFromObjects(ln, ln, undefined, 0, true, false, undefined, Light);
+	    this.map.createFromObjects(ln, ln, null, 0, true, false, undefined, Light);
 	}
     }
 	
