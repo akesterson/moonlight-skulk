@@ -773,27 +773,27 @@ GameState.prototype.preload = function()
 	game.load.spritesheet(s['name'], s['path'], s['width'], s['height'], s['frames'])
     }
 
+    this.map = this.add.tilemap('map');
     this.load.tilemap('map',
 		      moonlightSettings['map']['path'],
 		      null,
 		      Phaser.Tilemap.TILED_JSON);
     for (var k in moonlightSettings['map']['tilesets']) {
 	var ts = moonlightSettings['map']['tilesets'][k];
-	map.addTilesetImage(ts['name']);
+	this.map.addTilesetImage(ts['name']);
     }
 }
 
 GameState.prototype.create = function()
 {
-    map = this.add.tilemap('map');
     this.map_collision_layers = [];
 
     for (var ln in moonlightSettings['map']['layers']) {
 	console.log("Preparing layer " + ln);
 	lp = moonlightSettings['map']['layers'][ln];
-	layer = map.createLayer(ln);
+	layer = this.map.createLayer(ln);
 	console.log("Setting collisions on " + ln);
-	map.setCollisionBetween(
+	this.map.setCollisionBetween(
 	    lp['collisionBetween'][0],
 	    lp['collisionBetween'][1],
 	    lp['collides']
