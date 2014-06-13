@@ -27,12 +27,13 @@ var game = new Phaser.Game(640, 480, Phaser.AUTO, '');
 
 // Create torch objects
 // Light constructor
-var Light = function(game, x, y, key, frame, radius, fade, color_start, color_stop, flicker) {
+var Light = function(game, x, y, key, frame, radius, fade, color_start, color_stop, flicker, always_render) {
     color_start = ( typeof color_start == undefined ? color_start : 'rgba(255, 255, 255, 1.0)');
     color_stop = ( typeof color_stop == undefined ? color_stop : 'rgba(255, 255, 255, 0.0)');
     fade = ( typeof fade == undefined ? fade : 0.25);
     radius = ( typeof radius == undefined ? radius : 64);
     flicker = ( typeof flicker == undefined ? flicker : false);
+    always_render = ( typeof always_render == undefined ? always_render : false);
 
     Phaser.Sprite.call(this, game, x, y, null);
 
@@ -43,6 +44,7 @@ var Light = function(game, x, y, key, frame, radius, fade, color_start, color_st
     this.color_stop = color_stop;
     this.radius = radius;
     this.fade = radius * fade
+    this.always_render = always_render
     this.rect = new Phaser.Rectangle(this.x - radius, this.y - radius, radius * 2, radius * 2)
     this.flicker = flicker;
     console.log(this);
@@ -56,6 +58,7 @@ Light.prototype.update_new_values = function() {
     this.radius = parseInt(this.radius);
     this.fade = this.radius * Number(this.fade);
     this.flicker = Boolean(this.flicker);
+    this.always_render = Boolean(this.always_render)
     this.rect = new Phaser.Rectangle(this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2)
 }
 
@@ -161,7 +164,7 @@ var moonlightSettings = {
 		'type': 'tiles',
 		'inject_sprites': true
 	    },
-	    '0 - NonCollide Overlay - Ground Objects': {
+	    '0 - NonCollide Overlay - Above Player': {
 		'collides': false,
 		'collisionBetween': [0, 9999],
 		'type': 'tiles',
@@ -923,6 +926,7 @@ GameState.prototype.updateShadowTexture = function() {
     // Iterate through each of the lights and draw the glow
     this.staticLights.forEach(function(light) {
 	// Don't draw lights that aren't on screen
+	if ( light.always_render !== true ) 
 	var r1 = new Phaser.Rectangle(this.game.camera.x, 
 				      this.game.camera.y, 
 				      this.game.camera.width, 
