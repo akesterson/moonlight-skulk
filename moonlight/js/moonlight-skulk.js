@@ -40,7 +40,8 @@ var Light = function(game, x, y, key, frame, radius, fade, color, flicker) {
     this.fade = radius * fade
     this.rect = new Phaser.Rectangle(this.x - radius, this.y - radius, radius * 2, radius * 2)
     this.flicker = flicker;
-
+    console.log("Light is ready");
+    console.log(this);
 };
 
 // Lightes are a type of Phaser.Sprite
@@ -899,7 +900,6 @@ GameState.prototype.updateShadowTexture = function() {
 
     // Iterate through each of the lights and draw the glow
     this.staticLights.forEach(function(light) {
-	console.log("Drawing light " + light);
 	// Don't draw lights that aren't on screen
 	var r1 = new Phaser.Rectangle(this.game.camera.x, 
 				      this.game.camera.y, 
