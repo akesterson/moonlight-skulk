@@ -33,6 +33,8 @@ var Light = function(game, x, y, key, frame, radius, fade, color, flicker) {
     fade = ( typeof fade == undefined ? 0.25 : fade );
     radius = ( typeof radius == undefined ? 64 : radius );
     flicker = ( typeof flicker == undefined ? false : flicker );
+    console.log("Making a light : " + [x, y, key, frame, radius, fade, color, flicker]); 
+
     Phaser.Sprite.call(this, game, x, y, null);
 
     // Set the pivot point for this sprite to the center
