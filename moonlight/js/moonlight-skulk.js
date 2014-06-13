@@ -29,10 +29,10 @@ var game = new Phaser.Game(640, 480, Phaser.AUTO, '');
 // Light constructor
 var Light = function(game, x, y, key, frame, radius, fade, color, flicker) {
     console.log("Making a light : " + [x, y, key, frame, radius, fade, color, flicker]); 
-    color = ( typeof color == undefined ? [255, 255, 255] : color );
-    fade = ( typeof fade == undefined ? 0.25 : fade );
-    radius = ( typeof radius == undefined ? 64 : radius );
-    flicker = ( typeof flicker == undefined ? false : flicker );
+    color = ( typeof color == undefined ? color: [255, 255, 255]);
+    fade = ( typeof fade == undefined ? fade : 0.25);
+    radius = ( typeof radius == undefined ? radius : 64);
+    flicker = ( typeof flicker == undefined ? flicker : false);
     console.log("Making a light : " + [x, y, key, frame, radius, fade, color, flicker]); 
 
     Phaser.Sprite.call(this, game, x, y, null);
