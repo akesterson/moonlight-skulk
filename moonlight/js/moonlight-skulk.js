@@ -102,19 +102,23 @@ var moonlightSettings = {
 	'layers': {
 	    '0 - NonCollide Base': {
 		'collides': false,
-		'collisionBetween': [0, 0]
+		'collisionBetween': [0, 0],
+		'resizeWorld': true
 	    },
 	    '0 - Collide Base': {
 		'collides': true,
-		'collisionBetween': [0, 9999]
+		'collisionBetween': [0, 9999],
+		'resizeWorld': false
 	    },
 	    '0 - Collide Overlay - Foliage': {
 		'collides': true,
-		'collisionBetween': [0, 9999]
+		'collisionBetween': [0, 9999],
+		'resizeWorld': false
 	    },
 	    '0 - NonCollide Overlay - Foliage': {
 		'collides': false,
-		'collisionBetween': [0, 9999]
+		'collisionBetween': [0, 9999],
+		'resizeWorld': false
 	    }
 	},
 	'collisionRange': [385, 512],
