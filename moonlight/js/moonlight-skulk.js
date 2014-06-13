@@ -149,11 +149,6 @@ var moonlightSettings = {
 		'collides': false,
 		'collisionBetween': [0, 9999],
 		'type': 'tiles'
-	    },
-	    'Lights': {
-		'type': 'objects',
-		'gid': 97,
-		'class': Light
 	    }
 	},
 	'path': 'gfx/map.json'
@@ -818,10 +813,6 @@ GameState.prototype.create = function()
 	}
     }
 	
-    this.staticLights = game.add.group();
-
-    this.map.createFromObjects('Lights', 97, null, 0, true, false, this.staticLights, lp['class']);
-
     player = this.add.sprite((3 * 32), (17 * 32), 'player');
     this.physics.arcade.enable(player);
     player.body.center = new Phaser.Point(player.body.width / 2, player.body.height + player.body.halfHeight);
@@ -871,6 +862,8 @@ GameState.prototype.create = function()
     this.shadowSprite.blendMode = Phaser.blendModes.MULTIPLY;
 
     // Create the lights
+    this.staticLights = game.add.group();
+    this.map.createFromObjects('Lights', 97, null, 0, true, false, this.staticLights, Light);
     // for (i = 0; i < 50 ; i++ ) {
     // 	this.staticLights.add(
     // 	    new Light(game,
