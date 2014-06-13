@@ -827,7 +827,7 @@ GameState.prototype.create = function()
 	    );
 	    if ( lp['inject_sprites'] == true ) {
 		this.aiSprites = game.add.group();
-		player = this.add.sprite((3 * 32), (17 * 32), 'player');
+		player = this.add.sprite((20 * 32), (25 * 32), 'player');
 	    };
 	    if ( lp['collides'] == true ) {
 		this.map_collision_layers.push(layer);
