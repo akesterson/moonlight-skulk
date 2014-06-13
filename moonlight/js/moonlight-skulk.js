@@ -140,27 +140,32 @@ var moonlightSettings = {
 	    '0 - NonCollide Base': {
 		'collides': false,
 		'collisionBetween': [0, 0],
-		'type': 'tiles'
+		'type': 'tiles',
+		'inject_sprites': false
 	    },
 	    '0 - Collide Base': {
 		'collides': true,
 		'collisionBetween': [0, 9999],
-		'type': 'tiles'
+		'type': 'tiles',
+		'inject_sprites': false
 	    },
 	    '0 - NonCollide Overlay - Pathways': {
 		'collides': false,
 		'collisionBetween': [0, 9999],
-		'type': 'tiles'
+		'type': 'tiles',
+		'inject_sprites': false
 	    },
 	    '0 - Collide Overlay - Ground Objects': {
 		'collides': true,
 		'collisionBetween': [0, 9999],
-		'type': 'tiles'
+		'type': 'tiles',
+		'inject_sprites': false
 	    },
 	    '0 - NonCollide Overlay - Ground Objects': {
 		'collides': false,
 		'collisionBetween': [0, 9999],
-		'type': 'tiles'
+		'type': 'tiles',
+		'inject_sprites': true
 	    }
 	},
 	'path': 'gfx/map.json'
@@ -817,6 +822,10 @@ GameState.prototype.create = function()
 		lp['collides'],
 		ln
 	    );
+	    if ( lp['inject_sprites'] == true ) {
+		this.aiSprites = game.add.group();
+		player = this.add.sprite((3 * 32), (17 * 32), 'player');
+	    };
 	    if ( lp['collides'] == true ) {
 		layer.debug = true;
 		this.map_collision_layers.push(layer);
@@ -825,7 +834,6 @@ GameState.prototype.create = function()
 	}
     }
 	
-    player = this.add.sprite((3 * 32), (17 * 32), 'player');
     this.physics.arcade.enable(player);
     player.body.center = new Phaser.Point(player.body.width / 2, player.body.height + player.body.halfHeight);
     player.body.collideWorldBounds = true;
@@ -850,7 +858,6 @@ GameState.prototype.create = function()
     this.fpsText.fixedToCamera = true;
 
     // Create the wandering sprites
-    this.aiSprites = game.add.group();
     // for ( i = 0; i < 50 ; i++ ) {
     // 	this.aiSprites.add(
     // 	    new AISprite(game,
