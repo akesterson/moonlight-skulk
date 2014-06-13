@@ -23,6 +23,31 @@ SPRITE_TOWNSFOLK_FEMALE4 = 8;
 SPRITE_TOWNSFOLK_GUARD1 = 9;
 SPRITE_TOWNSFOLK_GUARD2 = 10;
 
+// Create torch objects
+// Light constructor
+var Light = function(game, x, y, key, frame, radius, fade, color, flicker) {
+    console.log("Making a light");
+    color = ( typeof color == undefined ? [255, 255, 255] : color );
+    fade = ( typeof fade == undefined ? 0.25 : fade );
+    radius = ( typeof radius == undefined ? 64 : radius );
+    flicker = ( typeof flicker == undefined ? false : flicker );
+    Phaser.Sprite.call(this, game, x, y, null);
+
+    // Set the pivot point for this sprite to the center
+    this.anchor.setTo(0.5, 0.5);
+    this.color = color;
+    this.radius = radius;
+    this.fade = radius * fade
+    this.rect = new Phaser.Rectangle(this.x - radius, this.y - radius, radius * 2, radius * 2)
+    this.flicker = flicker;
+
+};
+
+// Lightes are a type of Phaser.Sprite
+Light.prototype = Object.create(Phaser.Sprite.prototype);
+Light.prototype.constructor = Light;
+
+
 var moonlightSettings = {
     'map' : {
 	'tilesets': [
@@ -126,7 +151,9 @@ var moonlightSettings = {
 		'type': 'tiles'
 	    },
 	    'Lights': {
-		'type': 'objects'
+		'type': 'objects',
+		'gid': 97,
+		'class': Light
 	    }
 	},
 	'path': 'gfx/map.json'
@@ -602,30 +629,6 @@ var moonlightDialog = {
     }	
 };
 
-// Create torch objects
-// Light constructor
-var Light = function(game, x, y, key, frame, radius, fade, color, flicker) {
-    console.log("Making a light");
-    color = ( typeof color == undefined ? [255, 255, 255] : color );
-    fade = ( typeof fade == undefined ? 0.25 : fade );
-    radius = ( typeof radius == undefined ? 64 : radius );
-    flicker = ( typeof flicker == undefined ? false : flicker );
-    Phaser.Sprite.call(this, game, x, y, null);
-
-    // Set the pivot point for this sprite to the center
-    this.anchor.setTo(0.5, 0.5);
-    this.color = color;
-    this.radius = radius;
-    this.fade = radius * fade
-    this.rect = new Phaser.Rectangle(this.x - radius, this.y - radius, radius * 2, radius * 2)
-    this.flicker = flicker;
-
-};
-
-// Lightes are a type of Phaser.Sprite
-Light.prototype = Object.create(Phaser.Sprite.prototype);
-Light.prototype.constructor = Light;
-
 var AISprite = function(game, x, y, spritetype) {
     this.enableWordBubble = function() {
 	this.enable_word_bubble = true;
@@ -814,7 +817,7 @@ GameState.prototype.create = function()
 	    layer.resizeWorld();
 	} else if ( lp['type'] == "objects" ) {
 	    console.log("this.map.createFromObjects(" + ln + ", "+ ln +", undefined, 0, true, false, undefined, Light)");
-	    this.map.createFromObjects(ln, ln, null, 0, true, false, undefined, Light);
+	    this.map.createFromObjects(ln, lp['gid'], null, 0, true, false, undefined, lp['class']);
 	}
     }
 	
