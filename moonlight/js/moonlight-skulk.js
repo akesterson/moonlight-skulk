@@ -27,9 +27,9 @@ var game = new Phaser.Game(640, 480, Phaser.AUTO, '');
 
 // Create torch objects
 // Light constructor
-var Light = function(game, x, y, key, frame, radius, fade, color, flicker) {
-    console.log("Making a light : " + [x, y, key, frame, radius, fade, color, flicker]); 
-    color = ( typeof color == undefined ? color: [255, 255, 255]);
+var Light = function(game, x, y, key, frame, radius, fade, color_start, color_stop, flicker) {
+    color_start = ( typeof color_start == undefined ? color_start : 'rgba(255, 255, 255, 1.0)');
+    color_stop = ( typeof color == undefined ? color_start : 'rgba(255, 255, 255, 0.0)');
     fade = ( typeof fade == undefined ? fade : 0.25);
     radius = ( typeof radius == undefined ? radius : 64);
     flicker = ( typeof flicker == undefined ? flicker : false);
@@ -44,9 +44,12 @@ var Light = function(game, x, y, key, frame, radius, fade, color, flicker) {
     this.fade = radius * fade
     this.rect = new Phaser.Rectangle(this.x - radius, this.y - radius, radius * 2, radius * 2)
     this.flicker = flicker;
-    console.log("Light is ready");
     console.log(this);
 };
+
+Light.prototype.update_rect = function() {
+    this.rect = new Phaser.Rectangle(this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2)
+}
 
 // Lightes are a type of Phaser.Sprite
 Light.prototype = Object.create(Phaser.Sprite.prototype);
@@ -868,7 +871,10 @@ GameState.prototype.create = function()
     // Create the lights
     this.staticLights = game.add.group();
     this.map.createFromObjects('Lights', 97, 'player', 0, true, false, this.staticLights, Light);
-
+    this.staticLights.forEach(function(light) {
+	light.update_rect();
+    }, this)
+			     
     // for (i = 0; i < 50 ; i++ ) {
     // 	this.staticLights.add(
     // 	    new Light(game,
@@ -926,8 +932,8 @@ GameState.prototype.updateShadowTexture = function() {
             this.shadowTexture.context.createRadialGradient(
                 light.x + 16, light.y + 16, light.fade,
                 light.x + 16, light.y + 16, radius);
-        gradient.addColorStop(0, 'rgba(' + light.color[0] + ',' + light.color[1] + ',' + light.color[2] +', 1.0)');
-        gradient.addColorStop(1, 'rgba(' + light.color[0] + ',' + light.color[1] + ',' + light.color[2] +', 0.0)');
+        gradient.addColorStop(0, light.color_start);
+        gradient.addColorStop(1, light.color_stop);
 
         this.shadowTexture.context.beginPath();
         this.shadowTexture.context.fillStyle = gradient;
