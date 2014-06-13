@@ -26,7 +26,7 @@ SPRITE_TOWNSFOLK_GUARD2 = 10;
 // Create torch objects
 // Light constructor
 var Light = function(game, x, y, key, frame, radius, fade, color, flicker) {
-    console.log("Making a light");
+    console.log("Making a light at " + x "," + y); 
     color = ( typeof color == undefined ? [255, 255, 255] : color );
     fade = ( typeof fade == undefined ? 0.25 : fade );
     radius = ( typeof radius == undefined ? 64 : radius );
