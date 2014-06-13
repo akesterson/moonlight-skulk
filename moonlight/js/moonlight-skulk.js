@@ -997,7 +997,7 @@ function setSpriteMovement(spr, running, dir)
 	spr.body.velocity.x = 0;
 	spr.body.velocity.y = y;
     }
-    spr.body.setSize(16, 8, 8, 24);
+    spr.body.setSize(16, 16, 8, 16);
 
 }
 
