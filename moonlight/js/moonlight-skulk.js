@@ -926,14 +926,15 @@ GameState.prototype.updateShadowTexture = function() {
     // Iterate through each of the lights and draw the glow
     this.staticLights.forEach(function(light) {
 	// Don't draw lights that aren't on screen
-	if ( light.always_render !== true ) 
-	var r1 = new Phaser.Rectangle(this.game.camera.x, 
-				      this.game.camera.y, 
-				      this.game.camera.width, 
-				      this.game.camera.height);
-	if ( ! light.rect.intersects(r1) ) {
-	    console.log("Light does not appear on camera");
-	    return;
+	if ( light.always_render !== true ) {
+	    var r1 = new Phaser.Rectangle(this.game.camera.x, 
+					  this.game.camera.y, 
+					  this.game.camera.width, 
+					  this.game.camera.height);
+	    if ( ! light.rect.intersects(r1) ) {
+		console.log("Light does not appear on camera");
+		return;
+	    }
 	}
 
 	if ( light.flicker ) {
