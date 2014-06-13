@@ -137,6 +137,10 @@ var moonlightSettings = {
 	    {
 		'name': '004-Mountain01',
 		'path': 'gfx/tiles/004-Mountain01.png'
+	    },
+	    {
+		'name': '!Door1',
+		'path': 'gfx/tiles/Doors.png'
 	    }
 	],
 	'layers': {
@@ -153,6 +157,12 @@ var moonlightSettings = {
 		'inject_sprites': false
 	    },
 	    '0 - NonCollide Overlay - Pathways': {
+		'collides': false,
+		'collisionBetween': [0, 9999],
+		'type': 'tiles',
+		'inject_sprites': false
+	    },
+	    '0 - NonCollide Overlay - Below Player': {
 		'collides': false,
 		'collisionBetween': [0, 9999],
 		'type': 'tiles',
