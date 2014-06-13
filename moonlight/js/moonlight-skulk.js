@@ -738,7 +738,7 @@ var AISprite = function(game, x, y, key, frame) {
     }
 
     this.update_new_values = function() {
-	this.loadTexture(this.sprite_name);
+	this.loadTexture(this.sprite_name, 0);
 	setSpriteMovement(this, false, 'down');
 	this.bubble = null;
 	this.clearWordBubble();	
