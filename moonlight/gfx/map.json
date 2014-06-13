@@ -105,11 +105,11 @@
                  "properties":
                     {
                      "always_render":"false",
-                     "color_start":"rgba(255, 255, 255, 0.5)",
+                     "color_start":"rgba(255, 255, 255, 0.25)",
                      "color_stop":"rgba(239, 49, 60, 0.0)",
                      "fade":"0.1",
                      "flicker":"true",
-                     "radius":"32"
+                     "radius":"64"
                     },
                  "type":"Lights",
                  "visible":true,
