@@ -738,10 +738,18 @@ var AISprite = function(game, x, y, key, frame) {
     }
 
     this.update_new_values = function() {
-	this.loadTexture(this.sprite_name, 0);
+	Phaser.Sprite.call(this, game, x, y, this.sprite_name); 
 	this.bubble = null;
 	this.clearWordBubble();	
 	this.state = STATE_UNAWARE;
+	addAnimation(this, 'bipedwalkleft');
+	addAnimation(this, 'bipedwalkright');
+	addAnimation(this, 'bipedwalkup');
+	addAnimation(this, 'bipedwalkdown');
+	addAnimation(this, 'bipedrunleft');
+	addAnimation(this, 'bipedrunright');
+	addAnimation(this, 'bipedrunup');
+	addAnimation(this, 'bipedrundown');
     }
 
     var spritenames_by_type = [
@@ -762,16 +770,6 @@ var AISprite = function(game, x, y, key, frame) {
 
     this.sprite_name = "townsfolk-male-1";
     this.sprite_group = "townsfolk-male";
-
-    addAnimation(this, 'bipedwalkleft');
-    addAnimation(this, 'bipedwalkright');
-    addAnimation(this, 'bipedwalkup');
-    addAnimation(this, 'bipedwalkdown');
-    addAnimation(this, 'bipedrunleft');
-    addAnimation(this, 'bipedrunright');
-    addAnimation(this, 'bipedrunup');
-    addAnimation(this, 'bipedrundown');
-
     this.update_new_values();
 }
 
