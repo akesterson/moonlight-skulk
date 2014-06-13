@@ -906,6 +906,7 @@ GameState.prototype.updateShadowTexture = function() {
 				      this.game.camera.width, 
 				      this.game.camera.height);
 	if ( ! light.rect.intersects(r1) ) {
+	    console.log("Light does not appear on camera");
 	    return;
 	}
 
