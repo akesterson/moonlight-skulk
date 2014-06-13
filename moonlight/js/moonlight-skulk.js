@@ -815,13 +815,11 @@ GameState.prototype.create = function()
 		this.map_collision_layers.push(layer);
 	    }
 	    layer.resizeWorld();
-	} else if ( lp['type'] == "objects" ) {
-	    ogrp = game.add.group();
-	    console.log("this.map.createFromObjects(" + ln + ", "+ lp['gid'] +", null, 0, true, false, undefined, Light)");
-	    this.map.createFromObjects(ln, lp['gid'], null, 0, true, false, ogrp, lp['class']);
 	}
     }
 	
+    this.map.createFromObjects('Lights', 97, null, 0, true, false, this.staticLights, lp['class']);
+
     player = this.add.sprite((3 * 32), (17 * 32), 'player');
     this.physics.arcade.enable(player);
     player.body.center = new Phaser.Point(player.body.width / 2, player.body.height + player.body.halfHeight);
