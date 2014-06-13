@@ -53,8 +53,6 @@ Light.prototype = Object.create(Phaser.Sprite.prototype);
 Light.prototype.constructor = Light;
 
 Light.prototype.update_new_values = function() {
-    this.color_start = color_start;
-    this.color_stop = color_stop;
     this.radius = parseInt(this.radius);
     this.fade = this.radius * parseNumber(this.fade);
     this.flicker = Boolean(this.flicker);
