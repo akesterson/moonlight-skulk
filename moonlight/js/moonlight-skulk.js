@@ -47,7 +47,6 @@ var Light = function(game, x, y, key, frame, radius, fade, color, flicker) {
 Light.prototype = Object.create(Phaser.Sprite.prototype);
 Light.prototype.constructor = Light;
 
-
 var moonlightSettings = {
     'map' : {
 	'tilesets': [
@@ -863,7 +862,9 @@ GameState.prototype.create = function()
 
     // Create the lights
     this.staticLights = game.add.group();
-    this.map.createFromObjects('Lights', 97, null, 0, true, false, this.staticLights, Light);
+    //this.map.createFromObjects('Lights', 97, null, 0, true, false, this.staticLights, Light);
+    this.map.createFromObjects('Lights', 97, 'player', 0);
+
     // for (i = 0; i < 50 ; i++ ) {
     // 	this.staticLights.add(
     // 	    new Light(game,
@@ -899,6 +900,7 @@ GameState.prototype.updateShadowTexture = function() {
 
     // Iterate through each of the lights and draw the glow
     this.staticLights.forEach(function(light) {
+	console.log("Drawing light " + light);
 	// Don't draw lights that aren't on screen
 	var r1 = new Phaser.Rectangle(this.game.camera.x, 
 				      this.game.camera.y, 
