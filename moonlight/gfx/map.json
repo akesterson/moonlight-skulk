@@ -85,7 +85,11 @@
                  "name":"Lights",
                  "properties":
                     {
-                     "LOLIAMPROPERTY":"HAHAYESYOUARE"
+                     "light_color":"[128, 128, 255]",
+                     "light_fade":"0.25",
+                     "light_flicker":"true",
+                     "light_radius":"128",
+                     "light_recreate":"true"
                     },
                  "type":"Lights",
                  "visible":true,
