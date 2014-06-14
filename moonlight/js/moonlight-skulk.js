@@ -634,89 +634,113 @@ var moonlightDialog = {
     "status": {
 	"townsfolk-male" : {
 	    "unaware" : [
-		"townsfolk-male/unaware/1.png",
-		"townsfolk-male/unaware/2.png",
-		"townsfolk-male/unaware/3.png",
-		"townsfolk-male/unaware/4.png",
-		"townsfolk-male/unaware/6.png",
-		"townsfolk-male/unaware/7.png"
+		"I'd rather be fishing.",
+		"Different day, same old stuff.",
+		"Oi! Where'd that trouble run\noff to now then?",
+		"The missus is off shoppin', and\nhere I am sittin' on\nme Jack Jones.",
+		"Oy I'm gonna have a butcher’s at\nthat new tailor's knickers\nhe has for sale.",
+		"I'm off to the pub to see the\nlads and chew the fat.",
+		"♪ ♫ Whistling ♪ ♫"
 	    ],
 	    "concerned" : [
-		"townsfolk-male/concerned/2.png",
-		"townsfolk-male/concerned/5.png",
-		"townsfolk-male/concerned/7.png"
+		"Wha… what’s that? Who’s there?",
+		"Did you hear that?",
+		"Either I’m hearin’ things, or I\nneed to stop drinkin’ midday.",
+		"Oi? I don’t want no tomfoolery;\ncome out if you’re there!",
+		"Must be them darned kids again.",
+		"What’s that?",
+		"Did you see that?"
 	    ],
 	    "alerted" : [
-		"townsfolk-male/alerted/10.png",
-		"townsfolk-male/alerted/11.png",
-		"townsfolk-male/alerted/1.png",
-		"townsfolk-male/alerted/2.png",
-		"townsfolk-male/alerted/4.png",
-		"townsfolk-male/alerted/5.png",
-		"townsfolk-male/alerted/6.png",
-		"townsfolk-male/alerted/7.png",
-		"townsfolk-male/alerted/8.png",
-		"townsfolk-male/alerted/9.png"		
+		"Don't you come no closer, you hear?",
+		"Egads!",
+		"I'm getting’ outta here!",
+		"What's going on?!",
+		"Holy bejeezus!",
+		"Did you see that?",
+		"What're you doing?!",
+		"Get away!",
+		"Get away from me!",
+		"Stay away! I know Kung-fu! ... but\nthat would require bravery \nI don't have",
+		"Guards! GUARDS!"
 	    ],
 	    "losthim" : [
-		"townsfolk-male/losthim/6.png",
-		"townsfolk-male/losthim/7.png"
+		"Whew. Glad that’s over.",
+		"I wasn’t scared!",
+		"Must’ve been intimidated by\nmy manly physique.",
+		"That’s right! Run away!",
+		"Aye, and don’t-cha come back!",
+		"Spoony Bard...",
+		"Bloody wanker!"
 	    ]
 	},
 	"townsfolk-female" : {
 	    "unaware" : [
-		"townsfolk-female/unaware/1.png",
-		"townsfolk-female/unaware/3.png",
-		"townsfolk-female/unaware/4.png",
-		"townsfolk-female/unaware/5.png"
+		"My retro shake brings all the\nboys to the yard.",
+		"I'm off to get my Barnet sorted\nout. I’ll be the best looking\nlady at the gala.",
+		"It's always all itsy bitsy with\nthem boys at the Rub-a-Dub.",
+		"I need to get this shopping\nsorted out.",
+		"What a lovely evening. Perfect\nfor skulking, I would imagine."
 	    ],
 	    "concerned" : [
-		"townsfolk-female/concerned/2.png",
-		"townsfolk-female/concerned/3.png",
-		"townsfolk-female/concerned/4.png",
-		"townsfolk-female/concerned/6.png",
-		"townsfolk-female/concerned/7.png"	    ],
+		"Wha… what’s that? Who’s there?",
+		"Did you hear that?",
+		"Martha? Is that you?",
+		"I don't want no tomfoolery.\nGo away!",
+		"What was that? This is how horror\ntheatre bits start…",
+		"What's that?",
+		"Did you see that?"
+	    ],
 	    "alerted" : [
-		"townsfolk-female/alerted/1.png",
-		"townsfolk-female/alerted/2.png",
-		"townsfolk-female/alerted/3.png",
-		"townsfolk-female/alerted/4.png",
-		"townsfolk-female/alerted/5.png",
-		"townsfolk-female/alerted/6.png"
+		"Eeeek!",
+		"Stay away from me!",
+		"Guards! Guards!",
+		"What in the nine hells?",
+		"Get back or I'll swoon!",
+		"Help! He's after me virtue!"
 	    ],
 	    "losthim" : [
-		"townsfolk-female/losthim/3.png"
+		"Good riddance! There’s too many\nmale protagonists in\ngames anyhow!",
+		"I sure am glad that’s over.",
+		"This town is going straight to hell.",
+		"I hope he doesn’t come back.",
+		"I hope he’s caught and hanged!"
 	    ]
 	},
 	"townsfolk-guard" : {
 	    "unaware" : [
-		"townsfolk-guard/unaware/1.png",
-		"townsfolk-guard/unaware/2.png",
-		"townsfolk-guard/unaware/4.png",
-		"townsfolk-guard/unaware/5.png",
-		"townsfolk-guard/unaware/6.png",
-		"townsfolk-guard/unaware/7.png"
+		"Just doing my civic duty.",
+		"Good day, citizens.",
+		"Honor. Liberty. Justice.\nOh, and pancakes…\nI love pancakes.",
+		"No loitering.",
+		"I am the law.",
+		"May Evil beware and may\nGood dress warmly and\neat plenty of fresh vegetables.",
+		"We're sworn to protect The City."
 	    ],
 	    "concerned" : [
-		"townsfolk-guard/concerned/1.png",
-		"townsfolk-guard/concerned/2.png",
-		"townsfolk-guard/concerned/3.png",
-		"townsfolk-guard/concerned/5.png",
-		"townsfolk-guard/concerned/6.png"
+		"I sense law-breaking abound.",
+		"Did you hear something?",
+		"Did you see that?",
+		"I know you're around here\nsomewhere, rat…",
+		"Don't make me look for\nyou in hard-to-reach places!",
+		"The eyes play tricks\nlike tiny, round devils."
 	    ],
 	    "alerted" : [
-		"townsfolk-guard/alerted/1.png",
-		"townsfolk-guard/alerted/2.png",
-		"townsfolk-guard/alerted/4.png",
-		"townsfolk-guard/alerted/5.png",
-		"townsfolk-guard/alerted/7.png",
-		"townsfolk-guard/alerted/8.png",
-		"townsfolk-guard/alerted/9.png"    
+		"Surrender lawbreaker!",
+		"Halt!",
+		"Halt! In the name of the… umm, er… me!",
+		"Prepare for justice, criminal!",
+		"I am justice!",
+		"There’s no escaping the law!",
+		"Surrender thief!",
+		"Prepare to taste steel!",
+		"Clear the area! Nobody\npanic! I'll catch him!"
 	    ],
 	    "losthim" : [
-		"townsfolk-guard/losthim/2.png",
-		"townsfolk-guard/losthim/3.png",
-		"townsfolk-guard/losthim/4.png"
+		"I’ll get you next time,\ncriminal scum.",
+		"Defeat is a harsh mistress.",
+		"Evil men may get away, but\njustice fights another day.",
+		"Wickedness flees, evading the\ncold steel of righteousness."
 	    ]
 	}
     },
@@ -736,8 +760,22 @@ var moonlightDialog = {
 	    "townsfolk-female": [],
 	    "townsfolk-guard": []
 	}
-    }	
+    }
 };
+
+function stringSize(str, font)
+{
+    var f = font || '12px arial',
+    o = $('<div>' + this + '</div>')
+        .css({'position': 'absolute', 'float': 'left', 'white-space': 'nowrap', 'visibility': 'hidden', 'font': f})
+        .appendTo($('body')),
+    w = o.width(),
+    h = o.height();
+
+    o.remove();
+
+    return [w, h];
+}
 
 var AISprite = function(game, x, y, key, frame) {
     this.enableWordBubble = function() {
@@ -745,20 +783,19 @@ var AISprite = function(game, x, y, key, frame) {
     }
 
     this.clearWordBubble = function() {
-	if ( this.bubble !== null )
-	    this.bubble.destroy();
-	this.bubble = null;
+	this.clear_bubble = true;
 	this.enable_word_bubble = false;
 	timer = game.time.create(false);
-	timerev = timer.add(20000 + (game.rnd.integerInRange(0, 30) * 1000), this.enableWordBubble, this);
+	timerev = timer.add(10000, this.enableWordBubble, this);
 	timer.start()
     }
 
     this.setWordBubble = function()
     {
-	if ( this.bubble !== null || this.sprite_group == undefined || this.enable_word_bubble == false) {
+	if ( this.bubble !== null || this.sprite_group == undefined || this.word_bubble_enabled == false) {
 	    return;
 	}
+
 	aistate = this.state & ( STATE_UNAWARE | STATE_CONCERNED | STATE_ALERTED | STATE_LOSTHIM );
 	switch ( aistate ) {
 	    case STATE_UNAWARE: {
@@ -780,16 +817,22 @@ var AISprite = function(game, x, y, key, frame) {
 	}
 
 	var mylines = moonlightDialog['status'][this.sprite_group][aistate];
-	var myline = mylines[game.rnd.integerInRange(0, mylines.length)]
-	this.bubble = game.add.sprite(this.x, this.y, myline);
-	game.physics.arcade.enable(this.bubble);
-	
-	this.bubble.x = this.x - (this.bubble.width / 2);
-	this.bubble.y = this.y - (this.bubble.height);
+	text = mylines[game.rnd.integerInRange(0, mylines.length)];
+	style = {font: '14px Arial Bold', fill: '#ffffff', align: 'center'}
+	this.text_size = stringSize(text, style['font']);
+	this.bubble = game.add.text(this.x, this.y, text, style);
+	this.bubble_offsets = [ (this.body.width/2) + -(this.text_size[0] / 2), -( this.text_size[1]/2) ];
+	this.snap_bubble_position();
 
 	timer = game.time.create(false);
 	timerev = timer.add(5000, this.clearWordBubble, this);
 	timer.start()
+    }
+
+    this.snap_bubble_position = function()
+    {
+	this.bubble.position.x = this.x + this.bubble_offsets[0];
+	this.bubble.position.y = this.y + this.bubble_offsets[1];
     }
 
     this.update = function()
@@ -801,10 +844,13 @@ var AISprite = function(game, x, y, key, frame) {
 	}
 
 	if ( this.bubble !== null ) {
-	    this.bubble.body.velocity.x = this.body.velocity.x;
-	    this.bubble.body.velocity.y = this.body.velocity.y;
-	    //this.bubble.x = this.x - (this.bubble.width / 2);
-	    //this.bubble.y = this.y - (this.bubble.height);
+	    if ( this.clear_bubble == true ) {
+		this.bubble.destroy();
+		this.bubble = null;
+		this.clear_bubble = false;
+	    } else {
+		this.snap_bubble_position();
+	    }
 	}
 
 	if ( game.rnd.integerInRange(0, 100) < 95 )
