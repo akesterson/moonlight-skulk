@@ -626,9 +626,11 @@ var AISprite = function(game, x, y, key, frame) {
 
 	var sprrect = Phaser.Rectangle(spr.x, spr.y, spr.x + 32, spr.y + 32);
 
-	return ( 
-	    viewrect.intersects(sprrect) ||
-		viewrect.containsRect(sprrect) );
+	if ( viewrect.intersects(sprrect) || viewrect.containsRect(sprrect) ) {
+	    console.log("I SEE YOU YOU FUCKER");
+	    return true;
+	}
+	return false;
     }
 
     this.enableWordBubble = function() {
@@ -1097,7 +1099,7 @@ GameState.prototype.update = function()
 	}
 	if ( x.collide_with_player == false )
 	    return;
-	x.canSeeSprite(player, true);
+	x.canSeeSprite(player, false);
 	this.physics.arcade.collide(x, player);
     }
 
