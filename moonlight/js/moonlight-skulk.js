@@ -625,20 +625,20 @@ var AISprite = function(game, x, y, key, frame) {
 	     */
 
 	    if ( hasState(this, STATE_FACE_LEFT) ) {
-		rotateAllpoints([p1, p2, p3, p4], 
-				this.x + (this.body.width / 2),
-				this.y + (this.body.height / 2),
-				-90);
+		rotatePoints([p1, p2, p3, p4], 
+			     this.x + (this.body.width / 2),
+			     this.y + (this.body.height / 2),
+			     -90);
 	    } else if ( hasState(this, STATE_FACE_RIGHT) ) {
-		rotateAllpoints([p1, p2, p3, p4], 
-				this.x + (this.body.width / 2),
-				this.y + (this.body.height / 2),
-				90);
+		rotatePoints([p1, p2, p3, p4], 
+			     this.x + (this.body.width / 2),
+			     this.y + (this.body.height / 2),
+			     90);
 	    } else if ( hasState(this, STATE_FACE_DOWN) ) {
-		rotateAllpoints([p1, p2, p3, p4], 
-				this.x + (this.body.width / 2),
-				this.y + (this.body.height / 2),
-				180);
+		rotatePoints([p1, p2, p3, p4], 
+			     this.x + (this.body.width / 2),
+			     this.y + (this.body.height / 2),
+			     180);
 	    }
 
 	    
