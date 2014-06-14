@@ -206,7 +206,7 @@
                     {
                      "sound_key":"fountain"
                     },
-                 "type":"",
+                 "type":"Sounds",
                  "visible":true,
                  "width":0,
                  "x":736,
@@ -222,7 +222,7 @@
                      "sound_nofade":"true",
                      "sound_volume":"0.5"
                     },
-                 "type":"",
+                 "type":"Sounds",
                  "visible":true,
                  "width":0,
                  "x":64,
