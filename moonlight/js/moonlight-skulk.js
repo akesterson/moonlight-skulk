@@ -623,7 +623,7 @@ var AISprite = function(game, x, y, key, frame) {
 	    return false;
 	}
 
-	var sprrect = Phaser.Rectangle(spr.x, spr.y, spr.x + 32, spr.y + 32);
+	var sprrect = new Phaser.Rectangle(spr.x, spr.y, spr.x + 32, spr.y + 32);
 
 	if ( viewrect.intersects(sprrect) || viewrect.containsRect(sprrect) ) {
 	    console.log("I SEE YOU YOU FUCKER");
