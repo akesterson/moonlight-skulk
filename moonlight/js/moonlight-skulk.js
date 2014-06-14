@@ -614,6 +614,9 @@ var AISprite = function(game, x, y, key, frame) {
 	var p3 = new Phaser.Point(viewline.end.x, viewline.end.y);
 	var p4 = new Phaser.Point(viewline.end.x, viewline.end.y);
 	p4.rotate(p1.x, p1.y, 45, true);
+
+	if (debug == true )
+	    console.log([p1, p2, p3, p4]);
 	
 	/*
 	 *  ... In case this isn't obvious, this is the sprite's view cone:
