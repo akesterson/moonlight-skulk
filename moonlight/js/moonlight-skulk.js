@@ -856,9 +856,9 @@ var AISprite = function(game, x, y, key, frame) {
 
 	if ( game.rnd.integerInRange(0, 100) < 95 )
 	    return;
-	if ( game.rnd.integerInRange(0, 100) > 90 ) {
-	    running = true;
-	}
+	//if ( game.rnd.integerInRange(0, 100) > 90 ) {
+	//    running = true;
+	//}
 
 	switch ( game.rnd.integerInRange(0, 4) ) {
 	    case 0: {
