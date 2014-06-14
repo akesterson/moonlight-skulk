@@ -588,21 +588,7 @@ EffectSprite.prototype = Object.create(Phaser.Sprite.prototype);
 EffectSprite.prototype.constructor = EffectSprite;
 
 var AISprite = function(game, x, y, key, frame) {
-    this.canSeeSprite = function(spr, debug) {
-	var xd = (spr.x - this.x);
-	if ( xd < 0 )
-	    xd = -(xd);
-	var yd = (spr.y - this.y);
-	if ( yd < 0 )
-	    yd = -(yd);
-
-	var hyp = Math.sqrt(Number(xd * xd) + Number(yd * yd));
-	if ( hyp > this.view_distance ) {
-	    if ( debug == true )
-		console.log(spr + " is too far away");
-	    return false;
-	}
-
+    this.viewRectangle = function() {
 	if ( hasState(this, STATE_FACE_LEFT) ) {
 	    var viewrect = new Phaser.Rectangle(this.x, this.y - 32,
 						this.x - this.view_distance,
@@ -620,9 +606,28 @@ var AISprite = function(game, x, y, key, frame) {
 						this.x + 64,
 						this.y - this.view_distance);
 	} else {
+	    return null;
+	}
+
+    }
+    this.canSeeSprite = function(spr, debug) {
+	var xd = (spr.x - this.x);
+	if ( xd < 0 )
+	    xd = -(xd);
+	var yd = (spr.y - this.y);
+	if ( yd < 0 )
+	    yd = -(yd);
+
+	var hyp = Math.sqrt(Number(xd * xd) + Number(yd * yd));
+	if ( hyp > this.view_distance ) {
+	    if ( debug == true )
+		console.log(spr + " is too far away");
 	    return false;
 	}
 
+	var viewrect = this.viewRectangle();
+	if ( viewrect == null ) 
+	    return false;
 	var sprrect = new Phaser.Rectangle(spr.x, spr.y, spr.x + 32, spr.y + 32);
 
 	if ( viewrect.intersects(sprrect) || viewrect.containsRect(sprrect) ) {
@@ -1113,6 +1118,17 @@ GameState.prototype.update = function()
 
     this.aiSprites.forEach(_inner_collide, this);
     this.updateShadowTexture();
+
+    function _draw_viewrect(x) {
+	var r = x.viewRectangle();
+	this.shadowTexture.context.fillStyle = 'rgba(255, 255, 255)';
+	this.shadowTexture.context.fillRect(r.left, 
+					    r.top, 
+					    r.right,
+					    r.bottom);
+    }
+    this.aiSprites.forEach(_draw_viewrect, this);
+
     if (game.time.fps !== 0) {
         this.fpsText.setText(game.time.fps + ' FPS');
     }
