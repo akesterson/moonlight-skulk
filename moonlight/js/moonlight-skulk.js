@@ -73,11 +73,11 @@ function SoundSprite(game, x, y, key, frame,
     Phaser.Sprite.call(this, game, x, y, null);
     this.sound_key = sound_key;
     this.sound_marker = ( typeof sound_marker == undefined ? sound_marker : '');
-    this.sound_volume = ( typeof sound_volume == undefined ? Number(sound_volume) : 1.0 );
-    this.sound_position = ( typeof sound_position == undefined ? parseInt(sound_position) : 1.0 );
-    this.sound_loop = ( typeof sound_loop == undefined ? Boolean(sound_loop) : true );
-    this.sound_forcerestart = ( typeof sound_forcerestart == undefined ? Boolean(sound_forcerestart) : true );
-    this.sound_nofade = (typeof sound_nofade == undefined ? Boolean(sound_nofade) : false);
+    this.sound_volume = ( typeof sound_volume == undefined ? sound_volume : 1.0 );
+    this.sound_position = ( typeof sound_position == undefined ? sound_position : 1.0 );
+    this.sound_loop = ( typeof sound_loop == undefined ? sound_loop : true );
+    this.sound_forcerestart = ( typeof sound_forcerestart == undefined ? sound_forcerestart : true );
+    this.sound_nofade = (typeof sound_nofade == undefined ? sound_nofade : false);
 
     this.sound = null;
 }
@@ -93,7 +93,7 @@ SoundSprite.prototype.update_new_values = function() {
 	return;
     }
     this.sound_marker = parseInt(this.sound_marker);
-    this.sound_position = parseInt(this.sound_marker);
+    this.sound_position = parseInt(this.sound_position);
     this.sound_volume = Number(this.sound_volume);
     this.sound_loop = Boolean(this.sound_loop);
     this.sound_forcerestart = Boolean(this.sound_forcerestart);
