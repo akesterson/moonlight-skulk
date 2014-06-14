@@ -628,8 +628,7 @@ var AISprite = function(game, x, y, key, frame) {
 	var viewrect = this.viewRectangle();
 	if ( viewrect == null ) 
 	    return false;
-	var sprrect = new Phaser.Rectangle(spr.x, spr.y, spr.x + 32, spr.y + 32);
-
+	var sprrect = new Phaser.Rectangle(spr.x, spr.y, 32, 32);
 	if ( viewrect.intersects(sprrect) || viewrect.containsRect(sprrect) ) {
 	    console.log("I SEE YOU YOU FUCKER");
 	    return true;
