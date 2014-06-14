@@ -1136,7 +1136,6 @@ GameState.prototype.update = function()
 	}
 	if ( x.collide_with_player == false )
 	    return;
-	console.log(canSeeSprite(x, player));
 	this.physics.arcade.collide(x, player);
     }
 
