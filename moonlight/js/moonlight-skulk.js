@@ -604,21 +604,20 @@ var AISprite = function(game, x, y, key, frame) {
 	}
 
 	var viewrect = null;
-
 	if ( hasState(this, STATE_FACE_LEFT) ) {
-	    viewrect = Phaser.Rectangle(this.x, this.y - 32,
+	    viewrect = new Phaser.Rectangle(this.x, this.y - 32,
 					this.x - this.view_distance,
 					this.y + 64);
 	} else if ( hasState(this, STATE_FACE_RIGHT) ) {
-	    viewrect = Phaser.Rectangle(this.x + 32, this.y - 32,
+	    viewrect = new Phaser.Rectangle(this.x + 32, this.y - 32,
 					this.x + 32 + this.view_distance,
 					this.y + 64);
 	} else if ( hasState(this, STATE_FACE_DOWN) ) {
-	    viewrect = Phaser.Rectangle(this.x - 32, this.y + 32,
+	    viewrect = new Phaser.Rectangle(this.x - 32, this.y + 32,
 					this.x + 64,
 					this.y + 32 + this.view_distance);
 	} else if ( hasState(this, STATE_FACE_UP) ) {
-	    viewrect = Phaser.Rectangle(this.x - 32, this.y,
+	    viewrect = new Phaser.Rectangle(this.x - 32, this.y,
 					this.x + 64,
 					this.y - this.view_distance);
 	} else {
