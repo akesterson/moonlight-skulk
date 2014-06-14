@@ -611,8 +611,8 @@ var AISprite = function(game, x, y, key, frame) {
     {
 	this.bubble_sprite.x = this.x + 16;
 	this.bubble_sprite.y = this.y - 33;
-	this.bubble_text.position.x = this.x + 16 - 150 + 5;
-	this.bubble_text.position.y = this.y - 67 + 5;
+	this.bubble_text.position.x = this.x + 16 - 150 + 8;
+	this.bubble_text.position.y = this.y - 67 + 8;
     }
 
     this.update = function()
