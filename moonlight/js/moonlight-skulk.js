@@ -1082,6 +1082,12 @@ GameState.prototype.update = function()
 	this.physics.arcade.collide(player, layer);
     }
     
+    function _fix_audio_relative(x) {
+	x.adust_relative_to(this.player);
+    }
+    this.staticSounds.forEach(_fix_audio_relative, this);
+
+
     function _inner_collide(x) {
 	for ( var ln in this.map_collision_layers ) {
 	    layer = this.map_collision_layers[ln];
