@@ -74,11 +74,11 @@ function SoundSprite(game, x, y, key, frame,
     Phaser.Sprite.call(this, game, x, y, null);
     this.sound_key = sound_key;
     this.sound_marker = ( typeof sound_marker == undefined ? sound_marker : '');
-    this.sound_volume = ( typeof sound_volume == undefined ? sound_volume : 1.0 );
-    this.sound_position = ( typeof sound_position == undefined ? sound_position : 1.0 );
-    this.sound_loop = ( typeof sound_loop == undefined ? sound_loop : true );
-    this.sound_forcerestart = ( typeof sound_forcerestart == undefined ? sound_forcerestart : true );
-    this.sound_nofade = (typeof sound_alwaysplay == undefined ? sound_alwaysplay : false);
+    this.sound_volume = ( typeof sound_volume == undefined ? Number(sound_volume) : 1.0 );
+    this.sound_position = ( typeof sound_position == undefined ? parseInt(sound_position) : 1.0 );
+    this.sound_loop = ( typeof sound_loop == undefined ? Boolean(sound_loop) : true );
+    this.sound_forcerestart = ( typeof sound_forcerestart == undefined ? Boolean(sound_forcerestart) : true );
+    this.sound_nofade = (typeof sound_nofade == undefined ? Boolean(sound_alwaysplay) : false);
 
     this.sound = null;
 }

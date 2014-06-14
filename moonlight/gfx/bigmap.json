@@ -211,6 +211,22 @@
                  "width":0,
                  "x":736,
                  "y":865
+                }, 
+                {
+                 "gid":17,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+                     "sound_key":"background_music",
+                     "sound_nofade":"true",
+                     "sound_volume":"0.5"
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":64,
+                 "y":40
                 }],
          "opacity":1,
          "type":"objectgroup",
