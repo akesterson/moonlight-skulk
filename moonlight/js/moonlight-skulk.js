@@ -135,8 +135,8 @@ SoundSprite.prototype.adjust_relative_to = function(spr) {
 	);
     }
 
-    this.sound.volume = Math.min(0.0, Number(hyp_perfect / hyp));
-    console.log([hyp_perfect, hyp, this.sound.volume]);
+    this.sound.volume = Math.min(1.0, Number(hyp_perfect / hyp));
+    console.log([hyp_perfect, hyp, Number(hyp_perfect / hyp), this.sound.volume]);
 }
 
 var moonlightSettings = {
