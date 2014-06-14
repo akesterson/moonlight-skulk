@@ -917,6 +917,8 @@ var AISprite = function(game, x, y, key, frame) {
     Phaser.Sprite.call(this, game, x, y, null);
     game.physics.arcade.enable(this);
     this.timer = null;
+    this.bubble = null;
+    this.enable_word_bubble = false;
     this.body.collideWorldBounds = true;
     this.sprite_name = "townsfolk-male-1";
     this.sprite_group = "townsfolk-male";
