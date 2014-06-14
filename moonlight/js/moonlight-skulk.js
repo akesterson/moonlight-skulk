@@ -1122,7 +1122,7 @@ GameState.prototype.update = function()
     function _draw_viewrect(x) {
 	var r = x.viewRectangle();
 	if ( r == null ) 
-	    continue;
+	    return;
 	this.shadowTexture.context.fillStyle = 'rgba(255, 255, 255)';
 	this.shadowTexture.context.fillRect(r.left, 
 					    r.top, 
