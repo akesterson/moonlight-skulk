@@ -597,6 +597,7 @@ var AISprite = function(game, x, y, key, frame) {
 	style = {font: '14px Arial Bold', fill: '#ffffff', align: 'center'}
 	this.text_size = stringSize(text, style['font']);
 	this.bubble_sprite = game.add.sprite(this.x, this.y, 'wordbubble');
+	this.bubble_sprite.achor.set_to(0.5, 0.5);
 	this.bubble_text = game.add.text(this.x, this.y, text, style);
 	this.bubble_text_offsets = [ 16 - (this.text_size[0]/2), -( this.text_size[1]/2) ];
 	console.log(this.bubble_text_offsets);
@@ -609,10 +610,10 @@ var AISprite = function(game, x, y, key, frame) {
 
     this.snap_bubble_position = function()
     {
-	this.bubble_sprite.x = this.x + 16 - 150;
+	this.bubble_sprite.x = this.x + 16;
 	this.bubble_sprite.y = this.y - 33;
-	this.bubble_text.position.x = this.x + this.bubble_text_offsets[0];
-	this.bubble_text.position.y = this.y + this.bubble_text_offsets[1];
+	this.bubble_text.position.x = this.x + 16;
+	this.bubble_text.position.y = this.y - 33;
     }
 
     this.update = function()
