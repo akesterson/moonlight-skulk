@@ -883,7 +883,8 @@ var AISprite = function(game, x, y, key, frame) {
     }
 
     this.update_new_values = function() {
-	this.timer.stop();
+	if ( this.timer !== null )
+	    this.timer.stop();
 	this.animations.destroy();
 	this.clearWordBubble();	
 	this.state = STATE_UNAWARE;
