@@ -130,8 +130,8 @@ SoundSprite.prototype.adjust_relative_to = function(spr) {
     } else {
 	var hyp = Math.sqrt((xd * xd) + (yd * yd));
 	var hyp_perfect = Math.sqrt(
-	    ((game.camera.width/2) * (game.camera.width/2)) + 
-		((game.camera.height/2) * (game.camera.height/2))
+	    Number((game.camera.width/2) * (game.camera.width/2)) + 
+		Number((game.camera.height/2) * (game.camera.height/2))
 	);
     }
 
