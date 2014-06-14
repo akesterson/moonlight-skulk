@@ -164,6 +164,7 @@
                  "name":"FountainGuard",
                  "properties":
                     {
+                     "can_move":"false",
                      "sprite_group":"townsfolk-female",
                      "sprite_name":"townsfolk-female-3"
                     },
@@ -176,10 +177,10 @@
                 {
                  "gid":3544,
                  "height":0,
-                 "name":"",
+                 "name":"FountainPerson",
                  "properties":
                     {
-
+                     "can_move":"false"
                     },
                  "type":"",
                  "visible":true,
@@ -229,7 +230,7 @@
                  "y":40
                 }, 
                 {
-                 "gid":11,
+                 "gid":1837,
                  "height":0,
                  "name":"campfiresound",
                  "properties":

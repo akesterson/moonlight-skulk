@@ -714,6 +714,8 @@ var AISprite = function(game, x, y, key, frame) {
 	    }
 	}
 
+	if ( this.can_move == false)
+	    return;
 	if ( game.rnd.integerInRange(0, 100) < 95 )
 	    return;
 	if ( game.rnd.integerInRange(0, 100) > 90 ) {
@@ -747,6 +749,10 @@ var AISprite = function(game, x, y, key, frame) {
 	this.animations.destroy();
 	this.clearWordBubble();	
 	this.state = STATE_UNAWARE;
+	this.can_move = Boolean(this.can_move);
+	this.collide_with_player = Boolean(this.collide_with_player);
+	this.collide_with_map = Boolean(this.collide_with_map);
+	this.carries_light = Boolean(this.carries_light);
 
 	this.loadTexture(this.sprite_name, 0);
 	addAnimation(this, 'bipedwalkleft');
@@ -776,6 +782,7 @@ var AISprite = function(game, x, y, key, frame) {
     
     Phaser.Sprite.call(this, game, x, y, null);
     game.physics.arcade.enable(this);
+    this.can_move = false;
     this.collide_with_player = true;
     this.collide_with_map = true;
     this.carries_light = false;
