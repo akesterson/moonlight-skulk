@@ -984,8 +984,8 @@ GameState.prototype.create = function()
     this.staticSounds = game.add.group();
     this.map.createFromObjects('Sounds', 11, 'player', 0, true, false, this.staticSounds, SoundSprite);
     this.staticSounds.forEach(function(snd) {
-	light.update_new_values();
-	console.log(light);
+	snd.update_new_values();
+	console.log(snd);
     }, this)
 }
 
