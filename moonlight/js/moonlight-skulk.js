@@ -579,7 +579,7 @@ var EffectSprite = function(game, x, y, key, frame, animation) {
     Phaser.Sprite.call(this, game, x, y, null);
     game.physics.arcade.enable(this);
     this.collide_with_map = true;
-    this.collide_with_player = true;
+    this.collide_with_player = false;
 }
 
 EffectSprite.prototype = Object.create(Phaser.Sprite.prototype);
