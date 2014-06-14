@@ -781,7 +781,9 @@ var AISprite = function(game, x, y, key, frame) {
     this.enableWordBubble = function() {
 	this.enable_word_bubble = true;
 	timer = game.time.create(false);
-	timerev = timer.add(20000 + (game.rnd.integerInRange(0, 30) * 1000), this.setWordBubble, this);
+	var timerdelta = 20000 + (game.rnd.integerInRange(0, 30) * 1000);
+	console.log("In " + timerdelta + " ms, " + this + " will say something");
+	timerev = timer.add(, this.setWordBubble, this);
 	timer.start()
     }
 
