@@ -620,7 +620,9 @@ var AISprite = function(game, x, y, key, frame) {
 	if ( this.bubble_text !== null ) {
 	    if ( this.clear_bubble == true ) {
 		this.bubble_text.destroy();
+		this.bubble_sprite.destroy();
 		this.bubble_text = null;
+		this.bubble_sprite = null;
 		this.clear_bubble = false;
 	    } else {
 		this.snap_bubble_position();
