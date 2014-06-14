@@ -624,7 +624,9 @@ var AISprite = function(game, x, y, key, frame) {
 	    return false;
 	}
 
-	return viewrect.intersectsRaw(spr.x, spr.y, spr.x + 32, spr.y + 32);
+	return ( 
+	    viewrect.intersectsRaw(spr.x, spr.y, spr.x + 32, spr.y + 32) ||
+		viewrect.containsRaw(spr.x, spr.y, spr.x + 32, spr.y + 32) );
     }
 
     this.enableWordBubble = function() {
