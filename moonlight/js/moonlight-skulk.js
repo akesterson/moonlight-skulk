@@ -133,9 +133,9 @@ SoundSprite.prototype.adjust_relative_to = function(spr) {
 
     console.log([hyp_perfect, hyp_left, hyp_right]);
     if ( hyp_right > hyp_left ) {
-	this.sound.volume = Number(hyp_left / hyp_perfect);
+	this.sound.volume = Number(hyp_perfect / hyp_left);
     } else {
-	this.sound.volume = Number(hyp_right / hyp_perfect);
+	this.sound.volume = Number(hyp_perfect / hyp_right);
     }
 }
 
