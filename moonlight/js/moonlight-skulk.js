@@ -914,7 +914,7 @@ var AISprite = function(game, x, y, key, frame) {
 	'townsfolk-guard-2'
     ];
     
-    Phaser.Sprite.call(this, game, x, y, 'townsfolk-male-1');
+    Phaser.Sprite.call(this, game, x, y, null);
     game.physics.arcade.enable(this);
     this.timer = null;
     this.body.collideWorldBounds = true;
