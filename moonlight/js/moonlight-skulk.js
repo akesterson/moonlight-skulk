@@ -113,7 +113,6 @@ SoundSprite.prototype.update_new_values = function() {
 	this.sound_volume,
 	this.sound_loop,
 	this.sound_forcerestart);
-    console.log(this);
 }
 
 SoundSprite.prototype.adjust_relative_to = function(spr) {
@@ -568,7 +567,6 @@ function stringSize(str, font)
     h = o.height();
 
     o.remove();
-    console.log("stringSize : " + [w, h] + " : " + str);
     return [w, h];
 }
 
@@ -722,7 +720,6 @@ var AISprite = function(game, x, y, key, frame) {
 	this.bubble_sprite = game.add.sprite(this.x, this.y, 'wordbubble');
 	this.bubble_sprite.anchor.setTo(0.5, 0.5);
 	this.bubble_text = game.add.text(this.x, this.y, text, style);
-	console.log(this.bubble_text_offsets);
 	this.snap_bubble_position();
 
 	this.timer = game.time.create(false);
@@ -1139,8 +1136,6 @@ GameState.prototype.update = function()
 	}
 	if ( x.collide_with_player == false )
 	    return;
-	console.log(this);
-	console.log("Can see the player : " + x.canSeeSprite(player));
 	this.physics.arcade.collide(x, player);
     }
 
