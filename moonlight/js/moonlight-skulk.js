@@ -604,7 +604,154 @@ var AISprite = function(game, x, y, key, frame) {
 	} else if ( hasState(this, STATE_FACE_UP) ) {
 	    return new Phaser.Rectangle(this.x - 32, this.y,
 					64,
-					ns.destroy();
+					-this.view_distance);
+	} else {
+	    return null;
+	}
+    }
+
+    this.canSeeSprite = function(spr, debug) {
+	var xd = (spr.x - this.x);
+	if ( xd < 0 )
+	    xd = -(xd);
+	var yd = (spr.y - this.y);
+	if ( yd < 0 )
+	    yd = -(yd);
+
+	var hyp = Math.sqrt(Number(xd * xd) + Number(yd * yd));
+	if ( hyp > this.view_distance ) {
+	    if ( debug == true )
+		console.log(spr + " is too far away");
+	    return false;
+	}
+
+	var viewrect = this.viewRectangle();
+	if ( viewrect == null ) 
+	    return false;
+	var sprrect = new Phaser.Rectangle(spr.x, spr.y, spr.x + 32, spr.y + 32);
+
+	if ( viewrect.intersects(sprrect) || viewrect.containsRect(sprrect) ) {
+	    console.log("I SEE YOU YOU FUCKER");
+	    return true;
+	}
+	return false;
+    }
+
+    this.enableWordBubble = function() {
+	this.enable_word_bubble = true;
+	this.timer = game.time.create(false);
+	var timerdelta = 10000 + (game.rnd.integerInRange(0, 20) * 1000);
+	timerev = this.timer.add(timerdelta, this.setWordBubble, this);
+	this.timer.start()
+    }
+
+    this.clearWordBubble = function() {
+	if ( this.bubble_text !== null )
+	    this.clear_bubble = true;
+	this.enable_word_bubble = false;
+	this.timer = game.time.create(false);
+	timerev = this.timer.add(1000, this.enableWordBubble, this);
+	this.timer.start()
+    }
+
+    this.setWordBubble = function()
+    {
+	if ( this.bubble_text !== null || this.sprite_group == undefined || this.enable_world_bubble == false) {
+	    return;
+	}
+
+	aistate = this.state & ( STATE_UNAWARE | STATE_CONCERNED | STATE_ALERTED | STATE_LOSTHIM );
+	switch ( aistate ) {
+	    case STATE_UNAWARE: {
+		aistate = "unaware";
+		break;
+	    }
+	    case STATE_CONCERNED: {
+		aistate = "concerned";
+		break;
+	    }
+	    case STATE_ALERTED: {
+		aistate = "alerted";
+		break;
+	    }
+	    case STATE_LOSTHIM: {
+		aistate = "losthim";
+		break;
+	    }
+	}
+
+	var mylines = moonlightDialog['status'][this.sprite_group][aistate];
+	text = mylines[game.rnd.integerInRange(0, mylines.length-1)];
+	style = {font: '14px Arial Bold', fill: '#ffffff'}
+	this.text_size = stringSize(text, style['font']);
+	this.bubble_sprite = game.add.sprite(this.x, this.y, 'wordbubble');
+	this.bubble_sprite.anchor.setTo(0.5, 0.5);
+	this.bubble_text = game.add.text(this.x, this.y, text, style);
+	this.snap_bubble_position();
+
+	this.timer = game.time.create(false);
+	timerev = this.timer.add(5000, this.clearWordBubble, this);
+	this.timer.start()
+    }
+
+    this.snap_bubble_position = function()
+    {
+	this.bubble_sprite.x = this.x + 16;
+	this.bubble_sprite.y = this.y - 33;
+	this.bubble_text.position.x = this.x + 16 - 150 + 8;
+	this.bubble_text.position.y = this.y - 67 + 8;
+    }
+
+    this.update = function()
+    {
+	var running = false;
+	var newstate = STATE_NONE;
+
+	if ( this.bubble_text !== null ) {
+	    if ( this.clear_bubble == true ) {
+		this.bubble_text.destroy();
+		this.bubble_sprite.destroy();
+		this.bubble_text = null;
+		this.bubble_sprite = null;
+		this.clear_bubble = false;
+	    } else {
+		this.snap_bubble_position();
+	    }
+	}
+
+	if ( this.can_move == false)
+	    return;
+	if ( game.rnd.integerInRange(0, 100) < 95 )
+	    return;
+	if ( game.rnd.integerInRange(0, 100) > 90 ) {
+	    newstate = STATE_RUNNING;
+	}
+
+	switch ( game.rnd.integerInRange(0, 4) ) {
+	    case 0: {
+		newstate = newstate | (STATE_FACE_RIGHT | STATE_MOVING);
+		break;
+	    }
+	    case 1: {
+		newstate = newstate | (STATE_FACE_LEFT | STATE_MOVING);
+		break;
+	    }
+	    case 2: {
+		newstate = newstate | (STATE_FACE_UP | STATE_MOVING);
+		break;
+	    }
+	    case 3: {
+		newstate = newstate | (STATE_FACE_DOWN | STATE_MOVING);
+	    }
+	}
+	setMovingState(this, newstate);
+	setSpriteMovement(this);
+    }
+
+    this.update_new_values = function() {
+	if ( this.timer !== null )
+	    this.timer.stop();
+	this.animations.destroy();
 	this.clearWordBubble();	
 	this.state = STATE_UNAWARE;
 	this.can_move = (this.can_move == 'true');
@@ -640,7 +787,7 @@ var AISprite = function(game, x, y, key, frame) {
     
     Phaser.Sprite.call(this, game, x, y, null);
     game.physics.arcade.enable(this);
-    this.can_move = false;
+    this.can_move = 'false';
     this.collide_with_player = 'true';
     this.collide_with_map = 'true';
     this.carries_light = 'false';
