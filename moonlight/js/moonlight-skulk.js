@@ -106,7 +106,8 @@ SoundSprite.prototype.update_new_values = function() {
     console.log("Sound should be playing");
 }
 
-SoundSprite.prototype.adjust_relative_to_player = function() {
+SoundSprite.prototype.adjust_relative_to_player = function(spr) {
+    console.log(spr);
     if ( this.sound_nofade == true ) {
 	this.sound.volume = 1.0;
 	return;
@@ -116,10 +117,10 @@ SoundSprite.prototype.adjust_relative_to_player = function() {
     // hypotenuse of a triangle drawn from the point (p) to the 
     // sprite in question
 
-    var xd = (game.player.x - this.x);
+    var xd = (spr.x - this.x);
     if ( xd < 0 )
 	xd = -(xd);
-    var yd = (game.player.y - this.y);
+    var yd = (spr.y - this.y);
     if ( yd < 0 )
 	yd = -(yd);
     var hyp = Math.sqrt((xd * xd) + (yd * yd));
@@ -1077,7 +1078,7 @@ GameState.prototype.update = function()
     }
     
     function _fix_audio_relative(x) {
-	x.adjust_relative_to_player();
+	x.adjust_relative_to(this.player);
     }
     this.staticSounds.forEach(_fix_audio_relative, this);
 
