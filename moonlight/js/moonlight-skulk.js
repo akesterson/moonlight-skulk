@@ -875,7 +875,7 @@ function setMovingState(spr, state)
 {
     delState(spr, STATE_FACE_LEFT);
     delState(spr, STATE_FACE_RIGHT);
-    delStatr(spr, STATE_FACE_DOWN);
+    delState(spr, STATE_FACE_DOWN);
     delState(spr, STATE_FACE_UP);
     delState(spr, STATE_MOVING);
     delState(spr, STATE_RUNNING);
