@@ -624,9 +624,11 @@ var AISprite = function(game, x, y, key, frame) {
 	    return false;
 	}
 
+	var sprrect = Phaser.Rectangle(spr.x, spr.y, spr.x + 32, spr.y + 32);
+
 	return ( 
-	    viewrect.intersectsRaw(spr.x, spr.y, spr.x + 32, spr.y + 32) ||
-		viewrect.containsRaw(spr.x, spr.y, spr.x + 32, spr.y + 32) );
+	    viewrect.intersects(sprrect) ||
+		viewrect.containsRect(sprrect) );
     }
 
     this.enableWordBubble = function() {
@@ -1095,6 +1097,7 @@ GameState.prototype.update = function()
 	}
 	if ( x.collide_with_player == false )
 	    return;
+	x.canSeeSprite(player, true);
 	this.physics.arcade.collide(x, player);
     }
 
