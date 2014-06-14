@@ -92,7 +92,6 @@ SoundSprite.prototype.update_new_values = function() {
 	}
 	return;
     }
-    this.sound_marker = parseInt(this.sound_marker);
     this.sound_position = parseInt(this.sound_position);
     this.sound_volume = Number(this.sound_volume);
     this.sound_loop = Boolean(this.sound_loop);
