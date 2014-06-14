@@ -783,8 +783,8 @@ var AISprite = function(game, x, y, key, frame) {
 	this.timer = game.time.create(false);
 	var timerdelta = 20000 + (game.rnd.integerInRange(0, 30) * 1000);
 	console.log("In " + timerdelta + " ms, " + this + " will say something");
-	timerev = timer.add(timerdelta, this.setWordBubble, this);
-	timer.start()
+	timerev = this.timer.add(timerdelta, this.setWordBubble, this);
+	this.timer.start()
     }
 
     this.clearWordBubble = function() {
@@ -793,8 +793,8 @@ var AISprite = function(game, x, y, key, frame) {
 	this.timer = game.time.create(false);
 	var timerdelta = 20000 + (game.rnd.integerInRange(0, 30) * 1000);
 	console.log("In " + timerdelta + " ms, " + this + " will enable speech");	
-	timerev = timer.add(timerdelta, this.enableWordBubble, this);
-	timer.start()
+	timerev = this.timer.add(timerdelta, this.enableWordBubble, this);
+	this.timer.start()
     }
 
     this.setWordBubble = function()
@@ -833,8 +833,8 @@ var AISprite = function(game, x, y, key, frame) {
 	this.snap_bubble_position();
 
 	this.timer = game.time.create(false);
-	timerev = timer.add(5000, this.clearWordBubble, this);
-	timer.start()
+	timerev = this.timer.add(5000, this.clearWordBubble, this);
+	this.timer.start()
     }
 
     this.snap_bubble_position = function()
