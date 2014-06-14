@@ -100,11 +100,9 @@ SoundSprite.prototype.update_new_values = function() {
 	this.sound_volume,
 	this.sound_loop,
 	this.sound_forcerestart);
-    console.log("Sound should be playing");
 }
 
 SoundSprite.prototype.adjust_relative_to = function(spr) {
-    console.log(spr);
     if ( this.sound_nofade == true ) {
 	this.sound.volume = 1.0;
 	return;
