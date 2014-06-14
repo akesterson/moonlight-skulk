@@ -670,8 +670,10 @@ var AISprite = function(game, x, y, key, frame) {
 		if ( tl.intersects(sl) )
 		    return true;
 	    }, this);
-	    if ( debug == true ) 
+	    if ( debug == true ) {
 		console.log("contains ? " + sl.start.x + " " + sl.start.y);
+		console.log(viewcone);
+	    }
 	    if ( viewcone.contains(sl.start.x, sl.start.y) )
 		return true;
 	}, this);
