@@ -123,11 +123,12 @@ SoundSprite.prototype.adjust_relative_to = function(spr) {
     var xd_left = this.x - game.camera.x;
     var yd_bottom = (game.camera.y + game.camera.height - this.y);
     var yd_top = this.y - game.camera.y;
-    var hyp_perfect = sqrt(((game.camera.width/2) * (game.camera.width/2)) + 
-			   ((game.camera.height/2) * (game.camera.height/2))
-			   );
-    var hyp_right = sqrt((xd_right * xd_right) + (yd_bottom * yd_bottom));
-    var hyp_left = sqrt((xd_left * xd_left) + (yd_top * yd_top));
+    var hyp_perfect = Math.sqrt(
+	((game.camera.width/2) * (game.camera.width/2)) + 
+	    ((game.camera.height/2) * (game.camera.height/2))
+    );
+    var hyp_right = Math.sqrt((xd_right * xd_right) + (yd_bottom * yd_bottom));
+    var hyp_left = Math.sqrt((xd_left * xd_left) + (yd_top * yd_top));
 
     console.log([hyp_perfect, hyp_left, hyp_right]);
     if ( hyp_right > hyp_left ) {
