@@ -109,6 +109,7 @@ SoundSprite.prototype.update_new_values = function() {
 SoundSprite.prototype.adjust_relative_to = function(spr) {
     if ( this.sound_alwaysplay == false ) {
 	if ( ! this.inCamera ) {
+	    console.log("Sound is not on camera");
 	    // don't turn it off, let it continue at zero volume
 	    // for more realistic effect whe the player returns
 	    this.sound.volume = 0.0;
