@@ -1077,7 +1077,7 @@ GameState.prototype.update = function()
     }
     
     function _fix_audio_relative(x) {
-	x.adjust_relative_to(this.player);
+	x.adjust_relative_to_player();
     }
     this.staticSounds.forEach(_fix_audio_relative, this);
 
