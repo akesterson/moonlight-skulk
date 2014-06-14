@@ -797,7 +797,7 @@ GameState.prototype.create = function()
 
     this.shadowTexture = game.add.bitmapData(game.world.width, game.world.height);
     // drop this lower to make the map darker
-    this.shadowTextureColor = 'rgb(255, 255, 255)';
+    this.shadowTextureColor = 'rgb(40, 40, 40)';
     this.shadowSprite = game.add.image(0, 0, this.shadowTexture);
 
     this.shadowSprite.blendMode = Phaser.blendModes.MULTIPLY;
