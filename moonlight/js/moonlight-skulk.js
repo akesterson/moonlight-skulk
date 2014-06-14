@@ -114,25 +114,21 @@ SoundSprite.prototype.adjust_relative_to = function(spr) {
 
     // The volume of any given sound is equal to the length of the
     // hypotenuse of a triangle drawn from the point (p) to the 
-    // nearest corner of the camera
+    // sprite in question
 
-    var xd_right = (game.camera.x + game.camera.width - this.x);
-    var xd_left = this.x - game.camera.x;
-    var yd_bottom = (game.camera.y + game.camera.height - this.y);
-    var yd_top = this.y - game.camera.y;
+    var xd = (spr.x - this.x);
+    if ( xd < 0 )
+	xd = -(xd);
+    var yd = (spr.y - this.y);
+    if ( yd < 0 )
+	yd = -(yd);
+    var hyp = Math.sqrt((xd * xd) + (yd * yd));
     var hyp_perfect = Math.sqrt(
 	((game.camera.width/2) * (game.camera.width/2)) + 
 	    ((game.camera.height/2) * (game.camera.height/2))
     );
-    var hyp_right = Math.sqrt((xd_right * xd_right) + (yd_bottom * yd_bottom));
-    var hyp_left = Math.sqrt((xd_left * xd_left) + (yd_top * yd_top));
-
-    if ( hyp_right > hyp_left ) {
-	this.sound.volume = Number(hyp_perfect / hyp_left);
-    } else {
-	this.sound.volume = Number(hyp_perfect / hyp_right);
-    }
-    console.log([hyp_perfect, hyp_left, hyp_right, this.sound.volume]);
+    this.sound.volume = Number(hyp_perfect / hyp);
+    console.log([hyp_perfect, hyp, this.sound.volume]);
 }
 
 var moonlightSettings = {
