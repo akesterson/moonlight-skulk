@@ -773,7 +773,7 @@ function stringSize(str, font)
     h = o.height();
 
     o.remove();
-
+    console.log("stringSize : " + [w, h] + " : " + str);
     return [w, h];
 }
 
