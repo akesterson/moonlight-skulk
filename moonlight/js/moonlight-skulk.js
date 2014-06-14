@@ -910,6 +910,7 @@ function setSpriteMovement(spr)
 	y = 75;
 	spr.animations.play("bipedwalk" + dir);
     } else {
+	console.log("Sprite has no recognizable state");
 	spr.body.velocity.x = 0;
 	spr.body.velocity.y = 0;
 	spr.animations.stop();
@@ -966,7 +967,9 @@ GameState.prototype.check_input = function()
 	newstate = STATE_NONE;
     }
 
+    console.log(player.state);
     exchangeState(player, (STATES_FACE | STATES_MOVEMENT), newstate);
+    console.log(player.state);
     setSpriteMovement(player);
 }
 
