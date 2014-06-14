@@ -590,6 +590,87 @@ EffectSprite.prototype = Object.create(Phaser.Sprite.prototype);
 EffectSprite.prototype.constructor = EffectSprite;
 
 var AISprite = function(game, x, y, key, frame) {
+    this.canSeeSprite = function(spr) {
+	var xd = (spr.x - this.x);
+	if ( xd < 0 )
+	    xd = -(xd);
+	var yd = (spr.y - this.y);
+	if ( yd < 0 )
+	    yd = -(yd);
+
+	var hyp = Math.sqrt(Number(xd * xd) + Number(yd * yd));
+	if ( hyp < this.view_distance ) {
+	    // View cone intersection test
+	    var p1 = new Phaser.Point(this.x + (this.body.width / 2),
+				  this.y);
+	    var viewline = new Phaser.Line(this.x + (this.body.width / 2),
+				       this.y,
+				       this.x + (this.body.width / 2),
+				       this.y - this.view_distance );
+	    var p2 = new Phaser.Point(viewline.end.x, viewline.end.y);
+	    p2.rotate(p1.x, p1.y, -45, true);
+	    var p3 = new Phaser.point(viewline.end.x, viewline.end.y);
+	    var p4 = new Phaser.point(viewline.end.x, viewline.end.y);
+	    p4.rotate(p1.x, p1.y, 45, true);
+
+	    /*
+	     *  ... In case this isn't obvious, this is the sprite's view cone:
+	     * 
+	     *       p3
+	     *    p2    p4
+	     *     \    /
+	     *      \  /
+	     *       \/
+	     *       p1
+	     */
+
+	    if ( hasState(this, STATE_FACE_LEFT) ) {
+		rotateAllpoints([p1, p2, p3, p4], 
+				this.x + (this.body.width / 2),
+				this.y + (this.body.height / 2),
+				-90);
+	    } else if ( hasState(this, STATE_FACE_RIGHT) ) {
+		rotateAllpoints([p1, p2, p3, p4], 
+				this.x + (this.body.width / 2),
+				this.y + (this.body.height / 2),
+				90);
+	    } else if ( hasState(this, STATE_FACE_DOWN) ) {
+		rotateAllpoints([p1, p2, p3, p4], 
+				this.x + (this.body.width / 2),
+				this.y + (this.body.height / 2),
+				180);
+	    }
+
+	    
+	    var viewcone = new Phaser.Polygon(p1, p2, p3, p1);
+
+	    // FIXME : There has got to be a better way to do this
+	    var rectLines = [
+		new Phaser.line(spr.body.left, spr.body.top,
+				spr.body.right, spr.body.top),
+		new Phaser.line(spr.body.right, spr.body.top,
+				spr.body.right, spr.body.bottom),
+		new Phaser.line(spr.body.right, spr.body.bottom,
+				spr.body.left, spr.body.bottom),
+		new Phaser.line(spr.body.left, spr.body.bottom,
+				spr.body.left, spr.body.top)
+		];
+	    var withinView = false;
+	    rectLines.forEach(function(sl) {
+		[[p1, p2], [p2, p3], [p3, p4], [p4, p1]].forEach(function(vl) {
+		    tl = new Phaser.Line(vl[0].x, vl[0].y,
+					 vl[1].x, vl[1].y);
+		    if ( tl.intersects(sl) )
+			return true;
+		}, this);
+		if ( viewcone.contains(sl.start.x, sl.start.y) )
+		    return true;
+	    }, this);
+
+	    return false;
+	}
+    }
+
     this.enableWordBubble = function() {
 	this.enable_word_bubble = true;
 	this.timer = game.time.create(false);
@@ -737,6 +818,8 @@ var AISprite = function(game, x, y, key, frame) {
     game.physics.arcade.enable(this);
     this.collide_with_player = true;
     this.collide_with_map = true;
+    this.carries_light = false;
+    this.view_distance = 32 * 5;
     this.timer = null;
     this.bubble_text = null;
     this.enable_word_bubble = false;
@@ -748,6 +831,13 @@ var AISprite = function(game, x, y, key, frame) {
 
 AISprite.prototype = Object.create(Phaser.Sprite.prototype);
 AISprite.prototype.constructor = AISprite;
+
+function rotatePoints(arr, x, y, degrees)
+{
+    arr.forEach(function(p) {
+	p.rotate(x, y, degrees, true);
+    }, this);
+}
 
 var GameState = function(game) {
 }
@@ -1048,6 +1138,8 @@ GameState.prototype.update = function()
 	}
 	if ( x.collide_with_player == false )
 	    return;
+	console.log(this);
+	console.log("Can see the player : " + x.canSeeSprite(player));
 	this.physics.arcade.collide(x, player);
     }
 
