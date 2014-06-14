@@ -127,7 +127,8 @@ SoundSprite.prototype.adjust_relative_to = function(spr) {
 	    Number((game.camera.height/2) * (game.camera.height/2))
     );
 
-    this.sound.volume = Math.min(0.0, (1.0 - Math.max(1.0, Number(hyp / hyp_perfect))));
+    this.sound.volume = Math.max(0.0, (1.0 - Math.max(1.0, Number(hyp / hyp_perfect))));
+    
     console.log([hyp_perfect, hyp, Number(hyp / hyp_perfect), this.sound.volume]);
 }
 
