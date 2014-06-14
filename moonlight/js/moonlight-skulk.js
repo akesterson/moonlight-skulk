@@ -92,6 +92,13 @@ SoundSprite.prototype.update_new_values = function() {
 	}
 	return;
     }
+    this.sound_marker = parseInt(this.sound_marker);
+    this.sound_position = parseInt(this.sound_marker);
+    this.sound_volume = Number(this.sound_volume);
+    this.sound_loop = Boolean(this.sound_loop);
+    this.sound_forcerestart = Boolean(this.sound_forcerestart);
+    this.sound_nofade = Boolean(this.sound_nofade);
+
     this.sound = game.add.audio(this.sound_key);
     this.sound.play(
 	this.sound_marker,
@@ -104,7 +111,7 @@ SoundSprite.prototype.update_new_values = function() {
 
 SoundSprite.prototype.adjust_relative_to = function(spr) {
     if ( this.sound_nofade == true ) {
-	this.sound.volume = 1.0;
+	this.sound.volume = this.sound_volume;
 	return;
     }
 
