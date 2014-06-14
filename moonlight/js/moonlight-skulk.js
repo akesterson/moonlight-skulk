@@ -127,12 +127,12 @@ SoundSprite.prototype.adjust_relative_to = function(spr) {
     var hyp_right = Math.sqrt((xd_right * xd_right) + (yd_bottom * yd_bottom));
     var hyp_left = Math.sqrt((xd_left * xd_left) + (yd_top * yd_top));
 
-    console.log([hyp_perfect, hyp_left, hyp_right]);
     if ( hyp_right > hyp_left ) {
 	this.sound.volume = Number(hyp_perfect / hyp_left);
     } else {
 	this.sound.volume = Number(hyp_perfect / hyp_right);
     }
+    console.log([hyp_perfect, hyp_left, hyp_right, this.sound.volume]);
 }
 
 var moonlightSettings = {
