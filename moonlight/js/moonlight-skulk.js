@@ -749,6 +749,7 @@ var AISprite = function(game, x, y, key, frame) {
     }
 
     this.update_new_values = function() {
+	console.log(this);
 	if ( this.timer !== null )
 	    this.timer.stop();
 	this.animations.destroy();
