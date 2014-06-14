@@ -579,6 +579,9 @@ var EffectSprite = function(game, x, y, key, frame, animation) {
     game.physics.arcade.enable(this);
 }
 
+EffectSprite.prototype = Object.create(Phaser.Sprite.prototype);
+EffectSprite.prototype.constructor = EffectSprite;
+
 var AISprite = function(game, x, y, key, frame) {
     this.enableWordBubble = function() {
 	this.enable_word_bubble = true;
