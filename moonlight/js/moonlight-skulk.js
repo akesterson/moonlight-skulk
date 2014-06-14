@@ -127,9 +127,9 @@ SoundSprite.prototype.adjust_relative_to = function(spr) {
 	    Number((game.camera.height/2) * (game.camera.height/2))
     );
 
-    this.sound.volume = Number(hyp / hyp_perfect);
+    this.sound.volume = (1.0 - Number(hyp / hyp_perfect));
     
-    console.log([hyp_perfect, hyp, Number(hyp / hyp_perfect), this.sound.volume]);
+    console.log([hyp_perfect, hyp, (1.0 - Number(hyp / hyp_perfect)), this.sound.volume]);
 }
 
 var moonlightSettings = {
