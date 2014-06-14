@@ -646,13 +646,13 @@ var AISprite = function(game, x, y, key, frame) {
 
 	    // FIXME : There has got to be a better way to do this
 	    var rectLines = [
-		new Phaser.line(spr.body.left, spr.body.top,
+		new Phaser.Line(spr.body.left, spr.body.top,
 				spr.body.right, spr.body.top),
-		new Phaser.line(spr.body.right, spr.body.top,
+		new Phaser.Line(spr.body.right, spr.body.top,
 				spr.body.right, spr.body.bottom),
-		new Phaser.line(spr.body.right, spr.body.bottom,
+		new Phaser.Line(spr.body.right, spr.body.bottom,
 				spr.body.left, spr.body.bottom),
-		new Phaser.line(spr.body.left, spr.body.bottom,
+		new Phaser.Line(spr.body.left, spr.body.bottom,
 				spr.body.left, spr.body.top)
 		];
 	    var withinView = false;
