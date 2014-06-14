@@ -274,6 +274,10 @@ var moonlightSettings = {
 	{
 	    'name': 'background_music',
 	    'path': 'bgm/Hidden Agenda.mp3'
+	},
+	{
+	    'name': 'fire',
+	    'path': 'sfx/fire.ogg'
 	}
     ],
     'images': [
