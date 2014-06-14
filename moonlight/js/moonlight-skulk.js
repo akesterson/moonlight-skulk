@@ -655,7 +655,7 @@ var AISprite = function(game, x, y, key, frame) {
 	    new Phaser.Line(spr.x + spr.body.width, spr.y + spr.body.height,
 			    spr.x, spr.y + spr.body.height),
 	    new Phaser.Line(spr.x, spr.y + spr.body.height,
-			    spr.x, spr.y);
+			    spr.x, spr.y)
 	];
 	var withinView = false;
 	rectLines.forEach(function(sl) {
