@@ -793,6 +793,7 @@ var AISprite = function(game, x, y, key, frame) {
     this.setWordBubble = function()
     {
 	if ( this.bubble !== null || this.sprite_group == undefined || this.enable_world_bubble == false) {
+	    console.log("Word bubble disabled");
 	    return;
 	}
 
@@ -839,10 +840,6 @@ var AISprite = function(game, x, y, key, frame) {
     {
 	var running = false;
 
-	if ( game.rnd.integerInRange(0, 500) > 450 ) {
-	    this.setWordBubble();
-	}
-
 	if ( this.bubble !== null ) {
 	    if ( this.clear_bubble == true ) {
 		this.bubble.destroy();
@@ -851,6 +848,8 @@ var AISprite = function(game, x, y, key, frame) {
 	    } else {
 		this.snap_bubble_position();
 	    }
+	} else if ( game.rnd.integerInRange(0, 500) > 450 ) {
+	    this.setWordBubble();
 	}
 
 	if ( game.rnd.integerInRange(0, 100) < 95 )
@@ -908,9 +907,12 @@ var AISprite = function(game, x, y, key, frame) {
 	'townsfolk-guard-1',
 	'townsfolk-guard-2'
     ];
+    
     Phaser.Sprite.call(this, game, x, y, null); 
     game.physics.arcade.enable(this);
     this.body.collideWorldBounds = true;
+    this.bubble = null;
+    this.enable_word_bubble = false;
 
     this.sprite_name = "townsfolk-male-1";
     this.sprite_group = "townsfolk-male";
