@@ -663,7 +663,7 @@ var AISprite = function(game, x, y, key, frame) {
 		newstate = newstate | (STATE_FACE_DOWN | STATE_MOVING);
 	    }
 	}
-	exchangeState(this, (STATES_FACE | STATES_MOVEMENT), newstate);
+	setMovingState(this, newstate);
 	setSpriteMovement(this);
     }
 
@@ -683,7 +683,7 @@ var AISprite = function(game, x, y, key, frame) {
 	addAnimation(this, 'bipedrunright');
 	addAnimation(this, 'bipedrunup');
 	addAnimation(this, 'bipedrundown');
-	exchangeState(this, (STATES_FACE | STATES_MOVEMENT), STATE_FACE_DOWN);
+	setMovingState(this, STATE_FACE_DOWN);
 	setSpriteMovement(this);
     }
 
@@ -862,12 +862,24 @@ GameState.prototype.updateShadowTexture = function() {
 
 function delState(spr, state)
 {
-    spr.state = spr.state ^ state;
+    if ( hasState(spr, state) )
+	spr.state = spr.state ^ state;
 }
 
 function addState(spr, state)
 {
     spr.state = spr.state | state;
+}
+
+function setMovingState(spr, state)
+{
+    delState(spr, STATE_FACE_LEFT);
+    delState(spr, STATE_FACE_RIGHT);
+    delStatr(spr, STATE_FACE_DOWN);
+    delState(spr, STATE_FACE_UP);
+    delState(spr, STATE_MOVING);
+    delState(spr, STATE_RUNNING);
+    setState(spr, state);
 }
 
 function exchangeState(spr, state1, state2)
@@ -968,7 +980,7 @@ GameState.prototype.check_input = function()
 	newstate = STATE_NONE;
     }
 
-    exchangeState(player, (STATES_FACE | STATES_MOVEMENT), newstate);
+    setMovingState(player, newstate);
     setSpriteMovement(player);
 }
 
