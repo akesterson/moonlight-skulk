@@ -878,7 +878,9 @@ function exchangeState(spr, state1, state2)
 
 function hasState(spr, state)
 {
-    return ( spr.state & state == state );
+    if ( spr.state & state == state )
+	return true;
+    return false;
 }
 
 function spriteFacing(spr)
