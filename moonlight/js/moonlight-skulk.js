@@ -609,6 +609,8 @@ var AISprite = function(game, x, y, key, frame) {
 
     this.snap_bubble_position = function()
     {
+	this.bubble_sprite.x = this.x + 16 - 150;
+	this.bubble_sprite.y = this.y - 33;
 	this.bubble_text.position.x = this.x + this.bubble_text_offsets[0];
 	this.bubble_text.position.y = this.y + this.bubble_text_offsets[1];
     }
@@ -652,8 +654,6 @@ var AISprite = function(game, x, y, key, frame) {
 		setSpriteMovement(this, running, 'right');
 	    }
 	}
-	if ( this.bubble_sprite )
-	    this.bubble_sprite.velocity = this.velocity;
     }
 
     this.update_new_values = function() {
