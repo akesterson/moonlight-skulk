@@ -598,7 +598,7 @@ var AISprite = function(game, x, y, key, frame) {
 					32 + this.view_distance,
 					96);
 	} else if ( hasState(this, STATE_FACE_DOWN) ) {
-	    return new Phaser.Rectangle(this.x - 32, this.y + 32,
+	    return new Phaser.Rectangle(this.x - 32, this.y,
 					96,
 					this.view_distance);
 	} else if ( hasState(this, STATE_FACE_UP) ) {
