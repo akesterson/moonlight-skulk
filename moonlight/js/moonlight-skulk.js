@@ -106,10 +106,10 @@ SoundSprite.prototype.update_new_values = function() {
     console.log("Sound should be playing");
 }
 
-function adjust_audio_relative_to(sndspr, spr) {
+SoundSprite.prototype.adjust_relative_to = function(spr) {
     console.log(spr);
-    if ( sndspr.sound_nofade == true ) {
-	sndspr.sound.volume = 1.0;
+    if ( this.sound_nofade == true ) {
+	this.sound.volume = 1.0;
 	return;
     }
 
@@ -117,10 +117,10 @@ function adjust_audio_relative_to(sndspr, spr) {
     // hypotenuse of a triangle drawn from the point (p) to the 
     // sprite in question
 
-    var xd = (spr.x - sndspr.x);
+    var xd = (spr.x - this.x);
     if ( xd < 0 )
 	xd = -(xd);
-    var yd = (spr.y - sndspr.y);
+    var yd = (spr.y - this.y);
     if ( yd < 0 )
 	yd = -(yd);
     var hyp = Math.sqrt((xd * xd) + (yd * yd));
@@ -128,8 +128,8 @@ function adjust_audio_relative_to(sndspr, spr) {
 	((game.camera.width/2) * (game.camera.width/2)) + 
 	    ((game.camera.height/2) * (game.camera.height/2))
     );
-    sndspr.sound.volume = Number(hyp_perfect / hyp);
-    console.log([hyp_perfect, hyp, sndspr.sound.volume]);
+    this.sound.volume = Number(hyp_perfect / hyp);
+    console.log([hyp_perfect, hyp, this.sound.volume]);
 }
 
 var moonlightSettings = {
@@ -1079,7 +1079,7 @@ GameState.prototype.update = function()
     
     function _fix_audio_relative(x) {
 	console.log(x);
-	adjust_audio_relative_to(x, this.player);
+	x.adjust_relative_to(player);
     }
     this.staticSounds.forEach(_fix_audio_relative, this);
 
