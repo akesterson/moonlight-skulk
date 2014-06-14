@@ -573,6 +573,7 @@ var EffectSprite = function(game, x, y, key, frame, animation) {
 	this.animations.destroy();
 	this.loadTexture(this.sprite_key, 0);
 	addAnimation(this, this.sprite_animation);
+	this.animations.play(this.sprite_animation);
     }
 
     Phaser.Sprite.call(this, game, x, y, null);
