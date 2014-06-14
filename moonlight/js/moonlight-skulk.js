@@ -64,8 +64,8 @@ Light.prototype.constructor = Light;
 Light.prototype.update_new_values = function() {
     this.radius = parseInt(this.radius);
     this.fade = this.radius * Number(this.fade);
-    this.flicker = (this.flicker == 'true');
-    this.always_render = (this.always_render == 'true')
+    this.flicker = parseBoolean(this.flicker);
+    this.always_render = parseBoolean(this.always_render);
     this.rect = new Phaser.Rectangle(this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2)
 }
 
@@ -102,9 +102,9 @@ SoundSprite.prototype.update_new_values = function() {
     }
     this.sound_position = parseInt(this.sound_position);
     this.sound_volume = Number(this.sound_volume);
-    this.sound_loop = (this.sound_loop == 'true');
-    this.sound_forcerestart = (this.sound_forcerestart == 'true');
-    this.sound_nofade = (this.sound_nofade == 'true');
+    this.sound_loop = parseBoolean(this.sound_loop);
+    this.sound_forcerestart = parseBoolean(this.sound_forcerestart);
+    this.sound_nofade = parseBoolean(this.sound_nofade);
 
     this.sound = game.add.audio(this.sound_key);
     this.sound.play(
@@ -755,10 +755,10 @@ var AISprite = function(game, x, y, key, frame) {
 	this.animations.destroy();
 	this.clearWordBubble();	
 	this.state = STATE_UNAWARE;
-	this.can_move = (this.can_move == 'true');
-	this.collide_with_player = (this.collide_with_player == 'true');
-	this.collide_with_map = (this.collide_with_map == 'true');
-	this.carries_light = (this.carries_light == 'true');
+	this.can_move = parseBoolean(this.can_move);
+	this.collide_with_player = parseBoolean(this.collide_with_player);
+	this.collide_with_map = parseBoolean(this.collide_with_map);
+	this.carries_light = parseBoolean(this.carries_light);
 
 	this.loadTexture(this.sprite_name, 0);
 	addAnimation(this, 'bipedwalkleft');
@@ -1008,6 +1008,11 @@ function spriteFacing(spr)
 	return "down";
     if ( hasState(spr, STATE_FACE_UP) )
 	return "up";
+}
+
+function parseBoolean(val)
+{
+    return ( val == 'true' || val == true );
 }
 
 function setSpriteMovement(spr)
