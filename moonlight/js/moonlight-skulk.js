@@ -113,6 +113,7 @@ SoundSprite.prototype.adjust_relative_to = function(spr) {
 	    // for more realistic effect whe the player returns
 	    this.sound.volume = 0.0;
 	}
+	return;
     }
 
     // The volume of any given sound is equal to the length of the
