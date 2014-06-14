@@ -62,6 +62,79 @@ Light.prototype.update_new_values = function() {
     this.rect = new Phaser.Rectangle(this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2)
 }
 
+function SoundSprite(game, x, y, key, frame, 
+		     sound_key, 
+		     sound_marker, 
+		     sound_position,
+		     sound_volume, 
+		     sound_loop, 
+		     sound_forcerestart)
+{
+    Phaser.Sprite.call(this, game, x, y, null);
+    this.sound_key = sound_key;
+    this.sound_marker = ( typeof sound_marker == undefined ? sound_marker : '');
+    this.sound_volume = ( typeof sound_volume == undefined ? sound_volume : 1.0 );
+    this.sound_position = ( typeof sound_position == undefined ? sound_position : 1.0 );
+    this.sound_loop = ( typeof sound_loop == undefined ? sound_loop : true );
+    this.sound_forcerestart = ( typeof sound_forcerestart == undefined ? sound_forcerestart : true );
+    this.sound_alwaysplay = (typeof sound_alwaysplay == undefined ? sound_alwaysplay : false);
+
+    this.max_edge_dist = new Phaser.Point();
+    this.max_edge_dist.x = game.camera.width / 2;
+    this.max_edge_dist.y = game.camera.height / 2;
+
+
+    this.sound = null;
+}
+
+SoundSprite.prototype = Object.create(Phaser.Sprite.prototype);
+SoundSprite.prototype.constructor = Light;
+
+SoundSprite.prototype.update_new_values = function() {
+    if ( this.sound_key == null ) {
+	if ( this.sound !== null ) {
+	    this.sound.stop();
+	}
+	return;
+    }
+    this.sound = game.sound.play(
+	this.sound_key,
+	this.sound_marker,
+	this.sound_position,
+	this.sound_volume,
+	this.sound_loop,
+	this.sound_forcerestart);
+}
+
+SoundSprite.prototype.adjust_relative_to = function(spr) {
+    if ( this.sound_alwaysplay == false ) {
+	if ( ! this.inCamera ) {
+	    // don't turn it off, let it continue at zero volume
+	    // for more realistic effect whe the player returns
+	    this.sound.volume = 0.0;
+	}
+    }
+
+    // The volume of any given sound is equal to the length of the
+    // hypotenuse of a triangle drawn from the point (p) to the 
+    // nearest corner of the camera
+
+    var xd_right = (game.camera.x + game.camera.width - this.x);
+    var xd_left = this.x - game.camera.x;
+    var yd_bottom = (game.camera.y + game.camera.height - this.y);
+    var yd_top = this.y - game.camera.y;
+    var hyp_perfect:Number = sqrt(((game.camera.width/2) * (game.camera.width/2)) + 
+			   ((game.camera.height/2) * (game.camera.height/2))
+			   );
+    var hyp_right:Number = sqrt((xd_right * xd_right) + (yd_bottom * yd_bottom));
+    var hyp_left:Number = sqrt((xd_left * xd_left) + (yd_top * yd_top));
+
+    if ( hyp_right > hyp_left ) {
+	this.sound.volume = Number(hyp_left / hyp_perfect);
+    } else {
+	this.sound.volume = Number(hyp_right / hyp_perfect);
+    }
+}
 
 var moonlightSettings = {
     'map' : {
@@ -181,8 +254,18 @@ var moonlightSettings = {
 		'inject_sprites': false
 	    }
 	},
-	'path': 'gfx/map.json'
+	'path': 'gfx/bigmap.json'
     },
+    'sounds': [
+	{
+	    'name': 'fountain',
+	    'path': 'sfx/fountain.wav'
+	},
+	{
+	    'name': 'background_music',
+	    'path': 'bgm/Basement Floor.mp3'
+	}
+    ],
     'images': [
 	{
 	    'name': 'simplelight',
@@ -808,6 +891,10 @@ GameState.prototype.preload = function()
 	var i = moonlightSettings['images'][k];
 	this.load.image(i['name'], i['path']);
     }
+    for (var k in moonlightSettings['sounds']) {
+	var s = moonlightSettings['sounds'][k];
+	this.load.image(s['name'], s['path']);
+    }
     for (var k in moonlightSettings['spritesheets']) {
 	var s = moonlightSettings['spritesheets'][k]
 	game.load.spritesheet(s['name'], s['path'], s['width'], s['height'], s['frames'])
@@ -878,30 +965,14 @@ GameState.prototype.create = function()
     );
     this.fpsText.fixedToCamera = true;
 
-    // for ( i = 0; i < 50 ; i++ ) {
-    // 	this.aiSprites.add(
-    // 	    new AISprite(game,
-    // 				game.rnd.integerInRange(0, game.world.width),
-    // 				game.rnd.integerInRange(0, game.world.height),
-    // 				game.rnd.integerInRange(0, 9)
-    // 			       )
-    // 	);
-    // }
 
     this.shadowTexture = game.add.bitmapData(game.world.width, game.world.height);
     // drop this lower to make the map darker
-    //this.shadowTexturColor_Base = 30;
     this.shadowTextureColor = 'rgb(40, 40, 40)';
-    //this.shadowTextureColor = 'rgb(255, 255, 255)';
-
-    // Create an object that will use the bitmap as a texture
     this.shadowSprite = game.add.image(0, 0, this.shadowTexture);
 
-    // Set the blend mode to MULTIPLY. This will darken the colors of
-    // everything below this sprite.
     this.shadowSprite.blendMode = Phaser.blendModes.MULTIPLY;
 
-    // Create the lights
     this.staticLights = game.add.group();
     this.map.createFromObjects('Lights', 97, 'player', 0, true, false, this.staticLights, Light);
     this.staticLights.forEach(function(light) {
@@ -909,60 +980,32 @@ GameState.prototype.create = function()
 	console.log(light);
     }, this)
 			     
-    // for (i = 0; i < 50 ; i++ ) {
-    // 	this.staticLights.add(
-    // 	    new Light(game,
-    // 		      game.rnd.integerInRange(0, game.world.width),
-    // 		      game.rnd.integerInRange(0, game.world.height),
-    // 		      game.rnd.integerInRange(0, 128),
-    // 		      game.rnd.realInRange(0.0, 1.0),
-    // 		      [
-    // 			  game.rnd.integerInRange(0, 255),
-    // 			  game.rnd.integerInRange(0, 255),
-    // 			  game.rnd.integerInRange(0, 255)
-    // 		      ],
-    // 		      flicker = [true, false][game.rnd.integerInRange(0, 1)]
-    // 		 )
-    // 	);
-    // }
-    //this.movingLight = new Light(game, game.width/2, game.height/2);
-    //this.lights.add(this.movingLight);
+    this.staticSounds = game.add.group();
+    this.map.createFromObjects('Sounds', 11, 'player', 0, true, false, this.staticSounds, SoundSprite);
+    this.staticSounds.forEach(function(snd) {
+	light.update_new_values();
+	console.log(light);
+    }, this)
 }
 
 GameState.prototype.updateShadowTexture = function() {
-    // This function updates the shadow texture (this.shadowTexture).
-    // First, it fills the entire texture with a dark shadow color.
-    // Then it draws a white circle centered on the pointer position.
-    // Because the texture is drawn to the screen using the MULTIPLY
-    // blend mode, the dark areas of the texture make all of the colors
-    // underneath it darker, while the white area is unaffected.
-
-    // Draw shadow
     this.shadowTexture.context.fillStyle = this.shadowTextureColor;
     this.shadowTexture.context.fillRect(0, 0, game.world.width, game.world.height);
 
-    // Iterate through each of the lights and draw the glow
     this.staticLights.forEach(function(light) {
-	// Don't draw lights that aren't on screen
 	if ( light.always_render !== true ) {
-	    var r1 = new Phaser.Rectangle(this.game.camera.x, 
-					  this.game.camera.y, 
-					  this.game.camera.width, 
-					  this.game.camera.height);
-	    if ( ! light.rect.intersects(r1) ) {
+	    if ( ! light.inCamera ) {
 		console.log("Light does not appear on camera");
 		return;
 	    }
 	}
 
 	if ( light.flicker ) {
-            // Randomly change the radius each frame
             var radius = light.radius + game.rnd.integerInRange(1,10);
 	} else {
 	    var radius = light.radius;
 	}
 
-        // Draw circle of light with a soft edge
         var gradient =
             this.shadowTexture.context.createRadialGradient(
                 light.x + 16, light.y + 16, light.fade,
@@ -976,7 +1019,6 @@ GameState.prototype.updateShadowTexture = function() {
         this.shadowTexture.context.fill();
     }, this);
 
-    // This just tells the engine it should update the texture cache
     this.shadowTexture.dirty = true;
 };
 
