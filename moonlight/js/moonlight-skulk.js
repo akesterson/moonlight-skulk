@@ -954,9 +954,9 @@ GameState.prototype.check_input = function()
 
     if ( controls.up.isDown) {
 	if ( controls.up.shiftKey ) {
-	    newstate = (STATE_FACE_LEFT | STATE_MOVING | STATE_RUNNING);
+	    newstate = (STATE_FACE_UP | STATE_MOVING | STATE_RUNNING);
 	} else {
-	    newstate = (STATE_FACE_LEFT | STATE_MOVING );
+	    newstate = (STATE_FACE_UP | STATE_MOVING );
 	}
     } else if ( controls.down.isDown ) {
 	if ( controls.down.shiftKey ) {
