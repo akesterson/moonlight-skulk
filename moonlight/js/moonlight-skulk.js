@@ -68,7 +68,8 @@ function SoundSprite(game, x, y, key, frame,
 		     sound_position,
 		     sound_volume, 
 		     sound_loop, 
-		     sound_forcerestart)
+		     sound_forcerestart,
+		     sound_nofade)
 {
     Phaser.Sprite.call(this, game, x, y, null);
     this.sound_key = sound_key;
@@ -77,7 +78,7 @@ function SoundSprite(game, x, y, key, frame,
     this.sound_position = ( typeof sound_position == undefined ? sound_position : 1.0 );
     this.sound_loop = ( typeof sound_loop == undefined ? sound_loop : true );
     this.sound_forcerestart = ( typeof sound_forcerestart == undefined ? sound_forcerestart : true );
-    this.sound_alwaysplay = (typeof sound_alwaysplay == undefined ? sound_alwaysplay : false);
+    this.sound_nofade = (typeof sound_alwaysplay == undefined ? sound_alwaysplay : false);
 
     this.max_edge_dist = new Phaser.Point();
     this.max_edge_dist.x = game.camera.width / 2;
@@ -106,14 +107,8 @@ SoundSprite.prototype.update_new_values = function() {
 }
 
 SoundSprite.prototype.adjust_relative_to = function(spr) {
-    if ( this.sound_alwaysplay == false ) {
-	// we can't use inCamera because we don't have a body/sprite
-	if ( game.camera.screenView.contains(this.x, this.y) == false ) {
-	    console.log("Sound is not on camera");
-	    // don't turn it off, let it continue at zero volume
-	    // for more realistic effect whe the player returns
-	    this.sound.volume = 0.0;
-	}
+    if ( this.sound_nofade == true ) {
+	this.sound.volume = 1.0;
 	return;
     }
 
