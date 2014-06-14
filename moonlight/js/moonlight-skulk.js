@@ -894,7 +894,7 @@ GameState.prototype.preload = function()
     }
     for (var k in moonlightSettings['sounds']) {
 	var s = moonlightSettings['sounds'][k];
-	this.load.image(s['name'], s['path']);
+	this.load.sound(s['name'], s['path']);
     }
     for (var k in moonlightSettings['spritesheets']) {
 	var s = moonlightSettings['spritesheets'][k]
