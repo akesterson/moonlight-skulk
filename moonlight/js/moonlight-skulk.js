@@ -288,6 +288,13 @@ var moonlightSettings = {
     ],
     'spritesheets': [
 	{
+	    'name': 'flame',
+	    'path': 'gfx/effects/flame.png',
+	    'width': 32,
+	    'height': 32,
+	    'frames': 96
+	},
+	{
 	    'name': 'player',
 	    'path': 'gfx/sprites/sprite-player.png',
 	    'width': 32,
@@ -404,6 +411,11 @@ var moonlightSettings = {
 	'bipedrunup': {
 	    'frames': [10, 11, 9],
 	    'speed': 12,
+	    'loop': true
+	},
+	'campfire_small': {
+	    'frames': [6, 7, 8],
+	    'speed': 6,
 	    'loop': true
 	}
     }
@@ -554,6 +566,17 @@ function stringSize(str, font)
     o.remove();
     console.log("stringSize : " + [w, h] + " : " + str);
     return [w, h];
+}
+
+var EffectSprite = function(game, x, y, key, frame, animation) {
+    this.update_new_values = function() {
+	this.animations.destroy();
+	this.loadTexture(this.sprite_key, 0);
+	addAnimation(this, this.sprite_animation);
+    }
+
+    Phaser.Sprite.call(this, game, x, y, null);
+    game.physics.arcade.enable(this);
 }
 
 var AISprite = function(game, x, y, key, frame) {
@@ -774,6 +797,12 @@ GameState.prototype.create = function()
 
 		this.map.createFromObjects('AI', 3544, 'player', 0, true, false, this.aiSprites, AISprite);
 		this.aiSprites.forEach(function(spr) {
+		    spr.update_new_values();
+		}, this)
+
+		this.effectSprites = game.add.group();
+		this.map.createFromObjects('EffectSprites', 1837, 'player', 0, true, false, this.effectSprites, EffectSprite);
+		this.effectSprites.forEach(function(spr) {
 		    spr.update_new_values();
 		}, this)
 	    };
