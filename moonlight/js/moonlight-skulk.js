@@ -588,7 +588,7 @@ EffectSprite.prototype = Object.create(Phaser.Sprite.prototype);
 EffectSprite.prototype.constructor = EffectSprite;
 
 var AISprite = function(game, x, y, key, frame) {
-    this.canSeeSprite = function(spr) {
+    this.canSeeSprite = function(spr, debug=false) {
 	var xd = (spr.x - this.x);
 	if ( xd < 0 )
 	    xd = -(xd);
@@ -598,6 +598,8 @@ var AISprite = function(game, x, y, key, frame) {
 
 	var hyp = Math.sqrt(Number(xd * xd) + Number(yd * yd));
 	if ( hyp > this.view_distance ) {
+	    if ( debug == true )
+		console.log(spr + " is too far away");
 	    return false;
 	}
 	// View cone intersection test
@@ -658,11 +660,18 @@ var AISprite = function(game, x, y, key, frame) {
 	var withinView = false;
 	rectLines.forEach(function(sl) {
 	    [[p1, p2], [p2, p3], [p3, p4], [p4, p1]].forEach(function(vl) {
+		console.log("sl vs tl");
 		tl = new Phaser.Line(vl[0].x, vl[0].y,
 				     vl[1].x, vl[1].y);
+		if ( debug == true ) {
+		    console.log(sl);
+		    console.log(tl);
+		}
 		if ( tl.intersects(sl) )
 		    return true;
 	    }, this);
+	    if ( debug == true ) 
+		console.log("contains ? " + sl.start.x + " " + sl.start.y);
 	    if ( viewcone.contains(sl.start.x, sl.start.y) )
 		return true;
 	}, this);
