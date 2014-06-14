@@ -558,7 +558,7 @@ var AISprite = function(game, x, y, key, frame) {
     }
 
     this.clearWordBubble = function() {
-	if ( this.bubble !== null )
+	if ( this.bubble_text !== null )
 	    this.clear_bubble = true;
 	this.enable_word_bubble = false;
 	this.timer = game.time.create(false);
@@ -568,7 +568,7 @@ var AISprite = function(game, x, y, key, frame) {
 
     this.setWordBubble = function()
     {
-	if ( this.bubble !== null || this.sprite_group == undefined || this.enable_world_bubble == false) {
+	if ( this.bubble_text !== null || this.sprite_group == undefined || this.enable_world_bubble == false) {
 	    return;
 	}
 
@@ -596,9 +596,10 @@ var AISprite = function(game, x, y, key, frame) {
 	text = mylines[game.rnd.integerInRange(0, mylines.length)];
 	style = {font: '14px Arial Bold', fill: '#ffffff', align: 'center'}
 	this.text_size = stringSize(text, style['font']);
-	this.bubble = game.add.text(this.x, this.y, text, style);
-	this.bubble_offsets = [ 16 - (this.text_size[0]/2), -( this.text_size[1]/2) ];
-	console.log(this.bubble_offsets);
+	this.bubble_sprite = game.add.sprite(this.x, this.y, 'wordbubble');
+	this.bubble_text = game.add.text(this.x, this.y, text, style);
+	this.bubble_text_offsets = [ 16 - (this.text_size[0]/2), -( this.text_size[1]/2) ];
+	console.log(this.bubble_text_offsets);
 	this.snap_bubble_position();
 
 	this.timer = game.time.create(false);
@@ -608,18 +609,18 @@ var AISprite = function(game, x, y, key, frame) {
 
     this.snap_bubble_position = function()
     {
-	this.bubble.position.x = this.x + this.bubble_offsets[0];
-	this.bubble.position.y = this.y + this.bubble_offsets[1];
+	this.bubble_text.position.x = this.x + this.bubble_text_offsets[0];
+	this.bubble_text.position.y = this.y + this.bubble_text_offsets[1];
     }
 
     this.update = function()
     {
 	var running = false;
 
-	if ( this.bubble !== null ) {
+	if ( this.bubble_text !== null ) {
 	    if ( this.clear_bubble == true ) {
-		this.bubble.destroy();
-		this.bubble = null;
+		this.bubble_text.destroy();
+		this.bubble_text = null;
 		this.clear_bubble = false;
 	    } else {
 		this.snap_bubble_position();
@@ -635,18 +636,22 @@ var AISprite = function(game, x, y, key, frame) {
 	switch ( game.rnd.integerInRange(0, 4) ) {
 	    case 0: {
 		setSpriteMovement(this, running, 'up');
+		setSpriteMovement(this.bubble_sprite, running, 'up');
 		break;
 	    }
 	    case 1: {
 		setSpriteMovement(this, running, 'down');
+		setSpriteMovement(this.bubble_sprite, running, 'down');
 		break;
 	    }
 	    case 2: {
 		setSpriteMovement(this, running, 'left');
+		setSpriteMovement(this.bubble_sprite, running, 'left');
 		break;
 	    }
 	    case 3: {
 		setSpriteMovement(this, running, 'right');
+		setSpriteMovement(this.bubble_sprite, running, 'right');
 	    }
 	}
     }
@@ -686,7 +691,7 @@ var AISprite = function(game, x, y, key, frame) {
     Phaser.Sprite.call(this, game, x, y, null);
     game.physics.arcade.enable(this);
     this.timer = null;
-    this.bubble = null;
+    this.bubble_text = null;
     this.enable_word_bubble = false;
     this.body.collideWorldBounds = true;
     this.sprite_name = "townsfolk-male-1";
