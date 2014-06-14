@@ -80,9 +80,6 @@ function SoundSprite(game, x, y, key, frame,
     this.sound_forcerestart = ( typeof sound_forcerestart == undefined ? sound_forcerestart : true );
     this.sound_nofade = (typeof sound_alwaysplay == undefined ? sound_alwaysplay : false);
 
-    this.max_edge_dist = new Phaser.Point();
-    this.max_edge_dist.x = game.camera.width / 2;
-    this.max_edge_dist.y = game.camera.height / 2;
     this.sound = null;
 }
 
@@ -123,11 +120,21 @@ SoundSprite.prototype.adjust_relative_to = function(spr) {
     var yd = (spr.y - this.y);
     if ( yd < 0 )
 	yd = -(yd);
-    var hyp = Math.sqrt((xd * xd) + (yd * yd));
-    var hyp_perfect = Math.sqrt(
-	((game.camera.width/2) * (game.camera.width/2)) + 
-	    ((game.camera.height/2) * (game.camera.height/2))
-    );
+
+    if ( yd == 0 ) {
+	var hyp = xd;
+	var hyp_perfect = game.camera.width / 2;
+    } else if ( xd == 0 ) {
+	var hyp = yd;
+	var hyp_perfect = game.camera.height / 2;
+    } else {
+	var hyp = Math.sqrt((xd * xd) + (yd * yd));
+	var hyp_perfect = Math.sqrt(
+	    ((game.camera.width/2) * (game.camera.width/2)) + 
+		((game.camera.height/2) * (game.camera.height/2))
+	);
+    }
+
     this.sound.volume = Math.min(1.0, Number(hyp_perfect / hyp));
     console.log([hyp_perfect, hyp, this.sound.volume]);
 }
