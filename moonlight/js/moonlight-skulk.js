@@ -824,6 +824,7 @@ var AISprite = function(game, x, y, key, frame) {
 	var mylines = moonlightDialog['status'][this.sprite_group][aistate];
 	text = mylines[game.rnd.integerInRange(0, mylines.length)];
 	style = {font: '14px Arial Bold', fill: '#ffffff', align: 'center'}
+	console.log(this + " said " + text);
 	this.text_size = stringSize(text, style['font']);
 	this.bubble = game.add.text(this.x, this.y, text, style);
 	this.bubble_offsets = [ (this.body.width/2) + -(this.text_size[0] / 2), -( this.text_size[1]/2) ];
@@ -883,7 +884,6 @@ var AISprite = function(game, x, y, key, frame) {
 	this.animations.destroy();
 	this.bubble = null;
 	this.clearWordBubble();	
-	this.enableWordBubble();
 	this.state = STATE_UNAWARE;
 
 	this.loadTexture(this.sprite_name, 0);
@@ -914,8 +914,6 @@ var AISprite = function(game, x, y, key, frame) {
     Phaser.Sprite.call(this, game, x, y, null); 
     game.physics.arcade.enable(this);
     this.body.collideWorldBounds = true;
-    this.bubble = null;
-    this.enable_word_bubble = false;
 
     this.sprite_name = "townsfolk-male-1";
     this.sprite_group = "townsfolk-male";
