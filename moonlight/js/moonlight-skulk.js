@@ -827,6 +827,7 @@ var AISprite = function(game, x, y, key, frame) {
 	this.text_size = stringSize(text, style['font']);
 	this.bubble = game.add.text(this.x, this.y, text, style);
 	this.bubble_offsets = [ 16 - (this.text_size[0]/2), -( this.text_size[1]/2) ];
+	console.log(this.bubble_offsets);
 	this.snap_bubble_position();
 
 	this.timer = game.time.create(false);
