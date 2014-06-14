@@ -780,6 +780,9 @@ function stringSize(str, font)
 var AISprite = function(game, x, y, key, frame) {
     this.enableWordBubble = function() {
 	this.enable_word_bubble = true;
+	timer = game.time.create(false);
+	timerev = timer.add(20000 + (game.rnd.integerInRange(0, 30) * 1000), this.setWordBubble, this);
+	timer.start()
     }
 
     this.clearWordBubble = function() {
@@ -793,7 +796,6 @@ var AISprite = function(game, x, y, key, frame) {
     this.setWordBubble = function()
     {
 	if ( this.bubble !== null || this.sprite_group == undefined || this.enable_world_bubble == false) {
-	    console.log("Word bubble disabled");
 	    return;
 	}
 
@@ -848,8 +850,6 @@ var AISprite = function(game, x, y, key, frame) {
 	    } else {
 		this.snap_bubble_position();
 	    }
-	} else if ( game.rnd.integerInRange(0, 500) > 450 ) {
-	    this.setWordBubble();
 	}
 
 	if ( game.rnd.integerInRange(0, 100) < 95 )
@@ -881,6 +881,7 @@ var AISprite = function(game, x, y, key, frame) {
 	this.animations.destroy();
 	this.bubble = null;
 	this.clearWordBubble();	
+	this.enableWordBubble();
 	this.state = STATE_UNAWARE;
 
 	this.loadTexture(this.sprite_name, 0);
