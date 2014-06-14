@@ -2,11 +2,16 @@ STATE_UNAWARE = 1 << 1;
 STATE_CONCERNED = 1 << 2;
 STATE_ALERTED = 1 << 3;
 STATE_LOSTHIM = 1 << 4;
-STATE_RUN = 1 << 5;
-STATE_MOVE_LEFT = 1 << 6;
-STATE_MOVE_RIGHT = 1 << 7;
-STATE_MOVE_UP = 1 << 8;
-STATE_MOVE_DOWN = 1 << 9;
+
+STATE_RUNNING = 1 << 5;
+STATE_FACE_LEFT = 1 << 6;
+STATE_FACE_RIGHT = 1 << 7;
+STATE_FACE_UP = 1 << 8;
+STATE_FACE_DOWN = 1 << 9;
+STATE_MOVING = 1 << 10;
+
+STATES_MOVEMENT = (STATE_MOVING | STATE_RUNNING);
+STATES_FACE = (STATE_FACE_LEFT | STATE_FACE_RIGHT | STATE_FACE_DOWN | STATE_FACE_UP);
 
 SPRITE_TOWNSFOLK_MALE = 1;
 SPRITE_TOWNSFOLK_FEMALE = 2;
@@ -16,10 +21,12 @@ SPRITE_TOWNSFOLK_MALE1 = 1;
 SPRITE_TOWNSFOLK_MALE2 = 2;
 SPRITE_TOWNSFOLK_MALE3 = 3;
 SPRITE_TOWNSFOLK_MALE4 = 4;
+
 SPRITE_TOWNSFOLK_FEMALE1 = 5;
 SPRITE_TOWNSFOLK_FEMALE2 = 6;
 SPRITE_TOWNSFOLK_FEMALE3 = 7;
 SPRITE_TOWNSFOLK_FEMALE4 = 8;
+
 SPRITE_TOWNSFOLK_GUARD1 = 9;
 SPRITE_TOWNSFOLK_GUARD2 = 10;
 
@@ -618,6 +625,7 @@ var AISprite = function(game, x, y, key, frame) {
     this.update = function()
     {
 	var running = false;
+	var newstate = STATE_NONE;
 
 	if ( this.bubble_text !== null ) {
 	    if ( this.clear_bubble == true ) {
@@ -633,27 +641,29 @@ var AISprite = function(game, x, y, key, frame) {
 
 	if ( game.rnd.integerInRange(0, 100) < 95 )
 	    return;
-	//if ( game.rnd.integerInRange(0, 100) > 90 ) {
-	//    running = true;
-	//}
+	if ( game.rnd.integerInRange(0, 100) > 90 ) {
+	    newstate = STATE_RUNNING;
+	}
 
 	switch ( game.rnd.integerInRange(0, 4) ) {
 	    case 0: {
-		setSpriteMovement(this, running, 'up');
+		newstate = newstate | (STATE_FACE_RIGHT | STATE_MOVING);
 		break;
 	    }
 	    case 1: {
-		setSpriteMovement(this, running, 'down');
+		newstate = newstate | (STATE_FACE_LEFT | STATE_MOVING);
 		break;
 	    }
 	    case 2: {
-		setSpriteMovement(this, running, 'left');
+		newstate = newstate | (STATE_FACE_UP | STATE_MOVING);
 		break;
 	    }
 	    case 3: {
-		setSpriteMovement(this, running, 'right');
+		newstate = newstate | (STATE_FACE_DOWN | STATE_MOVING);
 	    }
 	}
+	exchangeState(this, (STATES_FACE | STATES_MOVEMENT), newstate);
+	setSpriteMovement(this);
     }
 
     this.update_new_values = function() {
@@ -672,7 +682,8 @@ var AISprite = function(game, x, y, key, frame) {
 	addAnimation(this, 'bipedrunright');
 	addAnimation(this, 'bipedrunup');
 	addAnimation(this, 'bipedrundown');
-	setSpriteMovement(this, false, 'down');
+	exchangeState(this, (STATES_FACE | STATES_MOVEMENT), STATE_FACE_DOWN);
+	setSpriteMovement(this);
     }
 
     var spritenames_by_type = [
@@ -848,19 +859,60 @@ GameState.prototype.updateShadowTexture = function() {
     this.shadowTexture.dirty = true;
 };
 
-function setSpriteMovement(spr, running, dir)
+function delState(spr, state)
+{
+    spr.state = spr.state ^ state;
+}
+
+function addState(spr, state)
+{
+    spr.state = spr.state | state;
+}
+
+function exchangeState(spr, state1, state2)
+{
+    delState(spr, state1);
+    addState(spr, state2);
+}
+
+function hasState(spr, state)
+{
+    return ( spr.state & state == state );
+}
+
+function spriteFacing(spr)
+{
+    if ( hasState(spr, STATE_FACE_LEFT) )
+	return "left";
+    if ( hasState(spr, STATE_FACE_RIGHT) )
+	return "right";
+    if ( hasState(spr, STATE_FACE_DOWN) )
+	return "down";
+    if ( hasState(spr, STATE_FACE_UP) )
+	return "up";
+}
+
+function setSpriteMovement(spr)
 {
     var x = 0;
     var y = 0;
+    var dir = spriteFacing(spr);
 
-    if ( running ) {
+    spr.body.setSize(16, 16, 8, 16);
+
+    if ( hasState(spr, STATE_RUNNING) ) {
 	x = 200;
 	y = 200;
 	spr.animations.play("bipedrun" + dir);
-    } else {
+    } else if ( hasState(spr, STATE_MOVING) ) {
 	x = 75;
 	y = 75;
 	spr.animations.play("bipedwalk" + dir);
+    } else {
+	spr.body.velocity.x = 0;
+	spr.body.velocity.y = 0;
+	spr.animations.stop();
+	return;
     }
 
     if ( dir == "left" ) {
@@ -876,7 +928,6 @@ function setSpriteMovement(spr, running, dir)
 	spr.body.velocity.x = 0;
 	spr.body.velocity.y = y;
     }
-    spr.body.setSize(16, 16, 8, 16);
 }
 
 GameState.prototype.check_input = function()
@@ -884,18 +935,38 @@ GameState.prototype.check_input = function()
     player.body.velocity.x = 0;
     player.body.velocity.y = 0;
     velocityMod = 0;
+    var newstate = 0;
 
     if ( controls.up.isDown) {
-	setSpriteMovement(player, controls.up.shiftKey, 'up');
+	if ( controls.up.shiftKey ) {
+	    newstate = (STATE_FACE_LEFT | STATE_MOVING | STATE_RUNNING);
+	} else {
+	    newstate = (STATE_FACE_LEFT | STATE_MOVING );
+	}
     } else if ( controls.down.isDown ) {
-	setSpriteMovement(player, controls.up.shiftKey, 'down');
+	if ( controls.down.shiftKey ) {
+	    newstate = (STATE_FACE_DOWN | STATE_MOVING | STATE_RUNNING);
+	} else {
+	    newstate = (STATE_FACE_DOWN | STATE_MOVING );
+	}
     } else if ( controls.left.isDown ) {
-	setSpriteMovement(player, controls.up.shiftKey, 'left');
+	if ( controls.left.shiftKey ) {
+	    newstate = (STATE_FACE_LEFT | STATE_MOVING | STATE_RUNNING);
+	} else {
+	    newstate = (STATE_FACE_LEFT | STATE_MOVING );
+	}
     } else if ( controls.right.isDown ) {
-	setSpriteMovement(player, controls.up.shiftKey, 'right');
+	if ( controls.right.shiftKey ) {
+	    newstate = (STATE_FACE_RIGHT | STATE_MOVING | STATE_RUNNING);
+	} else {
+	    newstate = (STATE_FACE_RIGHT | STATE_MOVING );
+	}
     } else {
-	player.animations.stop(null, true);
+	newstate = STATE_NONE;
     }
+
+    exchangeState(player, (STATES_FACE | STATES_MOVEMENT), newstate);
+    setSpriteMovement(player);
 }
 
 GameState.prototype.update = function()
