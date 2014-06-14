@@ -265,7 +265,7 @@ var moonlightSettings = {
 	},
 	{
 	    'name': 'background_music',
-	    'path': 'bgm/Basement Floor.mp3'
+	    'path': 'bgm/Hidden Agenda.mp3'
 	}
     ],
     'images': [
