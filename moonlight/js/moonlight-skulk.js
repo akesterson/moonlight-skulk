@@ -128,8 +128,10 @@ SoundSprite.prototype.adjust_relative_to = function(spr) {
     );
 
     this.sound.volume = (1.0 - Number(hyp / hyp_perfect));
+    // Math.max doesn't work here??
+    if ( this.sound.volume < 0 )
+	this.sound.volume = 0;
     
-    console.log([hyp_perfect, hyp, (1.0 - Number(hyp / hyp_perfect)), this.sound.volume]);
 }
 
 var moonlightSettings = {
@@ -929,7 +931,6 @@ GameState.prototype.create = function()
 		this.map.createFromObjects('AI', 3544, 'player', 0, true, false, this.aiSprites, AISprite);
 		this.aiSprites.forEach(function(spr) {
 		    spr.update_new_values();
-		    console.log(spr);
 		}, this)
 	    };
 	    if ( lp['collides'] == true ) {
@@ -973,14 +974,12 @@ GameState.prototype.create = function()
     this.map.createFromObjects('Lights', 97, 'player', 0, true, false, this.staticLights, Light);
     this.staticLights.forEach(function(light) {
 	light.update_new_values();
-	console.log(light);
     }, this)
 			     
     this.staticSounds = game.add.group();
     this.map.createFromObjects('Sounds', 11, 'player', 0, true, false, this.staticSounds, SoundSprite);
     this.staticSounds.forEach(function(snd) {
 	snd.update_new_values();
-	console.log(snd);
     }, this)
 }
 
@@ -991,7 +990,6 @@ GameState.prototype.updateShadowTexture = function() {
     this.staticLights.forEach(function(light) {
 	if ( light.always_render !== true ) {
 	    if ( ! light.inCamera ) {
-		console.log("Light does not appear on camera");
 		return;
 	    }
 	}
@@ -1078,7 +1076,6 @@ GameState.prototype.update = function()
     }
     
     function _fix_audio_relative(x) {
-	console.log(x);
 	x.adjust_relative_to(player);
     }
     this.staticSounds.forEach(_fix_audio_relative, this);
