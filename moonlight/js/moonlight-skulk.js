@@ -95,8 +95,8 @@ SoundSprite.prototype.update_new_values = function() {
 	}
 	return;
     }
-    this.sound = game.sound.play(
-	this.sound_key,
+    this.sound = game.add.audio(this.sound_key);
+    this.sound.play(
 	this.sound_marker,
 	this.sound_position,
 	this.sound_volume,
@@ -894,7 +894,7 @@ GameState.prototype.preload = function()
     }
     for (var k in moonlightSettings['sounds']) {
 	var s = moonlightSettings['sounds'][k];
-	game.load.audio(s['name'], s['path']);
+	this.load.audio(s['name'], s['path']);
     }
     for (var k in moonlightSettings['spritesheets']) {
 	var s = moonlightSettings['spritesheets'][k]
