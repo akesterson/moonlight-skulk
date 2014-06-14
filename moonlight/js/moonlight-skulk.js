@@ -577,6 +577,8 @@ var EffectSprite = function(game, x, y, key, frame, animation) {
 
     Phaser.Sprite.call(this, game, x, y, null);
     game.physics.arcade.enable(this);
+    this.collide_with_map = true;
+    this.collide_with_player = true;
 }
 
 EffectSprite.prototype = Object.create(Phaser.Sprite.prototype);
@@ -728,6 +730,8 @@ var AISprite = function(game, x, y, key, frame) {
     
     Phaser.Sprite.call(this, game, x, y, null);
     game.physics.arcade.enable(this);
+    this.collide_with_player = true;
+    this.collide_with_map = true;
     this.timer = null;
     this.bubble_text = null;
     this.enable_word_bubble = false;
@@ -1032,12 +1036,18 @@ GameState.prototype.update = function()
 
 
     function _inner_collide(x) {
-	for ( var ln in this.map_collision_layers ) {
-	    layer = this.map_collision_layers[ln];
-	    this.physics.arcade.collide(x, layer);
+	if ( x.collide_with_map == true ) {
+	    for ( var ln in this.map_collision_layers ) {
+		layer = this.map_collision_layers[ln];
+		this.physics.arcade.collide(x, layer);
+	    }
 	}
+	if ( x.collide_with_player == false )
+	    return;
 	this.physics.arcade.collide(x, player);
     }
+
+    this.effectSprites.forEach(_inner_collide, this);
 
     this.aiSprites.forEach(_inner_collide, this);
     this.updateShadowTexture();
