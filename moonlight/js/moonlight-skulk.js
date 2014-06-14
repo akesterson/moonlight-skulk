@@ -47,7 +47,6 @@ var Light = function(game, x, y, key, frame, radius, fade, color_start, color_st
     this.always_render = always_render
     this.rect = new Phaser.Rectangle(this.x - radius, this.y - radius, radius * 2, radius * 2)
     this.flicker = flicker;
-    console.log(this);
 };
 
 // Lightes are a type of Phaser.Sprite
@@ -78,7 +77,7 @@ function SoundSprite(game, x, y, key, frame,
     this.sound_position = ( typeof sound_position == undefined ? parseInt(sound_position) : 1.0 );
     this.sound_loop = ( typeof sound_loop == undefined ? Boolean(sound_loop) : true );
     this.sound_forcerestart = ( typeof sound_forcerestart == undefined ? Boolean(sound_forcerestart) : true );
-    this.sound_nofade = (typeof sound_nofade == undefined ? Boolean(sound_alwaysplay) : false);
+    this.sound_nofade = (typeof sound_nofade == undefined ? Boolean(sound_nofade) : false);
 
     this.sound = null;
 }
@@ -100,6 +99,7 @@ SoundSprite.prototype.update_new_values = function() {
 	this.sound_volume,
 	this.sound_loop,
 	this.sound_forcerestart);
+    console.log(this);
 }
 
 SoundSprite.prototype.adjust_relative_to = function(spr) {
