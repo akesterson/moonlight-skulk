@@ -782,7 +782,6 @@ var AISprite = function(game, x, y, key, frame) {
 	this.enable_word_bubble = true;
 	this.timer = game.time.create(false);
 	var timerdelta = 10000 + (game.rnd.integerInRange(0, 20) * 1000);
-	console.log("In " + timerdelta + " ms, " + this + " will say something");
 	timerev = this.timer.add(timerdelta, this.setWordBubble, this);
 	this.timer.start()
     }
@@ -792,7 +791,6 @@ var AISprite = function(game, x, y, key, frame) {
 	    this.clear_bubble = true;
 	this.enable_word_bubble = false;
 	this.timer = game.time.create(false);
-	console.log("In 1000 ms, " + this + " will enable speech");	
 	timerev = this.timer.add(1000, this.enableWordBubble, this);
 	this.timer.start()
     }
@@ -826,7 +824,6 @@ var AISprite = function(game, x, y, key, frame) {
 	var mylines = moonlightDialog['status'][this.sprite_group][aistate];
 	text = mylines[game.rnd.integerInRange(0, mylines.length)];
 	style = {font: '14px Arial Bold', fill: '#ffffff', align: 'center'}
-	console.log(this + " said " + text);
 	this.text_size = stringSize(text, style['font']);
 	this.bubble = game.add.text(this.x, this.y, text, style);
 	this.bubble_offsets = [ (this.body.width/2) + -(this.text_size[0] / 2), -( this.text_size[1]/2) ];
@@ -841,7 +838,6 @@ var AISprite = function(game, x, y, key, frame) {
     {
 	this.bubble.position.x = this.x + this.bubble_offsets[0];
 	this.bubble.position.y = this.y + this.bubble_offsets[1];
-	console.log(this);
     }
 
     this.update = function()
@@ -850,7 +846,6 @@ var AISprite = function(game, x, y, key, frame) {
 
 	if ( this.bubble !== null ) {
 	    if ( this.clear_bubble == true ) {
-		console.log(this + " cleared word bubble");
 		this.bubble.destroy();
 		this.bubble = null;
 		this.clear_bubble = false;
