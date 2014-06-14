@@ -878,7 +878,7 @@ function exchangeState(spr, state1, state2)
 
 function hasState(spr, state)
 {
-    if ( spr.state & state == state )
+    if ( (spr.state & state) == state )
 	return true;
     return false;
 }
