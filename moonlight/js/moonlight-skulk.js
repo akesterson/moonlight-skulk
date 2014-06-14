@@ -82,8 +82,6 @@ function SoundSprite(game, x, y, key, frame,
     this.max_edge_dist = new Phaser.Point();
     this.max_edge_dist.x = game.camera.width / 2;
     this.max_edge_dist.y = game.camera.height / 2;
-
-
     this.sound = null;
 }
 
@@ -104,6 +102,7 @@ SoundSprite.prototype.update_new_values = function() {
 	this.sound_volume,
 	this.sound_loop,
 	this.sound_forcerestart);
+    console.log("Sound should be playing");
 }
 
 SoundSprite.prototype.adjust_relative_to = function(spr) {
