@@ -781,7 +781,7 @@ var AISprite = function(game, x, y, key, frame) {
     this.enableWordBubble = function() {
 	this.enable_word_bubble = true;
 	this.timer = game.time.create(false);
-	var timerdelta = 20000 + (game.rnd.integerInRange(0, 30) * 1000);
+	var timerdelta = 10000 + (game.rnd.integerInRange(0, 20) * 1000);
 	console.log("In " + timerdelta + " ms, " + this + " will say something");
 	timerev = this.timer.add(timerdelta, this.setWordBubble, this);
 	this.timer.start()
@@ -840,6 +840,7 @@ var AISprite = function(game, x, y, key, frame) {
     {
 	this.bubble.position.x = this.x + this.bubble_offsets[0];
 	this.bubble.position.y = this.y + this.bubble_offsets[1];
+	console.log(this);
     }
 
     this.update = function()
@@ -848,6 +849,7 @@ var AISprite = function(game, x, y, key, frame) {
 
 	if ( this.bubble !== null ) {
 	    if ( this.clear_bubble == true ) {
+		console.log(this + " cleared word bubble");
 		this.bubble.destroy();
 		this.bubble = null;
 		this.clear_bubble = false;

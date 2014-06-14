@@ -161,21 +161,6 @@
                 {
                  "gid":3544,
                  "height":0,
-                 "name":"FountainGuard",
-                 "properties":
-                    {
-                     "sprite_group":"townsfolk-female",
-                     "sprite_name":"townsfolk-female-3"
-                    },
-                 "type":"AISprites",
-                 "visible":true,
-                 "width":0,
-                 "x":824,
-                 "y":953
-                }, 
-                {
-                 "gid":3544,
-                 "height":0,
                  "name":"",
                  "properties":
                     {
@@ -189,7 +174,7 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "width":100,
          "x":0,
          "y":0
