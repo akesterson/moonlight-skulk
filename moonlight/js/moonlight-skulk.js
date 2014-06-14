@@ -590,26 +590,26 @@ EffectSprite.prototype.constructor = EffectSprite;
 var AISprite = function(game, x, y, key, frame) {
     this.viewRectangle = function() {
 	if ( hasState(this, STATE_FACE_LEFT) ) {
-	    var viewrect = new Phaser.Rectangle(this.x, this.y - 32,
-						this.x - this.view_distance,
-						this.y + 64);
+	    return new Phaser.Rectangle(this.x, this.y - 32,
+					this.x - this.view_distance,
+					this.y + 64);
 	} else if ( hasState(this, STATE_FACE_RIGHT) ) {
-	    var viewrect = new Phaser.Rectangle(this.x + 32, this.y - 32,
-						this.x + 32 + this.view_distance,
-						this.y + 64);
+	    return new Phaser.Rectangle(this.x + 32, this.y - 32,
+					this.x + 32 + this.view_distance,
+					this.y + 64);
 	} else if ( hasState(this, STATE_FACE_DOWN) ) {
-	    var viewrect = new Phaser.Rectangle(this.x - 32, this.y + 32,
-						this.x + 64,
-						this.y + 32 + this.view_distance);
+	    return new Phaser.Rectangle(this.x - 32, this.y + 32,
+					this.x + 64,
+					this.y + 32 + this.view_distance);
 	} else if ( hasState(this, STATE_FACE_UP) ) {
-	    var viewrect = new Phaser.Rectangle(this.x - 32, this.y,
-						this.x + 64,
-						this.y - this.view_distance);
+	    return new Phaser.Rectangle(this.x - 32, this.y,
+					this.x + 64,
+					this.y - this.view_distance);
 	} else {
 	    return null;
 	}
-
     }
+
     this.canSeeSprite = function(spr, debug) {
 	var xd = (spr.x - this.x);
 	if ( xd < 0 )
