@@ -879,7 +879,7 @@ function setMovingState(spr, state)
     delState(spr, STATE_FACE_UP);
     delState(spr, STATE_MOVING);
     delState(spr, STATE_RUNNING);
-    setState(spr, state);
+    addState(spr, state);
 }
 
 function exchangeState(spr, state1, state2)
