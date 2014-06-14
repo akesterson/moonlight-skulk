@@ -121,22 +121,14 @@ SoundSprite.prototype.adjust_relative_to = function(spr) {
     if ( yd < 0 )
 	yd = -(yd);
 
-    if ( yd == 0 ) {
-	var hyp = xd;
-	var hyp_perfect = game.camera.width / 2;
-    } else if ( xd == 0 ) {
-	var hyp = yd;
-	var hyp_perfect = game.camera.height / 2;
-    } else {
-	var hyp = Math.sqrt((xd * xd) + (yd * yd));
-	var hyp_perfect = Math.sqrt(
-	    Number((game.camera.width/2) * (game.camera.width/2)) + 
-		Number((game.camera.height/2) * (game.camera.height/2))
-	);
-    }
+    var hyp = Math.sqrt((xd * xd) + (yd * yd));
+    var hyp_perfect = Math.sqrt(
+	Number((game.camera.width/2) * (game.camera.width/2)) + 
+	    Number((game.camera.height/2) * (game.camera.height/2))
+    );
 
-    this.sound.volume = Math.min(1.0, Number(hyp_perfect / hyp));
-    console.log([hyp_perfect, hyp, Number(hyp_perfect / hyp), this.sound.volume]);
+    this.sound.volume = Math.max(1.0, Number(hyp / hyp_perfect));
+    console.log([hyp_perfect, hyp, Number(hyp / hyp_perfect), this.sound.volume]);
 }
 
 var moonlightSettings = {
