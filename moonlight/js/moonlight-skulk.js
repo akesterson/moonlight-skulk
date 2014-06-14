@@ -599,76 +599,77 @@ var AISprite = function(game, x, y, key, frame) {
 	    yd = -(yd);
 
 	var hyp = Math.sqrt(Number(xd * xd) + Number(yd * yd));
-	if ( hyp < this.view_distance ) {
-	    // View cone intersection test
-	    var p1 = new Phaser.Point(this.x + (this.body.width / 2),
+	if ( hyp > this.view_distance ) {
+	    return false;
+	}
+	// View cone intersection test
+	var p1 = new Phaser.Point(this.x + (this.body.width / 2),
 				  this.y);
-	    var viewline = new Phaser.Line(this.x + (this.body.width / 2),
+	var viewline = new Phaser.Line(this.x + (this.body.width / 2),
 				       this.y,
 				       this.x + (this.body.width / 2),
 				       this.y - this.view_distance );
-	    var p2 = new Phaser.Point(viewline.end.x, viewline.end.y);
-	    p2.rotate(p1.x, p1.y, -45, true);
-	    var p3 = new Phaser.Point(viewline.end.x, viewline.end.y);
-	    var p4 = new Phaser.Point(viewline.end.x, viewline.end.y);
-	    p4.rotate(p1.x, p1.y, 45, true);
-
-	    /*
-	     *  ... In case this isn't obvious, this is the sprite's view cone:
-	     * 
-	     *       p3
-	     *    p2    p4
-	     *     \    /
-	     *      \  /
-	     *       \/
-	     *       p1
-	     */
-
-	    if ( hasState(this, STATE_FACE_LEFT) ) {
-		rotatePoints([p1, p2, p3, p4], 
-			     this.x + (this.body.width / 2),
-			     this.y + (this.body.height / 2),
-			     -90);
-	    } else if ( hasState(this, STATE_FACE_RIGHT) ) {
-		rotatePoints([p1, p2, p3, p4], 
-			     this.x + (this.body.width / 2),
-			     this.y + (this.body.height / 2),
-			     90);
-	    } else if ( hasState(this, STATE_FACE_DOWN) ) {
-		rotatePoints([p1, p2, p3, p4], 
-			     this.x + (this.body.width / 2),
-			     this.y + (this.body.height / 2),
-			     180);
-	    }
-
-	    
-	    var viewcone = new Phaser.Polygon(p1, p2, p3, p1);
-
-	    // FIXME : There has got to be a better way to do this
-	    var rectLines = [
-		new Phaser.Line(spr.body.left, spr.body.top,
-				spr.body.right, spr.body.top),
-		new Phaser.Line(spr.body.right, spr.body.top,
-				spr.body.right, spr.body.bottom),
-		new Phaser.Line(spr.body.right, spr.body.bottom,
-				spr.body.left, spr.body.bottom),
-		new Phaser.Line(spr.body.left, spr.body.bottom,
-				spr.body.left, spr.body.top)
-		];
-	    var withinView = false;
-	    rectLines.forEach(function(sl) {
-		[[p1, p2], [p2, p3], [p3, p4], [p4, p1]].forEach(function(vl) {
-		    tl = new Phaser.Line(vl[0].x, vl[0].y,
-					 vl[1].x, vl[1].y);
-		    if ( tl.intersects(sl) )
-			return true;
-		}, this);
-		if ( viewcone.contains(sl.start.x, sl.start.y) )
+	var p2 = new Phaser.Point(viewline.end.x, viewline.end.y);
+	p2.rotate(p1.x, p1.y, -45, true);
+	var p3 = new Phaser.Point(viewline.end.x, viewline.end.y);
+	var p4 = new Phaser.Point(viewline.end.x, viewline.end.y);
+	p4.rotate(p1.x, p1.y, 45, true);
+	
+	/*
+	 *  ... In case this isn't obvious, this is the sprite's view cone:
+	 * 
+	 *       p3
+	 *    p2    p4
+	 *     \    /
+	 *      \  /
+	 *       \/
+	 *       p1
+	 */
+	
+	if ( hasState(this, STATE_FACE_LEFT) ) {
+	    rotatePoints([p1, p2, p3, p4], 
+			 this.x + (this.body.width / 2),
+			 this.y + (this.body.height / 2),
+			 -90);
+	} else if ( hasState(this, STATE_FACE_RIGHT) ) {
+	    rotatePoints([p1, p2, p3, p4], 
+			 this.x + (this.body.width / 2),
+			 this.y + (this.body.height / 2),
+			 90);
+	} else if ( hasState(this, STATE_FACE_DOWN) ) {
+	    rotatePoints([p1, p2, p3, p4], 
+			 this.x + (this.body.width / 2),
+			 this.y + (this.body.height / 2),
+			 180);
+	}
+	
+	
+	var viewcone = new Phaser.Polygon(p1, p2, p3, p1);
+	
+	// FIXME : There has got to be a better way to do this
+	var rectLines = [
+	    new Phaser.Line(spr.body.left, spr.body.top,
+			    spr.body.right, spr.body.top),
+	    new Phaser.Line(spr.body.right, spr.body.top,
+			    spr.body.right, spr.body.bottom),
+	    new Phaser.Line(spr.body.right, spr.body.bottom,
+			    spr.body.left, spr.body.bottom),
+	    new Phaser.Line(spr.body.left, spr.body.bottom,
+			    spr.body.left, spr.body.top)
+	];
+	var withinView = false;
+	rectLines.forEach(function(sl) {
+	    [[p1, p2], [p2, p3], [p3, p4], [p4, p1]].forEach(function(vl) {
+		tl = new Phaser.Line(vl[0].x, vl[0].y,
+				     vl[1].x, vl[1].y);
+		if ( tl.intersects(sl) )
 		    return true;
 	    }, this);
-
-	    return false;
-	}
+	    if ( viewcone.contains(sl.start.x, sl.start.y) )
+		return true;
+	}, this);
+	
+	return false;
     }
 
     this.enableWordBubble = function() {
