@@ -602,86 +602,30 @@ var AISprite = function(game, x, y, key, frame) {
 		console.log(spr + " is too far away");
 	    return false;
 	}
-	// View cone intersection test
-	var p1 = new Phaser.Point(this.x + (this.body.width / 2),
-				  this.y);
-	var viewline = new Phaser.Line(this.x + (this.body.width / 2),
-				       this.y,
-				       this.x + (this.body.width / 2),
-				       this.y - this.view_distance );
-	var p2 = new Phaser.Point(viewline.end.x, viewline.end.y);
-	p2.rotate(p1.x, p1.y, -45, true);
-	var p3 = new Phaser.Point(viewline.end.x, viewline.end.y);
-	var p4 = new Phaser.Point(viewline.end.x, viewline.end.y);
-	p4.rotate(p1.x, p1.y, 45, true);
 
-	if (debug == true )
-	    console.log([p1, p2, p3, p4]);
-	
-	/*
-	 *  ... In case this isn't obvious, this is the sprite's view cone:
-	 * 
-	 *       p3
-	 *    p2    p4
-	 *     \    /
-	 *      \  /
-	 *       \/
-	 *       p1
-	 */
-	
+	var viewrect = null;
+
 	if ( hasState(this, STATE_FACE_LEFT) ) {
-	    rotatePoints([p1, p2, p3, p4], 
-			 this.x + (this.body.width / 2),
-			 this.y + (this.body.height / 2),
-			 -90);
+	    viewrect = Phaser.Rectangle(this.x, this.y - 32,
+					this.x - this.view_distance,
+					this.y + 64);
 	} else if ( hasState(this, STATE_FACE_RIGHT) ) {
-	    rotatePoints([p1, p2, p3, p4], 
-			 this.x + (this.body.width / 2),
-			 this.y + (this.body.height / 2),
-			 90);
+	    viewrect = Phaser.Rectangle(this.x + 32, this.y - 32,
+					this.x + 32 + this.view_distance,
+					this.y + 64);
 	} else if ( hasState(this, STATE_FACE_DOWN) ) {
-	    rotatePoints([p1, p2, p3, p4], 
-			 this.x + (this.body.width / 2),
-			 this.y + (this.body.height / 2),
-			 180);
+	    viewrect = Phaser.Rectangle(this.x - 32, this.y + 32,
+					this.x + 64,
+					this.y + 32 + this.view_distance);
+	} else if ( hasState(this, STATE_FACE_UP) ) {
+	    viewrect = Phaser.Rectangle(this.x - 32, this.y,
+					this.x + 64,
+					this.y - this.view_distance);
+	} else {
+	    return false;
 	}
-	
-	
-	var viewcone = new Phaser.Polygon(p1, p2, p3, p1);
-	
-	// FIXME : There has got to be a better way to do this
-	var rectLines = [
-	    new Phaser.Line(spr.x, spr.y,
-			    spr.x + spr.body.width, spr.y),
-	    new Phaser.Line(spr.x + spr.body.width, spr.y,
-			    spr.x + spr.body.width, spr.y + spr.body.height),
-	    new Phaser.Line(spr.x + spr.body.width, spr.y + spr.body.height,
-			    spr.x, spr.y + spr.body.height),
-	    new Phaser.Line(spr.x, spr.y + spr.body.height,
-			    spr.x, spr.y)
-	];
-	var withinView = false;
-	rectLines.forEach(function(sl) {
-	    [[p1, p2], [p2, p3], [p3, p4], [p4, p1]].forEach(function(vl) {
-		console.log("sl vs tl");
-		tl = new Phaser.Line(vl[0].x, vl[0].y,
-				     vl[1].x, vl[1].y);
-		if ( debug == true ) {
-		    console.log(sl);
-		    console.log(tl);
-		}
-		if ( tl.intersects(sl) )
-		    return true;
-	    }, this);
-	    if ( debug == true ) {
-		console.log("contains ? " + sl.start.x + " " + sl.start.y);
-		console.log(viewcone);
-	    }
-	    if ( viewcone.contains(sl.start.x, sl.start.y) )
-		return true;
-	}, this);
-	
-	return false;
+
+	return viewrect.intersectsRaw(spr.x, spr.y, spr.x + 32, spr.y + 32);
     }
 
     this.enableWordBubble = function() {
