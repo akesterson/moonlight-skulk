@@ -638,24 +638,22 @@ var AISprite = function(game, x, y, key, frame) {
 	switch ( game.rnd.integerInRange(0, 4) ) {
 	    case 0: {
 		setSpriteMovement(this, running, 'up');
-		setSpriteMovement(this.bubble_sprite, running, 'up');
 		break;
 	    }
 	    case 1: {
 		setSpriteMovement(this, running, 'down');
-		setSpriteMovement(this.bubble_sprite, running, 'down');
 		break;
 	    }
 	    case 2: {
 		setSpriteMovement(this, running, 'left');
-		setSpriteMovement(this.bubble_sprite, running, 'left');
 		break;
 	    }
 	    case 3: {
 		setSpriteMovement(this, running, 'right');
-		setSpriteMovement(this.bubble_sprite, running, 'right');
 	    }
 	}
+	if ( this.bubble_sprite )
+	    this.bubble_sprite.velocity = this.velocity;
     }
 
     this.update_new_values = function() {
