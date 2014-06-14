@@ -1126,8 +1126,8 @@ GameState.prototype.update = function()
 	this.shadowTexture.context.fillStyle = 'rgb(128, 128, 128)';
 	this.shadowTexture.context.fillRect(r.left, 
 					    r.top, 
-					    r.right,
-					    r.bottom);
+					    r.width,
+					    r.height);
     }
     this.aiSprites.forEach(_draw_viewrect, this);
 
