@@ -609,8 +609,8 @@ var AISprite = function(game, x, y, key, frame) {
 				       this.y - this.view_distance );
 	    var p2 = new Phaser.Point(viewline.end.x, viewline.end.y);
 	    p2.rotate(p1.x, p1.y, -45, true);
-	    var p3 = new Phaser.point(viewline.end.x, viewline.end.y);
-	    var p4 = new Phaser.point(viewline.end.x, viewline.end.y);
+	    var p3 = new Phaser.Point(viewline.end.x, viewline.end.y);
+	    var p4 = new Phaser.Point(viewline.end.x, viewline.end.y);
 	    p4.rotate(p1.x, p1.y, 45, true);
 
 	    /*
