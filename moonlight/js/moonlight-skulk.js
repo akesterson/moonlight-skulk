@@ -90,32 +90,6 @@ SoundSprite.prototype = Object.create(Phaser.Sprite.prototype);
 SoundSprite.prototype.constructor = Light;
 
 SoundSprite.prototype.update_new_values = function() {
-    this.adjust_relative_to = function(spr) {
-	console.log(spr);
-	if ( this.sound_nofade == true ) {
-	    this.sound.volume = 1.0;
-	    return;
-	}
-
-	// The volume of any given sound is equal to the length of the
-	// hypotenuse of a triangle drawn from the point (p) to the 
-	// sprite in question
-
-	var xd = (spr.x - this.x);
-	if ( xd < 0 )
-	    xd = -(xd);
-	var yd = (spr.y - this.y);
-	if ( yd < 0 )
-	    yd = -(yd);
-	var hyp = Math.sqrt((xd * xd) + (yd * yd));
-	var hyp_perfect = Math.sqrt(
-	    ((game.camera.width/2) * (game.camera.width/2)) + 
-		((game.camera.height/2) * (game.camera.height/2))
-	);
-	this.sound.volume = Number(hyp_perfect / hyp);
-	console.log([hyp_perfect, hyp, this.sound.volume]);
-    }
-
     if ( this.sound_key == null ) {
 	if ( this.sound !== null ) {
 	    this.sound.stop();
@@ -130,6 +104,32 @@ SoundSprite.prototype.update_new_values = function() {
 	this.sound_loop,
 	this.sound_forcerestart);
     console.log("Sound should be playing");
+}
+
+function adjust_audio_relative_to(sndspr, spr) {
+    console.log(spr);
+    if ( sndspr.sound_nofade == true ) {
+	sndspr.sound.volume = 1.0;
+	return;
+    }
+
+    // The volume of any given sound is equal to the length of the
+    // hypotenuse of a triangle drawn from the point (p) to the 
+    // sprite in question
+
+    var xd = (spr.x - sndspr.x);
+    if ( xd < 0 )
+	xd = -(xd);
+    var yd = (spr.y - sndspr.y);
+    if ( yd < 0 )
+	yd = -(yd);
+    var hyp = Math.sqrt((xd * xd) + (yd * yd));
+    var hyp_perfect = Math.sqrt(
+	((game.camera.width/2) * (game.camera.width/2)) + 
+	    ((game.camera.height/2) * (game.camera.height/2))
+    );
+    sndspr.sound.volume = Number(hyp_perfect / hyp);
+    console.log([hyp_perfect, hyp, sndspr.sound.volume]);
 }
 
 var moonlightSettings = {
@@ -1079,7 +1079,7 @@ GameState.prototype.update = function()
     
     function _fix_audio_relative(x) {
 	console.log(x);
-	x.adjust_relative_to(this.player);
+	adjust_relative_to(x, this.player);
     }
     this.staticSounds.forEach(_fix_audio_relative, this);
 
