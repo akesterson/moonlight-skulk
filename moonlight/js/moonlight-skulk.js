@@ -786,7 +786,7 @@ var AISprite = function(game, x, y, key, frame) {
 	this.clear_bubble = true;
 	this.enable_word_bubble = false;
 	timer = game.time.create(false);
-	timerev = timer.add(10000, this.enableWordBubble, this);
+	timerev = timer.add(20000 + (game.rnd.integerInRange(0, 30) * 1000), this.enableWordBubble, this);
 	timer.start()
     }
 
