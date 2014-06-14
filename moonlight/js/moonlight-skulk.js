@@ -788,7 +788,8 @@ var AISprite = function(game, x, y, key, frame) {
     }
 
     this.clearWordBubble = function() {
-	this.clear_bubble = true;
+	if ( this.bubble !== null )
+	    this.clear_bubble = true;
 	this.enable_word_bubble = false;
 	this.timer = game.time.create(false);
 	console.log("In 1000 ms, " + this + " will enable speech");	
