@@ -588,7 +588,7 @@ EffectSprite.prototype = Object.create(Phaser.Sprite.prototype);
 EffectSprite.prototype.constructor = EffectSprite;
 
 var AISprite = function(game, x, y, key, frame) {
-    this.canSeeSprite = function(spr, debug=false) {
+    this.canSeeSprite = function(spr, debug) {
 	var xd = (spr.x - this.x);
 	if ( xd < 0 )
 	    xd = -(xd);
