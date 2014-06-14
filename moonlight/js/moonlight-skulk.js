@@ -594,12 +594,12 @@ var AISprite = function(game, x, y, key, frame) {
 
 	var mylines = moonlightDialog['status'][this.sprite_group][aistate];
 	text = mylines[game.rnd.integerInRange(0, mylines.length)];
-	style = {font: '14px Arial Bold', fill: '#ffffff', align: 'center'}
+	style = {font: '14px Arial Bold', fill: '#ffffff'}
 	this.text_size = stringSize(text, style['font']);
 	this.bubble_sprite = game.add.sprite(this.x, this.y, 'wordbubble');
 	this.bubble_sprite.anchor.setTo(0.5, 0.5);
 	this.bubble_text = game.add.text(this.x, this.y, text, style);
-	this.bubble_text_offsets = [ 16 - (this.text_size[0]/2), -( this.text_size[1]/2) ];
+	this.bubble_text_offsets = [ 16 + (this.text_size[0]/2), (this.text_size[1]/2) ];
 	console.log(this.bubble_text_offsets);
 	this.snap_bubble_position();
 
@@ -612,8 +612,8 @@ var AISprite = function(game, x, y, key, frame) {
     {
 	this.bubble_sprite.x = this.x + 16;
 	this.bubble_sprite.y = this.y - 33;
-	this.bubble_text.position.x = this.x + 16;
-	this.bubble_text.position.y = this.y - 33;
+	this.bubble_text.position.x = this.x - this.bubble_text_offsets[0];
+	this.bubble_text.position.y = this.y - this.bubble_text_offsets[1];
     }
 
     this.update = function()
