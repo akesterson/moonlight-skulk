@@ -421,7 +421,7 @@ var moonlightSettings = {
 	    'loop': false
 	},
 	'relieved': {
-	    'frames': [39, 40, 41, 42, 43, 44, 45, 46],
+	    'frames': [40, 41, 42, 43, 44, 45, 46, 47],
 	    'speed': 4,
 	    'loop': false
 	},
