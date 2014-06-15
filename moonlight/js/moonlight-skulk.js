@@ -330,6 +330,7 @@ var moonlightSettings = {
 	    'width': 32,
 	    'height': 32,
 	    'frames': 80
+	},
 	{
 	    'name': 'player',
 	    'path': 'gfx/sprites/sprite-player.png',
