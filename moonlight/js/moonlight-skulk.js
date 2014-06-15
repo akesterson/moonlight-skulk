@@ -1107,7 +1107,7 @@ GameState.prototype.update_player_lightmeter = function() {
 	var length = line.length;
 	if ( light.flicker == true ) {
 	    // Because flickering lights are bigger than their radius
-	    length = ll + 10;
+	    length = length + 10;
 	}
 	var lv = light.light_meter - (Number(length) / Number(light.radius));
 	if ( lv > lightValue ) {
