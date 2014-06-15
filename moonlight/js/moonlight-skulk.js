@@ -1119,7 +1119,6 @@ function setAwarenessState(spr, state)
     delState(spr, STATE_ALERTED);
     delState(spr, STATE_LOSTHIM);
     addState(spr, state);
-    spr.setAwarenessEffect(state);
 }
 
 function exchangeState(spr, state1, state2)
