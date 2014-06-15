@@ -965,6 +965,8 @@ GameState.prototype.updateShadowTexture = function() {
     }, this);
 
     this.shadowTexture.dirty = true;
+    this.shadowTexture.update();
+
 };
 
 function delState(spr, state)
@@ -1099,7 +1101,6 @@ GameState.prototype.check_input = function()
 GameState.prototype.update = function()
 {
     this.check_input();
-
     lightcheck = [
 	this.shadowTexture.getPixelRGB(player.x, player.y),
 	this.shadowTexture.getPixelRGB(player.x + 32, player.y),
