@@ -801,7 +801,7 @@ var AISprite = function(game, x, y, key, frame) {
 		this.awareness_effect = null;
 	    } else {
 		this.awareness_effect.x = this.x + 16;
-		this.awareness_effect.y = this.y + 16;
+		this.awareness_effect.y = this.y - 16;
 	    }
 	}
 
