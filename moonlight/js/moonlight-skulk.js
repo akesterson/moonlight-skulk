@@ -748,8 +748,10 @@ var AISprite = function(game, x, y, key, frame) {
 	    }
 	}
 
-	if ( this.sprite_canmove == false)
+	if ( this.sprite_canmove == false) {
+	    this.body.immovable = true;
 	    return;
+	}
 	if ( game.rnd.integerInRange(0, 100) < 95 )
 	    return;
 	if ( game.rnd.integerInRange(0, 100) > 90 ) {
