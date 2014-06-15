@@ -1099,15 +1099,20 @@ GameState.prototype.check_input = function()
 GameState.prototype.update = function()
 {
     this.check_input();
-    this.shadowTexture.update(player.x-1, player.y-1, 34, 34);
-    lightcheck = [
-	this.shadowTexture.getPixelRGB(player.x, player.y),
-	this.shadowTexture.getPixelRGB(player.x + 32, player.y),
-	this.shadowTexture.getPixelRGB(player.x + 32, player.y + 32),
-	this.shadowTexture.getPixelRGB(player.x, player.y + 32)
-    ];
-    
-    console.log(lightcheck);
+    lightness = 0;
+    this.shadowTexture.processPixelRGB(
+	function(x) {
+	    var val = (x['r'] + x['g'] + x['b']) / 3;
+	    if ( val > lightness )
+		lightness = val;
+	},
+	this,
+	player.x,
+	player.y,
+	32,
+	32);
+	
+    console.log(lightness);
     
     for (var ln in this.map_collision_layers ) {
 	layer = this.map_collision_layers[ln];
