@@ -196,7 +196,7 @@
                     {
                      "sprite_canmove":"false",
                      "sprite_group":"townsfolk-guard",
-                     "sprite_name":"townsfolk-guard2"
+                     "sprite_name":"townsfolk-guard-2"
                     },
                  "type":"AI",
                  "visible":true,
