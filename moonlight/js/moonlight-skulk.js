@@ -161,6 +161,10 @@ var moonlightSettings = {
 		'path': 'gfx/tiles/bigtop.png'
 	    },
 	    {
+		'name': '002-Woods01',
+		'path': 'gfx/tiles/002-Woods01.png'
+	    },
+	    {
 		'name': '009-CastleTown01',
 		'path': 'gfx/tiles/009-CastleTown01.png'
 	    },
