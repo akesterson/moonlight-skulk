@@ -35,14 +35,14 @@ var game = new Phaser.Game(640, 480, Phaser.AUTO, '');
 
 // Create torch objects
 // Light constructor
-var Light = function(game, x, y, key, frame, radius, fade, color_start, color_stop, flicker, always_render) {
+var Light = function(game, x, y, key, frame, radius, fade, color_start, color_stop, flicker, always_render, light_meter) {
     color_start = ( typeof color_start == undefined ? color_start : 'rgba(255, 255, 255, 1.0)');
     color_stop = ( typeof color_stop == undefined ? color_stop : 'rgba(255, 255, 255, 0.0)');
     fade = ( typeof fade == undefined ? fade : 0.25);
     radius = ( typeof radius == undefined ? radius : 64);
     flicker = ( typeof flicker == undefined ? flicker : false);
     always_render = ( typeof always_render == undefined ? always_render : false);
-
+    lightmeter = ( typeof light_meter == undefined ? lightmeter : 1.0 );
     Phaser.Sprite.call(this, game, x, y, null);
 
     // Set the pivot point for this sprite to the center
@@ -52,6 +52,7 @@ var Light = function(game, x, y, key, frame, radius, fade, color_start, color_st
     this.color_stop = color_stop;
     this.radius = radius;
     this.fade = radius * fade
+    this.light_meter = lightmeter;
     this.always_render = always_render
     this.rect = new Phaser.Rectangle(this.x - radius, this.y - radius, radius * 2, radius * 2)
     this.flicker = flicker;
@@ -62,6 +63,7 @@ Light.prototype = Object.create(Phaser.Sprite.prototype);
 Light.prototype.constructor = Light;
 
 Light.prototype.update_new_values = function() {
+    this.light_meter = parseInt(this.light_meter);
     this.radius = parseInt(this.radius);
     this.fade = this.radius * Number(this.fade);
     this.flicker = parseBoolean(this.flicker);
@@ -1096,18 +1098,33 @@ GameState.prototype.check_input = function()
     setSpriteMovement(player);
 }
 
+GameState.prototype.update_player_lightmeter() {
+    lightValue = 0;
+    this.staticLights.forEach(function(light) {
+	var xd = (spr.x - light.x);
+	if ( xd < 0 )
+	    xd = -(xd);
+	var yd = (spr.y - light.y);
+	if ( yd < 0 )
+	    yd = -(yd);
+	
+	var hyp = Math.sqrt(Number(xd * xd) + Number(yd * yd));
+	if ( hyp > light.radius )
+	    return;
+	var lv = light.light_meter * ( hyp / light.radius );
+	if ( lv > lightValue ) {
+	    lightValue = lv;
+	}
+    }, this)
+
+    console.log(lightValue);
+}
+
 GameState.prototype.update = function()
 {
     this.check_input();
-    lightcheck = [
-	this.shadowTexture.buffer[player.x + player.y],
-	this.shadowTexture.buffer[player.x + 32 + player.y],
-	this.shadowTexture.buffer[player.x + 32 + player.y + 32],
-	this.shadowTexture.buffer[player.x + player.y + 32]
-    ];
-    
-    console.log(lightcheck);
-    
+    this.update_player_lightmeter();
+
     for (var ln in this.map_collision_layers ) {
 	layer = this.map_collision_layers[ln];
 	this.physics.arcade.collide(player, layer);
