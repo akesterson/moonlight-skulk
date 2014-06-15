@@ -1139,7 +1139,8 @@ GameState.prototype.update_player_lightmeter = function() {
 	    lightValue = lv;
 	}
     }, this)
-    this.lightbar_crop.width = (this.lightbar_image.width * lightValue);
+    this.lightbar_crop.width = Math.min(this.lightbar_image.width,
+					(this.lightbar_image.width * lightValue));
     this.lightbar.crop(this.lightbar_crop);
 }
 
