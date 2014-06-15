@@ -715,7 +715,6 @@ var AISprite = function(game, x, y, key, frame) {
 	    return;
 	} 
 
-	setAwarenessState(this, state);
 	if ( this.awareness_change_enabled == false &&
 	     state != STATE_ALERTED ) {
 	    return;
@@ -728,6 +727,8 @@ var AISprite = function(game, x, y, key, frame) {
 				 this.enableAwarenessChange, 
 				 this);
 	this.awareness_timer.start()
+
+	setAwarenessState(this, state);
 
 	if ( this.awareness_effect !== null ) {
 	    this.awareness_effect.alive = false;
