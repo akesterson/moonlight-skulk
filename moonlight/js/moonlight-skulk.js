@@ -697,6 +697,12 @@ var AISprite = function(game, x, y, key, frame) {
     this.setAwarenessEffect = function(state) {
 	var animkey = "";
 
+	if ( (state == STATE_LOSTHIM) && (hasState(this, STATE_ALERTED) == false)) {
+	    return;
+	} else if ( (state == STATE_ALERTED) && (hasState(this, STATE_ALERTED) == true) ) {
+	    return;
+	}
+
 	setAwarenessState(this, state);
 
 	if ( this.awareness_effect !== null ) {
@@ -1277,13 +1283,9 @@ GameState.prototype.update = function()
 	if ( x.collide_with_player == false )
 	    return;
 	if ( x.canSeeSprite(player, false) == true ) {
-	    if ( hasState(x, STATE_ALERTED) == false ) {
-		x.setAwarenessEffect(x, STATE_ALERTED);
-	    }
+	    x.setAwarenessEffect(x, STATE_ALERTED);
 	} else {
-	    if ( hasState(x, STATE_ALERTED) == true ) {
-		x.setAwarenessEffect(x, STATE_LOSTHIM);
-	    }
+	    x.setAwarenessEffect(x, STATE_LOSTHIM);
 	}
 	this.physics.arcade.collide(x, player);
     }
