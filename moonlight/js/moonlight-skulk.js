@@ -705,6 +705,9 @@ var AISprite = function(game, x, y, key, frame) {
 	var running = false;
 	var newstate = STATE_NONE;
 
+	if ( hasState(this, STATE_AWARE) ) {
+	    
+
 	if ( this.bubble_text !== null ) {
 	    if ( this.clear_bubble == true ) {
 		this.bubble_text.destroy();
@@ -786,6 +789,7 @@ var AISprite = function(game, x, y, key, frame) {
     
     Phaser.Sprite.call(this, game, x, y, null);
     game.physics.arcade.enable(this);
+    this.player_seen_timer = null;
     this.can_move = 'true';
     this.collide_with_player = 'true';
     this.collide_with_map = 'true';
@@ -877,6 +881,7 @@ GameState.prototype.create = function()
 		    spr.update_new_values();
 		}, this)
 		player = this.add.sprite((20 * 32), (25 * 32), 'player');
+		player.lightmeter = 0;
 	    };
 	    if ( lp['collides'] == true ) {
 		this.map_collision_layers.push(layer);
@@ -1097,6 +1102,15 @@ GameState.prototype.check_input = function()
 GameState.prototype.update = function()
 {
     this.check_input();
+
+    lightcheck = [
+	this.shadowBuffer.getRGB(player.x, player.y),
+	this.shadowBuffer.getRGB(player.x + 32, player.y),
+	this.shadowBuffer.getRGB(player.x + 32, player.y + 32),
+	this.shadowBuffer.getRGB(player.x, player.y + 32)
+    ];
+    
+    console.log(lightcheck);
     
     for (var ln in this.map_collision_layers ) {
 	layer = this.map_collision_layers[ln];
@@ -1107,7 +1121,6 @@ GameState.prototype.update = function()
 	x.adjust_relative_to(player);
     }
     this.staticSounds.forEach(_fix_audio_relative, this);
-
 
     function _inner_collide(x) {
 	if ( x.collide_with_map == true ) {
