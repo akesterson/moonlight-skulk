@@ -1100,10 +1100,10 @@ GameState.prototype.update = function()
 {
     this.check_input();
     lightcheck = [
-	this.shadowTexture.pixels[player.x + player.y],
-	this.shadowTexture.pixels[player.x + 32 + player.y],
-	this.shadowTexture.pixels[player.x + 32 + player.y + 32],
-	this.shadowTexture.pixels[player.x + player.y + 32]
+	this.shadowTexture.buffer[player.x + player.y],
+	this.shadowTexture.buffer[player.x + 32 + player.y],
+	this.shadowTexture.buffer[player.x + 32 + player.y + 32],
+	this.shadowTexture.buffer[player.x + player.y + 32]
     ];
     
     console.log(lightcheck);
