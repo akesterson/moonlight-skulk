@@ -116,7 +116,9 @@ SoundSprite.prototype.update_new_values = function() {
     this.sound_forcerestart = parseBoolean(this.sound_forcerestart);
     this.sound_nofade = parseBoolean(this.sound_nofade);
 
-    this.sound = game.add.audio(this.sound_key);
+    if ( this.sound !== null )
+	this.sound.stop();
+    this.sound = game.add.audio(this.sound_key, sound_volume, sound_loop);
     this.sound.play(
 	this.sound_marker,
 	this.sound_position,
