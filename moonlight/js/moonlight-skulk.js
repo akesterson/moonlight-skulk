@@ -284,11 +284,11 @@ var moonlightSettings = {
     ],
     'images': [
 	{
-	    'name': 'lightbox.png',
+	    'name': 'lightbox',
 	    'path': 'gfx/ui/lightbox.png'
 	},
 	{
-	    'name': 'lightbar.png',
+	    'name': 'lightbar',
 	    'path': 'gfx/ui/lightbar.png'
 	},
 	{
