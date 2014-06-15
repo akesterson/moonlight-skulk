@@ -962,11 +962,11 @@ GameState.prototype.updateShadowTexture = function() {
         this.shadowTexture.context.fillStyle = gradient;
         this.shadowTexture.context.arc(light.x + 16, light.y + 16, radius, 0, Math.PI*2);
         this.shadowTexture.context.fill();
+	this.shadowTexture.update(light.x - radius, light.y - radius,
+				  radius * 2, radius * 2);
     }, this);
 
     this.shadowTexture.dirty = true;
-    this.shadowTexture.update();
-
 };
 
 function delState(spr, state)
