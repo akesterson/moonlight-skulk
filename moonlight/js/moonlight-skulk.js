@@ -272,7 +272,13 @@ var moonlightSettings = {
 		'type': 'tiles',
 		'inject_sprites': true
 	    },
-	    '0 - NonCollide Overlay - Above Player': {
+	    '0 - NonCollide Overlay - Above Player (Short)': {
+		'collides': false,
+		'collisionBetween': [0, 9999],
+		'type': 'tiles',
+		'inject_sprites': false
+	    },
+	    '0 - NonCollide Overlay - Above Player (Tall)': {
 		'collides': false,
 		'collisionBetween': [0, 9999],
 		'type': 'tiles',
