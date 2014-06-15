@@ -152,6 +152,10 @@ var moonlightSettings = {
     'map' : {
 	'tilesets': [
 	    {
+		'name': 'bigtop',
+		'path': 'gfx/tiles/bigtop.png'
+	    },
+	    {
 		'name': '009-CastleTown01',
 		'path': 'gfx/tiles/009-CastleTown01.png'
 	    },
@@ -274,12 +278,12 @@ var moonlightSettings = {
 	    'path': 'sfx/fountain.wav'
 	},
 	{
-	    'name': 'background_music',
-	    'path': 'bgm/Hidden Agenda.mp3'
-	},
-	{
 	    'name': 'fire',
 	    'path': 'sfx/fire.ogg'
+	},
+	{
+	    'name': 'calliope',
+	    'path': 'sfx/calliope.mp3'
 	}
     ],
     'images': [
@@ -425,6 +429,11 @@ var moonlightSettings = {
 	},
 	'campfire_small': {
 	    'frames': [6, 7, 8],
+	    'speed': 6,
+	    'loop': true
+	},
+	'fire_small': {
+	    'frames': [9, 10, 11],
 	    'speed': 6,
 	    'loop': true
 	}
@@ -884,7 +893,7 @@ GameState.prototype.create = function()
 		this.effectSprites.forEach(function(spr) {
 		    spr.update_new_values();
 		}, this)
-		player = this.add.sprite((20 * 32), (25 * 32), 'player');
+		player = this.add.sprite((10 * 32), (17 * 32), 'player');
 		player.lightmeter = 0;
 	    };
 	    if ( lp['collides'] == true ) {
