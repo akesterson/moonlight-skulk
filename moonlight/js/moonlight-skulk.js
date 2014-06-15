@@ -51,6 +51,7 @@ var Light = function(game, x, y, key, frame, radius, fade, color_start, color_st
     this.color_start = color_start;
     this.color_stop = color_stop;
     this.radius = radius;
+    this.rendered_radius = radius;
     this.fade = radius * fade
     this.light_meter = lightmeter;
     this.always_render = always_render
@@ -952,6 +953,7 @@ GameState.prototype.updateShadowTexture = function() {
 	} else {
 	    var radius = light.radius;
 	}
+	light.rendered_radius = radius;
 
         var gradient =
             this.shadowTexture.context.createRadialGradient(
@@ -1102,14 +1104,10 @@ GameState.prototype.update_player_lightmeter = function() {
     lightValue = 0;
     this.staticLights.forEach(function(light) {
 	line = new Phaser.Line(player.x + 16, player.y + 16, light.x + 16, light.y + 16);
-	if ( line.length > light.radius )
+	if ( line.length > light.rendered_radius)
 	    return;
 	var length = line.length;
-	if ( light.flicker == true ) {
-	    // Because flickering lights are bigger than their radius
-	    length = length + 10;
-	}
-	var lv = light.light_meter - (Number(length) / Number(light.radius));
+	var lv = light.light_meter - (Number(length) / Number(light.rendered_radius));
 	if ( lv > lightValue ) {
 	    lightValue = lv;
 	}
