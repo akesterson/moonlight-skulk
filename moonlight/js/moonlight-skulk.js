@@ -1104,10 +1104,10 @@ GameState.prototype.update_player_lightmeter = function() {
     lightValue = 0;
     this.staticLights.forEach(function(light) {
 	var left = player.x;
-	var top = player.y;
+	var top = player.y + 32;
 
 	if ( player.y < this.y )
-	    top = player.y + 32;
+	    top = player.y;
 	if ( player.x + this.x )
 	    left = player.x + 32;
 
