@@ -270,7 +270,7 @@ var moonlightSettings = {
 		'inject_sprites': false
 	    }
 	},
-	'path': 'gfx/bigmap.json'
+	'path': 'gfx/map.json'
     },
     'sounds': [
 	{
