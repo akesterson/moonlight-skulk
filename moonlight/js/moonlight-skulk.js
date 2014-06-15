@@ -648,25 +648,31 @@ EffectSprite.prototype.constructor = EffectSprite;
 
 var AISprite = function(game, x, y, key, frame) {
     this.viewRectangle = function() {
+	var offset = [];
+	var size = [];
 	if ( hasState(this, STATE_FACE_LEFT) ) {
-	    return new Phaser.Rectangle(this.x, this.y - 32,
-					-this.view_distance,
-					96);
+	    offset = [0, -32];
+	    size = [-this.view_distance, 96];
 	} else if ( hasState(this, STATE_FACE_RIGHT) ) {
-	    return new Phaser.Rectangle(this.x + 32, this.y - 32,
-					32 + this.view_distance,
-					96);
+	    offset = [32, -32];
+	    size = [32 + this.view_distance, 96];
 	} else if ( hasState(this, STATE_FACE_DOWN) ) {
-	    return new Phaser.Rectangle(this.x - 32, this.y,
-					96,
-					this.view_distance);
+	    offset = [-32, 0];
+	    size = [96, this.view_distance];
 	} else if ( hasState(this, STATE_FACE_UP) ) {
-	    return new Phaser.Rectangle(this.x - 32, this.y,
-					96,
-					-this.view_distance);
+	    offset = [-32, 0];
+	    size = [96, -this.view_distance];
 	} else {
 	    return null;
 	}
+	if ( hasState(this, STATE_ALERTED) ) {
+	    offset = [offset[0] * 2, offset[1] * 2];
+	    size = [size[0] * 2, size[1] * 2];
+	}
+	return new Phaser.Rectangle(this.x + offset[0],
+				    this.y + offset[1],
+				    size[0],
+				    size[1]);
     }
 
     this.canSeeSprite = function(spr, debug) {
@@ -864,6 +870,7 @@ var AISprite = function(game, x, y, key, frame) {
 	this.animations.destroy();
 	this.clearWordBubble();	
 	this.state = STATE_UNAWARE;
+	this.sprite_can_see_lightmeter = Number(this.sprite_can_see_lightmeter);
 	this.sprite_canmove = parseBoolean(this.sprite_canmove);
 	this.collide_with_player = parseBoolean(this.collide_with_player);
 	this.collide_with_map = parseBoolean(this.collide_with_map);
@@ -897,6 +904,8 @@ var AISprite = function(game, x, y, key, frame) {
     
     Phaser.Sprite.call(this, game, x, y, null);
     game.physics.arcade.enable(this);
+    this.lightmeter = 1.0;
+    this.sprite_can_see_lightmeter = 0.5;
     this.awareness_effect = null;
     this.player_seen_timer = null;
     this.sprite_canmove = 'true';
@@ -1254,6 +1263,7 @@ GameState.prototype.update_player_lightmeter = function() {
 	    lightValue = lv;
 	}
     }, this)
+    player.lightmeter = lightValue;
     this.lightbar_crop.width = (this.lightbar_image.width * lightValue);
     this.lightbar.crop(this.lightbar_crop);
 }
@@ -1283,7 +1293,11 @@ GameState.prototype.update = function()
 	if ( x.collide_with_player == false )
 	    return;
 	if ( x.canSeeSprite(player, false) == true ) {
-	    x.setAwarenessEffect(STATE_ALERTED);
+	    if ( player.lightmeter >= x.sprite_can_see_lightmeter ) {
+		x.setAwarenessEffect(STATE_ALERTED);
+	    } else {
+		x.setAwarenessEffect(STATE_CONCERNED);
+	    }
 	} else {
 	    x.setAwarenessEffect(STATE_LOSTHIM);
 	}
@@ -1295,17 +1309,17 @@ GameState.prototype.update = function()
     this.aiSprites.forEach(_inner_collide, this);
     this.updateShadowTexture();
 
-    // function _draw_viewrect(x) {
-    // 	var r = x.viewRectangle();
-    // 	if ( r == null ) 
-    // 	    return;
-    // 	this.shadowTexture.context.fillStyle = 'rgb(128, 128, 128)';
-    // 	this.shadowTexture.context.fillRect(r.left, 
-    // 					    r.top, 
-    // 					    r.width,
-    // 					    r.height);
-    // }
-    // this.aiSprites.forEach(_draw_viewrect, this);
+    function _draw_viewrect(x) {
+    	var r = x.viewRectangle();
+    	if ( r == null ) 
+    	    return;
+    	this.shadowTexture.context.fillStyle = 'rgb(128, 128, 128)';
+    	this.shadowTexture.context.fillRect(r.left, 
+    					    r.top, 
+    					    r.width,
+    					    r.height);
+    }
+    this.aiSprites.forEach(_draw_viewrect, this);
 
     if (game.time.fps !== 0) {
         this.fpsText.setText(game.time.fps + ' FPS');
