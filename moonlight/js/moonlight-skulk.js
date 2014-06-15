@@ -705,9 +705,6 @@ var AISprite = function(game, x, y, key, frame) {
 	var running = false;
 	var newstate = STATE_NONE;
 
-	if ( hasState(this, STATE_AWARE) ) {
-	    
-
 	if ( this.bubble_text !== null ) {
 	    if ( this.clear_bubble == true ) {
 		this.bubble_text.destroy();
