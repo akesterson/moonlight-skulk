@@ -117,9 +117,9 @@
                     {
                      "color_start":"rgba(235, 185, 22, 1.0)",
                      "color_stop":"rgba(246, 152, 62, 0.0)",
-                     "fade":"0.75",
+                     "fade":"0.25",
                      "flicker":"true",
-                     "radius":"64"
+                     "radius":"96"
                     },
                  "type":"Lights",
                  "visible":true,
@@ -135,9 +135,9 @@
                     {
                      "color_start":"rgba(235, 185, 22, 1.0)",
                      "color_stop":"rgba(246, 152, 62, 0.0)",
-                     "fade":"0.75",
+                     "fade":"0.25",
                      "flicker":"true",
-                     "radius":"64"
+                     "radius":"96"
                     },
                  "type":"Lights",
                  "visible":true,
@@ -153,9 +153,9 @@
                     {
                      "color_start":"rgba(235, 185, 22, 1.0)",
                      "color_stop":"rgba(246, 152, 62, 0.0)",
-                     "fade":"0.75",
+                     "fade":"0.25",
                      "flicker":"true",
-                     "radius":"64"
+                     "radius":"96"
                     },
                  "type":"Lights",
                  "visible":true,
@@ -171,9 +171,9 @@
                     {
                      "color_start":"rgba(235, 185, 22, 1.0)",
                      "color_stop":"rgba(246, 152, 62, 0.0)",
-                     "fade":"0.75",
+                     "fade":"0.25",
                      "flicker":"true",
-                     "radius":"64"
+                     "radius":"96"
                     },
                  "type":"Lights",
                  "visible":true,
