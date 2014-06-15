@@ -1201,17 +1201,17 @@ GameState.prototype.update = function()
     this.aiSprites.forEach(_inner_collide, this);
     this.updateShadowTexture();
 
-    function _draw_viewrect(x) {
-	var r = x.viewRectangle();
-	if ( r == null ) 
-	    return;
-	this.shadowTexture.context.fillStyle = 'rgb(128, 128, 128)';
-	this.shadowTexture.context.fillRect(r.left, 
-					    r.top, 
-					    r.width,
-					    r.height);
-    }
-    this.aiSprites.forEach(_draw_viewrect, this);
+    // function _draw_viewrect(x) {
+    // 	var r = x.viewRectangle();
+    // 	if ( r == null ) 
+    // 	    return;
+    // 	this.shadowTexture.context.fillStyle = 'rgb(128, 128, 128)';
+    // 	this.shadowTexture.context.fillRect(r.left, 
+    // 					    r.top, 
+    // 					    r.width,
+    // 					    r.height);
+    // }
+    // this.aiSprites.forEach(_draw_viewrect, this);
 
     if (game.time.fps !== 0) {
         this.fpsText.setText(game.time.fps + ' FPS');

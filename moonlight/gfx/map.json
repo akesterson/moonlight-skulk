@@ -207,26 +207,11 @@
                 {
                  "gid":3544,
                  "height":0,
-                 "name":"BigTopGuard",
-                 "properties":
-                    {
-                     "sprite_canmove":"false",
-                     "sprite_group":"townsfolk-guard",
-                     "sprite_name":"townsfolk-guard2"
-                    },
-                 "type":"AI",
-                 "visible":true,
-                 "width":0,
-                 "x":320,
-                 "y":480
-                }, 
-                {
-                 "gid":3544,
-                 "height":0,
                  "name":"BigTopCustomer2",
                  "properties":
                     {
-                     "sprite_group":"townsfolk-female"
+                     "sprite_group":"townsfolk-female",
+                     "sprite_name":"townsfolk-female-2"
                     },
                  "type":"AI",
                  "visible":true,
@@ -240,7 +225,8 @@
                  "name":"BigTopCustomer2",
                  "properties":
                     {
-                     "sprite_group":"townsfolk-male"
+                     "sprite_group":"townsfolk-male",
+                     "sprite_name":"townsfolk-male-3"
                     },
                  "type":"AI",
                  "visible":true,
