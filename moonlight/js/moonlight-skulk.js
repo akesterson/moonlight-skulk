@@ -945,8 +945,8 @@ GameState.prototype.create = function()
 					0,
 					this.uigroup);
     this.lightbar_image = game.cache.getImage('lightbar');
-    this.lightbar_crop = new Phaser.Rectangle(this.lightbar.x,
-					      this.lightbar.y,
+    this.lightbar_crop = new Phaser.Rectangle(0,
+					      0,
 					      game.cache.getImage('lightbar').width,
 					      game.cache.getImage('lightbar').height);
     this.uigroup.setAll('fixedToCamera', true);	
@@ -1139,7 +1139,6 @@ GameState.prototype.update_player_lightmeter = function() {
 	    lightValue = lv;
 	}
     }, this)
-    console.log(lightValue);
     this.lightbar_crop.width = (this.lightbar_image.width * lightValue);
     this.lightbar.crop(this.lightbar_crop);
 }
