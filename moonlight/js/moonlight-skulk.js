@@ -786,7 +786,7 @@ var AISprite = function(game, x, y, key, frame) {
     
     Phaser.Sprite.call(this, game, x, y, null);
     game.physics.arcade.enable(this);
-    this.can_move = 'false';
+    this.can_move = 'true';
     this.collide_with_player = 'true';
     this.collide_with_map = 'true';
     this.carries_light = 'false';
