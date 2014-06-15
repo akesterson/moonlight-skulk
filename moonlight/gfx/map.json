@@ -40,7 +40,7 @@
              "z_height":"0"
             },
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":50,
          "x":0,
          "y":0
@@ -81,7 +81,7 @@
              "z_height":"0"
             },
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":50,
          "x":0,
          "y":0
@@ -183,7 +183,7 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "width":50,
          "x":0,
          "y":0
@@ -224,13 +224,67 @@
                  "name":"torchsound",
                  "properties":
                     {
-                     "sound_key":"fire"
+                     "sound_distance":"100",
+                     "sound_key":"fire",
+                     "sound_position":"6",
+                     "sound_volume":"0.5"
                     },
                  "type":"Sounds",
                  "visible":true,
                  "width":0,
-                 "x":322,
-                 "y":370
+                 "x":225,
+                 "y":310
+                }, 
+                {
+                 "gid":11,
+                 "height":0,
+                 "name":"torchsound",
+                 "properties":
+                    {
+                     "sound_distance":"100",
+                     "sound_key":"fire",
+                     "sound_position":"8",
+                     "sound_volume":"0.5"
+                    },
+                 "type":"Sounds",
+                 "visible":true,
+                 "width":0,
+                 "x":414,
+                 "y":311
+                }, 
+                {
+                 "gid":11,
+                 "height":0,
+                 "name":"torchsound",
+                 "properties":
+                    {
+                     "sound_distance":"100",
+                     "sound_key":"fire",
+                     "sound_position":"12",
+                     "sound_volume":"0.5"
+                    },
+                 "type":"Sounds",
+                 "visible":true,
+                 "width":0,
+                 "x":417,
+                 "y":437
+                }, 
+                {
+                 "gid":11,
+                 "height":0,
+                 "name":"torchsound",
+                 "properties":
+                    {
+                     "sound_distance":"100",
+                     "sound_key":"fire",
+                     "sound_position":"5",
+                     "sound_volume":"0.5"
+                    },
+                 "type":"Sounds",
+                 "visible":true,
+                 "width":0,
+                 "x":222,
+                 "y":439
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -305,7 +359,7 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "width":50,
          "x":0,
          "y":0
