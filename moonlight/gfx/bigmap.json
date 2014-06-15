@@ -164,8 +164,6 @@
                  "name":"FountainGuard",
                  "properties":
                     {
-                     "can_move":"false",
-                     "collide_with_player":"true",
                      "sprite_group":"townsfolk-female",
                      "sprite_name":"townsfolk-female-3"
                     },
@@ -181,7 +179,7 @@
                  "name":"FountainPerson",
                  "properties":
                     {
-                     "can_move":"false"
+
                     },
                  "type":"",
                  "visible":true,

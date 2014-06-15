@@ -630,7 +630,6 @@ var AISprite = function(game, x, y, key, frame) {
 	    return false;
 	var sprrect = new Phaser.Rectangle(spr.x, spr.y, 32, 32);
 	if ( viewrect.intersects(sprrect) || viewrect.containsRect(sprrect) ) {
-	    console.log("I SEE YOU YOU FUCKER");
 	    return true;
 	}
 	return false;
@@ -940,7 +939,6 @@ GameState.prototype.updateShadowTexture = function() {
                                           this.game.camera.width,
                                           this.game.camera.height);
             if ( ! light.rect.intersects(r1) ) {
-		console.log("Light does not appear on camera");
 		return;
 	    }
 	}
