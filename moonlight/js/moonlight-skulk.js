@@ -284,8 +284,12 @@ var moonlightSettings = {
     ],
     'images': [
 	{
-	    'name': 'simplelight',
-	    'path': 'gfx/lights/light-white-256px.png'
+	    'name': 'lightbox.png',
+	    'path': 'gfx/ui/lightbox.png'
+	},
+	{
+	    'name': 'lightbar.png',
+	    'path': 'gfx/ui/lightbar.png'
 	},
 	{
 	    'name': 'wordbubble',
@@ -906,13 +910,6 @@ GameState.prototype.create = function()
     this.camera.follow(player, Phaser.Camera.FOLLOW_TOPDOWN);
     controls = game.input.keyboard.createCursorKeys();
 
-    this.game.time.advancedTiming = true;
-    this.fpsText = this.game.add.text(
-        20, 20, '', { font: '16px Arial', fill: '#ffffff' }
-    );
-    this.fpsText.fixedToCamera = true;
-
-
     this.shadowTexture = game.add.bitmapData(game.world.width, game.world.height);
     // drop this lower to make the map darker
     this.shadowTextureColor = 'rgb(60, 60, 60)';
@@ -931,6 +928,23 @@ GameState.prototype.create = function()
     this.staticSounds.forEach(function(snd) {
 	snd.update_new_values();
     }, this)
+
+    this.uigroup = game.add.group();
+    this.game.time.advancedTiming = true;
+    this.fpsText = this.game.add.text(
+        20, 20, '', { font: '16px Arial', fill: '#ffffff' }, this.uigroup
+    );
+    this.lightbox = this.game.add.image(game.camera.width / 2 - 50,
+					game.camera.height - 40,
+					'lightbox',
+					0,
+					this.uigroup);
+    this.lightbar = this.game.add.image(this.lightbox.x + 3,
+					this.lightbox.y + 3,
+					'lightbar',
+					0,
+					this.uigroup);
+    this.uigroup.setAll('fixedToCamera', true);	
 }
 
 GameState.prototype.updateShadowTexture = function() {
