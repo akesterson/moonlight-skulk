@@ -1101,7 +1101,7 @@ GameState.prototype.check_input = function()
 GameState.prototype.update_player_lightmeter = function() {
     lightValue = 0;
     this.staticLights.forEach(function(light) {
-	line = new Phaser.Line(player.x + 16, player.y + 16, light.x, light.y);
+	line = new Phaser.Line(player.x + 16, player.y + 16, light.x + 16, light.y + 16);
 	if ( line.length > light.radius )
 	    return;
 	var ll = line.length;
