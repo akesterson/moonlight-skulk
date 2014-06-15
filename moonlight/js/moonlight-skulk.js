@@ -1099,21 +1099,14 @@ GameState.prototype.check_input = function()
 GameState.prototype.update = function()
 {
     this.check_input();
-    lightness = 0;
-    this.shadowTexture.processPixelRGB(
-	function(x) {
-	    var val = (x['r'] + x['g'] + x['b']) / 3;
-	    if ( val > lightness )
-		lightness = val;
-	    return false;
-	},
-	this,
-	player.x,
-	player.y,
-	32,
-	32);
-	
-    console.log(lightness);
+    lightcheck = [
+	this.shadowTexture.pixels(player.x + player.y),
+	this.shadowTexture.pixels(player.x + 32 + player.y),
+	this.shadowTexture.pixels(player.x + 32 + player.y + 32),
+	this.shadowTexture.pixels(player.x + player.y + 32)
+    ];
+    
+    console.log(lightcheck);
     
     for (var ln in this.map_collision_layers ) {
 	layer = this.map_collision_layers[ln];
