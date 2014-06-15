@@ -891,13 +891,6 @@ GameState.prototype.create = function()
 		    spr.update_new_values();
 		}, this)
 
-		this.effectSprites = game.add.group();
-		this.map.createFromObjects('EffectSprites', 5, 'player', 0, true, false, this.effectSprites, EffectSprite);
-		this.effectSprites.forEach(function(spr) {
-		    spr.update_new_values();
-		}, this)
-		player = this.add.sprite((10 * 32), (17 * 32), 'player');
-		player.lightmeter = 0;
 	    };
 	    if ( lp['collides'] == true ) {
 		this.map_collision_layers.push(layer);
@@ -921,6 +914,14 @@ GameState.prototype.create = function()
 
     this.camera.follow(player, Phaser.Camera.FOLLOW_TOPDOWN);
     controls = game.input.keyboard.createCursorKeys();
+
+    this.effectSprites = game.add.group();
+    this.map.createFromObjects('EffectSprites', 5, 'player', 0, true, false, this.effectSprites, EffectSprite);
+    this.effectSprites.forEach(function(spr) {
+	spr.update_new_values();
+    }, this)
+    player = this.add.sprite((10 * 32), (17 * 32), 'player');
+    player.lightmeter = 0;
 
     this.shadowTexture = game.add.bitmapData(game.world.width, game.world.height);
     // drop this lower to make the map darker
