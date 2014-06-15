@@ -890,6 +890,8 @@ GameState.prototype.create = function()
 		this.aiSprites.forEach(function(spr) {
 		    spr.update_new_values();
 		}, this)
+		player = this.add.sprite((10 * 32), (17 * 32), 'player');
+		player.lightmeter = 0;
 
 	    };
 	    if ( lp['collides'] == true ) {
@@ -920,8 +922,6 @@ GameState.prototype.create = function()
     this.effectSprites.forEach(function(spr) {
 	spr.update_new_values();
     }, this)
-    player = this.add.sprite((10 * 32), (17 * 32), 'player');
-    player.lightmeter = 0;
 
     this.shadowTexture = game.add.bitmapData(game.world.width, game.world.height);
     // drop this lower to make the map darker
