@@ -1283,9 +1283,9 @@ GameState.prototype.update = function()
 	if ( x.collide_with_player == false )
 	    return;
 	if ( x.canSeeSprite(player, false) == true ) {
-	    x.setAwarenessEffect(x, STATE_ALERTED);
+	    x.setAwarenessEffect(STATE_ALERTED);
 	} else {
-	    x.setAwarenessEffect(x, STATE_LOSTHIM);
+	    x.setAwarenessEffect(STATE_LOSTHIM);
 	}
 	this.physics.arcade.collide(x, player);
     }
