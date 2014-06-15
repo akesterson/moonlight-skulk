@@ -697,6 +697,7 @@ var AISprite = function(game, x, y, key, frame) {
     this.setAwarenessEffect = function(state) {
 	var animkey = "";
 	if ( this.awareness_effect !== null ) {
+	    return;
 	    this.awareness_effect.alive = false;
 	    this.awareness_effect.destroy();
 	    this.awareness_effect = null;
