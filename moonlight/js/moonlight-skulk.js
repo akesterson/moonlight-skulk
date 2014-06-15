@@ -1101,10 +1101,10 @@ GameState.prototype.check_input = function()
 GameState.prototype.update_player_lightmeter = function() {
     lightValue = 0;
     this.staticLights.forEach(function(light) {
-	var xd = (spr.x - light.x);
+	var xd = (player.x - light.x);
 	if ( xd < 0 )
 	    xd = -(xd);
-	var yd = (spr.y - light.y);
+	var yd = (player.y - light.y);
 	if ( yd < 0 )
 	    yd = -(yd);
 	
