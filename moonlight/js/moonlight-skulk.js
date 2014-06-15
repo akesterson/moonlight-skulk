@@ -700,6 +700,10 @@ var AISprite = function(game, x, y, key, frame) {
 	return false;
     }
 
+    this.enableAwarenessChange = function(state) {
+	this.awareness_change_enabled = true;
+    }
+
     this.setAwarenessEffect = function(state) {
 	var animkey = "";
 
@@ -712,6 +716,15 @@ var AISprite = function(game, x, y, key, frame) {
 	} 
 
 	setAwarenessState(this, state);
+	if ( this.awareness_change_enabled == false &&
+	     state != STATE_ALERTED ) {
+	    return;
+	}
+	this.awareness_timer = game.time.create(false);
+	this.awareness_timer.add(this.sprite_awareness_duration, 
+				 this.enableAwarenessChange, 
+				 this);
+	this.awareness_timer.start()
 
 	if ( this.awareness_effect !== null ) {
 	    this.awareness_effect.alive = false;
@@ -874,6 +887,7 @@ var AISprite = function(game, x, y, key, frame) {
 	this.state = STATE_UNAWARE;
 	this.sprite_can_see_lightmeter = Number(this.sprite_can_see_lightmeter);
 	this.sprite_canmove = parseBoolean(this.sprite_canmove);
+	this.sprite_awareness_duration = parseInt(this.sprite_awareness_duration);
 	this.collide_with_player = parseBoolean(this.collide_with_player);
 	this.collide_with_map = parseBoolean(this.collide_with_map);
 	this.carries_light = parseBoolean(this.carries_light);
@@ -906,10 +920,12 @@ var AISprite = function(game, x, y, key, frame) {
     
     Phaser.Sprite.call(this, game, x, y, null);
     game.physics.arcade.enable(this);
+    this.awareness_change_enabled = true;
     this.lightmeter = 1.0;
     this.sprite_can_see_lightmeter = 0.5;
     this.awareness_effect = null;
-    this.player_seen_timer = null;
+    this.awareness_timer = null;
+    this.sprite_awareness_duration = 30;
     this.sprite_canmove = 'true';
     this.collide_with_player = 'true';
     this.collide_with_map = 'true';
