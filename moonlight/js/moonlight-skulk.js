@@ -1111,7 +1111,7 @@ GameState.prototype.update_player_lightmeter = function() {
 	var hyp = Math.sqrt(Number(xd * xd) + Number(yd * yd));
 	if ( hyp > light.radius )
 	    return;
-	var lv = light.light_meter * ( hyp / light.radius );
+	var lv = light.light_meter - Number( hyp / light.radius );
 	if ( lv > lightValue ) {
 	    lightValue = lv;
 	}
