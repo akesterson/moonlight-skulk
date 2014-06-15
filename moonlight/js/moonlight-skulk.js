@@ -748,7 +748,7 @@ var AISprite = function(game, x, y, key, frame) {
 	    }
 	}
 
-	if ( this.can_move == false)
+	if ( this.sprite_canmove == false)
 	    return;
 	if ( game.rnd.integerInRange(0, 100) < 95 )
 	    return;
@@ -784,7 +784,7 @@ var AISprite = function(game, x, y, key, frame) {
 	this.animations.destroy();
 	this.clearWordBubble();	
 	this.state = STATE_UNAWARE;
-	this.can_move = parseBoolean(this.can_move);
+	this.sprite_canmove = parseBoolean(this.sprite_canmove);
 	this.collide_with_player = parseBoolean(this.collide_with_player);
 	this.collide_with_map = parseBoolean(this.collide_with_map);
 	this.carries_light = parseBoolean(this.carries_light);
@@ -818,7 +818,7 @@ var AISprite = function(game, x, y, key, frame) {
     Phaser.Sprite.call(this, game, x, y, null);
     game.physics.arcade.enable(this);
     this.player_seen_timer = null;
-    this.can_move = 'true';
+    this.sprite_canmove = 'true';
     this.collide_with_player = 'true';
     this.collide_with_map = 'true';
     this.carries_light = 'false';

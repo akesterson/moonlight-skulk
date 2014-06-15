@@ -194,14 +194,59 @@
                  "name":"BigTopGuard",
                  "properties":
                     {
-                     "sprite_group":"townsfolk_guard",
-                     "sprite_name":"townsfolk_guard2"
+                     "sprite_canmove":"false",
+                     "sprite_group":"townsfolk-guard",
+                     "sprite_name":"townsfolk-guard2"
                     },
                  "type":"AI",
                  "visible":true,
                  "width":0,
                  "x":320,
                  "y":480
+                }, 
+                {
+                 "gid":3544,
+                 "height":0,
+                 "name":"BigTopGuard",
+                 "properties":
+                    {
+                     "sprite_canmove":"false",
+                     "sprite_group":"townsfolk-guard",
+                     "sprite_name":"townsfolk-guard2"
+                    },
+                 "type":"AI",
+                 "visible":true,
+                 "width":0,
+                 "x":320,
+                 "y":480
+                }, 
+                {
+                 "gid":3544,
+                 "height":0,
+                 "name":"BigTopCustomer2",
+                 "properties":
+                    {
+                     "sprite_group":"townsfolk-female"
+                    },
+                 "type":"AI",
+                 "visible":true,
+                 "width":0,
+                 "x":640,
+                 "y":192
+                }, 
+                {
+                 "gid":3544,
+                 "height":0,
+                 "name":"BigTopCustomer2",
+                 "properties":
+                    {
+                     "sprite_group":"townsfolk-male"
+                    },
+                 "type":"AI",
+                 "visible":true,
+                 "width":0,
+                 "x":128,
+                 "y":320
                 }],
          "opacity":1,
          "type":"objectgroup",
