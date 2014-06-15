@@ -1099,7 +1099,7 @@ GameState.prototype.check_input = function()
 GameState.prototype.update = function()
 {
     this.check_input();
-    this.shadowTexture.update(player.x, player.y, 32, 32);
+    this.shadowTexture.update(player.x-1, player.y-1, 34, 34);
     lightcheck = [
 	this.shadowTexture.getPixelRGB(player.x, player.y),
 	this.shadowTexture.getPixelRGB(player.x + 32, player.y),
