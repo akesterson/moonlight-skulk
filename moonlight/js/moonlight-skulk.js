@@ -706,7 +706,7 @@ var AISprite = function(game, x, y, key, frame) {
 	} else if ( state == STATE_CONCERNED ) {
 	    animkey = "concerned";
 	} else if ( state == STATE_LOSTHIM ) {
-	    if ( this.sprite_group == "townsfolk_guard" ) {
+	    if ( this.sprite_group == "townsfolk-guard" ) {
 		animkey = "angry";
 	    } else {
 		animkey = "relieved";
