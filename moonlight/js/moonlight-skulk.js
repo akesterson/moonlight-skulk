@@ -412,22 +412,22 @@ var moonlightSettings = {
     'animations': {
 	'alerted': {
 	    'frames': [0, 1, 2, 3, 4, 5, 6, 7],
-	    'speed': 2,
+	    'speed': 4,
 	    'loop': false
 	},
 	'concerned': {
 	    'frames': [8, 9, 10, 11, 12, 13, 14, 15],
-	    'speed': 2,
+	    'speed': 4,
 	    'loop': false
 	},
 	'relieved': {
 	    'frames': [48, 49, 50, 51, 52, 53, 54, 55],
-	    'speed': 2,
+	    'speed': 4,
 	    'loop': false
 	},
 	'angry': {
 	    'frames': [56, 57, 58, 59, 60, 61, 62, 63],
-	    'speed': 2,
+	    'speed': 4,
 	    'loop': false
 	},
 	'bipedwalkdown': {
