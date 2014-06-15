@@ -79,6 +79,7 @@ function SoundSprite(game, x, y, key, frame,
 		     sound_volume, 
 		     sound_loop, 
 		     sound_forcerestart,
+		     sound_distance,
 		     sound_nofade)
 {
     Phaser.Sprite.call(this, game, x, y, null);
@@ -88,6 +89,11 @@ function SoundSprite(game, x, y, key, frame,
     this.sound_position = ( typeof sound_position == undefined ? sound_position : 1.0 );
     this.sound_loop = ( typeof sound_loop == undefined ? sound_loop : true );
     this.sound_forcerestart = ( typeof sound_forcerestart == undefined ? sound_forcerestart : true );
+    var def_distance = Math.sqrt(
+	Number((game.camera.width/2) * (game.camera.width/2)) + 
+	    Number((game.camera.height/2) * (game.camera.height/2))
+    );
+    this.sound_distance = ( typeof sound_distance == undefined ? sound_distance : def_distance);
     this.sound_nofade = (typeof sound_nofade == undefined ? sound_nofade : false);
 
     this.sound = null;
@@ -104,6 +110,7 @@ SoundSprite.prototype.update_new_values = function() {
 	return;
     }
     this.sound_position = parseInt(this.sound_position);
+    this.sound_distance = Number(this.sound_distance);
     this.sound_volume = Number(this.sound_volume);
     this.sound_loop = parseBoolean(this.sound_loop);
     this.sound_forcerestart = parseBoolean(this.sound_forcerestart);
@@ -135,13 +142,9 @@ SoundSprite.prototype.adjust_relative_to = function(spr) {
     if ( yd < 0 )
 	yd = -(yd);
 
-    var hyp = Math.sqrt(Number(xd * xd) + Number(yd * yd));
-    var hyp_perfect = Math.sqrt(
-	Number((game.camera.width/2) * (game.camera.width/2)) + 
-	    Number((game.camera.height/2) * (game.camera.height/2))
-    );
+    var hyp = Math.sqrt(Number(xd * xd) + Number(yd * yd));    
 
-    this.sound.volume = (1.0 - Number(hyp / hyp_perfect));
+    this.sound.volume = (1.0 - Number(hyp / this.sound_distance));
     // Math.max doesn't work here??
     if ( this.sound.volume < 0 )
 	this.sound.volume = 0;
@@ -889,7 +892,7 @@ GameState.prototype.create = function()
 		}, this)
 
 		this.effectSprites = game.add.group();
-		this.map.createFromObjects('EffectSprites', 1837, 'player', 0, true, false, this.effectSprites, EffectSprite);
+		this.map.createFromObjects('EffectSprites', 5, 'player', 0, true, false, this.effectSprites, EffectSprite);
 		this.effectSprites.forEach(function(spr) {
 		    spr.update_new_values();
 		}, this)
