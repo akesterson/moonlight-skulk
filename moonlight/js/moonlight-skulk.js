@@ -720,6 +720,9 @@ var AISprite = function(game, x, y, key, frame) {
 	     state != STATE_ALERTED ) {
 	    return;
 	}
+	this.awareness_change_enabled = false;
+	if ( this.awareness_timer !== null )
+	    this.awareness_timer.stop();
 	this.awareness_timer = game.time.create(false);
 	this.awareness_timer.add(this.sprite_awareness_duration, 
 				 this.enableAwarenessChange, 
