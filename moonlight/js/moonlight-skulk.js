@@ -88,7 +88,7 @@ function SoundSprite(game, x, y, key, frame,
     this.sound_volume = ( typeof sound_volume == undefined ? sound_volume : 1.0 );
     this.sound_position = ( typeof sound_position == undefined ? sound_position : 1.0 );
     this.sound_loop = ( typeof sound_loop == undefined ? sound_loop : true );
-    this.sound_forcerestart = ( typeof sound_forcerestart == undefined ? sound_forcerestart : true );
+    this.sound_forcerestart = ( typeof sound_forcerestart == undefined ? sound_forcerestart : false );
     var def_distance = Math.sqrt(
 	Number((game.camera.width/2) * (game.camera.width/2)) + 
 	    Number((game.camera.height/2) * (game.camera.height/2))
