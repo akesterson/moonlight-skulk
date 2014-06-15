@@ -11,6 +11,7 @@ STATE_FACE_UP = 1 << 8;
 STATE_FACE_DOWN = 1 << 9;
 STATE_MOVING = 1 << 10;
 
+STATES_AWARENESS = (STATE_UNAWARE | STATE_CONCERNED | STATE_ALERTED | STATE_LOSTHIM);
 STATES_MOVEMENT = (STATE_MOVING | STATE_RUNNING);
 STATES_FACE = (STATE_FACE_LEFT | STATE_FACE_RIGHT | STATE_FACE_DOWN | STATE_FACE_UP);
 
@@ -324,6 +325,12 @@ var moonlightSettings = {
 	    'frames': 96
 	},
 	{
+	    'name': 'balloon',
+	    'path': 'gfx/effects/Balloon.png',
+	    'width': 32,
+	    'height': 32,
+	    'frames': 80
+	{
 	    'name': 'player',
 	    'path': 'gfx/sprites/sprite-player.png',
 	    'width': 32,
@@ -402,6 +409,26 @@ var moonlightSettings = {
 	}
     ],
     'animations': {
+	'alerted': {
+	    'frames': [0, 1, 2, 3, 4, 5, 6, 7],
+	    'speed': 2,
+	    'loop': false
+	},
+	'concerned': {
+	    'frames': [8, 9, 10, 11, 12, 13, 14, 15],
+	    'speed': 2,
+	    'loop': false
+	},
+	'relieved': {
+	    'frames': [47, 48, 49, 50, 51, 52, 53, 54],
+	    'speed': 2,
+	    'loop': false
+	},
+	'angry': {
+	    'frames': [55, 56, 57, 58, 59, 60, 61, 62],
+	    'speed': 2,
+	    'loop': false
+	},
 	'bipedwalkdown': {
 	    'frames': [1, 2, 0],
 	    'speed': 4,
@@ -666,6 +693,31 @@ var AISprite = function(game, x, y, key, frame) {
 	return false;
     }
 
+    this.setAwarenessEffect = function(state) {
+	var animkey = "";
+	if ( state == STATE_ALERTED ) {
+	    animkey = "alerted";
+	} else if ( state == STATE_CONCERNED ) {
+	    animkey = "concerned";
+	} else if ( state == STATE_LOSTHIM ) {
+	    if ( this.sprite_group == "townsfolk_guard" ) {
+		animkey = "angry";
+	    } else {
+		animkey = "relieved";
+	    }
+	}
+	    
+	if ( animkey == "" )
+	    return;
+
+	this.clearWordBubble();
+	this.awareness_effect = game.state.states.game.add.sprite(
+	    this.x + 16,
+	    this.y - 16,
+	    'balloon');
+	this.awareness_effect.play(animkey, null, false, true);
+    }
+
     this.enableWordBubble = function() {
 	this.enable_word_bubble = true;
 	this.timer = game.time.create(false);
@@ -735,6 +787,16 @@ var AISprite = function(game, x, y, key, frame) {
     {
 	var running = false;
 	var newstate = STATE_NONE;
+
+	if ( this.awareness_effect !== null ) {
+	    if ( this.awareness_effect.alive == false ) {
+		this.awareness_effect.destroy();
+		this.awareness_effect = null;
+	    } else {
+		this.awareness_effect.x = this.x + 16;
+		this.awareness_effect.y = this.y + 16;
+	    }
+	}
 
 	if ( this.bubble_text !== null ) {
 	    if ( this.clear_bubble == true ) {
@@ -819,6 +881,7 @@ var AISprite = function(game, x, y, key, frame) {
     
     Phaser.Sprite.call(this, game, x, y, null);
     game.physics.arcade.enable(this);
+    this.awareness_effect = null;
     this.player_seen_timer = null;
     this.sprite_canmove = 'true';
     this.collide_with_player = 'true';
@@ -1039,6 +1102,16 @@ function setMovingState(spr, state)
     addState(spr, state);
 }
 
+function setAwarenessState(spr, state)
+{
+    delState(spr, STATE_UNAWARE);
+    delState(spr, STATE_CONCERNED);
+    delState(spr, STATE_ALERTED);
+    delState(spr, STATE_LOSTHIM);
+    addState(spr, state);
+    spr.setAwarenessEffect(state);
+}
+
 function exchangeState(spr, state1, state2)
 {
     delState(spr, state1);
@@ -1194,7 +1267,9 @@ GameState.prototype.update = function()
 	}
 	if ( x.collide_with_player == false )
 	    return;
-	x.canSeeSprite(player, false);
+	if ( x.canSeeSprite(player, false) == true ) {
+	    setAwarenessState(x, STATE_ALERTED);
+	}
 	this.physics.arcade.collide(x, player);
     }
 
