@@ -1105,6 +1105,7 @@ GameState.prototype.update = function()
 	    var val = (x['r'] + x['g'] + x['b']) / 3;
 	    if ( val > lightness )
 		lightness = val;
+	    return false;
 	},
 	this,
 	player.x,
