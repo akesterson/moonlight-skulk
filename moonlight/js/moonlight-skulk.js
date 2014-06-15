@@ -935,7 +935,12 @@ GameState.prototype.updateShadowTexture = function() {
 
     this.staticLights.forEach(function(light) {
 	if ( light.always_render !== true ) {
-	    if ( ! light.inCamera ) {
+            var r1 = new Phaser.Rectangle(this.game.camera.x,
+                                          this.game.camera.y,
+                                          this.game.camera.width,
+                                          this.game.camera.height);
+            if ( ! light.rect.intersects(r1) ) {
+		console.log("Light does not appear on camera");
 		return;
 	    }
 	}
