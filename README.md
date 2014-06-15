@@ -8,10 +8,6 @@ Development notes
 
 This stuff is just for me to keep track, since I'm afraid using GitHub's issue tracker or Wiki would bloat my process, and since I only have 4 days, I can't afford that.
 
-## TODO : AI spawns locations marked on the map
-
-The map should randomly spawn AI at various locations on the map that are specified as AI spawn locations, but never within view of the player.
-
 ## TODO : AI should wander around the map
 
 The AI should, in their default states, wander around the map aimlessly. They should restrict themselves to normal pedestrian traffic lanes, which will likely require the marking of such lanes in TilED.
@@ -19,14 +15,6 @@ The AI should, in their default states, wander around the map aimlessly. They sh
 ## TODO : AI that chases you on the map
 
 There needs to be 2 classes of AI : AI that runs from you, and AI that chases you. At this point the "run from you" AI should just continually try to escape you. The "chase you" AI should continually try to reach you.
-
-## TODO : AI needs to only react to you when you are within line of sight
-
-See above, the AI should only react to you when you are within an FOV cone in front of them (90 degrees, centered on their (x,y) center, extending infinitely, pointing forward)
-
-## TODO : AI 'Emotion' effects
-
-When an AI is emotionally affected (scaredby the player, alerted to the player, relieved the player is gone, disappointed the player has escaped, etc), they should show "emotion" - sweat beads, anger bubbles, whatever.
 
 ## TODO : "Run away" AI reports you to "Chase" AI types
 

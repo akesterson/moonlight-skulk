@@ -1,14 +1,22 @@
+Programming:
+
+    Andrew Kesterson (@akesterson)
+    Phaser JS framework written by @photonstorm
+
+Narrative/Dialog Writing:
+
+    JC Wigriff (@jcwigriff)
+
 Graphics:
 
-Bigtop tileset - PandaMaru from an RPG Maker resource pack
-Door tileset - RPG Maker VX Ace
-Numbered tileset ([0-9]+-[a-z]+) : RPG Maker XP
-Sprites : RPG Maker XP / VX Ace
-Flame effect : RPG Maker VX Ace
-
+    Bigtop tileset - PandaMaru from an RPG Maker resource pack
+    Door tileset - RPG Maker VX Ace
+    Numbered tileset ([0-9]+-[a-z]+) : RPG Maker XP
+    Sprites : RPG Maker XP / VX Ace
+    Flame effect : RPG Maker VX Ace
 
 Sound Effects:
 
-Fountain : Roscoe Toon (via Freesound.org)
-Fire : RPG Maker VX Ace
-Calliope : RTB45 via FreeSound.org
+    Fountain : Roscoe Toon (via Freesound.org)
+    Fire : RPG Maker VX Ace
+    Calliope : RTB45 via FreeSound.org
