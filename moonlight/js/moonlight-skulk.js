@@ -1098,7 +1098,7 @@ GameState.prototype.check_input = function()
     setSpriteMovement(player);
 }
 
-GameState.prototype.update_player_lightmeter() {
+GameState.prototype.update_player_lightmeter = function() {
     lightValue = 0;
     this.staticLights.forEach(function(light) {
 	var xd = (spr.x - light.x);
