@@ -1104,12 +1104,12 @@ GameState.prototype.update_player_lightmeter = function() {
 	line = new Phaser.Line(player.x + 16, player.y + 16, light.x + 16, light.y + 16);
 	if ( line.length > light.radius )
 	    return;
-	var ll = line.length;
+	var length = line.length;
 	if ( light.flicker == true ) {
 	    // Because flickering lights are bigger than their radius
-	    ll = ll + 10;
+	    length = ll + 10;
 	}
-	var lv = light.light_meter - (Number(ll) / light.radius);
+	var lv = light.light_meter - (Number(length) / Number(light.radius));
 	if ( lv > lightValue ) {
 	    lightValue = lv;
 	}
