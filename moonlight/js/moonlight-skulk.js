@@ -722,6 +722,7 @@ var AISprite = function(game, x, y, key, frame) {
 	    this.x + 16,
 	    this.y - 16,
 	    'balloon');
+	addAnimation(this.awareness_effect, animkey);
 	this.awareness_effect.play(animkey, null, false, true);
     }
 
