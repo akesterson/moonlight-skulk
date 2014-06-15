@@ -704,10 +704,23 @@ var AISprite = function(game, x, y, key, frame) {
 	this.awareness_change_enabled = true;
     }
 
+    this.startAwarenessTimer = function() {
+	this.awareness_change_enabled = false;
+	if ( this.awareness_timer !== null )
+	    this.awareness_timer.stop();
+	this.awareness_timer = game.time.create(false);
+	this.awareness_timer.add(this.sprite_awareness_duration, 
+				 this.enableAwarenessChange, 
+				 this);
+	this.awareness_timer.start()
+    }
+
     this.setAwarenessEffect = function(state) {
 	var animkey = "";
 
 	if ( hasState(this, state) == true ) {
+	    // restart the awareness timer
+	    this.startAwarenessTimer();
 	    return;
 	} else if ( (state == STATE_LOSTHIM) && 
 		    (hasState(this, STATE_ALERTED) == false) &&
@@ -719,15 +732,7 @@ var AISprite = function(game, x, y, key, frame) {
 	     state != STATE_ALERTED ) {
 	    return;
 	}
-	this.awareness_change_enabled = false;
-	if ( this.awareness_timer !== null )
-	    this.awareness_timer.stop();
-	this.awareness_timer = game.time.create(false);
-	this.awareness_timer.add(this.sprite_awareness_duration, 
-				 this.enableAwarenessChange, 
-				 this);
-	this.awareness_timer.start()
-
+	this.startAwarenessTimer();
 	setAwarenessState(this, state);
 
 	if ( this.awareness_effect !== null ) {
