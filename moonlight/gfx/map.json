@@ -115,7 +115,7 @@
                  "name":"brazierlight1",
                  "properties":
                     {
-                     "color_start":"rgba(235, 185, 22, `1.0)",
+                     "color_start":"rgba(235, 185, 22, 1.0)",
                      "color_stop":"rgba(246, 152, 62, 0.0)",
                      "fade":"0.75",
                      "flicker":"true",
@@ -133,7 +133,7 @@
                  "name":"brazierlight2",
                  "properties":
                     {
-                     "color_start":"rgba(235, 185, 22, `1.0)",
+                     "color_start":"rgba(235, 185, 22, 1.0)",
                      "color_stop":"rgba(246, 152, 62, 0.0)",
                      "fade":"0.75",
                      "flicker":"true",
@@ -151,7 +151,7 @@
                  "name":"brazierlight3",
                  "properties":
                     {
-                     "color_start":"rgba(235, 185, 22, `1.0)",
+                     "color_start":"rgba(235, 185, 22, 1.0)",
                      "color_stop":"rgba(246, 152, 62, 0.0)",
                      "fade":"0.75",
                      "flicker":"true",
@@ -169,7 +169,7 @@
                  "name":"brazierlight4",
                  "properties":
                     {
-                     "color_start":"rgba(235, 185, 22, `1.0)",
+                     "color_start":"rgba(235, 185, 22, 1.0)",
                      "color_stop":"rgba(246, 152, 62, 0.0)",
                      "fade":"0.75",
                      "flicker":"true",
