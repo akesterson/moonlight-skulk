@@ -703,12 +703,11 @@ var AISprite = function(game, x, y, key, frame) {
     this.setAwarenessEffect = function(state) {
 	var animkey = "";
 
-	if ( (state == STATE_LOSTHIM) && (hasState(this, STATE_ALERTED) == false)) {
+	if ( hasState(this, state) == true ) {
 	    return;
-	} else if ( (state == STATE_ALERTED) && (hasState(this, STATE_ALERTED) == true) ) {
+	} else if ( (state == STATE_LOSTHIM) && (hasState(this, STATE_ALERTED) == false)) {
 	    return;
-	}
-
+	} 
 	setAwarenessState(this, state);
 
 	if ( this.awareness_effect !== null ) {
