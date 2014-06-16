@@ -825,16 +825,13 @@ var AISprite = function(game, x, y, key, frame) {
 	text = mylines[game.rnd.integerInRange(0, mylines.length-1)];
 	style = {font: '14px Arial Bold', fill: '#ffffff'}
 	this.text_size = stringSize(text, style['font']);
-	bubblegrp = game.state.states.game.bubble_group;
-	console.log(bubblegrp);
-	console.log(bubbleimg);
-	this.bubble_sprite = game.add.sprite(this.x, this.y, 'wordbubble', bubblegrp);
+	this.bubble_sprite = game.add.sprite(this.x, this.y, 'wordbubble');
 	this.bubble_sprite.anchor.setTo(0.5, 1.0);
 	console.log(this.bubble_sprite.scale);
 	this.bubble_sprite.scale.x = Number((this.text_size[0] + 16) / bubbleimg.width);
 	this.bubble_sprite.scale.y = Number((this.text_size[1] + 16) / bubbleimg.height);
 	console.log(this.bubble_sprite);
-	this.bubble_text = game.add.text(this.x, this.y, text, style, bubblegrp);
+	this.bubble_text = game.add.text(this.x, this.y, text, style);
 	this.snap_bubble_position();
 
 	this.timer = game.time.create(false);
@@ -850,7 +847,6 @@ var AISprite = function(game, x, y, key, frame) {
 	var ty = this.bubble_sprite.y - (this.bubble_sprite.height);
 	this.bubble_text.position.x = tx;
 	this.bubble_text.position.y = ty;
-	this.bubble_text.bringToTop();
     }
 
     this.update = function()
