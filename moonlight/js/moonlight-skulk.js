@@ -1343,7 +1343,11 @@ GameState.prototype.update = function()
 	    }
 	    return;
 	} else {
-	    x.setAwarenessEffect(STATE_LOSTHIM);
+	    if ( hasState(x, STATE_LOSTHIM) == false ) {
+		x.setAwarenessEffect(STATE_LOSTHIM);
+	    } else {
+		x.setAwarenessEffect(STATE_NONE);
+	    }
 	}
 	this.physics.arcade.collide(x, player);
     }
