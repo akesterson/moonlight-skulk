@@ -623,18 +623,18 @@ var moonlightDialog = {
 
 function stringSize(str, font)
 {
-    var f = font || '12px arial',
-    o = $('<div>' + str + '</div>')
-        .css({'position': 'absolute', 'float': 'left', 'visibility': 'hidden', 'font': f})
-        .appendTo($('body')),
-    w = o.width(),
-    h = o.height();
-    hstep = 0;
-    newlines = Math.max(1, str.split("\n").length);
-    if ( newlines > 1 )
-	hstep = 5;
+    var widths = [];
+    var height = 0;
+    str.split("\n").forEach(function() {
+	var f = font || '12px arial';
+	var o = $('<div>' + str + '</div>')
+            .css({'position': 'absolute', 'float': 'left', 'visibility': 'hidden', 'font': f})
+            .appendTo($('body'));
+	widths.push(o.width());
+	height += 5 + o.height();
+    }, this);
     o.remove();
-    return [w/newlines, (h+hstep)*newlines];
+    return [Math.max(widths), height];
 }
 
 var EffectSprite = function(game, x, y, key, frame, animation) {
