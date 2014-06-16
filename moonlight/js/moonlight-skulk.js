@@ -868,6 +868,7 @@ var AISprite = function(game, x, y, key, frame) {
 
     this.action_wander = function()
     {
+	var newstate = STATE_NONE;
 	if ( this.sprite_canmove == false) {
 	    return;
 	}
@@ -899,7 +900,6 @@ var AISprite = function(game, x, y, key, frame) {
     this.update = function()
     {
 	var running = false;
-	var newstate = STATE_NONE;
 
 	if ( this.awareness_effect !== null ) {
 	    if ( this.awareness_effect.alive == false ) {
