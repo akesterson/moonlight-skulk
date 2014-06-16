@@ -567,6 +567,7 @@ var moonlightDialog = {
 	},
 	"townsfolk-guard" : {
 	    "unaware" : [
+		"This is some\nmultiline text\nin this bitch",
 		"Just doing my civic duty.",
 		"Good day, citizens.",
 		"Honor. Liberty. Justice.\nOh, and pancakes…\nI love pancakes.",
@@ -825,7 +826,8 @@ var AISprite = function(game, x, y, key, frame) {
 
 	var mylines = moonlightDialog['status'][this.sprite_group][aistate];
 	bubbleimg = game.cache.getImage('wordbubble');
-	text = mylines[game.rnd.integerInRange(0, mylines.length-1)];
+	//text = mylines[game.rnd.integerInRange(0, mylines.length-1)];
+	text = mylines[0];
 	style = {font: '14px Arial Bold', fill: '#ffffff'}
 	this.text_size = stringSize(text, style['font']);
 	this.bubble_sprite = game.add.sprite(this.x, this.y, 'wordbubble');
