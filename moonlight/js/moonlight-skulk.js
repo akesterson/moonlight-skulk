@@ -630,7 +630,7 @@ function stringSize(str, font)
     w = o.width(),
     h = o.height();
     hstep = 0;
-    newlines = str.split("\n").length;
+    newlines = Math.min(1, str.split("\n").length);
     if ( newlines > 1 )
 	hstep = 5;
     o.remove();
