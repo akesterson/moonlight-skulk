@@ -625,9 +625,9 @@ function stringSize(str, font)
 {
     var widths = [];
     var height = 0;
-    str.split("\n").forEach(function() {
-	var f = font || '12px arial';
-	var o = $('<div>' + str + '</div>')
+    var f = font || '12px arial';
+    str.split("\n").forEach(function(x) {
+	var o = $('<div>' + x + '</div>')
             .css({'position': 'absolute', 'float': 'left', 'visibility': 'hidden', 'font': f})
             .appendTo($('body'));
 	widths.push(o.width());
