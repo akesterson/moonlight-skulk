@@ -43,7 +43,7 @@ var Light = function(game, x, y, key, frame, radius, fade, color_start, color_st
     radius = ( typeof radius == undefined ? radius : 64);
     flicker = ( typeof flicker == undefined ? flicker : false);
     always_render = ( typeof always_render == undefined ? always_render : false);
-    lightmeter = ( typeof light_meter == undefined ? lightmeter : 1.0 );
+    light_meter = ( typeof light_meter == undefined ? light_meter : 1.0 );
     Phaser.Sprite.call(this, game, x, y, null);
 
     // Set the pivot point for this sprite to the center
@@ -54,7 +54,7 @@ var Light = function(game, x, y, key, frame, radius, fade, color_start, color_st
     this.radius = radius;
     this.rendered_radius = radius;
     this.fade = radius * fade
-    this.light_meter = lightmeter;
+    this.light_meter = light_meter;
     this.always_render = always_render
     this.rect = new Phaser.Rectangle(this.x - radius, this.y - radius, radius * 2, radius * 2)
     this.flicker = flicker;
