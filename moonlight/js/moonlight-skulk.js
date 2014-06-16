@@ -471,7 +471,7 @@ var moonlightSettings = {
 	    'loop': true
 	},
 	'lantern_small': {
-	    'frames': [22, 23, 24],
+	    'frames': [24, 25, 26],
 	    'speed': 6,
 	    'loop': true
 	},
