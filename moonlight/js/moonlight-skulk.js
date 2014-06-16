@@ -923,14 +923,13 @@ var AISprite = function(game, x, y, key, frame) {
 	    }
 	}
 
-
 	if ( hasState(this, STATE_ALERTED) ) {
 	    if ( this.sprite_group == "townsfolk-guard" ) {
 		this.action_chaseplayer();
 	    } else {
 		this.action_reportplayer();
 	    }
-	} else if ( hasState(this, (STATE_CONCERNED | STATE_LOSTHIM)) ) {
+	} else if ( hasAnyState(this, [STATE_CONCERNED, STATE_LOSTHIM]) ) {
 	    this.action_huntplayer();
 	} else {
 	    this.action_wander();
@@ -1197,6 +1196,16 @@ function exchangeState(spr, state1, state2)
 {
     delState(spr, state1);
     addState(spr, state2);
+}
+
+function hasAnyState(spr, states)
+{
+    var hasstate = false;
+    states.forEach(function(x) {
+	if ( hasState(spr, x) )
+	    hasstate = true;
+    }, this);
+    return hasstate;
 }
 
 function hasState(spr, state)
