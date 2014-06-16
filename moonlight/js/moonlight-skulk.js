@@ -635,7 +635,7 @@ function stringSize(str, font)
 	height += 5 + o.height();
 	o.remove();
     }, this);
-    return [Math.max(widths), height];
+    return [Math.max.call(widths), height];
 }
 
 var EffectSprite = function(game, x, y, key, frame, animation) {
