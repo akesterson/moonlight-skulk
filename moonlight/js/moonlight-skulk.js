@@ -990,40 +990,9 @@ function addAnimation(obj, anim)
     obj.animations.add(anim, a['frames'], a['speed'], a['loop'])
 }
 
-GameState.prototype.preload = function()
-{
-    game.load.image('preloader', 'gfx/ui/preloader.png');
-    preloadBar = game.add.sprite(0, 0, 'preloader');
-    console.log(preloadBar);
-    preloadBar.anchor.setTo(0.5, 0.5);
-    preloadBar.x = game.camera.x + (game.camera.width / 2);
-    preloadBar.y = game.camera.y + (game.camera.width / 2);
-    game.load.setPreloadSprite(preloadBar, 0);
-
-    for (var k in moonlightSettings['map']['tilesets']) {
-	var ts = moonlightSettings['map']['tilesets'][k];
-	this.load.image(ts['name'], ts['path']);
-    }
-    for (var k in moonlightSettings['images']) {
-	var i = moonlightSettings['images'][k];
-	this.load.image(i['name'], i['path']);
-    }
-    for (var k in moonlightSettings['sounds']) {
-	var s = moonlightSettings['sounds'][k];
-	this.load.audio(s['name'], s['path']);
-    }
-    for (var k in moonlightSettings['spritesheets']) {
-	var s = moonlightSettings['spritesheets'][k]
-	game.load.spritesheet(s['name'], s['path'], s['width'], s['height'], s['frames'])
-    }
-
-    this.load.tilemap('map',
-		      moonlightSettings['map']['path'],
-		      null,
-		      Phaser.Tilemap.TILED_JSON);
-
-    preloadBar.destroy();
-}
+//GameState.prototype.preload = function()
+//{
+//}
 
 GameState.prototype.create = function()
 {
@@ -1394,4 +1363,76 @@ GameState.prototype.update = function()
     }
 }
 
+function Boot()
+{
+    Phaser.State.call(game, this);
+}
+
+var Boot = function(game) {
+}
+Boot.prototype = Object.create(Phaser.State.prototype);
+
+Boot.preload = function()
+{
+    game.load.image('preloader', 'gfx/ui/preloader.png');
+};
+
+Boot.create = function()
+{
+    this.input.maxPointers = 1;
+    this.stage.disableVisibilityChange = true;
+    this.stage.scale.pageAlignHoritzontally = true;
+    game.state.start('preloader', true, false);
+}
+
+var Preloader = function(game) {
+}
+Preloader.prototype = Object.create(Phaser.State.prototype);
+
+Preloader.prototype.preload = function()
+{
+    this.preloadBar = game.add.sprite(0, 0, 'preloader');
+    this.preloadBar.anchor.setTo(0.5, 0.5);
+    this.preloadBar.x = game.camera.x + (game.camera.width / 2);
+    this.preloadBar.y = game.camera.y + (game.camera.width / 2);
+    game.load.setPreloadSprite(this.preloadBar, 0);
+
+    for (var k in moonlightSettings['map']['tilesets']) {
+	var ts = moonlightSettings['map']['tilesets'][k];
+	this.load.image(ts['name'], ts['path']);
+    }
+    for (var k in moonlightSettings['images']) {
+	var i = moonlightSettings['images'][k];
+	this.load.image(i['name'], i['path']);
+    }
+    for (var k in moonlightSettings['sounds']) {
+	var s = moonlightSettings['sounds'][k];
+	this.load.audio(s['name'], s['path']);
+    }
+    for (var k in moonlightSettings['spritesheets']) {
+	var s = moonlightSettings['spritesheets'][k]
+	game.load.spritesheet(s['name'], s['path'], s['width'], s['height'], s['frames'])
+    }
+
+    this.load.tilemap('map',
+		      moonlightSettings['map']['path'],
+		      null,
+		      Phaser.Tilemap.TILED_JSON);
+
+}
+
+Preloader.prototype.create = function()
+{
+
+    function goalready() {
+	this.preloadBar.destroy();
+	game.state.start('game', true, false);
+    }
+
+    var tween = this.add.tween(this.preloadBar).to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
+    tween.onComplete.add(goalready, this);
+}
+
+game.state.add('boot', Boot, true);
+game.state.add('preloader', Preloader, true);
 game.state.add('game', GameState, true);
