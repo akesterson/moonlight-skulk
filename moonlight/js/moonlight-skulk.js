@@ -629,9 +629,12 @@ function stringSize(str, font)
         .appendTo($('body')),
     w = o.width(),
     h = o.height();
+    hstep = 0;
     newlines = str.split("\n").length;
+    if ( newlines > 1 )
+	hstep = 5;
     o.remove();
-    return [w/newlines, (h+5)*newlines];
+    return [w/newlines, (h+hstep)*newlines];
 }
 
 var EffectSprite = function(game, x, y, key, frame, animation) {
