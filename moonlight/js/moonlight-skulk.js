@@ -32,6 +32,8 @@ SPRITE_TOWNSFOLK_FEMALE4 = 8;
 SPRITE_TOWNSFOLK_GUARD1 = 9;
 SPRITE_TOWNSFOLK_GUARD2 = 10;
 
+var pathfinder = null;
+
 var game = new Phaser.Game(640, 480, Phaser.AUTO, '');
 
 // Create torch objects
@@ -853,7 +855,26 @@ var AISprite = function(game, x, y, key, frame) {
 
     this.action_chaseplayer = function()
     {
-	console.log("I AM CHASING THE PLAYER");
+	var newpath = []
+	var movingstate = STATE_NONE;
+	pathfinder.setCallbackFunction(function(path) {
+            newpath = (path || []);
+	});	
+	this.path = newpath;
+	pathfinder.preparePathCalculation([0,0], [player.x/32, player.y/32]);
+	pathfinder.calculatePath();
+	if ( this.path[0].x < this.x ) {
+	    movingstate = STATE_FACE_LEFT | STATE_MOVING | STATE_RUNNING;
+	} else if ( this.path[0].x > this.x ) {
+	    movingstate = STATE_FACE_RIGHT | STATE_MOVING | STATE_RUNNING;
+	} else if ( this.path[0].y < this.y ) {
+	    movingstate = STATE_FACE_UP | STATE_MOVING | STATE_RUNNING;
+	} else if ( this.path[0].y > this.y ) {
+	    movingstate = STATE_FACE_DOWN | STATE_MOVING | STATE_RUNNING;
+	} else {
+	    movingstate = (this.state & STATES_FACE);
+	}
+	setMovingState(this, movingstate);
     }
 
     this.action_reportplayer = function()
@@ -874,9 +895,6 @@ var AISprite = function(game, x, y, key, frame) {
 	}
 	if ( game.rnd.integerInRange(0, 100) < 95 )
 	    return;
-	if ( game.rnd.integerInRange(0, 100) > 90 ) {
-	    newstate = STATE_RUNNING;
-	}
 	switch ( game.rnd.integerInRange(0, 4) ) {
 	    case 0: {
 		newstate = newstate | (STATE_FACE_RIGHT | STATE_MOVING);
@@ -1022,6 +1040,7 @@ var GameState = function(game) {
 
 GameState.prototype.create = function()
 {
+    this.pathfinding_grid = []
     this.map = this.add.tilemap('map');
     for (var k in moonlightSettings['map']['tilesets']) {
 	var ts = moonlightSettings['map']['tilesets'][k];
@@ -1033,7 +1052,7 @@ GameState.prototype.create = function()
     for (var ln in moonlightSettings['map']['layers']) {
 	lp = moonlightSettings['map']['layers'][ln];
 	if ( lp['type'] == "tiles" ) {
-	    layer = this.map.createLayer(ln);
+	    layer = this.map.createLayer(ln);	    
 	    this.map.setCollisionBetween(
 		lp['collisionBetween'][0],
 		lp['collisionBetween'][1],
@@ -1052,11 +1071,26 @@ GameState.prototype.create = function()
 	    };
 	    if ( lp['collides'] == true ) {
 		this.map_collision_layers.push(layer);
+		for (var i = 0; i < layer.data.length; i++)
+		{
+		    if ( this.pathfinding_grid.length <= i )
+			this.pathfinding_grid[i] = [];
+		    for (var j = 0; j < layer.data[i].length; j++)
+		    {
+			if (layer.data[i][j])
+			    this.pathfinding_grid[i][j] = layer.data[i][j].index;
+			else
+			    this.pathfinding_grid[i][j] = 0;
+		    }
+		}
 	    }
 	    layer.resizeWorld();
 	}
     }
 	
+    pathfinder = game.plugins.add(Phaser.Plugin.PathFinderPlugin);
+    pathfinder.setGrid(map.layers[0].data, walkables);
+
     this.physics.arcade.enable(player);
     player.body.center = new Phaser.Point(player.body.width / 2, player.body.height + player.body.halfHeight);
     player.body.collideWorldBounds = true;

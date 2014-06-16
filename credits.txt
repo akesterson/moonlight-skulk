@@ -2,6 +2,9 @@ Programming:
 
     Andrew Kesterson (@akesterson)
     Phaser JS framework written by @photonstorm
+    Phaser Pathfinding plugin by casarock (https://github.com/appsbu-de/phaser_plugin_pathfinding)
+    EasyStarJS by prettymuchbryce (https://github.com/prettymuchbryce/easystarjs)
+
 
 Narrative/Dialog Writing:
 
