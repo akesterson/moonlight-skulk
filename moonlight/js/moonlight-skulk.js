@@ -470,6 +470,11 @@ var moonlightSettings = {
 	    'speed': 12,
 	    'loop': true
 	},
+	'lantern_small': {
+	    'frames': [23, 24, 25],
+	    'speed': 6,
+	    'loop': true
+	},
 	'campfire_small': {
 	    'frames': [6, 7, 8],
 	    'speed': 6,
