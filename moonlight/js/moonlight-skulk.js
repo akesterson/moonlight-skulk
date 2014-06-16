@@ -625,7 +625,7 @@ function stringSize(str, font)
 {
     var f = font || '12px arial',
     o = $('<div>' + str + '</div>')
-        .css({'position': 'absolute', 'float': 'left', 'white-space': 'nowrap', 'visibility': 'hidden', 'font': f})
+        .css({'position': 'absolute', 'float': 'left', 'visibility': 'hidden', 'font': f})
         .appendTo($('body')),
     w = o.width(),
     h = o.height();
