@@ -821,12 +821,17 @@ var AISprite = function(game, x, y, key, frame) {
 	}
 
 	var mylines = moonlightDialog['status'][this.sprite_group][aistate];
+	bubbleimg = game.cache.image('wordbubble')
 	text = mylines[game.rnd.integerInRange(0, mylines.length-1)];
 	style = {font: '14px Arial Bold', fill: '#ffffff'}
 	this.text_size = stringSize(text, style['font']);
-	this.bubble_sprite = game.add.sprite(this.x, this.y, 'wordbubble');
-	this.bubble_sprite.anchor.setTo(0.5, 0.5);
-	this.bubble_text = game.add.text(this.x, this.y, text, style);
+	bubblegrp = game.state.states.game.bubble_group;
+	this.bubble_sprite = bubblegrp.add.sprite(this.x, this.y, 'wordbubble');
+	this.bubble_sprite.anchor.setTo(0.5, 1.0);
+	this.bubble_sprite.scale(Number(this.text_size[0] / bubbleimg.width),
+				 Number(this.text_size[1] / bubbleimg.height)
+				 );
+	this.bubble_text = bubblegrp.add.text(this.x, this.y, text, style);
 	this.snap_bubble_position();
 
 	this.timer = game.time.create(false);
@@ -838,8 +843,8 @@ var AISprite = function(game, x, y, key, frame) {
     {
 	this.bubble_sprite.x = this.x + 16;
 	this.bubble_sprite.y = this.y - 33;
-	this.bubble_text.position.x = this.x + 16 - 150 + 8;
-	this.bubble_text.position.y = this.y - 67 + 8;
+	this.bubble_text.position.x = this.bubble_sprite.x + 8;
+	this.bubble_text.position.y = this.bubble_sprite.y + 8;
     }
 
     this.update = function()
@@ -1084,6 +1089,8 @@ GameState.prototype.create = function()
     this.staticSounds.forEach(function(snd) {
 	snd.update_new_values();
     }, this)
+
+    this.bubble_group = game.add.group();
 
     this.uigroup = game.add.group();
     this.game.time.advancedTiming = true;
