@@ -723,11 +723,7 @@ var AISprite = function(game, x, y, key, frame) {
     this.setAwarenessEffect = function(state) {
 	var animkey = "";
 
-	if ( hasState(this, state) == true ) {
-	    // restart the awareness timer
-	    this.startAwarenessTimer();
-	    return;
-	} else if ( (state == STATE_LOSTHIM) && 
+	if ( (state == STATE_LOSTHIM) && 
 		    (hasState(this, STATE_ALERTED) == false) &&
 		    (hasState(this, STATE_CONCERNED) == false) ) {
 	    return;
