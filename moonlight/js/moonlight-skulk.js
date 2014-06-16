@@ -631,7 +631,7 @@ function stringSize(str, font)
     h = o.height();
     newlines = str.split("\n").length;
     o.remove();
-    return [w/newlines, h*newlines];
+    return [w/newlines, (h+5)*newlines];
 }
 
 var EffectSprite = function(game, x, y, key, frame, animation) {
