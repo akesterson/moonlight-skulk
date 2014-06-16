@@ -844,7 +844,7 @@ var AISprite = function(game, x, y, key, frame) {
 	this.bubble_sprite.x = this.x + 16;
 	this.bubble_sprite.y = this.y;
 	var tx = this.bubble_sprite.x - (this.text_size[0]/2);
-	var ty = this.bubble_sprite.y - (this.bubble_sprite.height);
+	var ty = this.bubble_sprite.y - (this.bubble_sprite.height) + 8;
 	this.bubble_text.position.x = tx;
 	this.bubble_text.position.y = ty;
     }
