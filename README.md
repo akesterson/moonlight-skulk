@@ -28,10 +28,6 @@ The Chase AI should stop chasing you if it has not seen you for a certain amount
 
 See above, once the Chase AI loses you, it should look for you for some time before giving up
 
-## TODO : Make player harder to "see" when they are in shadows or far away
-
-The dynamic lighting effect will make certain areas of the map "darker" than others. When the player stands in them, they get darker as well. This "darkness" factor, as well as how far away the player is, should be taken into account when determining if an AI can "see" the player
-
 ## TODO : Player should be able to "steal" from people
 
 The player should be able to get within a certain distance of people, press an action button, and "steal" objects from them
@@ -51,7 +47,3 @@ The game should keep score based on how much loot the player steals ($$ value?),
 ## TODO : AI stops and chats with each other
 
 A coup de grace would be if, every so often, AI would randomly stop and have short preprogrammed chats with each other.
-
-## TODO : AI should give some indicator that it is about to change directions
-
-As a player, it would really suck if the AI I was following suddenly did an about-face with absolutely no warning. The AI should telegraph this movement somehow with varying degrees of "time to get your shit together".

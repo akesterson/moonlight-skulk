@@ -992,6 +992,13 @@ function addAnimation(obj, anim)
 
 GameState.prototype.preload = function()
 {
+    game.load.image('preloader', 'gfx/ui/preloader.png');
+    preloadBar = game.add.sprite(0, 0, 'preloader');
+    preloadBar.anchor.setTo(0.5, 0.5);
+    preloadBar.x = game.camera.x + (game.camera.width / 2);
+    preloadBar.y = game.camera.y + (game.camera.width / 2);
+    game.load.setPreloadSprite(preloadBar, 0);
+
     for (var k in moonlightSettings['map']['tilesets']) {
 	var ts = moonlightSettings['map']['tilesets'][k];
 	this.load.image(ts['name'], ts['path']);
