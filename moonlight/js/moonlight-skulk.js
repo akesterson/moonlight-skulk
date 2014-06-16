@@ -624,18 +624,19 @@ var moonlightDialog = {
 
 function stringSize(str, font)
 {
-    var widths = [];
+    var width = 0;
     var height = 0;
     var f = font || '12px arial';
     str.split("\n").forEach(function(x) {
 	var o = $('<div>' + x + '</div>')
             .css({'position': 'absolute', 'float': 'left', 'visibility': 'hidden', 'font': f})
             .appendTo($('body'));
-	widths.push(o.width());
+	if ( o.width() > width )
+	    width = o.width();
 	height += 5 + o.height();
 	o.remove();
     }, this);
-    return [Math.max.call(widths), height];
+    return [width, height];
 }
 
 var EffectSprite = function(game, x, y, key, frame, animation) {
