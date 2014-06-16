@@ -1290,7 +1290,7 @@ GameState.prototype.update_player_lightmeter = function() {
 	if ( line.length > light.rendered_radius)
 	    return;
 	var length = line.length;
-	var lv = light.light_meter - (Number(length) / Number(light.rendered_radius));
+	var lv = (Number(length) / Number(light.rendered_radius)) * light.light_meter;
 	if ( lv > lightValue ) {
 	    lightValue = lv;
 	}
