@@ -833,7 +833,7 @@ var AISprite = function(game, x, y, key, frame) {
 	console.log(this.bubble_sprite.scale);
 	this.bubble_sprite.scale.x = Number(this.text_size[0] / bubbleimg.width);
 	this.bubble_sprite.scale.y = Number(this.text_size[1] / bubbleimg.height);
-	this.bubble_text = bubblegrp.add.text(this.x, this.y, text, style);
+	this.bubble_text = game.add.text(this.x, this.y, text, style, bubblegrp);
 	this.snap_bubble_position();
 
 	this.timer = game.time.create(false);
