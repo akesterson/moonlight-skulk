@@ -857,7 +857,6 @@ var AISprite = function(game, x, y, key, frame) {
 	}
 
 	if ( this.sprite_canmove == false) {
-	    this.body.immovable = true;
 	    return;
 	}
 	if ( game.rnd.integerInRange(0, 100) < 95 )
@@ -929,6 +928,7 @@ var AISprite = function(game, x, y, key, frame) {
     
     Phaser.Sprite.call(this, game, x, y, null);
     game.physics.arcade.enable(this);
+    this.body.immovable = true;
     this.awareness_change_enabled = true;
     this.lightmeter = 1.0;
     this.sprite_can_see_lightmeter = 0.5;
@@ -1320,11 +1320,14 @@ GameState.prototype.update = function()
 	if ( x.collide_with_player == false )
 	    return;
 	if ( x.canSeeSprite(player, false) == true ) {
-	    if ( player.lightmeter >= x.sprite_can_see_lightmeter ) {
+	    if ( this.physics.arcade.collide(x, player) ) {
+		x.setAwarenessEffect(STATE_ALERTED);
+	    } else if ( player.lightmeter >= x.sprite_can_see_lightmeter ) {
 		x.setAwarenessEffect(STATE_ALERTED);
 	    } else {
 		x.setAwarenessEffect(STATE_CONCERNED);
 	    }
+	    return;
 	} else {
 	    x.setAwarenessEffect(STATE_LOSTHIM);
 	}
