@@ -1374,11 +1374,13 @@ Boot.prototype = Object.create(Phaser.State.prototype);
 
 Boot.preload = function()
 {
+    console.log("Boot.preload");
     game.load.image('preloader', 'gfx/ui/preloader.png');
 };
 
 Boot.create = function()
 {
+    console.log("Boot.create");
     this.input.maxPointers = 1;
     this.stage.disableVisibilityChange = true;
     this.stage.scale.pageAlignHoritzontally = true;
@@ -1391,6 +1393,7 @@ Preloader.prototype = Object.create(Phaser.State.prototype);
 
 Preloader.prototype.preload = function()
 {
+    console.log("Preloader.preload");
     this.preloadBar = game.add.sprite(0, 0, 'preloader');
     this.preloadBar.anchor.setTo(0.5, 0.5);
     this.preloadBar.x = game.camera.x + (game.camera.width / 2);
@@ -1423,7 +1426,7 @@ Preloader.prototype.preload = function()
 
 Preloader.prototype.create = function()
 {
-
+    console.log("Preloader.create");
     function goalready() {
 	this.preloadBar.destroy();
 	game.state.start('game', true, false);
