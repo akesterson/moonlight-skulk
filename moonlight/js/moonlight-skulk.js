@@ -827,6 +827,7 @@ var AISprite = function(game, x, y, key, frame) {
 	this.text_size = stringSize(text, style['font']);
 	bubblegrp = game.state.states.game.bubble_group;
 	console.log(bubblegrp);
+	console.log(bubbleimg);
 	this.bubble_sprite = game.add.sprite(this.x, this.y, 'wordbubble', bubblegrp);
 	this.bubble_sprite.anchor.setTo(0.5, 1.0);
 	this.bubble_sprite.scale(Number(this.text_size[0] / bubbleimg.width),
@@ -1111,8 +1112,8 @@ GameState.prototype.create = function()
     this.lightbar_image = game.cache.getImage('lightbar');
     this.lightbar_crop = new Phaser.Rectangle(0,
 					      0,
-					      game.cache.getImage('lightbar').width,
-					      game.cache.getImage('lightbar').height);
+					      this.lightbar_image.width,
+					      this.lightbar_image.height);
     this.uigroup.setAll('fixedToCamera', true);	
 }
 
