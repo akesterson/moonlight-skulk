@@ -830,9 +830,10 @@ var AISprite = function(game, x, y, key, frame) {
 	console.log(bubbleimg);
 	this.bubble_sprite = game.add.sprite(this.x, this.y, 'wordbubble', bubblegrp);
 	this.bubble_sprite.anchor.setTo(0.5, 1.0);
-	this.bubble_sprite.scale(Number(this.text_size[0] / bubbleimg.width),
-				 Number(this.text_size[1] / bubbleimg.height)
-				 );
+	console.log(this.bubble_sprite.scale);
+	this.bubble_sprite.scale = [Number(this.text_size[0] / bubbleimg.width),
+				    Number(this.text_size[1] / bubbleimg.height)
+				    ];
 	this.bubble_text = bubblegrp.add.text(this.x, this.y, text, style);
 	this.snap_bubble_position();
 
