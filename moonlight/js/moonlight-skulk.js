@@ -851,6 +851,51 @@ var AISprite = function(game, x, y, key, frame) {
 	this.bubble_text.position.y = ty;
     }
 
+    this.action_chaseplayer = function()
+    {
+	console.log("I AM CHASING THE PLAYER");
+    }
+
+    this.action_reportplayer = function()
+    {
+	console.log("I AM REPORTING THE PLAYER");
+    }
+
+    this.action_huntplayer = function()
+    {
+	console.log("I AM HUNTING FOR THE PLAYER");
+    }
+
+    this.action_wander = function()
+    {
+	if ( this.sprite_canmove == false) {
+	    return;
+	}
+	if ( game.rnd.integerInRange(0, 100) < 95 )
+	    return;
+	if ( game.rnd.integerInRange(0, 100) > 90 ) {
+	    newstate = STATE_RUNNING;
+	}
+	switch ( game.rnd.integerInRange(0, 4) ) {
+	    case 0: {
+		newstate = newstate | (STATE_FACE_RIGHT | STATE_MOVING);
+		break;
+	    }
+	    case 1: {
+		newstate = newstate | (STATE_FACE_LEFT | STATE_MOVING);
+		break;
+	    }
+	    case 2: {
+		newstate = newstate | (STATE_FACE_UP | STATE_MOVING);
+		break;
+	    }
+	    case 3: {
+		newstate = newstate | (STATE_FACE_DOWN | STATE_MOVING);
+	    }
+	}
+	setMovingState(this, newstate);
+    }
+
     this.update = function()
     {
 	var running = false;
@@ -878,33 +923,18 @@ var AISprite = function(game, x, y, key, frame) {
 	    }
 	}
 
-	if ( this.sprite_canmove == false) {
-	    return;
-	}
-	if ( game.rnd.integerInRange(0, 100) < 95 )
-	    return;
-	if ( game.rnd.integerInRange(0, 100) > 90 ) {
-	    newstate = STATE_RUNNING;
-	}
 
-	switch ( game.rnd.integerInRange(0, 4) ) {
-	    case 0: {
-		newstate = newstate | (STATE_FACE_RIGHT | STATE_MOVING);
-		break;
+	if ( hasState(this, STATE_ALERTED) ) {
+	    if ( this.sprite_group == "townsfolk-guard" ) {
+		this.action_chaseplayer();
+	    } else {
+		this.action_reportplayer();
 	    }
-	    case 1: {
-		newstate = newstate | (STATE_FACE_LEFT | STATE_MOVING);
-		break;
-	    }
-	    case 2: {
-		newstate = newstate | (STATE_FACE_UP | STATE_MOVING);
-		break;
-	    }
-	    case 3: {
-		newstate = newstate | (STATE_FACE_DOWN | STATE_MOVING);
-	    }
+	} else if ( hasState(this, (STATE_CONCERNED | STATE_RELIEVED)) ) {
+	    this.action_huntplayer();
+	} else {
+	    this.action_wander();
 	}
-	setMovingState(this, newstate);
 	setSpriteMovement(this);
     }
 
@@ -962,6 +992,7 @@ var AISprite = function(game, x, y, key, frame) {
     this.carries_light = 'false';
     this.view_distance = 32 * 5;
     this.timer = null;
+    this.origin = new Phaser.Point(x, y);
     this.bubble_immediate = false;
     this.bubble_text = null;
     this.enable_word_bubble = false;
