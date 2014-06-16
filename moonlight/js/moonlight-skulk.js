@@ -1434,8 +1434,11 @@ Preloader.prototype.create = function()
     tween.onComplete.add(goalready, this);
 }
 
+console.log("Adding boot");
 game.state.add('boot', Boot, false);
+console.log("Adding preloader");
 game.state.add('preloader', Preloader, false);
+console.log("Adding game");
 game.state.add('game', GameState, false);
 
 game.state.start('boot');
