@@ -990,9 +990,9 @@ function addAnimation(obj, anim)
     obj.animations.add(anim, a['frames'], a['speed'], a['loop'])
 }
 
-//GameState.prototype.preload = function()
-//{
-//}
+GameState.prototype.preload = function()
+{
+}
 
 GameState.prototype.create = function()
 {
