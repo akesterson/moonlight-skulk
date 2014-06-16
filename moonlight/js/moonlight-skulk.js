@@ -567,7 +567,6 @@ var moonlightDialog = {
 	},
 	"townsfolk-guard" : {
 	    "unaware" : [
-		"This is some\nmultiline text\nin this bitch",
 		"Just doing my civic duty.",
 		"Good day, citizens.",
 		"Honor. Liberty. Justice.\nOh, and pancakes…\nI love pancakes.",
@@ -827,18 +826,13 @@ var AISprite = function(game, x, y, key, frame) {
 
 	var mylines = moonlightDialog['status'][this.sprite_group][aistate];
 	bubbleimg = game.cache.getImage('wordbubble');
-	//text = mylines[game.rnd.integerInRange(0, mylines.length-1)];
-	text = mylines[0];
-	console.log(text);
+	text = mylines[game.rnd.integerInRange(0, mylines.length-1)];
 	style = {font: '14px Arial Bold', fill: '#ffffff'}
 	this.text_size = stringSize(text, style['font']);
 	this.bubble_sprite = game.add.sprite(this.x, this.y, 'wordbubble');
 	this.bubble_sprite.anchor.setTo(0.5, 1.0);
-	console.log(this.text_size);
-	console.log(this.bubble_sprite.scale);
 	this.bubble_sprite.scale.x = Number((this.text_size[0] + 16) / bubbleimg.width);
 	this.bubble_sprite.scale.y = Number((this.text_size[1] + 16) / bubbleimg.height);
-	console.log(this.bubble_sprite);
 	this.bubble_text = game.add.text(this.x, this.y, text, style);
 	this.snap_bubble_position();
 
@@ -915,7 +909,6 @@ var AISprite = function(game, x, y, key, frame) {
     }
 
     this.update_new_values = function() {
-	console.log(this);
 	if ( this.timer !== null )
 	    this.timer.stop();
 	this.animations.destroy();

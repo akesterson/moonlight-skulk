@@ -285,7 +285,6 @@
                  "name":"BigTopCustomer2",
                  "properties":
                     {
-                     "sprite_canmove":"false",
                      "sprite_group":"townsfolk-female",
                      "sprite_name":"townsfolk-female-2"
                     },
@@ -301,7 +300,6 @@
                  "name":"BigTopCustomer2",
                  "properties":
                     {
-                     "sprite_canmove":"false",
                      "sprite_group":"townsfolk-male",
                      "sprite_name":"townsfolk-male-3"
                     },
