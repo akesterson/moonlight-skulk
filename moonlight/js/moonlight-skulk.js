@@ -1346,7 +1346,7 @@ GameState.prototype.update = function()
 	    if ( hasState(x, STATE_LOSTHIM) == false ) {
 		x.setAwarenessEffect(STATE_LOSTHIM);
 	    } else {
-		x.setAwarenessEffect(STATE_NONE);
+		x.setAwarenessEffect(STATE_UNAWARE);
 	    }
 	}
 	this.physics.arcade.collide(x, player);
