@@ -850,6 +850,7 @@ var AISprite = function(game, x, y, key, frame) {
 	var ty = this.bubble_sprite.y - (this.bubble_sprite.height);
 	this.bubble_text.position.x = tx;
 	this.bubble_text.position.y = ty;
+	this.bubble_text.bringToTop();
     }
 
     this.update = function()
