@@ -32,8 +32,6 @@ SPRITE_TOWNSFOLK_FEMALE4 = 8;
 SPRITE_TOWNSFOLK_GUARD1 = 9;
 SPRITE_TOWNSFOLK_GUARD2 = 10;
 
-var game = new Phaser.Game(640, 480, Phaser.AUTO, '');
-
 // Create torch objects
 // Light constructor
 var Light = function(game, x, y, key, frame, radius, fade, color_start, color_stop, flicker, always_render, light_meter) {
@@ -1436,3 +1434,5 @@ Preloader.prototype.create = function()
 game.state.add('boot', Boot, true);
 game.state.add('preloader', Preloader, true);
 game.state.add('game', GameState, true);
+
+var game = new Phaser.Game(640, 480, Phaser.AUTO, '', Boot);
