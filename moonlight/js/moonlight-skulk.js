@@ -994,6 +994,7 @@ GameState.prototype.preload = function()
 {
     game.load.image('preloader', 'gfx/ui/preloader.png');
     preloadBar = game.add.sprite(0, 0, 'preloader');
+    console.log(preloadBar);
     preloadBar.anchor.setTo(0.5, 0.5);
     preloadBar.x = game.camera.x + (game.camera.width / 2);
     preloadBar.y = game.camera.y + (game.camera.width / 2);
@@ -1020,6 +1021,8 @@ GameState.prototype.preload = function()
 		      moonlightSettings['map']['path'],
 		      null,
 		      Phaser.Tilemap.TILED_JSON);
+
+    preloadBar.destroy();
 }
 
 GameState.prototype.create = function()
