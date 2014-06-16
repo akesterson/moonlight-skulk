@@ -828,6 +828,7 @@ var AISprite = function(game, x, y, key, frame) {
 	bubbleimg = game.cache.getImage('wordbubble');
 	//text = mylines[game.rnd.integerInRange(0, mylines.length-1)];
 	text = mylines[0];
+	console.log(text);
 	style = {font: '14px Arial Bold', fill: '#ffffff'}
 	this.text_size = stringSize(text, style['font']);
 	this.bubble_sprite = game.add.sprite(this.x, this.y, 'wordbubble');
