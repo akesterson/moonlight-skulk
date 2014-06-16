@@ -1,3 +1,12 @@
+SPEED_WALKING = 8;
+SPEED_RUNNING = 14;
+
+// Millisecond durations per tweens, per tile
+TWEEN_DURATION_PERTILE_RUNNING = 160;
+TWEEN_DURATION_PERTILE_WALKING = 224;
+TWEEN_DURATION_PERPIXEL_RUNNING = 5;
+TWEEN_DURATION_PERPIXEL_WALKING = 7;
+
 STATE_NONE = 0;
 STATE_UNAWARE = 1 << 1;
 STATE_CONCERNED = 1 << 2;
@@ -33,6 +42,7 @@ SPRITE_TOWNSFOLK_GUARD1 = 9;
 SPRITE_TOWNSFOLK_GUARD2 = 10;
 
 var pathfinder = null;
+var pathfinder_grid = null;
 
 var game = new Phaser.Game(640, 480, Phaser.AUTO, '');
 
@@ -623,6 +633,21 @@ var moonlightDialog = {
     }
 };
 
+// Return new array with duplicate values removed
+function array_unique(arr) {
+    var a = [];
+    var l = arr.length;
+    for(var i=0; i<l; i++) {
+	for(var j=i+1; j<l; j++) {
+	    // If arr[i] is found later in the array
+	    if (arr[i] === arr[j])
+		j = ++i;
+	}
+	a.push(arr[i]);
+    }
+    return a;
+}
+
 function stringSize(str, font)
 {
     var width = 0;
@@ -696,8 +721,6 @@ var AISprite = function(game, x, y, key, frame) {
 
 	var hyp = Math.sqrt(Number(xd * xd) + Number(yd * yd));
 	if ( hyp > this.view_distance ) {
-	    if ( debug == true )
-		console.log(spr + " is too far away");
 	    return false;
 	}
 
@@ -853,38 +876,136 @@ var AISprite = function(game, x, y, key, frame) {
 	this.bubble_text.position.y = ty;
     }
 
+    this.blocked = function() {
+	function f() {
+	    if ( hasState(this, STATE_FACE_LEFT) &&
+		 this.body.blocked.left == true )
+		return true;
+	    if ( hasState(this, STATE_FACE_RIGHT) &&
+		 this.body.blocked.right == true )
+		return true;
+	    if ( hasState(this, STATE_FACE_DOWN) &&
+		 this.body.blocked.down == true )
+		return true;
+	    if ( hasState(this, STATE_FACE_UP) &&
+		 this.body.blocked.up == true )
+		return true;
+	    return false;
+	}
+	console.log("this.blocked? " + f());
+	return f();
+    }
+
+    this.path_set = function(target, force) {
+	force = ( typeof force == undefined ? false : force );
+	if ( force == false &&
+	     this.path.length > 0 && 
+	     this.path_index < this.path_maximum_steps ) {
+	    return false;
+	}
+	this.path = [];
+	this.path_index = 0;
+	tpath = pathfinder.findPath(
+	    parseInt(this.x/32), 
+	    parseInt(this.y/32),
+	    parseInt(target.x/32), 
+	    parseInt(target.y/32),
+	    pathfinder_grid.clone()
+	);
+	prevpoint = [this.x, this.y];
+	for ( var i = 0 ; i < tpath.length ; i++ ) {
+	    if ( (prevpoint[0]+prevpoint[1]) == ((tpath[i][0]*32)+(tpath[i][1]*32)) )
+		continue;
+	    this.path.push(new Phaser.Line(prevpoint[0], prevpoint[1], 
+					   tpath[i][0]*32, tpath[i][1]*32));
+	    prevpoint = [tpath[i][0]*32, tpath[i][1]*32];
+	}
+	console.log("New path");
+	console.log(this.path);
+	return true;
+    }
+
+    this.path_tween_start = function()
+    {
+	this.path_tweens = [];
+	prevpos = [this.x, this.y]
+	for ( var i = 0; 
+	      i < Math.min(this.path_maximum_steps, this.path.length) ; 
+	      i++ ) {
+	    pl = this.path[i];
+	    movingstate = STATE_MOVING;
+	    if ( pl.end.x < prevpos[0]) {
+		movingstate = movingstate | STATE_FACE_LEFT;
+	    } else if ( pl.end.x > prevpos[0] ) {
+		movingstate = movingstate | STATE_FACE_RIGHT;
+	    }
+	    if ( pl.end.y < prevpos[1] ) {
+		movingstate = movingstate | STATE_FACE_UP;
+	    } else if ( pl.end.y > prevpos[1] ) {
+		movingstate = movingstate | STATE_FACE_DOWN;
+	    }
+	    prevpos = [pl.end.x, pl.end.y];
+	    tween = game.add.tween(this);
+	    tween.movingstate = movingstate;
+	    this.path_tweens.push(tween);
+	    tween.to(
+		{x: (pl.end.x), y: (pl.end.y)},
+		(TWEEN_DURATION_PERPIXEL_WALKING * pl.length),
+		null);
+	    tween.onStart.add(function() {
+		setMovingState(this._object, this.movingstate);
+		setSpriteMovement(this._object, false);
+	    }, tween);
+	    tween.onComplete.add(function() {
+		this._object.path_index += 1;
+		setMovingState(this._object, getFaceState(this._object));
+		setSpriteMovement(this._object, false);
+	    }, tween);
+	    if ( i > 0 ) {
+		this.path_tweens[i-1].onComplete.add(tween.start, 
+						     tween);
+	    }
+	}
+	console.log(this.path_tweens);
+	if ( this.path_tweens.length > 0 )
+	    this.path_tweens[0].start();
+    }
+
+    this.path_tween_stop = function()
+    {
+	this.path_tweens.forEach(function(x) {
+	    x.stop();
+	    game.tweens.remove(x);
+	}, this);
+    }
+
     this.action_chaseplayer = function()
     {
-	var newpath = []
 	var movingstate = STATE_NONE;
-	pathfinder.setCallbackFunction(function(path) {
-            newpath = (path || []);
-	});	
-	this.path = newpath;
-	pathfinder.preparePathCalculation([0,0], [player.x/32, player.y/32]);
-	pathfinder.calculatePath();
-	if ( this.path[0].x < this.x ) {
-	    movingstate = STATE_FACE_LEFT | STATE_MOVING | STATE_RUNNING;
-	} else if ( this.path[0].x > this.x ) {
-	    movingstate = STATE_FACE_RIGHT | STATE_MOVING | STATE_RUNNING;
-	} else if ( this.path[0].y < this.y ) {
-	    movingstate = STATE_FACE_UP | STATE_MOVING | STATE_RUNNING;
-	} else if ( this.path[0].y > this.y ) {
-	    movingstate = STATE_FACE_DOWN | STATE_MOVING | STATE_RUNNING;
+	if ( game.physics.arcade.collide(this, player) )
+	    return;
+
+	if ( this.path_index >= this.path.length ) {
+	    this.path_tween_stop();
+	    this.path_set(player, true);
+	    this.path_tween_start();
 	} else {
-	    movingstate = (this.state & STATES_FACE);
+	    if ( this.path_set(player, this.blocked(true)) )
+		this.path_tween_start();
 	}
-	setMovingState(this, movingstate);
+	return;
     }
 
     this.action_reportplayer = function()
     {
 	console.log("I AM REPORTING THE PLAYER");
+	setSpriteMovement(this);
     }
 
     this.action_huntplayer = function()
     {
 	console.log("I AM HUNTING FOR THE PLAYER");
+	setSpriteMovement(this);
     }
 
     this.action_wander = function()
@@ -952,7 +1073,6 @@ var AISprite = function(game, x, y, key, frame) {
 	} else {
 	    this.action_wander();
 	}
-	setSpriteMovement(this);
     }
 
     this.update_new_values = function() {
@@ -968,6 +1088,7 @@ var AISprite = function(game, x, y, key, frame) {
 	this.collide_with_map = parseBoolean(this.collide_with_map);
 	this.carries_light = parseBoolean(this.carries_light);
 
+	this.path_maximum_steps = parseInt(this.path_maximum_steps);
 	this.loadTexture(this.sprite_name, 0);
 	addAnimation(this, 'bipedwalkleft');
 	addAnimation(this, 'bipedwalkright');
@@ -997,6 +1118,11 @@ var AISprite = function(game, x, y, key, frame) {
     Phaser.Sprite.call(this, game, x, y, null);
     game.physics.arcade.enable(this);
     this.body.immovable = true;
+    pathfinder_grid = [];
+    this.walkables = [];
+    this.path = [];
+    this.path_tweens = [];
+    this.path_maximum_steps = 4;
     this.awareness_change_enabled = true;
     this.lightmeter = 1.0;
     this.sprite_can_see_lightmeter = 0.3;
@@ -1040,14 +1166,13 @@ var GameState = function(game) {
 
 GameState.prototype.create = function()
 {
-    this.pathfinding_grid = []
     this.map = this.add.tilemap('map');
     for (var k in moonlightSettings['map']['tilesets']) {
 	var ts = moonlightSettings['map']['tilesets'][k];
 	this.map.addTilesetImage(ts['name']);
     }
-
     this.map_collision_layers = [];
+    pfgrid = [];
 
     for (var ln in moonlightSettings['map']['layers']) {
 	lp = moonlightSettings['map']['layers'][ln];
@@ -1061,6 +1186,7 @@ GameState.prototype.create = function()
 	    );
 	    if ( lp['inject_sprites'] == true ) {
 		this.aiSprites = game.add.group();
+		this.aiSprites.debug = true;
 		this.map.createFromObjects('AI', 3544, 'player', 0, true, false, this.aiSprites, AISprite);
 		this.aiSprites.forEach(function(spr) {
 		    spr.update_new_values();
@@ -1071,29 +1197,38 @@ GameState.prototype.create = function()
 	    };
 	    if ( lp['collides'] == true ) {
 		this.map_collision_layers.push(layer);
-		for (var i = 0; i < layer.data.length; i++)
+		console.log(layer);
+		for (var i = 0; i < layer.layer.data.length; i++)
 		{
-		    if ( this.pathfinding_grid.length <= i )
-			this.pathfinding_grid[i] = [];
-		    for (var j = 0; j < layer.data[i].length; j++)
+		    if ( i >= pfgrid.length )
+			pfgrid[i] = [];
+		    for (var j = 0; j < layer.layer.data[i].length; j++)
 		    {
-			if (layer.data[i][j])
-			    this.pathfinding_grid[i][j] = layer.data[i][j].index;
-			else
-			    this.pathfinding_grid[i][j] = 0;
+			if (layer.layer.data[i][j].index > 0) {
+			    pfgrid[i][j] = 1;
+			} else if ( pfgrid[i][j] != 1 ) {
+			    pfgrid[i][j] = 0;
+			}
 		    }
 		}
 	    }
 	    layer.resizeWorld();
 	}
     }
-	
-    pathfinder = game.plugins.add(Phaser.Plugin.PathFinderPlugin);
-    pathfinder.setGrid(map.layers[0].data, walkables);
+
+    console.log(pfgrid)
+    pathfinder_grid = new PF.Grid(this.map.width,
+				  this.map.height,
+				  pfgrid);
+    pathfinder = new PF.AStarFinder({allowDiagonal: false});
+    
+    console.log(pathfinder_grid);
+    console.log(pathfinder);
 
     this.physics.arcade.enable(player);
     player.body.center = new Phaser.Point(player.body.width / 2, player.body.height + player.body.halfHeight);
     player.body.collideWorldBounds = true;
+    player.body.immovable = true;
 
     addAnimation(player, 'bipedwalkleft');
     addAnimation(player, 'bipedwalkright');
@@ -1195,6 +1330,20 @@ GameState.prototype.updateShadowTexture = function() {
     this.shadowTexture.dirty = true;
 };
 
+function getFaceState(spr)
+{
+    return ( hasState(spr, STATE_FACE_LEFT) ||
+	     hasState(spr, STATE_FACE_RIGHT) ||
+	     hasState(spr, STATE_FACE_DOWN) ||
+	     hasState(spr, STATE_FACE_UP) );
+}
+
+function getMoveState(spr)
+{
+    return ( hasState(spr, STATE_MOVING) ||
+	     hasState(spr, STATE_RUNNING) );
+}
+
 function delState(spr, state)
 {
     if ( hasState(spr, state) )
@@ -1266,41 +1415,49 @@ function parseBoolean(val)
     return ( val == 'true' || val == true );
 }
 
-function setSpriteMovement(spr)
+function setSpriteMovement(spr, velocity)
 {
     var x = 0;
     var y = 0;
     var dir = spriteFacing(spr);
+    velocity = ( typeof velocity == undefined ? velocity : [SPEED_WALKING, 
+							    SPEED_RUNNING] );
 
     spr.body.setSize(16, 16, 8, 16);
 
     if ( hasState(spr, STATE_RUNNING) ) {
-	x = 200;
-	y = 200;
+	if ( velocity !== false )
+	    velocity = velocity[1];
+	console.log("Playing bipedrun" + dir);
 	spr.animations.play("bipedrun" + dir);
     } else if ( hasState(spr, STATE_MOVING) ) {
-	x = 75;
-	y = 75;
+	if ( velocity !== false )
+	    velocity = velocity[0];
+	console.log("Playing bipedwalk" + dir);
 	spr.animations.play("bipedwalk" + dir);
     } else {
-	spr.body.velocity.x = 0;
-	spr.body.velocity.y = 0;
+	if ( velocity !== false ) {
+	    spr.body.velocity.x = 0;
+	    spr.body.velocity.y = 0;
+	}
 	spr.animations.stop();
 	return;
     }
 
-    if ( dir == "left" ) {
-	spr.body.velocity.x = -x;
-	spr.body.velocity.y = 0;
-    } else if ( dir == "right" ) {
-	spr.body.velocity.x = x;
-	spr.body.velocity.y = 0;
-    } else if ( dir == "up" ) {
-	spr.body.velocity.x = 0;
-	spr.body.velocity.y = -y;
-    } else if ( dir == "down" ) {
-	spr.body.velocity.x = 0;
-	spr.body.velocity.y = y;
+    if ( velocity !== false ) {
+	if ( dir == "left" ) {
+	    spr.body.velocity.x = -(velocity * velocity);
+	    spr.body.velocity.y = 0;
+	} else if ( dir == "right" ) {
+	    spr.body.velocity.x = (velocity * velocity);
+	    spr.body.velocity.y = 0;
+	} else if ( dir == "up" ) {
+	    spr.body.velocity.x = 0;
+	    spr.body.velocity.y = -(velocity * velocity);
+	} else if ( dir == "down" ) {
+	    spr.body.velocity.x = 0;
+	    spr.body.velocity.y = (velocity * velocity);
+	}
     }
 }
 
@@ -1416,18 +1573,32 @@ GameState.prototype.update = function()
     this.aiSprites.forEach(_inner_collide, this);
     this.updateShadowTexture();
 
-    // function _draw_viewrect(x) {
-    // 	var r = x.viewRectangle();
-    // 	if ( r == null ) 
-    // 	    return;
-    // 	this.shadowTexture.context.fillStyle = 'rgb(128, 128, 128)';
-    // 	this.shadowTexture.context.fillRect(r.left, 
-    // 					    r.top, 
-    // 					    r.width,
-    // 					    r.height);
+    // if ( this.aiSprites.debug == true ) {
+    // 	function _draw_viewrect(x) {
+    // 	    var r = x.viewRectangle();
+    // 	    if ( r == null ) 
+    // 		return;
+    // 	    this.shadowTexture.context.fillStyle = 'rgb(128, 128, 128)';
+    // 	    this.shadowTexture.context.fillRect(r.left, 
+    // 						r.top, 
+    // 						r.width,
+    // 						r.height);
+    // 	}
+    // 	this.aiSprites.forEach(_draw_viewrect, this);
+    // 	function _draw_aipath(x) {
+    // 	    var p = x.path;
+    // 	    if ( p == null )
+    // 		return;
+    // 	    this.shadowTexture.context.fillStyle = 'rgb(255, 128, 128)';
+    // 	    p.forEach(function(r) {
+    // 		this.shadowTexture.context.fillRect(r.start.x, 
+    // 						    r.start.y, 
+    // 						    r.end.x - r.start.x,
+    // 						    r.end.y - r.start.y);
+    // 	    }, this);
+    // 	}
+    // 	this.aiSprites.forEach(_draw_aipath, this);
     // }
-    // this.aiSprites.forEach(_draw_viewrect, this);
-
     if (game.time.fps !== 0) {
         this.fpsText.setText(game.time.fps + ' FPS');
     }
@@ -1443,15 +1614,13 @@ var Boot = function(game) {
 
 Boot.prototype.preload = function()
 {
-    console.log("Boot.preload");
     game.load.image('preloader', 'gfx/ui/preloader.png');
 };
 
 Boot.prototype.create = function()
 {
-    console.log("Boot.create");
     this.input.maxPointers = 1;
-    this.stage.disableVisibilityChange = true;
+    this.stage.disableVisibilityChange = false;
     this.stage.scale.pageAlignHoritzontally = true;
     game.state.start('preloader', true, false);
 }
@@ -1461,7 +1630,6 @@ var Preloader = function(game) {
 
 Preloader.prototype.preload = function()
 {
-    console.log("Preloader.preload");
     this.preloadBar = game.add.sprite(0, 0, 'preloader');
     this.preloadBar.anchor.setTo(0.5, 0.5);
     this.preloadBar.x = game.camera.x + (game.camera.width / 2);
@@ -1489,12 +1657,10 @@ Preloader.prototype.preload = function()
 		      moonlightSettings['map']['path'],
 		      null,
 		      Phaser.Tilemap.TILED_JSON);
-
 }
 
 Preloader.prototype.create = function()
 {
-    console.log("Preloader.create");
     function goalready() {
 	this.preloadBar.destroy();
 	game.state.start('game', true, false);
@@ -1504,11 +1670,8 @@ Preloader.prototype.create = function()
     tween.onComplete.add(goalready, this);
 }
 
-console.log("Adding boot");
 game.state.add('boot', Boot, false);
-console.log("Adding preloader");
 game.state.add('preloader', Preloader, false);
-console.log("Adding game");
 game.state.add('game', GameState, false);
 
 game.state.start('boot');
