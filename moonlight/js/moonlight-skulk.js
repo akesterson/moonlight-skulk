@@ -65,7 +65,7 @@ Light.prototype = Object.create(Phaser.Sprite.prototype);
 Light.prototype.constructor = Light;
 
 Light.prototype.update_new_values = function() {
-    this.light_meter = parseInt(this.light_meter);
+    this.light_meter = Number(this.light_meter);
     this.radius = parseInt(this.radius);
     this.fade = this.radius * Number(this.fade);
     this.flicker = parseBoolean(this.flicker);
