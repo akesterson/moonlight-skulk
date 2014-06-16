@@ -629,7 +629,7 @@ function stringSize(str, font)
         .appendTo($('body')),
     w = o.width(),
     h = o.height();
-    newlines = str.split("\n");
+    newlines = str.split("\n").length;
     o.remove();
     return [w/newlines, h*newlines];
 }
