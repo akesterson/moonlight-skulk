@@ -997,7 +997,7 @@ GameState.prototype.preload = function()
 	try {
 	    if ( typeof game.cache.getImage('preloader') !== undefined )
 		break;
-	} catch {
+	} catch(e) {
 	    continue;
 	}
     }
