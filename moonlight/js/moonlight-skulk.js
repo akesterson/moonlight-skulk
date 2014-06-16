@@ -930,7 +930,7 @@ var AISprite = function(game, x, y, key, frame) {
 	    } else {
 		this.action_reportplayer();
 	    }
-	} else if ( hasState(this, (STATE_CONCERNED | STATE_RELIEVED)) ) {
+	} else if ( hasState(this, (STATE_CONCERNED | STATE_LOSTHIM)) ) {
 	    this.action_huntplayer();
 	} else {
 	    this.action_wander();
