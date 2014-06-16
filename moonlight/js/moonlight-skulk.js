@@ -993,7 +993,6 @@ function addAnimation(obj, anim)
 GameState.prototype.preload = function()
 {
     game.load.image('preloader', 'gfx/ui/preloader.png');
-    while ( game.load.totalLoadedFiles() < 1 ) {}
     preloadBar = game.add.sprite(0, 0, 'preloader');
     console.log(preloadBar);
     preloadBar.anchor.setTo(0.5, 0.5);
