@@ -833,6 +833,7 @@ var AISprite = function(game, x, y, key, frame) {
 	this.text_size = stringSize(text, style['font']);
 	this.bubble_sprite = game.add.sprite(this.x, this.y, 'wordbubble');
 	this.bubble_sprite.anchor.setTo(0.5, 1.0);
+	console.log(this.text_size);
 	console.log(this.bubble_sprite.scale);
 	this.bubble_sprite.scale.x = Number((this.text_size[0] + 16) / bubbleimg.width);
 	this.bubble_sprite.scale.y = Number((this.text_size[1] + 16) / bubbleimg.height);
