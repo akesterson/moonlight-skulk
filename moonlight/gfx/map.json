@@ -223,7 +223,7 @@
                      "color_stop":"rgba(246, 152, 62, 0.0)",
                      "fade":"0.15",
                      "flicker":"true",
-                     "light_meter":"1.5",
+                     "light_meter":"0.75",
                      "radius":"128"
                     },
                  "type":"Lights",
@@ -242,7 +242,7 @@
                      "color_stop":"rgba(246, 152, 62, 0.0)",
                      "fade":"0.15",
                      "flicker":"true",
-                     "light_meter":"1.5",
+                     "light_meter":"0.75",
                      "radius":"128"
                     },
                  "type":"Lights",
