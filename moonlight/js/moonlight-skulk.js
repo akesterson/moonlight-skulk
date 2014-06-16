@@ -760,6 +760,7 @@ var AISprite = function(game, x, y, key, frame) {
 	if ( animkey == "" )
 	    return;
 
+	this.bubble_immediate = true;
 	this.clearWordBubble();
 	this.awareness_effect = game.state.states.game.add.sprite(
 	    this.x + 16,
@@ -772,9 +773,14 @@ var AISprite = function(game, x, y, key, frame) {
     this.enableWordBubble = function() {
 	this.enable_word_bubble = true;
 	this.timer = game.time.create(false);
-	var timerdelta = 10000 + (game.rnd.integerInRange(0, 20) * 1000);
-	timerev = this.timer.add(timerdelta, this.setWordBubble, this);
-	this.timer.start()
+	if ( this.bubble_immediate == true ) {
+	    this.bubble_immediate = false;
+	    this.setWordBubble();
+	} else {
+	    var timerdelta = 10000 + (game.rnd.integerInRange(0, 20) * 1000);
+	    timerev = this.timer.add(timerdelta, this.setWordBubble, this);
+	    this.timer.start()
+	}
     }
 
     this.clearWordBubble = function() {
@@ -788,7 +794,9 @@ var AISprite = function(game, x, y, key, frame) {
 
     this.setWordBubble = function()
     {
-	if ( this.bubble_text !== null || this.sprite_group == undefined || this.enable_world_bubble == false) {
+	if ( this.bubble_text !== null || 
+	     this.sprite_group == undefined || 
+	     this.enable_world_bubble == false) {
 	    return;
 	}
 
@@ -946,6 +954,7 @@ var AISprite = function(game, x, y, key, frame) {
     this.carries_light = 'false';
     this.view_distance = 32 * 5;
     this.timer = null;
+    this.bubble_immediate = false;
     this.bubble_text = null;
     this.enable_word_bubble = false;
     this.body.collideWorldBounds = true;
@@ -1024,7 +1033,7 @@ GameState.prototype.create = function()
 		this.aiSprites.forEach(function(spr) {
 		    spr.update_new_values();
 		}, this)
-		player = this.add.sprite((10 * 32), (17 * 32), 'player');
+		player = this.add.sprite((19 * 32), (21 * 32), 'player');
 		player.lightmeter = 0;
 
 	    };
