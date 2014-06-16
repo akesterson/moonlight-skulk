@@ -632,8 +632,8 @@ function stringSize(str, font)
             .appendTo($('body'));
 	widths.push(o.width());
 	height += 5 + o.height();
+	o.remove();
     }, this);
-    o.remove();
     return [Math.max(widths), height];
 }
 
