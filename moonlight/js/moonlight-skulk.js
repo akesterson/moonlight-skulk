@@ -981,17 +981,13 @@ function rotatePoints(arr, x, y, degrees)
     }, this);
 }
 
-var GameState = function(game) {
-}
-
 function addAnimation(obj, anim)
 {
     a = moonlightSettings['animations'][anim]
     obj.animations.add(anim, a['frames'], a['speed'], a['loop'])
 }
 
-GameState.prototype.preload = function()
-{
+var GameState = function(game) {
 }
 
 GameState.prototype.create = function()
@@ -1371,13 +1367,13 @@ function Boot()
 var Boot = function(game) {
 }
 
-Boot.preload = function()
+Boot.prototype.preload = function()
 {
     console.log("Boot.preload");
     game.load.image('preloader', 'gfx/ui/preloader.png');
 };
 
-Boot.create = function()
+Boot.prototype.create = function()
 {
     console.log("Boot.create");
     this.input.maxPointers = 1;
