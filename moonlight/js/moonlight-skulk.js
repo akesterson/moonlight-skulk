@@ -1370,7 +1370,6 @@ function Boot()
 
 var Boot = function(game) {
 }
-Boot.prototype = Object.create(Phaser.State.prototype);
 
 Boot.preload = function()
 {
@@ -1389,7 +1388,6 @@ Boot.create = function()
 
 var Preloader = function(game) {
 }
-Preloader.prototype = Object.create(Phaser.State.prototype);
 
 Preloader.prototype.preload = function()
 {
