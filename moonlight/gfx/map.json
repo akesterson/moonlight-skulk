@@ -219,11 +219,11 @@
                  "name":"brazierlight3",
                  "properties":
                     {
-                     "color_start":"rgba(235, 185, 22, 0.5)",
+                     "color_start":"rgba(235, 185, 22, 0.4)",
                      "color_stop":"rgba(246, 152, 62, 0.0)",
                      "fade":"0.15",
                      "flicker":"true",
-                     "radius":"64"
+                     "radius":"128"
                     },
                  "type":"Lights",
                  "visible":true,
@@ -237,11 +237,11 @@
                  "name":"brazierlight3",
                  "properties":
                     {
-                     "color_start":"rgba(235, 185, 22, 0.5)",
+                     "color_start":"rgba(235, 185, 22, 0.4)",
                      "color_stop":"rgba(246, 152, 62, 0.0)",
                      "fade":"0.15",
                      "flicker":"true",
-                     "radius":"64"
+                     "radius":"128"
                     },
                  "type":"Lights",
                  "visible":true,
