@@ -1010,7 +1010,7 @@ var AISprite = function(game, x, y, key, frame) {
 	    setMovingState(this, STATE_FACE_DOWN);
 	}
 	this.animations.stop();
-	this.animations.play("bipedrun" + spriteFacing(this._object));		
+	this.animations.play("bipedrun" + spriteFacing(this));		
 	this.animations.stop();
 	this.rotation_timer.stop();
 	this.rotation_timer = null;
