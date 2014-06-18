@@ -707,7 +707,7 @@ var AISprite = function(game, x, y, key, frame) {
 	    console.log("I don't have a facing state?");
 	    return null;
 	}
-	offset[0] *= mulitplier;
+	offset[0] *= multiplier;
 	offset[1] *= multiplier;
 	size[0] *= multiplier;
 	size[1] *= multiplier;
