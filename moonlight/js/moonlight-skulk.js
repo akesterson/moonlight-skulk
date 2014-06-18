@@ -720,7 +720,7 @@ var AISprite = function(game, x, y, key, frame) {
 
 	var distance = (new Phaser.Line(spr.x, spr.y, this.x, this.y).length);
 	if ( distance > vd ) {
-	    console.log("Target is outside my view distance");
+	    console.log("Target is outside my view distance (" + distance + " vs " + vd + ")");
 	    return false;
 	}
 
