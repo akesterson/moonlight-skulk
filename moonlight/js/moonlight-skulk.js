@@ -68,7 +68,7 @@ var Light = function(game, x, y, key, frame, radius, fade, color_start, color_st
     this.fade = radius * fade
     this.light_meter = light_meter;
     this.always_render = always_render
-    this.rect = new Phaser.Rectangle(this.x - radius, this.y - radius, radius * 2, radius * 2)
+    this.rect = positiveRectangle(this.x - radius, this.y - radius, radius * 2, radius * 2)
     this.flicker = flicker;
 };
 
@@ -82,7 +82,7 @@ Light.prototype.update_new_values = function() {
     this.fade = this.radius * Number(this.fade);
     this.flicker = parseBoolean(this.flicker);
     this.always_render = parseBoolean(this.always_render);
-    this.rect = new Phaser.Rectangle(this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2)
+    this.rect = positiveRectangle(this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2)
 }
 
 function SoundSprite(game, x, y, key, frame, 
@@ -706,10 +706,10 @@ var AISprite = function(game, x, y, key, frame) {
 	    offset = [offset[0] * 2, offset[1] * 2];
 	    size = [size[0] * 2, size[1] * 2];
 	}
-	return new Phaser.Rectangle(this.x + offset[0],
-				    this.y + offset[1],
-				    size[0],
-				    size[1]);
+	return positiveRectangle(this.x + offset[0],
+				 this.y + offset[1],
+				 size[0],
+				 size[1]);
     }
 
     this.canSeeSprite = function(spr, debug) {
@@ -735,7 +735,7 @@ var AISprite = function(game, x, y, key, frame) {
 	    console.log("I don't have a view rectangle");
 	    return false;
 	}
-	var sprrect = new Phaser.Rectangle(spr.x, spr.y, 32, 32);
+	var sprrect = positiveRectangle(spr.x, spr.y, 32, 32);
 	if ( viewrect.intersects(sprrect) || viewrect.containsRect(sprrect) ) {
 	    return true;
 	}
@@ -1202,6 +1202,18 @@ function rotatePoints(arr, x, y, degrees)
     }, this);
 }
 
+function positiveRectangle(x, y, w, h) {
+    if ( w < 0 ) {
+	w = -(w);
+	x = x - w;
+    }
+    if ( h < 0 ) {
+	h = -(h);
+	y = y - h;
+    }
+    return new Phaser.Rectangle(x, y, w, h);
+}
+
 function addAnimation(obj, anim)
 {
     a = moonlightSettings['animations'][anim]
@@ -1332,10 +1344,10 @@ GameState.prototype.create = function()
 					0,
 					this.uigroup);
     this.lightbar_image = game.cache.getImage('lightbar');
-    this.lightbar_crop = new Phaser.Rectangle(0,
-					      0,
-					      this.lightbar_image.width,
-					      this.lightbar_image.height);
+    this.lightbar_crop = positiveRectangle(0,
+					   0,
+					   this.lightbar_image.width,
+					   this.lightbar_image.height);
     this.uigroup.setAll('fixedToCamera', true);	
 }
 
@@ -1345,10 +1357,10 @@ GameState.prototype.updateShadowTexture = function() {
 
     this.staticLights.forEach(function(light) {
 	if ( light.always_render !== true ) {
-            var r1 = new Phaser.Rectangle(this.game.camera.x,
-                                          this.game.camera.y,
-                                          this.game.camera.width,
-                                          this.game.camera.height);
+            var r1 = positiveRectangle(this.game.camera.x,
+                                       this.game.camera.y,
+                                       this.game.camera.width,
+                                       this.game.camera.height);
             if ( ! light.rect.intersects(r1) ) {
 		return;
 	    }
