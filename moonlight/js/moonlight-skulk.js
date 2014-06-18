@@ -721,16 +721,20 @@ var AISprite = function(game, x, y, key, frame) {
 
 	var hyp = Math.sqrt(Number(xd * xd) + Number(yd * yd));
 	if ( hyp > this.view_distance ) {
+	    console.log("Player is outside my view distance");
 	    return false;
 	}
 
 	var viewrect = this.viewRectangle();
-	if ( viewrect == null ) 
+	if ( viewrect == null ) {
+	    console.log("I don't have a view rectangle");
 	    return false;
+	}
 	var sprrect = new Phaser.Rectangle(spr.x, spr.y, 32, 32);
 	if ( viewrect.intersects(sprrect) || viewrect.containsRect(sprrect) ) {
 	    return true;
 	}
+	console.log("I have a view rectangle but it does not intersect or contain the player");
 	return false;
     }
 
