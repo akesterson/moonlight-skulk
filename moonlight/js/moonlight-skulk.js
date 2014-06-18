@@ -2,10 +2,10 @@ SPEED_WALKING = 8;
 SPEED_RUNNING = 14;
 
 // Millisecond durations per tweens, per tile
-TWEEN_DURATION_PERTILE_RUNNING = 120;
+TWEEN_DURATION_PERTILE_RUNNING = 160;
 TWEEN_DURATION_PERTILE_WALKING = 224;
 TWEEN_DURATION_PERPIXEL_RUNNING = 3;
-TWEEN_DURATION_PERPIXEL_WALKING = 6;
+TWEEN_DURATION_PERPIXEL_WALKING = 7;
 
 STATE_NONE = 0;
 STATE_UNAWARE = 1 << 1;
@@ -939,7 +939,7 @@ var AISprite = function(game, x, y, key, frame) {
 	      i < Math.min(this.path_maximum_steps, this.path.length) ; 
 	      i++ ) {
 	    pl = this.path[i];
-	    movingstate = STATE_MOVING;
+	    movingstate = STATE_MOVING | STATE_RUNNING;
 	    if ( pl.end.x < prevpos[0]) {
 		movingstate = movingstate | STATE_FACE_LEFT;
 	    } else if ( pl.end.x > prevpos[0] ) {
