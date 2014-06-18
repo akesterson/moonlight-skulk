@@ -997,7 +997,7 @@ var AISprite = function(game, x, y, key, frame) {
 		    setMovingState(this, STATE_FACE_UP);
 		} else if ( hasState(this, STATE_FACE_UP) ) {
 		    setMovingState(this, STATE_FACE_RIGHT);
-		} else if ( haState(this, STATE_FACE_RIGHT) ) {
+		} else if ( hasState(this, STATE_FACE_RIGHT) ) {
 		    setMovingState(this, STATE_FACE_DOWN);
 		}
 	    }
