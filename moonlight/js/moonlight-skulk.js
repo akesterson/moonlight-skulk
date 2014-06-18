@@ -973,12 +973,13 @@ var AISprite = function(game, x, y, key, frame) {
 		null);
 	    tween.onStart.add(function() {
 		setMovingState(this._object, this.movingstate);
-		setSpriteMovement(this._object, false);
+		this._object.animations.play("bipedrun" + spriteFacing(this._object));
 	    }, tween);
 	    tween.onComplete.add(function() {
 		this._object.path_index += 1;
 		setMovingState(this._object, getFaceState(this._object));
-		setSpriteMovement(this._object, false);
+		this._object.animations.play("bipedrun" + spriteFacing(this._object));		
+		this._object.animations.stop();
 	    }, tween);
 	    if ( i > 0 ) {
 		this.path_tweens[i-1].onComplete.add(tween.start, 
