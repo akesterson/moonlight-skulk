@@ -714,6 +714,13 @@ var AISprite = function(game, x, y, key, frame) {
 
     this.canSeeSprite = function(spr, debug) {
 	var vd = this.view_distance;
+	if ( hasState(this, STATE_FACE_LEFT) ||
+	     hasState(this, STATE_FACE_UP) ) {
+	    // Without this the player can stand in our view distance
+	    // but as long as their left edge is 1 px out we won't see them,
+	    // with this we see their near edge
+	    vd = vd + 32;
+	}
 	if ( hasState(this, STATE_ALERTED) )
 	    vd = vd * 2;
 
