@@ -1357,10 +1357,14 @@ GameState.prototype.updateShadowTexture = function() {
 
 function getFaceState(spr)
 {
-    return ( hasState(spr, STATE_FACE_LEFT) ||
-	     hasState(spr, STATE_FACE_RIGHT) ||
-	     hasState(spr, STATE_FACE_DOWN) ||
-	     hasState(spr, STATE_FACE_UP) );
+    if ( hasState(spr, STATE_FACE_LEFT) )
+	return STATE_FACE_LEFT;
+    if ( hasState(spr, STATE_FACE_RIGHT) )
+	return STATE_FACE_RIGHT;
+    if ( hasState(spr, STATE_FACE_DOWN) )
+	return STATE_FACE_DOWN;
+    if ( hasState(spr, STATE_FACE_UP) )
+	return STATE_FACE_UP;
 }
 
 function getMoveState(spr)
