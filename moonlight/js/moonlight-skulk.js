@@ -699,6 +699,7 @@ var AISprite = function(game, x, y, key, frame) {
 	    offset = [-32, 0];
 	    size = [96, -this.view_distance];
 	} else {
+	    console.log("I don't have a facing state?");
 	    return null;
 	}
 	if ( hasState(this, STATE_ALERTED) ) {
