@@ -995,6 +995,8 @@ var AISprite = function(game, x, y, key, frame) {
 	} else if ( hasState(this, STATE_FACE_RIGHT) ) {
 	    setMovingState(this, STATE_FACE_DOWN);
 	}
+	this.rotation_timer.stop();
+	this.rotation_timer = null;
     }
 
     this.action_chaseplayer = function()
@@ -1011,12 +1013,12 @@ var AISprite = function(game, x, y, key, frame) {
 		this.path_set(player, true);
 		this.path_tween_start();
 	    } else {
-		console.log("I can't see the player - turning so I can");
-		if ( this.rotation_timer !== null )
-		    this.rotation_timer.stop();
-		this.rotation_timer = game.time.create(false);
-		timerev = this.rotation_timer.add(1000, this.turnFaceRight, this);
-		this.rotation_timer.start()
+		if ( this.rotation_timer == null ) {
+		    console.log("I can't see the player - turning so I can");
+		    this.rotation_timer = game.time.create(false);
+		    timerev = this.rotation_timer.add(1000, this.turnFaceRight, this);
+		    this.rotation_timer.start()
+		}
 	    }
 	} else {
 	    if ( this.path_set(player, this.blocked(true)) == true ) {
