@@ -987,13 +987,23 @@ var AISprite = function(game, x, y, key, frame) {
 
 	if ( this.path_index >= this.path.length ) {
 	    this.path_tween_stop();
-	    if ( this.canSeeSprite(player, false) == true ) {		
+	    if ( this.canSeeSprite(player, false) == true ) {
 		this.path_set(player, true);
 		this.path_tween_start();
+	    } else {
+		if ( hasState(this, STATE_FACE_DOWN) ) {
+		    setMovingState(this, STATE_FACE_LEFT);
+		} else if ( hasState(this, STATE_FACE_LEFT) ) {
+		    setMovingState(this, STATE_FACE_UP);
+		} else if ( hasState(this, STATE_FACE_UP) ) {
+		    setMovingState(this, STATE_FACE_RIGHT) );
+		} else if ( haState(this, STATE_FACE_RIGHT) ) {
+		    setMovingState(this, STATE_FACE_DOWN);
+		}
 	    }
 	} else {
 	    if ( this.path_set(player, this.blocked(true)) == true )
-		if ( this.canSeeSprite(player, false) == false ) {		
+		if ( this.canSeeSprite(player, false) == false ) {
 		    this.path_tween_stop();
 		} else {
 		    this.path_tween_start();
