@@ -992,12 +992,13 @@ var AISprite = function(game, x, y, key, frame) {
 
 	if ( this.path_index >= this.path.length ) {
 	    this.path_tween_stop();
+	    console.log("I am at the end of my path");
 	    if ( this.canSeeSprite(player, false) == true ) {
-		console.log("I am at the end of my path and can see the player");
+		console.log("I can see the player");
 		this.path_set(player, true);
 		this.path_tween_start();
 	    } else {
-		console.log("I am at the end of my path but can't see the player");
+		console.log("I can't see the player");
 		if ( hasState(this, STATE_FACE_DOWN) ) {
 		    setMovingState(this, STATE_FACE_LEFT);
 		} else if ( hasState(this, STATE_FACE_LEFT) ) {
