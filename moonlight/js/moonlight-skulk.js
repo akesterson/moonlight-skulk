@@ -985,6 +985,18 @@ var AISprite = function(game, x, y, key, frame) {
 	}, this);
     }
 
+    this.turnFaceRight = function() {
+	if ( hasState(this, STATE_FACE_DOWN) ) {
+	    setMovingState(this, STATE_FACE_LEFT);
+	} else if ( hasState(this, STATE_FACE_LEFT) ) {
+	    setMovingState(this, STATE_FACE_UP);
+	} else if ( hasState(this, STATE_FACE_UP) ) {
+	    setMovingState(this, STATE_FACE_RIGHT);
+	} else if ( hasState(this, STATE_FACE_RIGHT) ) {
+	    setMovingState(this, STATE_FACE_DOWN);
+	}
+    }
+
     this.action_chaseplayer = function()
     {
 	var movingstate = STATE_NONE;
@@ -1000,15 +1012,11 @@ var AISprite = function(game, x, y, key, frame) {
 		this.path_tween_start();
 	    } else {
 		console.log("I can't see the player - turning so I can");
-		if ( hasState(this, STATE_FACE_DOWN) ) {
-		    setMovingState(this, STATE_FACE_LEFT);
-		} else if ( hasState(this, STATE_FACE_LEFT) ) {
-		    setMovingState(this, STATE_FACE_UP);
-		} else if ( hasState(this, STATE_FACE_UP) ) {
-		    setMovingState(this, STATE_FACE_RIGHT);
-		} else if ( hasState(this, STATE_FACE_RIGHT) ) {
-		    setMovingState(this, STATE_FACE_DOWN);
-		}
+		if ( this.rotation_timer !== null )
+		    this.rotation_timer.stop();
+		this.rotation_timer = game.time.create(false);
+		timerev = this.rotation_timer.add(1000, this.turnFaceRight, this);
+		this.rotation_timer.start()
 	    }
 	} else {
 	    if ( this.path_set(player, this.blocked(true)) == true ) {
@@ -1163,6 +1171,7 @@ var AISprite = function(game, x, y, key, frame) {
     this.carries_light = 'false';
     this.view_distance = 32 * 5;
     this.timer = null;
+    this.rotation_timer = null;
     this.origin = new Phaser.Point(x, y);
     this.bubble_immediate = false;
     this.bubble_text = null;
