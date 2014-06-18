@@ -956,7 +956,7 @@ var AISprite = function(game, x, y, key, frame) {
 	    this.path_tweens.push(tween);
 	    tween.to(
 		{x: (pl.end.x), y: (pl.end.y)},
-		(TWEEN_DURATION_PERPIXEL_WALKING * pl.length),
+		(TWEEN_DURATION_PERPIXEL_RUNNING * pl.length),
 		null);
 	    tween.onStart.add(function() {
 		setMovingState(this._object, this.movingstate);
