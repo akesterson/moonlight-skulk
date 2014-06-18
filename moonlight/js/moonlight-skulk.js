@@ -987,11 +987,17 @@ var AISprite = function(game, x, y, key, frame) {
 
 	if ( this.path_index >= this.path.length ) {
 	    this.path_tween_stop();
-	    this.path_set(player, true);
-	    this.path_tween_start();
-	} else {
-	    if ( this.path_set(player, this.blocked(true)) )
+	    if ( x.canSeeSprite(player, false) == true ) {		
+		this.path_set(player, true);
 		this.path_tween_start();
+	    }
+	} else {
+	    if ( this.path_set(player, this.blocked(true)) == true )
+		if ( x.canSeeSprite(player, false) == true ) {		
+		    this.path_tween_stop();
+		} else {
+		    this.path_tween_start();
+		}
 	}
 	return;
     }
