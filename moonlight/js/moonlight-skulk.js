@@ -717,7 +717,6 @@ var AISprite = function(game, x, y, key, frame) {
 	if ( hasState(this, STATE_ALERTED) )
 	    vd = vd * 2;
 
-
 	var distance = (new Phaser.Line(spr.x, spr.y, this.x, this.y).length);
 	if ( distance > vd ) {
 	    console.log("Target is outside my view distance (" + distance + " vs " + vd + ")");
@@ -899,6 +898,11 @@ var AISprite = function(game, x, y, key, frame) {
 	return f();
     }
 
+    this.path_purge = function() {
+	this.path = [];
+	this.path_index = 0;
+    }
+
     this.path_set = function(target, force) {
 	force = ( typeof force == undefined ? false : force );
 	if ( force == false &&
@@ -906,8 +910,7 @@ var AISprite = function(game, x, y, key, frame) {
 	     this.path_index < this.path_maximum_steps ) {
 	    return false;
 	}
-	this.path = [];
-	this.path_index = 0;
+	this.path_purge();
 	tpath = pathfinder.findPath(
 	    parseInt(this.x/32), 
 	    parseInt(this.y/32),
@@ -1011,6 +1014,7 @@ var AISprite = function(game, x, y, key, frame) {
 	    if ( this.path_set(player, this.blocked(true)) == true ) {
 		console.log("I just got a new path");
 		if ( this.canSeeSprite(player, false) == false ) {
+		    this.path_purge();
 		    this.path_tween_stop();
 		} else {
 		    this.path_tween_start();
