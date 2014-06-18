@@ -717,15 +717,9 @@ var AISprite = function(game, x, y, key, frame) {
 	if ( hasState(this, STATE_ALERTED) )
 	    vd = vd * 2;
 
-	var xd = (spr.x - this.x);
-	if ( xd < 0 )
-	    xd = -(xd);
-	var yd = (spr.y - this.y);
-	if ( yd < 0 )
-	    yd = -(yd);
 
-	var hyp = Math.sqrt(Number(xd * xd) + Number(yd * yd));
-	if ( hyp > vd ) {
+	var distance = (new Phaser.Line(spr.x, spr.y, this.x, this.y).length);
+	if ( distance > vd ) {
 	    console.log("Target is outside my view distance");
 	    return false;
 	}
