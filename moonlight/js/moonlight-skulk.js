@@ -733,6 +733,7 @@ var AISprite = function(game, x, y, key, frame) {
 	    return true;
 	}
 	console.log("I have a view rectangle but it does not intersect or contain the target");
+	console.log(viewrect, sprrect);
 	return false;
     }
 
@@ -1016,7 +1017,7 @@ var AISprite = function(game, x, y, key, frame) {
 		if ( this.rotation_timer == null ) {
 		    console.log("I can't see the player - turning so I can");
 		    this.rotation_timer = game.time.create(false);
-		    timerev = this.rotation_timer.add(1000, this.turnFaceRight, this);
+		    timerev = this.rotation_timer.add(500, this.turnFaceRight, this);
 		    this.rotation_timer.start()
 		}
 	    }
