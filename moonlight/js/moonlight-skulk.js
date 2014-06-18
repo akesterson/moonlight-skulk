@@ -993,7 +993,7 @@ var AISprite = function(game, x, y, key, frame) {
 	    }
 	} else {
 	    if ( this.path_set(player, this.blocked(true)) == true )
-		if ( this.canSeeSprite(player, false) == true ) {		
+		if ( this.canSeeSprite(player, false) == false ) {		
 		    this.path_tween_stop();
 		} else {
 		    this.path_tween_start();
