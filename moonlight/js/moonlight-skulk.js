@@ -1228,7 +1228,7 @@ GameState.prototype.create = function()
     this.physics.arcade.enable(player);
     player.body.center = new Phaser.Point(player.body.width / 2, player.body.height + player.body.halfHeight);
     player.body.collideWorldBounds = true;
-    player.body.immovable = true;
+    //player.body.immovable = true;
 
     addAnimation(player, 'bipedwalkleft');
     addAnimation(player, 'bipedwalkright');
