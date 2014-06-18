@@ -713,6 +713,10 @@ var AISprite = function(game, x, y, key, frame) {
     }
 
     this.canSeeSprite = function(spr, debug) {
+	var vd = this.view_distance;
+	if ( hasState(this, STATE_ALERTED) ) {
+	    vd = vd * 2;
+
 	var xd = (spr.x - this.x);
 	if ( xd < 0 )
 	    xd = -(xd);
