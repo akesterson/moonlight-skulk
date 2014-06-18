@@ -2,8 +2,8 @@ SPEED_WALKING = 8;
 SPEED_RUNNING = 14;
 
 // Millisecond durations per tweens, per tile
-TWEEN_DURATION_PERPIXEL_RUNNING = 4;
-TWEEN_DURATION_PERPIXEL_WALKING = 7;
+TWEEN_DURATION_PERPIXEL_RUNNING = 5;
+TWEEN_DURATION_PERPIXEL_WALKING = 9;
 TWEEN_DURATION_PERTILE_RUNNING = TWEEN_DURATION_PERPIXEL_RUNNING * 32;
 TWEEN_DURATION_PERTILE_WALKING = TWEEN_DURATION_PERPIXEL_WALKING * 32;
 
@@ -1278,7 +1278,7 @@ GameState.prototype.create = function()
 
     this.shadowTexture = game.add.bitmapData(game.world.width, game.world.height);
     // drop this lower to make the map darker
-    this.shadowTextureColor = 'rgb(25, 25, 25)';
+    this.shadowTextureColor = 'rgb(60, 60, 60)';
     this.shadowSprite = game.add.image(0, 0, this.shadowTexture);
 
     this.shadowSprite.blendMode = Phaser.blendModes.MULTIPLY;
