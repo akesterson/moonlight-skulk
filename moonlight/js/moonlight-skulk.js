@@ -725,8 +725,8 @@ var AISprite = function(game, x, y, key, frame) {
 	    yd = -(yd);
 
 	var hyp = Math.sqrt(Number(xd * xd) + Number(yd * yd));
-	if ( hyp > this.view_distance ) {
-	    console.log("Player is outside my view distance");
+	if ( hyp > vd ) {
+	    console.log("Target is outside my view distance");
 	    return false;
 	}
 
@@ -739,7 +739,7 @@ var AISprite = function(game, x, y, key, frame) {
 	if ( viewrect.intersects(sprrect) || viewrect.containsRect(sprrect) ) {
 	    return true;
 	}
-	console.log("I have a view rectangle but it does not intersect or contain the player");
+	console.log("I have a view rectangle but it does not intersect or contain the target");
 	return false;
     }
 
@@ -1002,7 +1002,7 @@ var AISprite = function(game, x, y, key, frame) {
 		this.path_set(player, true);
 		this.path_tween_start();
 	    } else {
-		console.log("I can't see the player");
+		console.log("I can't see the player - turning so I can");
 		if ( hasState(this, STATE_FACE_DOWN) ) {
 		    setMovingState(this, STATE_FACE_LEFT);
 		} else if ( hasState(this, STATE_FACE_LEFT) ) {
@@ -1015,6 +1015,7 @@ var AISprite = function(game, x, y, key, frame) {
 	    }
 	} else {
 	    if ( this.path_set(player, this.blocked(true)) == true ) {
+		console.log("I just got a new path");
 		if ( this.canSeeSprite(player, false) == false ) {
 		    this.path_tween_stop();
 		} else {
