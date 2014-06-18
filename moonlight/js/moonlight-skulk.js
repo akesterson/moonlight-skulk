@@ -1605,32 +1605,32 @@ GameState.prototype.update = function()
     this.aiSprites.forEach(_inner_collide, this);
     this.updateShadowTexture();
 
-    // if ( this.aiSprites.debug == true ) {
-    // 	function _draw_viewrect(x) {
-    // 	    var r = x.viewRectangle();
-    // 	    if ( r == null ) 
-    // 		return;
-    // 	    this.shadowTexture.context.fillStyle = 'rgb(128, 128, 128)';
-    // 	    this.shadowTexture.context.fillRect(r.left, 
-    // 						r.top, 
-    // 						r.width,
-    // 						r.height);
-    // 	}
-    // 	this.aiSprites.forEach(_draw_viewrect, this);
-    // 	function _draw_aipath(x) {
-    // 	    var p = x.path;
-    // 	    if ( p == null )
-    // 		return;
-    // 	    this.shadowTexture.context.fillStyle = 'rgb(255, 128, 128)';
-    // 	    p.forEach(function(r) {
-    // 		this.shadowTexture.context.fillRect(r.start.x, 
-    // 						    r.start.y, 
-    // 						    r.end.x - r.start.x,
-    // 						    r.end.y - r.start.y);
-    // 	    }, this);
-    // 	}
-    // 	this.aiSprites.forEach(_draw_aipath, this);
-    // }
+    if ( this.aiSprites.debug == true ) {
+    	function _draw_viewrect(x) {
+    	    var r = x.viewRectangle();
+    	    if ( r == null ) 
+    		return;
+    	    this.shadowTexture.context.fillStyle = 'rgb(128, 128, 128)';
+    	    this.shadowTexture.context.fillRect(r.left, 
+    						r.top, 
+    						r.width,
+    						r.height);
+    	}
+    	this.aiSprites.forEach(_draw_viewrect, this);
+    	function _draw_aipath(x) {
+    	    var p = x.path;
+    	    if ( p == null )
+    		return;
+    	    this.shadowTexture.context.fillStyle = 'rgb(255, 128, 128)';
+    	    p.forEach(function(r) {
+    		this.shadowTexture.context.fillRect(r.start.x, 
+    						    r.start.y, 
+    						    r.end.x - r.start.x,
+    						    r.end.y - r.start.y);
+    	    }, this);
+    	}
+    	this.aiSprites.forEach(_draw_aipath, this);
+    }
     if (game.time.fps !== 0) {
         this.fpsText.setText(game.time.fps + ' FPS');
     }
