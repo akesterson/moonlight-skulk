@@ -1045,7 +1045,7 @@ var AISprite = function(game, x, y, key, frame) {
 		    this.path_purge();
 		    this.path_tween_stop();
 		} else {
-		    x.setAwarenessState(STATE_ALERTED);
+		    this.setAwarenessState(STATE_ALERTED);
 		    this.path_tween_start();
 		}
 	    }
