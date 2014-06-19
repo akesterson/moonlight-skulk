@@ -1035,7 +1035,7 @@ var AISprite = function(game, x, y, key, frame) {
 		if ( this.rotation_timer == null ) {
 		    console.log("I can't see the player - turning so I can");
 		    this.rotation_timer = game.time.create(false);
-		    timerev = this.rotation_timer.add(250, this.turnFaceRight, this);
+		    timerev = this.rotation_timer.add(250, this.turnUnseenDirection, this);
 		    this.rotation_timer.start()
 		}
 	    }
