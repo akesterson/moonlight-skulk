@@ -1011,8 +1011,10 @@ var AISprite = function(game, x, y, key, frame) {
 	this.animations.stop();
 	this.animations.play("bipedrun" + spriteFacing(this));		
 	this.animations.stop();
-	this.rotation_timer.stop();
-	this.rotation_timer = null;
+	if ( this.rotation_timer !== null ) {
+	    this.rotation_timer.stop();
+	    this.rotation_timer = null;
+	}
     }
 
     this.action_chaseplayer = function()
