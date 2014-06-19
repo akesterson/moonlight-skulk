@@ -1027,6 +1027,7 @@ var AISprite = function(game, x, y, key, frame) {
 	    console.log("I am at the end of my path");
 	    if ( this.canSeeSprite(player, false) == true ) {
 		console.log("I can see the player");
+		this.setAwarenessEffect(STATE_ALERTED);
 		this.path_set(player, true);
 		this.path_tween_start();
 	    } else {
@@ -1044,6 +1045,7 @@ var AISprite = function(game, x, y, key, frame) {
 		    this.path_purge();
 		    this.path_tween_stop();
 		} else {
+		    x.setAwarenessState(STATE_ALERTED);
 		    this.path_tween_start();
 		}
 	    }
