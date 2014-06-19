@@ -692,23 +692,21 @@ var AISprite = function(game, x, y, key, frame) {
 	} 
 
 	if ( hasState(this, STATE_FACE_LEFT) ) {
-	    offset = [0, -32];
+	    offset = [0, -32 * multiplier];
 	    size = [-this.view_distance, 96];
 	} else if ( hasState(this, STATE_FACE_RIGHT) ) {
-	    offset = [32, -32];
+	    offset = [32, -32 * multiplier];
 	    size = [32 + this.view_distance, 96];
 	} else if ( hasState(this, STATE_FACE_DOWN) ) {
-	    offset = [-32, 32];
+	    offset = [-32 * multiplier, 32];
 	    size = [96, this.view_distance];
 	} else if ( hasState(this, STATE_FACE_UP) ) {
-	    offset = [-32, 0];
+	    offset = [-32 * multiplier, 0];
 	    size = [96, -this.view_distance];
 	} else {
 	    console.log("I don't have a facing state?");
 	    return null;
 	}
-	offset[0] *= multiplier;
-	offset[1] *= multiplier;
 	size[0] *= multiplier;
 	size[1] *= multiplier;
 	return positiveRectangle(this.x + offset[0],
