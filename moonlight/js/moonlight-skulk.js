@@ -1078,8 +1078,8 @@ var AISprite = function(game, x, y, key, frame) {
 
     this.update = function()
     {
-	var running = false;
-
+	if ( this.ready_to_update == false )
+	    return;
 	if ( this.awareness_effect !== null ) {
 	    if ( this.awareness_effect.alive == false ) {
 		this.awareness_effect.destroy();
@@ -1140,6 +1140,7 @@ var AISprite = function(game, x, y, key, frame) {
 	addAnimation(this, 'bipedrundown');
 	setMovingState(this, STATE_FACE_DOWN);
 	setSpriteMovement(this);
+	this.ready_to_update = true;
     }
 
     var spritenames_by_type = [
@@ -1155,6 +1156,7 @@ var AISprite = function(game, x, y, key, frame) {
 	'townsfolk-guard-2'
     ];
     
+    this.ready_to_update = false;
     Phaser.Sprite.call(this, game, x, y, null);
     game.physics.arcade.enable(this);
     this.body.immovable = true;
