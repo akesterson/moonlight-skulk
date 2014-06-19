@@ -278,6 +278,37 @@
                  "width":0,
                  "x":320,
                  "y":521
+                }, 
+                {
+                 "gid":3544,
+                 "height":0,
+                 "name":"BigTopCustomer2",
+                 "properties":
+                    {
+                     "sprite_canmove":"true",
+                     "sprite_group":"townsfolk-female",
+                     "sprite_name":"townsfolk-female-2"
+                    },
+                 "type":"AI",
+                 "visible":true,
+                 "width":0,
+                 "x":640,
+                 "y":192
+                }, 
+                {
+                 "gid":3544,
+                 "height":0,
+                 "name":"BigTopCustomer2",
+                 "properties":
+                    {
+                     "sprite_group":"townsfolk-male",
+                     "sprite_name":"townsfolk-male-3"
+                    },
+                 "type":"AI",
+                 "visible":true,
+                 "width":0,
+                 "x":128,
+                 "y":320
                 }],
          "opacity":1,
          "type":"objectgroup",
