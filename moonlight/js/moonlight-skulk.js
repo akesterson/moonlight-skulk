@@ -999,16 +999,16 @@ var AISprite = function(game, x, y, key, frame) {
 	}, this);
     }
 
-    this.turnFaceRight = function() {
-	if ( hasState(this, STATE_FACE_DOWN) ) {
-	    setMovingState(this, STATE_FACE_LEFT);
-	} else if ( hasState(this, STATE_FACE_LEFT) ) {
-	    setMovingState(this, STATE_FACE_UP);
-	} else if ( hasState(this, STATE_FACE_UP) ) {
-	    setMovingState(this, STATE_FACE_RIGHT);
-	} else if ( hasState(this, STATE_FACE_RIGHT) ) {
-	    setMovingState(this, STATE_FACE_DOWN);
+    this.turnUnseenDirection = function() {
+	if ( this.seen_directions.length >= 4 )
+	    this.seen_directions = [];
+	var directions = [STATE_FACE_DOWN, STATE_FACE_LEFT,
+			  STATE_FACE_RIGHT, STATE_FACE_UP];
+	var newdirection = directions[game.rnd.integerInRange(0, 3)];
+	while ( this.seen_directions.indexOf(newdirection) !== -1 ) {
+	    newdirection = directions[game.rnd.integerInRange(0, 3)];
 	}
+	setMovingState(this, newdirection);
 	this.animations.stop();
 	this.animations.play("bipedrun" + spriteFacing(this));		
 	this.animations.stop();
@@ -1185,6 +1185,7 @@ var AISprite = function(game, x, y, key, frame) {
     this.sprite_can_see_lightmeter = 0.3;
     this.awareness_effect = null;
     this.awareness_timer = null;
+    this.seen_directions = [];
     this.sprite_awareness_duration = 60000;
     this.sprite_canmove = 'true';
     this.collide_with_player = 'true';
