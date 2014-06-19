@@ -1008,6 +1008,7 @@ var AISprite = function(game, x, y, key, frame) {
 	while ( this.seen_directions.indexOf(newdirection) !== -1 ) {
 	    newdirection = directions[game.rnd.integerInRange(0, 3)];
 	}
+	console.log("Setting new direction to " + newdirection);
 	setMovingState(this, newdirection);
 	this.animations.stop();
 	this.animations.play("bipedrun" + spriteFacing(this));		
