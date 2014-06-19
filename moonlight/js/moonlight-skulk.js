@@ -1072,24 +1072,8 @@ var AISprite = function(game, x, y, key, frame) {
 	}
 	if ( game.rnd.integerInRange(0, 100) < 95 )
 	    return;
-	switch ( game.rnd.integerInRange(0, 4) ) {
-	    case 0: {
-		newstate = newstate | (STATE_FACE_RIGHT | STATE_MOVING);
-		break;
-	    }
-	    case 1: {
-		newstate = newstate | (STATE_FACE_LEFT | STATE_MOVING);
-		break;
-	    }
-	    case 2: {
-		newstate = newstate | (STATE_FACE_UP | STATE_MOVING);
-		break;
-	    }
-	    case 3: {
-		newstate = newstate | (STATE_FACE_DOWN | STATE_MOVING);
-	    }
-	}
-	setMovingState(this, newstate);
+	this.turnUnseenDirection();
+	setMovingState(this, this.state | STATE_MOVING);
     }
 
     this.update = function()
