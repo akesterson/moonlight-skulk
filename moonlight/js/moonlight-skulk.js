@@ -1069,7 +1069,9 @@ var AISprite = function(game, x, y, key, frame) {
 		    nearest = spr;
 		}
 	    }
-	    this.target = spr;
+	    console.log("Running to nearest for help");
+	    console.log(nearest);
+	    this.target = nearest;
 	}
 	if ( this.target !== null )
 	    this.chasetarget(this.target);
@@ -1272,7 +1274,6 @@ GameState.prototype.create = function()
 	    };
 	    if ( lp['collides'] == true ) {
 		this.map_collision_layers.push(layer);
-		console.log(layer);
 		for (var i = 0; i < layer.layer.data.length; i++)
 		{
 		    if ( i >= pfgrid.length )
@@ -1291,15 +1292,11 @@ GameState.prototype.create = function()
 	}
     }
 
-    console.log(pfgrid)
     pathfinder_grid = new PF.Grid(this.map.width,
 				  this.map.height,
 				  pfgrid);
     pathfinder = new PF.AStarFinder({allowDiagonal: false});
     
-    console.log(pathfinder_grid);
-    console.log(pathfinder);
-
     this.physics.arcade.enable(player);
     player.body.center = new Phaser.Point(player.body.width / 2, player.body.height + player.body.halfHeight);
     player.body.collideWorldBounds = true;
@@ -1507,12 +1504,10 @@ function setSpriteMovement(spr, velocity)
     if ( hasState(spr, STATE_RUNNING) ) {
 	if ( velocity !== false )
 	    velocity = velocity[1];
-	console.log("Playing bipedrun" + dir);
 	spr.animations.play("bipedrun" + dir);
     } else if ( hasState(spr, STATE_MOVING) ) {
 	if ( velocity !== false )
 	    velocity = velocity[0];
-	console.log("Playing bipedwalk" + dir);
 	spr.animations.play("bipedwalk" + dir);
     } else {
 	if ( velocity !== false ) {
