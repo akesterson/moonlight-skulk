@@ -1074,7 +1074,7 @@ var AISprite = function(game, x, y, key, frame) {
 	    }
 	    this.chasetarget(this.target,
 			     chaseState, 
-			     STATE_MOVING | RUNNING,
+			     STATE_MOVING | STATE_RUNNING,
 			     false);
 	}
     }
