@@ -1079,7 +1079,10 @@ var AISprite = function(game, x, y, key, frame) {
 		this.path_tween_stop();
 		this.path_purge();
 	    }
-	    this.chasetarget(this.target);
+	    this.chasetarget(this.target,
+			     STATE_ALERTED,
+			     STATE_MOVING | STATE_RUNNING,
+			     false);
 	}
     }
 
