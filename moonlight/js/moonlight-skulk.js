@@ -1073,6 +1073,8 @@ var AISprite = function(game, x, y, key, frame) {
 	if ( (this.path.length < 1) || this.path_index >= this.path.length) {
 	    for ( var i = 0 ; i < length(aiSprites); i++ ) {
 		spr = aiSprites[i];
+		if ( spr.sprite_group !== "townsfolk-guard" ) 
+		    continue;
 		var dist = new Phaser.Line(this.x, this.y, spr.x, spr.y);
 		if ( (lastdist == 0.0 ) || (dist.length < lastdist) ) {
 		    lastdist = dist;
