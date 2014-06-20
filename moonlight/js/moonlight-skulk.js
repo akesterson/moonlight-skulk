@@ -911,7 +911,7 @@ var AISprite = function(game, x, y, key, frame) {
     }
 
     this.path_set = function(target, force, maxsteps) {
-	maxsteps = (typeof maxsteps == undefined ? this.path_maximum_steps : maxsteps);
+	maxsteps = (typeof maxsteps == undefined ? maxsteps : this.path_maximum_steps);
 	force = ( typeof force == undefined ? false : force );
 	if ( force == false &&
 	     this.path.length > 0 && 
@@ -919,14 +919,16 @@ var AISprite = function(game, x, y, key, frame) {
 	    return false;
 	}
 	this.path_purge();
+	var pos = nearestWalkableTile(target);
 	tpath = pathfinder.findPath(
 	    parseInt(this.x/32), 
 	    parseInt(this.y/32),
-	    parseInt(target.x/32), 
-	    parseInt(target.y/32),
+	    pos[0],
+	    pos[1],
 	    pathfinder_grid.clone()
 	);
 	prevpoint = [this.x, this.y];
+	console.log("New path has at most " + maxsteps + " steps in it");
 	for ( var i = 0 ; i < Math.min(maxsteps, tpath.length) ; i++ ) {
 	    if ( (prevpoint[0]+prevpoint[1]) == ((tpath[i][0]*32)+(tpath[i][1]*32)) )
 		continue;
@@ -1062,24 +1064,17 @@ var AISprite = function(game, x, y, key, frame) {
 		this.target = nearestInGroup(this, aiSprites, "townsfolk-guard");
 	    }
 	}
-	if ( this.target !== null ) {
-	    var targetseesyou = false;
-	    if (this.target.canSeeSprite) {
-		if (this.target.canSeeSprite(this) == true)
-		    targetseesyou = true;
-	    }
-	    if ( (game.physics.arcade.collide(this, this.target) == true) ||
-		 targetseesyou == true ) {
-		if ( hasState(this, STATE_RUNNINGTOLIGHT) == false ) {
-		    this.path_tween_stop();
-		    this.path_purge();
-		    var staticLights = game.state.states.game.staticLights;		
-		    this.target = nearestInGroup(this, staticLights);
-		    console.log("Running to the nearest light");
-		    console.log(this.target);
-		    addState(this, STATE_RUNNINGTOLIGHT);
-		}   
-	    }
+	if ( this.target !== null &&
+	     hasState(this, STATE_RUNNINGTOLIGHT) == false ) {
+	    if ( (game.physics.arcade.collide(this, this.target) == true) ) {
+		this.path_tween_stop();
+		this.path_purge();
+		var staticLights = game.state.states.game.staticLights;		
+		this.target = nearestInGroup(this, staticLights);
+		console.log("Running to the nearest light");
+		console.log(this.target);
+		addState(this, STATE_RUNNINGTOLIGHT);
+	    }   
 	    this.chasetarget(this.target,
 			     STATE_ALERTED, 
 			     STATE_MOVING | STATE_RUNNING,
@@ -1261,6 +1256,46 @@ function nearestInGroup(sprite, group, sprite_group) {
 	}
     }
     return nearest;
+}
+
+function nearestWalkableTile(spr)
+{
+    function _walkable_inner(multiplier) {
+	var startx = parseInt(Math.max((spr.x / 32) - (1 * multiplier), 0));
+	var starty = parseInt(Math.max((spr.y / 32) - (1 * multiplier), 0));
+	var endx = parseInt(Math.min((spr.x / 32) + 1 + (1 * multiplier), game.state.states.game.map.width));
+	var endy = parseInt(Math.min((spr.y / 32) + 1 + (1 * multiplier), game.state.states.game.map.width));
+	
+	for ( var x = startx ; x <= endx ; x++ ) {
+	    for ( var y = starty ; y <= endy ; y++ ) {
+		if ( (x == startx && y == starty) ||
+		     (x == startx && y == endy) ||
+		     (y == starty) ||
+		     (y == endy) ) {
+		    console.log(pathfinder_grid);
+		    if ( pathfinder_grid.nodes[x][y].walkable == true ) {
+			console.log([x, y]);
+			return [x, y];
+		    }
+		}
+	    }   
+	}
+	return null;
+    }
+
+    for ( var i = 1 ; i < 100 ; i++ ) {
+	var rv = _walkable_inner(i);
+	if ( rv !== null ) {
+	    console.log("Found near walkable tile");
+	    console.log([rv] + [spr.x / 32, spr.y / 32]);
+	    return rv
+	}
+    }
+    //if ( multiplier >= 10 ) 
+    console.log("Couldn't find a near walkable tile");
+    console.log([spr.x / 32, spr.y / 32]);
+    return [parseInt(spr.x / 32), parseInt(spr.y / 32)];
+    //return nearestWalkableTile(spr, multiplier + 1);
 }
 
 function addAnimation(obj, anim)
