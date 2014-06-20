@@ -1073,8 +1073,13 @@ var AISprite = function(game, x, y, key, frame) {
 	    console.log(nearest);
 	    this.target = nearest;
 	}
-	if ( this.target !== null )
+	if ( this.target !== null ) {
+	    if ( this.target(canSeeSprite, this) == true ) {
+		this.path_tween_stop();
+		this.path_purge();
+	    }
 	    this.chasetarget(this.target);
+	}
     }
 
     this.action_huntplayer = function()
