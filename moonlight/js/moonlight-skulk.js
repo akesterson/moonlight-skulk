@@ -908,11 +908,12 @@ var AISprite = function(game, x, y, key, frame) {
 	this.path_index = 0;
     }
 
-    this.path_set = function(target, force) {
+    this.path_set = function(target, force, maxsteps) {
+	maxsteps = (typeof maxsteps == undefined ? this.path_maximum_steps : maxsteps);
 	force = ( typeof force == undefined ? false : force );
 	if ( force == false &&
 	     this.path.length > 0 && 
-	     this.path_index < this.path_maximum_steps ) {
+	     this.path_index < this.path.length ) {
 	    return false;
 	}
 	this.path_purge();
@@ -924,7 +925,7 @@ var AISprite = function(game, x, y, key, frame) {
 	    pathfinder_grid.clone()
 	);
 	prevpoint = [this.x, this.y];
-	for ( var i = 0 ; i < tpath.length ; i++ ) {
+	for ( var i = 0 ; i < Math.min(maxsteps, tpath.length) ; i++ ) {
 	    if ( (prevpoint[0]+prevpoint[1]) == ((tpath[i][0]*32)+(tpath[i][1]*32)) )
 		continue;
 	    this.path.push(new Phaser.Line(prevpoint[0], prevpoint[1], 
@@ -1008,7 +1009,7 @@ var AISprite = function(game, x, y, key, frame) {
 	}
     }
 
-    this.chasetarget = function(target, alertedState, movingstate, visual)
+    this.chasetarget = function(target, alertedState, movingstate, visual, maxsteps)
     {
 	alertedState = (typeof alertedState == undefined ? STATE_ALERTED : alertedState);
 	visual = (typeof visual == undefined ? false : visual);
@@ -1020,7 +1021,7 @@ var AISprite = function(game, x, y, key, frame) {
 	    this.path_tween_stop();
 	    if ( (visual == false) || (this.canSeeSprite(target, false) == true )) {
 		this.setAwarenessEffect(alertedState);
-		this.path_set(target, true);
+		this.path_set(target, true, maxsteps);
 		this.path_tween_start(movingstate);
 	    } else {
 		if ( this.rotation_timer == null ) {
@@ -1030,7 +1031,7 @@ var AISprite = function(game, x, y, key, frame) {
 		}
 	    }
 	} else {
-	    if ( this.path_set(target, this.blocked(true)) == true ) {
+	    if ( this.path_set(target, this.blocked(true), maxsteps) == true ) {
 		if ( (visual == false) || (this.canSeeSprite(target, false) == false )) {
 		    this.path_purge();
 		    this.path_tween_stop();
@@ -1058,7 +1059,6 @@ var AISprite = function(game, x, y, key, frame) {
 	    this.target = nearestInGroup(this, aiSprites, "townsfolk-guard");
 	}
 	if ( this.target !== null ) {
-	    var chaseState = STATE_NONE;
 	    if ( this.target.canSeeSprite(this) == true ||
 		 game.physics.arcade.collide(this, this.target) == true ) {
 		console.log("My target can see me!");
@@ -1066,16 +1066,14 @@ var AISprite = function(game, x, y, key, frame) {
 		this.path_purge();
 		var staticLights = game.state.states.game.staticLights;		
 		this.target = nearestInGroup(this, staticLights);
-		chaseState = STATE_CONCERNED;
-		console.log("Walking to the nearest light");
+		console.log("Running to the nearest light");
 		console.log(this.target);
-	    } else {
-		chaseState = STATE_ALERTED;
 	    }
 	    this.chasetarget(this.target,
-			     chaseState, 
+			     STATE_ALERTED, 
 			     STATE_MOVING | STATE_RUNNING,
-			     false);
+			     false,
+			     1000);
 	}
     }
 
