@@ -944,7 +944,7 @@ var AISprite = function(game, x, y, key, frame) {
 
     this.path_tween_start = function(movingstate)
     {
-	movingState = (typeof movementState == undefined ? movementState : (STATE_MOVING | STATE_RUNNING);
+	movingState = (typeof movementState == undefined ? movementState : (STATE_MOVING | STATE_RUNNING));
 	this.path_tweens = [];
 	prevpos = [this.x, this.y]
 	for ( var i = 0; 
@@ -1058,7 +1058,10 @@ var AISprite = function(game, x, y, key, frame) {
     this.action_chaseplayer = function()
     {
 	var movingstate = STATE_NONE;
-	this.action_chasetarget(player);
+	this.action_chasetarget(player, 
+				STATE_ALERTED, 
+				STATE_MOVING | STATE_RUNNING,
+				true);
 	return;
     }
 
