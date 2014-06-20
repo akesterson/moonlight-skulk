@@ -1064,7 +1064,7 @@ var AISprite = function(game, x, y, key, frame) {
 		this.path_tween_stop();
 		this.path_purge();
 		var staticLights = game.state.states.game.staticLights;		
-		this.target = nearestInGroup(staticLights);
+		this.target = nearestInGroup(this, staticLights);
 		chaseState = STATE_CONCERNED;
 	    }
 	    this.chasetarget(this.target,
