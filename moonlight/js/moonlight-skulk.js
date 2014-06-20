@@ -1058,16 +1058,16 @@ var AISprite = function(game, x, y, key, frame) {
 	    this.target = nearestInGroup(this, aiSprites);
 	}
 	if ( this.target !== null ) {
+	    var chaseStart = STATE_ALERTED;
 	    if ( this.target.canSeeSprite(this) == true ) {
 		console.log("My target can see me!");
 		this.path_tween_stop();
 		this.path_purge();
 		var staticLights = game.state.states.game.staticLights;		
 		this.target = nearestInGroup(staticLights);
+		chaseState = STATE_CONCERNED;
 	    }
-	    var chaseState = STATE_ALERTED;
 	    this.chasetarget(this.target,
-			     STATE_ALERTED,
 			     STATE_MOVING | STATE_RUNNING,
 			     false);
 	}
