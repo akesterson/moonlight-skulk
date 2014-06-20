@@ -1061,8 +1061,11 @@ var AISprite = function(game, x, y, key, frame) {
 	    this.target = nearestInGroup(this, aiSprites, "townsfolk-guard");
 	}
 	if ( this.target !== null ) {
-	    if ( ((typeof this.target.canSeeSprite !== undefined) &&
-		  (this.target.canSeeSprite(this) == true)) ||
+	    var targetseesyou = false;
+	    if ((typeof this.target.canSeeSprite !== undefined) &&
+		(this.target.canSeeSprite(this) == true) )
+		targetseesyou = true;
+	    if (  targetseesyou ||
 		 (game.physics.arcade.collide(this, this.target) == true) ) {
 		if ( hasState(this, STATE_RUNNINGTOLIGHT) == true ) {
 		    return;
