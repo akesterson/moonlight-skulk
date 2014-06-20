@@ -1067,8 +1067,21 @@ var AISprite = function(game, x, y, key, frame) {
 
     this.action_reportplayer = function()
     {
-	console.log("I AM REPORTING THE PLAYER");
-	setSpriteMovement(this);
+	var aiSprites = game.state.states.game.aiSprites;
+	var nearest = null;
+	var lastdist = 0.0;
+	if ( (this.path.length < 1) || this.path_index >= this.path.length) {
+	    for ( var i = 0 ; i < length(aiSprites); i++ ) {
+		spr = aiSprites[i];
+		var dist = new Phaser.Line(this.x, this.y, spr.x, spr.y);
+		if ( (lastdist == 0.0 ) || (dist.length < lastdist) ) {
+		    lastdist = dist;
+		    nearest = spr;
+		}
+	    }
+	    this.target = spr;
+	}
+	this.chasetarget(spr);
     }
 
     this.action_huntplayer = function()
@@ -1177,6 +1190,7 @@ var AISprite = function(game, x, y, key, frame) {
     pathfinder_grid = [];
     this.walkables = [];
     this.path = [];
+    this.target = player;
     this.path_tweens = [];
     this.path_maximum_steps = 4;
     this.awareness_change_enabled = true;
