@@ -1075,7 +1075,7 @@ var AISprite = function(game, x, y, key, frame) {
 	}
 	if ( this.target !== null ) {
 	    if ( this.target.canSeeSprite(this) == true ) {
-		console.log("I can't see my target!");
+		console.log("My target can see me!");
 		this.path_tween_stop();
 		this.path_purge();
 	    }
