@@ -1055,7 +1055,7 @@ var AISprite = function(game, x, y, key, frame) {
     {
 	if ( (this.path.length < 1) || this.path_index >= this.path.length) {
 	    var aiSprites = game.state.states.game.aiSprites;
-	    this.target = nearestInGroup(this, aiSprites);
+	    this.target = nearestInGroup(this, aiSprites, "townsfolk-guard");
 	}
 	if ( this.target !== null ) {
 	    var chaseState = STATE_NONE;
@@ -1235,14 +1235,15 @@ function positiveRectangle(x, y, w, h) {
     return new Phaser.Rectangle(x, y, w, h);
 }
 
-function nearestInGroup(sprite, group) {
+function nearestInGroup(sprite, group, sprite_group) {
     var nearest = null;
     var lastdist = 0.0;
     for ( var i = 0 ; i < group.length; i++ ) {
-	console.log("Checking out aiSprite[" + i + "]");
+	console.log("Checking distance to group[" + i + "]");
 	var spr = group.getChildAt(i);
 	console.log(spr);
-	if ( spr.sprite_group !== "townsfolk-guard" ) 
+	if ( (typeof sprite_group !== undefined) &&
+	     spr.sprite_group !== sprite_group ) 
 	    continue;
 	var dist = new Phaser.Line(sprite.x, sprite.y, spr.x, spr.y);
 	if ( (lastdist == 0.0 ) || (dist.length < lastdist) ) {
