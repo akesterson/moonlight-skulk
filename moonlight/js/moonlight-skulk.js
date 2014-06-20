@@ -1245,7 +1245,7 @@ function nearestInGroup(sprite, group, sprite_group) {
 	    continue;
 	var dist = new Phaser.Line(sprite.x, sprite.y, spr.x, spr.y);
 	if ( (lastdist == 0.0 ) || (dist.length < lastdist) ) {
-	    lastdist = dist;
+	    lastdist = dist.length;
 	    nearest = spr;
 	}
     }
