@@ -309,6 +309,22 @@
                  "width":0,
                  "x":128,
                  "y":320
+                }, 
+                {
+                 "gid":3544,
+                 "height":0,
+                 "name":"BigTopCustomer2",
+                 "properties":
+                    {
+                     "sprite_canmove":"true",
+                     "sprite_group":"townsfolk-female",
+                     "sprite_name":"townsfolk-female-4"
+                    },
+                 "type":"AI",
+                 "visible":true,
+                 "width":0,
+                 "x":158,
+                 "y":830
                 }],
          "opacity":1,
          "type":"objectgroup",
