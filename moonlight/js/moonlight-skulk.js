@@ -20,6 +20,8 @@ STATE_FACE_UP = 1 << 8;
 STATE_FACE_DOWN = 1 << 9;
 STATE_MOVING = 1 << 10;
 
+STATE_RUNNINGTOLIGHT = 1 << 11;
+
 STATES_AWARENESS = (STATE_UNAWARE | STATE_CONCERNED | STATE_ALERTED | STATE_LOSTHIM);
 STATES_MOVEMENT = (STATE_MOVING | STATE_RUNNING);
 STATES_FACE = (STATE_FACE_LEFT | STATE_FACE_RIGHT | STATE_FACE_DOWN | STATE_FACE_UP);
@@ -1059,15 +1061,20 @@ var AISprite = function(game, x, y, key, frame) {
 	    this.target = nearestInGroup(this, aiSprites, "townsfolk-guard");
 	}
 	if ( this.target !== null ) {
-	    if ( this.target.canSeeSprite(this) == true ||
-		 game.physics.arcade.collide(this, this.target) == true ) {
-		console.log("My target can see me!");
-		this.path_tween_stop();
-		this.path_purge();
-		var staticLights = game.state.states.game.staticLights;		
-		this.target = nearestInGroup(this, staticLights);
-		console.log("Running to the nearest light");
-		console.log(this.target);
+	    if ( (this.target.canSeeSprite(this) == true) ||
+		 (game.physics.arcade.collide(this, this.target) == true) ) {
+		if ( hasState(this, STATE_RUNNINGTOLIGHT) == true ) {
+		    return;
+		} else {
+		    console.log("My target can see me!");
+		    this.path_tween_stop();
+		    this.path_purge();
+		    var staticLights = game.state.states.game.staticLights;		
+		    this.target = nearestInGroup(this, staticLights);
+		    console.log("Running to the nearest light");
+		    console.log(this.target);
+		    addState(this, STATE_RUNNINGTOLIGHT);
+		}   
 	    }
 	    this.chasetarget(this.target,
 			     STATE_ALERTED, 
