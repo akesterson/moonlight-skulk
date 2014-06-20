@@ -1062,9 +1062,11 @@ var AISprite = function(game, x, y, key, frame) {
 	}
 	if ( this.target !== null ) {
 	    var targetseesyou = false;
-	    if ((typeof this.target.canSeeSprite !== undefined) &&
-		(this.target.canSeeSprite(this) == true) )
-		targetseesyou = true;
+	    if (typeof this.target.canSeeSprite !== undefined) {
+		if (this.target.canSeeSprite(this) == true)
+		    targetseesyou = true;
+	    }
+
 	    if (  targetseesyou ||
 		 (game.physics.arcade.collide(this, this.target) == true) ) {
 		if ( hasState(this, STATE_RUNNINGTOLIGHT) == true ) {
