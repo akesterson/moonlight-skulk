@@ -942,8 +942,9 @@ var AISprite = function(game, x, y, key, frame) {
 	return true;
     }
 
-    this.path_tween_start = function()
+    this.path_tween_start = function(movingstate)
     {
+	movingState = (typeof movementState == undefined ? movementState : (STATE_MOVING | STATE_RUNNING);
 	this.path_tweens = [];
 	prevpos = [this.x, this.y]
 	for ( var i = 0; 
@@ -1017,40 +1018,47 @@ var AISprite = function(game, x, y, key, frame) {
 	}
     }
 
-    this.action_chaseplayer = function()
+    this.chasetarget = function(target, alertedState, movingstate, visual)
     {
-	var movingstate = STATE_NONE;
-	if ( game.physics.arcade.collide(this, player) )
+	alertedState = (typeof alertedState == undefined ? alertedState : STATE_ALERTED);
+	visual = (typeof visual == undefined ? visual : false);
+	if ( game.physics.arcade.collide(this, target) )
 	    return;
 
 	if ( this.path_index >= this.path.length ) {
 	    this.path_tween_stop();
 	    console.log("I am at the end of my path");
-	    if ( this.canSeeSprite(player, false) == true ) {
-		console.log("I can see the player");
-		this.setAwarenessEffect(STATE_ALERTED);
-		this.path_set(player, true);
-		this.path_tween_start();
+	    if ( (visual == false) || (this.canSeeSprite(target, false) == true )) {
+		console.log("I can see the target");
+		this.setAwarenessEffect(alertedState);
+		this.path_set(target, true);
+		this.path_tween_start(movingstate);
 	    } else {
 		if ( this.rotation_timer == null ) {
-		    console.log("I can't see the player - turning so I can");
+		    console.log("I can't see the target - turning so I can");
 		    this.rotation_timer = game.time.create(false);
 		    timerev = this.rotation_timer.add(250, this.turnUnseenDirection, this);
 		    this.rotation_timer.start()
 		}
 	    }
 	} else {
-	    if ( this.path_set(player, this.blocked(true)) == true ) {
+	    if ( this.path_set(target, this.blocked(true)) == true ) {
 		console.log("I just got a new path");
-		if ( this.canSeeSprite(player, false) == false ) {
+		if ( (visual == false) || (this.canSeeSprite(target, false) == false )) {
 		    this.path_purge();
 		    this.path_tween_stop();
 		} else {
-		    this.setAwarenessEffect(STATE_ALERTED);
-		    this.path_tween_start();
+		    this.setAwarenessEffect(alertedState);
+		    this.path_tween_start(movingstate);
 		}
 	    }
 	}
+    }
+
+    this.action_chaseplayer = function()
+    {
+	var movingstate = STATE_NONE;
+	this.action_chasetarget(player);
 	return;
     }
 
@@ -1075,7 +1083,8 @@ var AISprite = function(game, x, y, key, frame) {
 	if ( game.rnd.integerInRange(0, 100) < 95 )
 	    return;
 	this.turnUnseenDirection();
-	setMovingState(this, this.state | STATE_MOVING);
+	addState(this, STATE_MOVING);
+	setSpriteMovement(this);
     }
 
     this.update = function()

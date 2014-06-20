@@ -8,6 +8,10 @@ Development notes
 
 This stuff is just for me to keep track, since I'm afraid using GitHub's issue tracker or Wiki would bloat my process, and since I only have 4 days, I can't afford that.
 
+## TODO : Import SAT and use polygonal cones for vision testing
+
+http://jriecken.github.io/sat-js/ - I had tried using Phaser's bits for this interally, but it was janky, so I put it off and used rectangles instead. Should really get around to using this.
+
 ## TODO : AI should wander around the map
 
 The AI should, in their default states, wander around the map aimlessly. They should restrict themselves to normal pedestrian traffic lanes, which will likely require the marking of such lanes in TilED.
