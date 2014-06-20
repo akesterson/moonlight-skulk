@@ -1062,7 +1062,7 @@ var AISprite = function(game, x, y, key, frame) {
 	}
 	if ( this.target !== null ) {
 	    var targetseesyou = false;
-	    if (typeof this.target.canSeeSprite !== undefined) {
+	    if (this.target.canSeeSprite) {
 		if (this.target.canSeeSprite(this) == true)
 		    targetseesyou = true;
 	    }
