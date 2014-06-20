@@ -1053,32 +1053,19 @@ var AISprite = function(game, x, y, key, frame) {
 
     this.action_reportplayer = function()
     {
-	var aiSprites = game.state.states.game.aiSprites;
-	var nearest = null;
-	var lastdist = 0.0;
 	if ( (this.path.length < 1) || this.path_index >= this.path.length) {
-	    for ( var i = 0 ; i < aiSprites.length; i++ ) {
-		console.log("Checking out aiSprite[" + i + "]");
-		spr = aiSprites.getChildAt(i);
-		console.log(spr);
-		if ( spr.sprite_group !== "townsfolk-guard" ) 
-		    continue;
-		var dist = new Phaser.Line(this.x, this.y, spr.x, spr.y);
-		if ( (lastdist == 0.0 ) || (dist.length < lastdist) ) {
-		    lastdist = dist;
-		    nearest = spr;
-		}
-	    }
-	    console.log("Running to nearest for help");
-	    console.log(nearest);
-	    this.target = nearest;
+	    var aiSprites = game.state.states.game.aiSprites;
+	    this.target = nearestInGroup(this, aiSprites);
 	}
 	if ( this.target !== null ) {
 	    if ( this.target.canSeeSprite(this) == true ) {
 		console.log("My target can see me!");
 		this.path_tween_stop();
 		this.path_purge();
+		var staticLights = game.state.states.game.staticLights;		
+		this.target = nearestInGroup(staticLights);
 	    }
+	    var chaseState = STATE_ALERTED;
 	    this.chasetarget(this.target,
 			     STATE_ALERTED,
 			     STATE_MOVING | STATE_RUNNING,
@@ -1200,6 +1187,7 @@ var AISprite = function(game, x, y, key, frame) {
     this.sprite_can_see_lightmeter = 0.3;
     this.awareness_effect = null;
     this.awareness_timer = null;
+    this.lastSawPlayerAt = null;
     this.seen_directions = [];
     this.sprite_awareness_duration = 60000;
     this.sprite_canmove = 'true';
@@ -1239,6 +1227,24 @@ function positiveRectangle(x, y, w, h) {
 	y = y - h;
     }
     return new Phaser.Rectangle(x, y, w, h);
+}
+
+function nearestInGroup(sprite, group) {
+    var nearest = null;
+    var lastdist = 0.0;
+    for ( var i = 0 ; i < aiSprites.length; i++ ) {
+	console.log("Checking out aiSprite[" + i + "]");
+	var spr = aiSprites.getChildAt(i);
+	console.log(spr);
+	if ( spr.sprite_group !== "townsfolk-guard" ) 
+	    continue;
+	var dist = new Phaser.Line(sprite.x, sprite.y, spr.x, spr.y);
+	if ( (lastdist == 0.0 ) || (dist.length < lastdist) ) {
+	    lastdist = dist;
+	    nearest = spr;
+	}
+    }
+    return nearest;
 }
 
 function addAnimation(obj, anim)
@@ -1633,6 +1639,7 @@ GameState.prototype.update = function()
 	if ( x.collide_with_player == false )
 	    return;
 	if ( x.canSeeSprite(player, false) == true ) {
+	    x.lastSawPlayerAt = new Phaser.Point(player.x, player.y);
 	    if ( this.physics.arcade.collide(x, player) ) {
 		x.setAwarenessEffect(STATE_ALERTED);
 	    } else if ( player.lightmeter >= x.sprite_can_see_lightmeter ) {
