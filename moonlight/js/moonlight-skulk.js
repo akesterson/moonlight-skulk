@@ -941,7 +941,7 @@ var AISprite = function(game, x, y, key, frame) {
 	this.path_tweens = [];
 	prevpos = [this.x, this.y]
 	for ( var i = 0; 
-	      i < Math.min(this.path_maximum_steps, this.path.length) ; 
+	      i < this.path.length ; 
 	      i++ ) {
 	    pl = this.path[i];
 	    movingstate = STATE_MOVING | STATE_RUNNING;
