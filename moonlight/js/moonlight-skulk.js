@@ -1068,6 +1068,7 @@ var AISprite = function(game, x, y, key, frame) {
 		chaseState = STATE_CONCERNED;
 	    }
 	    this.chasetarget(this.target,
+			     chaseState, 
 			     STATE_MOVING | STATE_RUNNING,
 			     false);
 	}
