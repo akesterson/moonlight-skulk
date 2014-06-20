@@ -1020,8 +1020,9 @@ var AISprite = function(game, x, y, key, frame) {
 
     this.chasetarget = function(target, alertedState, movingstate, visual)
     {
-	alertedState = (typeof alertedState == undefined ? alertedState : STATE_ALERTED);
-	visual = (typeof visual == undefined ? visual : false);
+	alertedState = (typeof alertedState == undefined ? STATE_ALERTED : alertedState);
+	visual = (typeof visual == undefined ? false : visual);
+	movingstate = (typeof alertedState == undefined ? STATE_NONE : movingstate);
 	if ( game.physics.arcade.collide(this, target) )
 	    return;
 
@@ -1057,7 +1058,6 @@ var AISprite = function(game, x, y, key, frame) {
 
     this.action_chaseplayer = function()
     {
-	var movingstate = STATE_NONE;
 	this.chasetarget(player, 
 			 STATE_ALERTED, 
 			 STATE_MOVING | STATE_RUNNING,
