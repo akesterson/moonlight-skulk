@@ -1058,7 +1058,7 @@ var AISprite = function(game, x, y, key, frame) {
 	    this.target = nearestInGroup(this, aiSprites);
 	}
 	if ( this.target !== null ) {
-	    var chaseStart = STATE_ALERTED;
+	    var chaseState = STATE_ALERTED;
 	    if ( this.target.canSeeSprite(this) == true ) {
 		console.log("My target can see me!");
 		this.path_tween_stop();
