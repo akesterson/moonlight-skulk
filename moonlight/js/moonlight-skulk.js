@@ -1072,6 +1072,7 @@ var AISprite = function(game, x, y, key, frame) {
 	var lastdist = 0.0;
 	if ( (this.path.length < 1) || this.path_index >= this.path.length) {
 	    for ( var i = 0 ; i < aiSprites.length; i++ ) {
+		console.log("Checking out aiSprite[" + i + "]");
 		spr = aiSprites[i];
 		if ( spr.sprite_group !== "townsfolk-guard" ) 
 		    continue;
