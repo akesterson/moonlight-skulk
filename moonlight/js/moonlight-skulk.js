@@ -704,7 +704,6 @@ var AISprite = function(game, x, y, key, frame) {
 	    offset = [-32 * multiplier, 0];
 	    size = [96, -this.view_distance];
 	} else {
-	    console.log("I don't have a facing state?");
 	    return null;
 	}
 	size[0] *= multiplier;
@@ -729,21 +728,17 @@ var AISprite = function(game, x, y, key, frame) {
 
 	var distance = (new Phaser.Line(spr.x, spr.y, this.x, this.y).length);
 	if ( distance > vd ) {
-	    console.log("Target is outside my view distance (" + distance + " vs " + vd + ")");
 	    return false;
 	}
 
 	var viewrect = this.viewRectangle();
 	if ( viewrect == null ) {
-	    console.log("I don't have a view rectangle");
 	    return false;
 	}
 	var sprrect = positiveRectangle(spr.x, spr.y, 32, 32);
 	if ( viewrect.intersects(sprrect) || viewrect.containsRect(sprrect) ) {
 	    return true;
 	}
-	console.log("I have a view rectangle but it does not intersect or contain the target");
-	console.log(viewrect, sprrect);
 	return false;
     }
 
@@ -905,7 +900,6 @@ var AISprite = function(game, x, y, key, frame) {
 		return true;
 	    return false;
 	}
-	console.log("this.blocked? " + f());
 	return f();
     }
 
@@ -937,8 +931,6 @@ var AISprite = function(game, x, y, key, frame) {
 					   tpath[i][0]*32, tpath[i][1]*32));
 	    prevpoint = [tpath[i][0]*32, tpath[i][1]*32];
 	}
-	console.log("New path");
-	console.log(this.path);
 	return true;
     }
 
@@ -985,7 +977,6 @@ var AISprite = function(game, x, y, key, frame) {
 						     tween);
 	    }
 	}
-	console.log(this.path_tweens);
 	if ( this.path_tweens.length > 0 )
 	    this.path_tweens[0].start();
     }
@@ -1007,7 +998,6 @@ var AISprite = function(game, x, y, key, frame) {
 	while ( this.seen_directions.indexOf(newdirection) !== -1 ) {
 	    newdirection = directions[game.rnd.integerInRange(0, 3)];
 	}
-	console.log("Setting new direction to " + newdirection);
 	setMovingState(this, newdirection);
 	this.animations.stop();
 	this.animations.play("bipedrun" + spriteFacing(this));		
@@ -1028,15 +1018,12 @@ var AISprite = function(game, x, y, key, frame) {
 
 	if ( this.path_index >= this.path.length ) {
 	    this.path_tween_stop();
-	    console.log("I am at the end of my path");
 	    if ( (visual == false) || (this.canSeeSprite(target, false) == true )) {
-		console.log("I can see the target");
 		this.setAwarenessEffect(alertedState);
 		this.path_set(target, true);
 		this.path_tween_start(movingstate);
 	    } else {
 		if ( this.rotation_timer == null ) {
-		    console.log("I can't see the target - turning so I can");
 		    this.rotation_timer = game.time.create(false);
 		    timerev = this.rotation_timer.add(250, this.turnUnseenDirection, this);
 		    this.rotation_timer.start()
@@ -1044,7 +1031,6 @@ var AISprite = function(game, x, y, key, frame) {
 	    }
 	} else {
 	    if ( this.path_set(target, this.blocked(true)) == true ) {
-		console.log("I just got a new path");
 		if ( (visual == false) || (this.canSeeSprite(target, false) == false )) {
 		    this.path_purge();
 		    this.path_tween_stop();
@@ -1074,6 +1060,7 @@ var AISprite = function(game, x, y, key, frame) {
 	    for ( var i = 0 ; i < aiSprites.length; i++ ) {
 		console.log("Checking out aiSprite[" + i + "]");
 		spr = aiSprites.getChildAt(i);
+		console.log(spr);
 		if ( spr.sprite_group !== "townsfolk-guard" ) 
 		    continue;
 		var dist = new Phaser.Line(this.x, this.y, spr.x, spr.y);
