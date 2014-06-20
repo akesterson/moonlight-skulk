@@ -1232,9 +1232,9 @@ function positiveRectangle(x, y, w, h) {
 function nearestInGroup(sprite, group) {
     var nearest = null;
     var lastdist = 0.0;
-    for ( var i = 0 ; i < aiSprites.length; i++ ) {
+    for ( var i = 0 ; i < group.length; i++ ) {
 	console.log("Checking out aiSprite[" + i + "]");
-	var spr = aiSprites.getChildAt(i);
+	var spr = group.getChildAt(i);
 	console.log(spr);
 	if ( spr.sprite_group !== "townsfolk-guard" ) 
 	    continue;
