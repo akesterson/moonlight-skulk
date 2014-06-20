@@ -1083,7 +1083,8 @@ var AISprite = function(game, x, y, key, frame) {
 	    }
 	    this.target = spr;
 	}
-	this.chasetarget(spr);
+	if ( this.target !== null )
+	    this.chasetarget(this.target);
     }
 
     this.action_huntplayer = function()
@@ -1192,7 +1193,7 @@ var AISprite = function(game, x, y, key, frame) {
     pathfinder_grid = [];
     this.walkables = [];
     this.path = [];
-    this.target = player;
+    this.target = null;
     this.path_tweens = [];
     this.path_maximum_steps = 4;
     this.awareness_change_enabled = true;
