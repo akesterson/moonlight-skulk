@@ -1066,10 +1066,9 @@ var AISprite = function(game, x, y, key, frame) {
 		if (this.target.canSeeSprite(this) == true)
 		    targetseesyou = true;
 	    }
-	    if (  targetseesyou ||
-		 (game.physics.arcade.collide(this, this.target) == true) ) {
+	    if ( (game.physics.arcade.collide(this, this.target) == true) ||
+		 targetseesyou == true ) {
 		if ( hasState(this, STATE_RUNNINGTOLIGHT) == false ) {
-		    console.log("My target can see me!");
 		    this.path_tween_stop();
 		    this.path_purge();
 		    var staticLights = game.state.states.game.staticLights;		
