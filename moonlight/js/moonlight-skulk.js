@@ -1059,19 +1059,22 @@ var AISprite = function(game, x, y, key, frame) {
 	}
 	if ( this.target !== null ) {
 	    var chaseState = STATE_NONE;
-	    if ( this.target.canSeeSprite(this) == true ) {
+	    if ( this.target.canSeeSprite(this) == true ||
+		 game.physics.arcade.collide(this, this.target) == true ) {
 		console.log("My target can see me!");
 		this.path_tween_stop();
 		this.path_purge();
 		var staticLights = game.state.states.game.staticLights;		
 		this.target = nearestInGroup(this, staticLights);
 		chaseState = STATE_CONCERNED;
+		console.log("Walking to the nearest light");
+		console.log(this.target);
 	    } else {
 		chaseState = STATE_ALERTED;
 	    }
 	    this.chasetarget(this.target,
 			     chaseState, 
-			     STATE_MOVING | STATE_RUNNING,
+			     STATE_MOVING | RUNNING,
 			     false);
 	}
     }
