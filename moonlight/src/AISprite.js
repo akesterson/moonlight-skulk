@@ -371,7 +371,8 @@ var AISprite = function(game, x, y, key, frame) {
 	this.chasetarget(player, 
 			 STATE_ALERTED, 
 			 STATE_MOVING | STATE_RUNNING,
-			 true);
+			 true,
+			 false);
 	return;
     }
 
