@@ -377,12 +377,27 @@ var AISprite = function(game, x, y, key, frame) {
 
     this.action_chaseplayer = function()
     {
-	this.chasetarget(player, 
-			 STATE_ALERTED, 
-			 STATE_MOVING | STATE_RUNNING,
-			 true,
-			 undefined,
-			 false);
+	if ( this.path.length > 1 && 
+	     this.path_index >= this.path.length &&
+	     hasState(this, STATE_RUNNINGTOREPORT) ) {
+	    delState(this, STATE_RUNNINGTOREPORT);
+	    this.target = player;
+	}
+	if ( hasState(this, STATE_RUNNINGTOREPORT) ) {
+	    this.chasetarget(this.target, 
+			     STATE_ALERTED, 
+			     STATE_MOVING | STATE_RUNNING,
+			     true,
+			     1000,
+			     false);
+	} else { 
+	    this.chasetarget(player,
+			     STATE_ALERTED, 
+			     STATE_MOVING | STATE_RUNNING,
+			     true,
+			     undefined,
+			     false);
+	}
 	return;
     }
 
@@ -394,6 +409,10 @@ var AISprite = function(game, x, y, key, frame) {
 		var aiSprites = game.state.states.game.aiSprites;
 		this.target = nearestInGroup(this, aiSprites, "townsfolk-guard");
 	    } else if ( hasState(this, STATE_RUNNINGTOLIGHT) == false ) {
+		this.target.setAwarenessState(STATE_ALERTED);
+		this.target.target = this.lastSawPlayerAt
+		addState(this.target, STATE_RUNNINGTOREPORT);
+
 		this.path_tween_stop();
 		this.path_purge();
 		var staticLights = game.state.states.game.staticLights;		
