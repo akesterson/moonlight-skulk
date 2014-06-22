@@ -411,6 +411,7 @@ var AISprite = function(game, x, y, key, frame) {
 	    } else if ( hasState(this, STATE_RUNNINGTOLIGHT) == false ) {
 		if ( this.target.rotation_timer !== null )
 		    this.target.rotation_timer.stop();
+		this.target.path_purge();
 		this.target.setAwarenessEffect(STATE_ALERTED);
 		this.target.target = this.lastSawPlayerAt;
 		addState(this.target, STATE_RUNNINGTOREPORT);
