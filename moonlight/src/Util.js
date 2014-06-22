@@ -247,3 +247,18 @@ function setSpriteMovement(spr, velocity)
     }
 }
 
+function genericGridClone()
+{
+    return pathfinder_grid.clone();
+}
+
+function gridWithAISprites()
+{
+    var grid = pathfinder_grid.clone();
+    var aiSprites = game.state.states.game.aiSprites;
+    for ( var i = 0 ; i < aiSprites.length ; i++ ) {
+	var spr = aiSprites.getChildAt(i);
+	grid.nodes[parseInt(spr.y/32)][parseInt(spr.x/32)].walkable = false;
+    }
+    return grid;
+}

@@ -244,7 +244,7 @@ var AISprite = function(game, x, y, key, frame) {
 	    parseInt(this.y/32),
 	    pos[0],
 	    pos[1],
-	    pathfinder_grid.clone()
+	    gridWithAISprites()
 	);
 	prevpoint = [this.x, this.y];
 	console.log("New path has at most " + maxsteps + " steps in it");
