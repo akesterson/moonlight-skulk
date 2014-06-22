@@ -380,25 +380,24 @@ var AISprite = function(game, x, y, key, frame) {
     this.action_reportplayer = function()
     {
 	if ( (this.path.length < 1) || this.path_index >= this.path.length) {
-	    if ( hasState(this, STATE_RUNNINGTOLIGHT) == false ) {
+	    if ( this.target == null && 
+		 hasState(this, STATE_RUNNINGTOLIGHT) == false ) {
 		var aiSprites = game.state.states.game.aiSprites;
 		this.target = nearestInGroup(this, aiSprites, "townsfolk-guard");
-	    } else {
-		this.setAwarenessEffect(STATE_RELIEVED);
-		return;
-	    }
-	}
-	if ( this.target !== null &&
-	     hasState(this, STATE_RUNNINGTOLIGHT) == false ) {
-	    if ( (game.physics.arcade.collide(this, this.target) == true) ) {
+	    } else if ( hasState(this, STATE_RUNNINGTOLIGHT) == false ) {
 		this.path_tween_stop();
 		this.path_purge();
 		var staticLights = game.state.states.game.staticLights;		
 		this.target = nearestInGroup(this, staticLights);
 		console.log("Running to the nearest light");
 		console.log(this.target);
-		addState(this, STATE_RUNNINGTOLIGHT);
-	    }   
+		addState(this, STATE_RUNNINGTOLIGHT);		
+	    } else {
+		this.setAwarenessEffect(STATE_RELIEVED);
+		return;
+	    }
+	}
+	if ( this.target !== null ) {
 	    this.chasetarget(this.target,
 			     STATE_ALERTED, 
 			     STATE_MOVING | STATE_RUNNING,
