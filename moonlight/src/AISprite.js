@@ -224,7 +224,8 @@ var AISprite = function(game, x, y, key, frame) {
 	this.path_index = 0;
     }
 
-    this.path_set = function(target, force, maxsteps) {
+    this.path_set = function(target, force, maxsteps, useNearestWalkable) {
+	useNearestWalkable = (typeof useNearestWalkable == 'undefined' ? true : useNearestWalkable);
 	maxsteps = (typeof maxsteps == undefined ? maxsteps : this.path_maximum_steps);
 	force = ( typeof force == undefined ? false : force );
 	if ( force == false &&
@@ -233,7 +234,11 @@ var AISprite = function(game, x, y, key, frame) {
 	    return false;
 	}
 	this.path_purge();
-	var pos = nearestWalkableTile(target);
+	if ( useNearestWalkable == true ) {
+	    var pos = nearestWalkableTile(target);
+	} else {
+	    var pos = [parseInt(target.x/32), parseInt(target.y/32)];
+	}
 	tpath = pathfinder.findPath(
 	    parseInt(this.x/32), 
 	    parseInt(this.y/32),
