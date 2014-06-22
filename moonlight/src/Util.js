@@ -70,6 +70,8 @@ function nearestInGroup(sprite, group, sprite_group) {
 
 function nearestWalkableTile(spr)
 {
+    var grid = gridWithAISprites();
+
     function _walkable_inner(multiplier) {
 	var startx = parseInt(Math.max((spr.x / 32) - (1 * multiplier), 0));
 	var starty = parseInt(Math.max((spr.y / 32) - (1 * multiplier), 0));
@@ -82,8 +84,7 @@ function nearestWalkableTile(spr)
 		     (x == startx && y == endy) ||
 		     (y == starty) ||
 		     (y == endy) ) {
-		    console.log(pathfinder_grid);
-		    if ( pathfinder_grid.nodes[y][x].walkable == true ) {
+		    if ( grid.nodes[y][x].walkable == true ) {
 			console.log([x, y]);
 			return [x, y];
 		    }
