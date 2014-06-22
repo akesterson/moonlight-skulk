@@ -171,9 +171,6 @@ var AISprite = function(game, x, y, key, frame) {
 		aistate = "losthim";
 		break;
 	    }
-	    default {
-		return;
-	    }
 	}
 
 	var mylines = moonlightDialog['status'][this.sprite_group][aistate];
@@ -319,7 +316,7 @@ var AISprite = function(game, x, y, key, frame) {
     this.turnRandomDirection = function() {
 	var directions = [STATE_FACE_DOWN, STATE_FACE_LEFT,
 			  STATE_FACE_RIGHT, STATE_FACE_UP];
-	setMovingState(this, game.rnd.integerInRange(0, 3));
+	setMovingState(this, directions[game.rnd.integerInRange(0, 3)]);
 	this.animations.stop();
 	this.animations.play("bipedrun" + spriteFacing(this));		
 	this.animations.stop();
