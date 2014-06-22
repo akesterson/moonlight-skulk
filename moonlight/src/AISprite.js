@@ -372,6 +372,7 @@ var AISprite = function(game, x, y, key, frame) {
 			 STATE_ALERTED, 
 			 STATE_MOVING | STATE_RUNNING,
 			 true,
+			 undefined,
 			 false);
 	return;
     }
