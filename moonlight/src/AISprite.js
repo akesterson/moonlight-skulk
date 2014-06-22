@@ -226,8 +226,8 @@ var AISprite = function(game, x, y, key, frame) {
 
     this.path_set = function(target, force, maxsteps, useNearestWalkable) {
 	useNearestWalkable = (typeof useNearestWalkable == 'undefined' ? true : useNearestWalkable);
-	maxsteps = (typeof maxsteps == undefined ? maxsteps : this.path_maximum_steps);
-	force = ( typeof force == undefined ? false : force );
+	maxsteps = (typeof maxsteps == 'undefined' ? this.path_maximum_steps : maxsteps);
+	force = ( typeof force == 'undefined' ? false : force );
 	if ( force == false &&
 	     this.path.length > 0 && 
 	     this.path_index < this.path.length ) {
@@ -334,9 +334,9 @@ var AISprite = function(game, x, y, key, frame) {
 
     this.chasetarget = function(target, alertedState, movingstate, visual, maxsteps, useNearestWalkable)
     {
-	alertedState = (typeof alertedState == undefined ? STATE_ALERTED : alertedState);
-	visual = (typeof visual == undefined ? false : visual);
-	movingstate = (typeof alertedState == undefined ? STATE_NONE : movingstate);
+	alertedState = (typeof alertedState == 'undefined' ? STATE_ALERTED : alertedState);
+	visual = (typeof visual == 'undefined' ? false : visual);
+	movingstate = (typeof alertedState == 'undefined' ? STATE_NONE : movingstate);
 	if ( game.physics.arcade.collide(this, target) )
 	    return;
 
