@@ -171,6 +171,9 @@ var AISprite = function(game, x, y, key, frame) {
 		aistate = "losthim";
 		break;
 	    }
+	    default {
+		return;
+	    }
 	}
 
 	var mylines = moonlightDialog['status'][this.sprite_group][aistate];
