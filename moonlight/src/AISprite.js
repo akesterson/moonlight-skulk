@@ -332,7 +332,7 @@ var AISprite = function(game, x, y, key, frame) {
 	}
     }
 
-    this.chasetarget = function(target, alertedState, movingstate, visual, maxsteps)
+    this.chasetarget = function(target, alertedState, movingstate, visual, maxsteps, useNearestWalkable)
     {
 	alertedState = (typeof alertedState == undefined ? STATE_ALERTED : alertedState);
 	visual = (typeof visual == undefined ? false : visual);
@@ -344,7 +344,7 @@ var AISprite = function(game, x, y, key, frame) {
 	    this.path_tween_stop();
 	    if ( (visual == false) || (this.canSeeSprite(target, false) == true )) {
 		this.setAwarenessEffect(alertedState);
-		this.path_set(target, true, maxsteps);
+		this.path_set(target, true, maxsteps, useNearestWalkable);
 		this.path_tween_start(movingstate);
 	    } else {
 		if ( this.rotation_timer == null ) {
@@ -354,7 +354,7 @@ var AISprite = function(game, x, y, key, frame) {
 		}
 	    }
 	} else {
-	    if ( this.path_set(target, this.blocked(true), maxsteps) == true ) {
+	    if ( this.path_set(target, this.blocked(true), maxsteps, useNearestWalkable) == true ) {
 		if ( (visual == false) || (this.canSeeSprite(target, false) == false )) {
 		    this.path_purge();
 		    this.path_tween_stop();
