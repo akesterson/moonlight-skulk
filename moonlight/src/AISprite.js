@@ -313,6 +313,15 @@ var AISprite = function(game, x, y, key, frame) {
 	}, this);
     }
 
+    this.turnRandomDirection = function() {
+	var directions = [STATE_FACE_DOWN, STATE_FACE_LEFT,
+			  STATE_FACE_RIGHT, STATE_FACE_UP];
+	setMovingState(this, game.rnd.integerInRange(0, 3]);
+	this.animations.stop();
+	this.animations.play("bipedrun" + spriteFacing(this));		
+	this.animations.stop();
+    }
+
     this.turnUnseenDirection = function() {
 	if ( this.seen_directions.length >= 4 )
 	    this.seen_directions = [];
@@ -396,6 +405,7 @@ var AISprite = function(game, x, y, key, frame) {
 		this.awareness_timer.stop();
 		this.awareness_change_enabled = true;
 		this.setAwarenessEffect(STATE_LOSTHIM);
+		this.turnRandomDirection();
 		this.target = null;
 		delState(this, STATE_RUNNINGTOLIGHT);
 		return;
