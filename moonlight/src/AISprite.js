@@ -396,6 +396,7 @@ var AISprite = function(game, x, y, key, frame) {
 		this.awareness_timer.stop();
 		this.awareness_change_enabled = true;
 		this.setAwarenessEffect(STATE_LOSTHIM);
+		this.target = null;
 		return;
 	    }
 	}
