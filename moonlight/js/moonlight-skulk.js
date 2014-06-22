@@ -42,132 +42,6 @@ SPRITE_TOWNSFOLK_FEMALE4 = 8;
 
 SPRITE_TOWNSFOLK_GUARD1 = 9;
 SPRITE_TOWNSFOLK_GUARD2 = 10;
-
-var pathfinder = null;
-var pathfinder_grid = null;
-
-var game = new Phaser.Game(640, 480, Phaser.AUTO, '');
-
-// Create torch objects
-// Light constructor
-var Light = function(game, x, y, key, frame, radius, fade, color_start, color_stop, flicker, always_render, light_meter) {
-    color_start = ( typeof color_start == undefined ? color_start : 'rgba(255, 255, 255, 1.0)');
-    color_stop = ( typeof color_stop == undefined ? color_stop : 'rgba(255, 255, 255, 0.0)');
-    fade = ( typeof fade == undefined ? fade : 0.25);
-    radius = ( typeof radius == undefined ? radius : 64);
-    flicker = ( typeof flicker == undefined ? flicker : false);
-    always_render = ( typeof always_render == undefined ? always_render : false);
-    light_meter = ( typeof light_meter == undefined ? light_meter : 1.0 );
-    Phaser.Sprite.call(this, game, x, y, null);
-
-    // Set the pivot point for this sprite to the center
-    this.anchor.setTo(0.5, 0.5);
-
-    this.color_start = color_start;
-    this.color_stop = color_stop;
-    this.radius = radius;
-    this.rendered_radius = radius;
-    this.fade = radius * fade
-    this.light_meter = light_meter;
-    this.always_render = always_render
-    this.rect = positiveRectangle(this.x - radius, this.y - radius, radius * 2, radius * 2)
-    this.flicker = flicker;
-};
-
-// Lightes are a type of Phaser.Sprite
-Light.prototype = Object.create(Phaser.Sprite.prototype);
-Light.prototype.constructor = Light;
-
-Light.prototype.update_new_values = function() {
-    this.light_meter = Number(this.light_meter);
-    this.radius = parseInt(this.radius);
-    this.fade = this.radius * Number(this.fade);
-    this.flicker = parseBoolean(this.flicker);
-    this.always_render = parseBoolean(this.always_render);
-    this.rect = positiveRectangle(this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2)
-}
-
-function SoundSprite(game, x, y, key, frame, 
-		     sound_key, 
-		     sound_marker, 
-		     sound_position,
-		     sound_volume, 
-		     sound_loop, 
-		     sound_forcerestart,
-		     sound_distance,
-		     sound_nofade)
-{
-    Phaser.Sprite.call(this, game, x, y, null);
-    this.sound_key = sound_key;
-    this.sound_marker = ( typeof sound_marker == undefined ? sound_marker : '');
-    this.sound_volume = ( typeof sound_volume == undefined ? sound_volume : 1.0 );
-    this.sound_position = ( typeof sound_position == undefined ? sound_position : 1.0 );
-    this.sound_loop = ( typeof sound_loop == undefined ? sound_loop : true );
-    this.sound_forcerestart = ( typeof sound_forcerestart == undefined ? sound_forcerestart : false );
-    var def_distance = Math.sqrt(
-	Number((game.camera.width/2) * (game.camera.width/2)) + 
-	    Number((game.camera.height/2) * (game.camera.height/2))
-    );
-    this.sound_distance = ( typeof sound_distance == undefined ? sound_distance : def_distance);
-    this.sound_nofade = (typeof sound_nofade == undefined ? sound_nofade : false);
-
-    this.sound = null;
-}
-
-SoundSprite.prototype = Object.create(Phaser.Sprite.prototype);
-SoundSprite.prototype.constructor = Light;
-
-SoundSprite.prototype.update_new_values = function() {
-    if ( this.sound_key == null ) {
-	if ( this.sound !== null ) {
-	    this.sound.stop();
-	}
-	return;
-    }
-    this.sound_position = parseInt(this.sound_position);
-    this.sound_distance = Number(this.sound_distance);
-    this.sound_volume = Number(this.sound_volume);
-    this.sound_loop = parseBoolean(this.sound_loop);
-    this.sound_forcerestart = parseBoolean(this.sound_forcerestart);
-    this.sound_nofade = parseBoolean(this.sound_nofade);
-
-    if ( this.sound !== null )
-	this.sound.stop();
-    this.sound = game.add.audio(this.sound_key, this.sound_volume, this.sound_loop);
-    this.sound.play(
-	this.sound_marker,
-	this.sound_position,
-	this.sound_volume,
-	this.sound_loop,
-	this.sound_forcerestart);
-}
-
-SoundSprite.prototype.adjust_relative_to = function(spr) {
-    if ( this.sound_nofade == true ) {
-	this.sound.volume = this.sound_volume;
-	return;
-    }
-
-    // The volume of any given sound is equal to the length of the
-    // hypotenuse of a triangle drawn from the point (p) to the 
-    // sprite in question
-
-    var xd = (spr.x - this.x);
-    if ( xd < 0 )
-	xd = -(xd);
-    var yd = (spr.y - this.y);
-    if ( yd < 0 )
-	yd = -(yd);
-
-    var hyp = Math.sqrt(Number(xd * xd) + Number(yd * yd));    
-
-    this.sound.volume = (1.0 - Number(hyp / this.sound_distance));
-    // Math.max doesn't work here??
-    if ( this.sound.volume < 0 )
-	this.sound.volume = 0;
-    
-}
-
 var moonlightSettings = {
     'map' : {
 	'tilesets': [
@@ -501,7 +375,6 @@ var moonlightSettings = {
 	}
     }
 };
-
 var moonlightDialog = {
     "status": {
 	"townsfolk-male" : {
@@ -634,7 +507,6 @@ var moonlightDialog = {
 	}
     }
 };
-
 // Return new array with duplicate values removed
 function array_unique(arr) {
     var a = [];
@@ -667,23 +539,262 @@ function stringSize(str, font)
     return [width, height];
 }
 
-var EffectSprite = function(game, x, y, key, frame, animation) {
-    this.update_new_values = function() {
-	this.animations.destroy();
-	this.loadTexture(this.sprite_key, 0);
-	addAnimation(this, this.sprite_animation);
-	this.animations.play(this.sprite_animation);
-    }
-
-    Phaser.Sprite.call(this, game, x, y, null);
-    game.physics.arcade.enable(this);
-    this.collide_with_map = true;
-    this.collide_with_player = false;
+function rotatePoints(arr, x, y, degrees)
+{
+    arr.forEach(function(p) {
+	p.rotate(x, y, degrees, true);
+    }, this);
 }
 
-EffectSprite.prototype = Object.create(Phaser.Sprite.prototype);
-EffectSprite.prototype.constructor = EffectSprite;
+function positiveRectangle(x, y, w, h) {
+    if ( w < 0 ) {
+	w = -(w);
+	x = x - w;
+    }
+    if ( h < 0 ) {
+	h = -(h);
+	y = y - h;
+    }
+    return new Phaser.Rectangle(x, y, w, h);
+}
 
+function nearestInGroup(sprite, group, sprite_group) {
+    var nearest = null;
+    var lastdist = 0.0;
+    for ( var i = 0 ; i < group.length; i++ ) {
+	console.log("Checking distance to group[" + i + "]");
+	var spr = group.getChildAt(i);
+	console.log(spr);
+	if ( (typeof sprite_group !== undefined) &&
+	     spr.sprite_group !== sprite_group ) 
+	    continue;
+	var dist = new Phaser.Line(sprite.x, sprite.y, spr.x, spr.y);
+	if ( (lastdist == 0.0 ) || (dist.length < lastdist) ) {
+	    lastdist = dist.length;
+	    nearest = spr;
+	}
+    }
+    return nearest;
+}
+
+function nearestWalkableTile(spr)
+{
+    function _walkable_inner(multiplier) {
+	var startx = parseInt(Math.max((spr.x / 32) - (1 * multiplier), 0));
+	var starty = parseInt(Math.max((spr.y / 32) - (1 * multiplier), 0));
+	var endx = parseInt(Math.min((spr.x / 32) + 1 + (1 * multiplier), game.state.states.game.map.width));
+	var endy = parseInt(Math.min((spr.y / 32) + 1 + (1 * multiplier), game.state.states.game.map.width));
+	
+	for ( var x = startx ; x <= endx ; x++ ) {
+	    for ( var y = starty ; y <= endy ; y++ ) {
+		if ( (x == startx && y == starty) ||
+		     (x == startx && y == endy) ||
+		     (y == starty) ||
+		     (y == endy) ) {
+		    console.log(pathfinder_grid);
+		    if ( pathfinder_grid.nodes[x][y].walkable == true ) {
+			console.log([x, y]);
+			return [x, y];
+		    }
+		}
+	    }   
+	}
+	return null;
+    }
+
+    for ( var i = 1 ; i < 100 ; i++ ) {
+	var rv = _walkable_inner(i);
+	if ( rv !== null ) {
+	    console.log("Found near walkable tile");
+	    console.log([rv] + [spr.x / 32, spr.y / 32]);
+	    return rv
+	}
+    }
+    //if ( multiplier >= 10 ) 
+    console.log("Couldn't find a near walkable tile");
+    console.log([spr.x / 32, spr.y / 32]);
+    return [parseInt(spr.x / 32), parseInt(spr.y / 32)];
+    //return nearestWalkableTile(spr, multiplier + 1);
+}
+
+function addAnimation(obj, anim)
+{
+    a = moonlightSettings['animations'][anim]
+    obj.animations.add(anim, a['frames'], a['speed'], a['loop'])
+}
+
+function getFaceState(spr)
+{
+    if ( hasState(spr, STATE_FACE_LEFT) )
+	return STATE_FACE_LEFT;
+    if ( hasState(spr, STATE_FACE_RIGHT) )
+	return STATE_FACE_RIGHT;
+    if ( hasState(spr, STATE_FACE_DOWN) )
+	return STATE_FACE_DOWN;
+    if ( hasState(spr, STATE_FACE_UP) )
+	return STATE_FACE_UP;
+}
+
+function getMoveState(spr)
+{
+    return ( hasState(spr, STATE_MOVING) ||
+	     hasState(spr, STATE_RUNNING) );
+}
+
+function delState(spr, state)
+{
+    if ( hasState(spr, state) )
+	spr.state = spr.state ^ state;
+}
+
+function addState(spr, state)
+{
+    spr.state = spr.state | state;
+}
+
+function setMovingState(spr, state)
+{
+    delState(spr, STATE_FACE_LEFT);
+    delState(spr, STATE_FACE_RIGHT);
+    delState(spr, STATE_FACE_DOWN);
+    delState(spr, STATE_FACE_UP);
+    delState(spr, STATE_MOVING);
+    delState(spr, STATE_RUNNING);
+    addState(spr, state);
+}
+
+function setAwarenessState(spr, state)
+{
+    delState(spr, STATE_UNAWARE);
+    delState(spr, STATE_CONCERNED);
+    delState(spr, STATE_ALERTED);
+    delState(spr, STATE_LOSTHIM);
+    addState(spr, state);
+}
+
+function exchangeState(spr, state1, state2)
+{
+    delState(spr, state1);
+    addState(spr, state2);
+}
+
+function hasAnyState(spr, states)
+{
+    var hasstate = false;
+    states.forEach(function(x) {
+	if ( hasState(spr, x) )
+	    hasstate = true;
+    }, this);
+    return hasstate;
+}
+
+function hasState(spr, state)
+{
+    if ( (spr.state & state) == state )
+	return true;
+    return false;
+}
+
+function spriteFacing(spr)
+{
+    if ( hasState(spr, STATE_FACE_LEFT) )
+	return "left";
+    if ( hasState(spr, STATE_FACE_RIGHT) )
+	return "right";
+    if ( hasState(spr, STATE_FACE_DOWN) )
+	return "down";
+    if ( hasState(spr, STATE_FACE_UP) )
+	return "up";
+}
+
+function parseBoolean(val)
+{
+    return ( val == 'true' || val == true );
+}
+
+function setSpriteMovement(spr, velocity)
+{
+    var x = 0;
+    var y = 0;
+    var dir = spriteFacing(spr);
+    velocity = ( typeof velocity == undefined ? velocity : [SPEED_WALKING, 
+							    SPEED_RUNNING] );
+
+    spr.body.setSize(16, 16, 8, 16);
+
+    if ( hasState(spr, STATE_RUNNING) ) {
+	if ( velocity !== false )
+	    velocity = velocity[1];
+	spr.animations.play("bipedrun" + dir);
+    } else if ( hasState(spr, STATE_MOVING) ) {
+	if ( velocity !== false )
+	    velocity = velocity[0];
+	spr.animations.play("bipedwalk" + dir);
+    } else {
+	if ( velocity !== false ) {
+	    spr.body.velocity.x = 0;
+	    spr.body.velocity.y = 0;
+	}
+	spr.animations.stop();
+	return;
+    }
+
+    if ( velocity !== false ) {
+	if ( dir == "left" ) {
+	    spr.body.velocity.x = -(velocity * velocity);
+	    spr.body.velocity.y = 0;
+	} else if ( dir == "right" ) {
+	    spr.body.velocity.x = (velocity * velocity);
+	    spr.body.velocity.y = 0;
+	} else if ( dir == "up" ) {
+	    spr.body.velocity.x = 0;
+	    spr.body.velocity.y = -(velocity * velocity);
+	} else if ( dir == "down" ) {
+	    spr.body.velocity.x = 0;
+	    spr.body.velocity.y = (velocity * velocity);
+	}
+    }
+}
+
+
+// Create torch objects
+// Light constructor
+var Light = function(game, x, y, key, frame, radius, fade, color_start, color_stop, flicker, always_render, light_meter) {
+    color_start = ( typeof color_start == undefined ? color_start : 'rgba(255, 255, 255, 1.0)');
+    color_stop = ( typeof color_stop == undefined ? color_stop : 'rgba(255, 255, 255, 0.0)');
+    fade = ( typeof fade == undefined ? fade : 0.25);
+    radius = ( typeof radius == undefined ? radius : 64);
+    flicker = ( typeof flicker == undefined ? flicker : false);
+    always_render = ( typeof always_render == undefined ? always_render : false);
+    light_meter = ( typeof light_meter == undefined ? light_meter : 1.0 );
+    Phaser.Sprite.call(this, game, x, y, null);
+
+    // Set the pivot point for this sprite to the center
+    this.anchor.setTo(0.5, 0.5);
+
+    this.color_start = color_start;
+    this.color_stop = color_stop;
+    this.radius = radius;
+    this.rendered_radius = radius;
+    this.fade = radius * fade
+    this.light_meter = light_meter;
+    this.always_render = always_render
+    this.rect = positiveRectangle(this.x - radius, this.y - radius, radius * 2, radius * 2)
+    this.flicker = flicker;
+};
+
+// Lightes are a type of Phaser.Sprite
+Light.prototype = Object.create(Phaser.Sprite.prototype);
+Light.prototype.constructor = Light;
+
+Light.prototype.update_new_values = function() {
+    this.light_meter = Number(this.light_meter);
+    this.radius = parseInt(this.radius);
+    this.fade = this.radius * Number(this.fade);
+    this.flicker = parseBoolean(this.flicker);
+    this.always_render = parseBoolean(this.always_render);
+    this.rect = positiveRectangle(this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2)
+}
 var AISprite = function(game, x, y, key, frame) {
     this.viewRectangle = function() {
 	var offset = [];
@@ -1219,91 +1330,102 @@ var AISprite = function(game, x, y, key, frame) {
 
 AISprite.prototype = Object.create(Phaser.Sprite.prototype);
 AISprite.prototype.constructor = AISprite;
+var EffectSprite = function(game, x, y, key, frame, animation) {
+    this.update_new_values = function() {
+	this.animations.destroy();
+	this.loadTexture(this.sprite_key, 0);
+	addAnimation(this, this.sprite_animation);
+	this.animations.play(this.sprite_animation);
+    }
 
-function rotatePoints(arr, x, y, degrees)
+    Phaser.Sprite.call(this, game, x, y, null);
+    game.physics.arcade.enable(this);
+    this.collide_with_map = true;
+    this.collide_with_player = false;
+}
+
+EffectSprite.prototype = Object.create(Phaser.Sprite.prototype);
+EffectSprite.prototype.constructor = EffectSprite;
+
+function SoundSprite(game, x, y, key, frame, 
+		     sound_key, 
+		     sound_marker, 
+		     sound_position,
+		     sound_volume, 
+		     sound_loop, 
+		     sound_forcerestart,
+		     sound_distance,
+		     sound_nofade)
 {
-    arr.forEach(function(p) {
-	p.rotate(x, y, degrees, true);
-    }, this);
+    Phaser.Sprite.call(this, game, x, y, null);
+    this.sound_key = sound_key;
+    this.sound_marker = ( typeof sound_marker == undefined ? sound_marker : '');
+    this.sound_volume = ( typeof sound_volume == undefined ? sound_volume : 1.0 );
+    this.sound_position = ( typeof sound_position == undefined ? sound_position : 1.0 );
+    this.sound_loop = ( typeof sound_loop == undefined ? sound_loop : true );
+    this.sound_forcerestart = ( typeof sound_forcerestart == undefined ? sound_forcerestart : false );
+    var def_distance = Math.sqrt(
+	Number((game.camera.width/2) * (game.camera.width/2)) + 
+	    Number((game.camera.height/2) * (game.camera.height/2))
+    );
+    this.sound_distance = ( typeof sound_distance == undefined ? sound_distance : def_distance);
+    this.sound_nofade = (typeof sound_nofade == undefined ? sound_nofade : false);
+
+    this.sound = null;
 }
 
-function positiveRectangle(x, y, w, h) {
-    if ( w < 0 ) {
-	w = -(w);
-	x = x - w;
-    }
-    if ( h < 0 ) {
-	h = -(h);
-	y = y - h;
-    }
-    return new Phaser.Rectangle(x, y, w, h);
-}
+SoundSprite.prototype = Object.create(Phaser.Sprite.prototype);
+SoundSprite.prototype.constructor = Light;
 
-function nearestInGroup(sprite, group, sprite_group) {
-    var nearest = null;
-    var lastdist = 0.0;
-    for ( var i = 0 ; i < group.length; i++ ) {
-	console.log("Checking distance to group[" + i + "]");
-	var spr = group.getChildAt(i);
-	console.log(spr);
-	if ( (typeof sprite_group !== undefined) &&
-	     spr.sprite_group !== sprite_group ) 
-	    continue;
-	var dist = new Phaser.Line(sprite.x, sprite.y, spr.x, spr.y);
-	if ( (lastdist == 0.0 ) || (dist.length < lastdist) ) {
-	    lastdist = dist.length;
-	    nearest = spr;
+SoundSprite.prototype.update_new_values = function() {
+    if ( this.sound_key == null ) {
+	if ( this.sound !== null ) {
+	    this.sound.stop();
 	}
+	return;
     }
-    return nearest;
+    this.sound_position = parseInt(this.sound_position);
+    this.sound_distance = Number(this.sound_distance);
+    this.sound_volume = Number(this.sound_volume);
+    this.sound_loop = parseBoolean(this.sound_loop);
+    this.sound_forcerestart = parseBoolean(this.sound_forcerestart);
+    this.sound_nofade = parseBoolean(this.sound_nofade);
+
+    if ( this.sound !== null )
+	this.sound.stop();
+    this.sound = game.add.audio(this.sound_key, this.sound_volume, this.sound_loop);
+    this.sound.play(
+	this.sound_marker,
+	this.sound_position,
+	this.sound_volume,
+	this.sound_loop,
+	this.sound_forcerestart);
 }
 
-function nearestWalkableTile(spr)
-{
-    function _walkable_inner(multiplier) {
-	var startx = parseInt(Math.max((spr.x / 32) - (1 * multiplier), 0));
-	var starty = parseInt(Math.max((spr.y / 32) - (1 * multiplier), 0));
-	var endx = parseInt(Math.min((spr.x / 32) + 1 + (1 * multiplier), game.state.states.game.map.width));
-	var endy = parseInt(Math.min((spr.y / 32) + 1 + (1 * multiplier), game.state.states.game.map.width));
-	
-	for ( var x = startx ; x <= endx ; x++ ) {
-	    for ( var y = starty ; y <= endy ; y++ ) {
-		if ( (x == startx && y == starty) ||
-		     (x == startx && y == endy) ||
-		     (y == starty) ||
-		     (y == endy) ) {
-		    console.log(pathfinder_grid);
-		    if ( pathfinder_grid.nodes[x][y].walkable == true ) {
-			console.log([x, y]);
-			return [x, y];
-		    }
-		}
-	    }   
-	}
-	return null;
+SoundSprite.prototype.adjust_relative_to = function(spr) {
+    if ( this.sound_nofade == true ) {
+	this.sound.volume = this.sound_volume;
+	return;
     }
 
-    for ( var i = 1 ; i < 100 ; i++ ) {
-	var rv = _walkable_inner(i);
-	if ( rv !== null ) {
-	    console.log("Found near walkable tile");
-	    console.log([rv] + [spr.x / 32, spr.y / 32]);
-	    return rv
-	}
-    }
-    //if ( multiplier >= 10 ) 
-    console.log("Couldn't find a near walkable tile");
-    console.log([spr.x / 32, spr.y / 32]);
-    return [parseInt(spr.x / 32), parseInt(spr.y / 32)];
-    //return nearestWalkableTile(spr, multiplier + 1);
-}
+    // The volume of any given sound is equal to the length of the
+    // hypotenuse of a triangle drawn from the point (p) to the 
+    // sprite in question
 
-function addAnimation(obj, anim)
-{
-    a = moonlightSettings['animations'][anim]
-    obj.animations.add(anim, a['frames'], a['speed'], a['loop'])
-}
+    var xd = (spr.x - this.x);
+    if ( xd < 0 )
+	xd = -(xd);
+    var yd = (spr.y - this.y);
+    if ( yd < 0 )
+	yd = -(yd);
 
+    var hyp = Math.sqrt(Number(xd * xd) + Number(yd * yd));    
+
+    this.sound.volume = (1.0 - Number(hyp / this.sound_distance));
+    // Math.max doesn't work here??
+    if ( this.sound.volume < 0 )
+	this.sound.volume = 0;    
+}
 var GameState = function(game) {
 }
 
@@ -1329,7 +1451,7 @@ GameState.prototype.create = function()
 	    );
 	    if ( lp['inject_sprites'] == true ) {
 		this.aiSprites = game.add.group();
-		this.aiSprites.debug = true;
+		this.aiSprites.debug = false;
 		this.map.createFromObjects('AI', 3544, 'player', 0, true, false, this.aiSprites, AISprite);
 		this.aiSprites.forEach(function(spr) {
 		    spr.update_new_values();
@@ -1468,139 +1590,6 @@ GameState.prototype.updateShadowTexture = function() {
     this.shadowTexture.dirty = true;
 };
 
-function getFaceState(spr)
-{
-    if ( hasState(spr, STATE_FACE_LEFT) )
-	return STATE_FACE_LEFT;
-    if ( hasState(spr, STATE_FACE_RIGHT) )
-	return STATE_FACE_RIGHT;
-    if ( hasState(spr, STATE_FACE_DOWN) )
-	return STATE_FACE_DOWN;
-    if ( hasState(spr, STATE_FACE_UP) )
-	return STATE_FACE_UP;
-}
-
-function getMoveState(spr)
-{
-    return ( hasState(spr, STATE_MOVING) ||
-	     hasState(spr, STATE_RUNNING) );
-}
-
-function delState(spr, state)
-{
-    if ( hasState(spr, state) )
-	spr.state = spr.state ^ state;
-}
-
-function addState(spr, state)
-{
-    spr.state = spr.state | state;
-}
-
-function setMovingState(spr, state)
-{
-    delState(spr, STATE_FACE_LEFT);
-    delState(spr, STATE_FACE_RIGHT);
-    delState(spr, STATE_FACE_DOWN);
-    delState(spr, STATE_FACE_UP);
-    delState(spr, STATE_MOVING);
-    delState(spr, STATE_RUNNING);
-    addState(spr, state);
-}
-
-function setAwarenessState(spr, state)
-{
-    delState(spr, STATE_UNAWARE);
-    delState(spr, STATE_CONCERNED);
-    delState(spr, STATE_ALERTED);
-    delState(spr, STATE_LOSTHIM);
-    addState(spr, state);
-}
-
-function exchangeState(spr, state1, state2)
-{
-    delState(spr, state1);
-    addState(spr, state2);
-}
-
-function hasAnyState(spr, states)
-{
-    var hasstate = false;
-    states.forEach(function(x) {
-	if ( hasState(spr, x) )
-	    hasstate = true;
-    }, this);
-    return hasstate;
-}
-
-function hasState(spr, state)
-{
-    if ( (spr.state & state) == state )
-	return true;
-    return false;
-}
-
-function spriteFacing(spr)
-{
-    if ( hasState(spr, STATE_FACE_LEFT) )
-	return "left";
-    if ( hasState(spr, STATE_FACE_RIGHT) )
-	return "right";
-    if ( hasState(spr, STATE_FACE_DOWN) )
-	return "down";
-    if ( hasState(spr, STATE_FACE_UP) )
-	return "up";
-}
-
-function parseBoolean(val)
-{
-    return ( val == 'true' || val == true );
-}
-
-function setSpriteMovement(spr, velocity)
-{
-    var x = 0;
-    var y = 0;
-    var dir = spriteFacing(spr);
-    velocity = ( typeof velocity == undefined ? velocity : [SPEED_WALKING, 
-							    SPEED_RUNNING] );
-
-    spr.body.setSize(16, 16, 8, 16);
-
-    if ( hasState(spr, STATE_RUNNING) ) {
-	if ( velocity !== false )
-	    velocity = velocity[1];
-	spr.animations.play("bipedrun" + dir);
-    } else if ( hasState(spr, STATE_MOVING) ) {
-	if ( velocity !== false )
-	    velocity = velocity[0];
-	spr.animations.play("bipedwalk" + dir);
-    } else {
-	if ( velocity !== false ) {
-	    spr.body.velocity.x = 0;
-	    spr.body.velocity.y = 0;
-	}
-	spr.animations.stop();
-	return;
-    }
-
-    if ( velocity !== false ) {
-	if ( dir == "left" ) {
-	    spr.body.velocity.x = -(velocity * velocity);
-	    spr.body.velocity.y = 0;
-	} else if ( dir == "right" ) {
-	    spr.body.velocity.x = (velocity * velocity);
-	    spr.body.velocity.y = 0;
-	} else if ( dir == "up" ) {
-	    spr.body.velocity.x = 0;
-	    spr.body.velocity.y = -(velocity * velocity);
-	} else if ( dir == "down" ) {
-	    spr.body.velocity.x = 0;
-	    spr.body.velocity.y = (velocity * velocity);
-	}
-    }
-}
-
 GameState.prototype.check_input = function()
 {
     player.body.velocity.x = 0;
@@ -1661,7 +1650,10 @@ GameState.prototype.update_player_lightmeter = function() {
 	}
     }, this)
     player.lightmeter = lightValue;
-    this.lightbar_crop.width = (this.lightbar_image.width * lightValue);
+    this.lightbar_crop.width = Math.min(
+	this.lightbar_image.width, 
+	((this.lightbar_image.width /2) + ((this.lightbar_image.width/2)* lightValue))
+    );
     this.lightbar.crop(this.lightbar_crop);
 }
 
@@ -1811,8 +1803,20 @@ Preloader.prototype.create = function()
     tween.onComplete.add(goalready, this);
 }
 
+
+
+var pathfinder = null;
+var pathfinder_grid = null;
+
+var game = new Phaser.Game(640, 480, Phaser.AUTO, '');
+
 game.state.add('boot', Boot, false);
 game.state.add('preloader', Preloader, false);
 game.state.add('game', GameState, false);
 
 game.state.start('boot');
+
+
+
+
+
