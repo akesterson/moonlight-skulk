@@ -385,6 +385,7 @@ var AISprite = function(game, x, y, key, frame) {
 		this.target = nearestInGroup(this, aiSprites, "townsfolk-guard");
 	    } else {
 		this.setAwarenessEffect(STATE_RELIEVED);
+		return;
 	    }
 	}
 	if ( this.target !== null &&
