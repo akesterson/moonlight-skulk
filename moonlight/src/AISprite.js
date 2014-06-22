@@ -378,7 +378,7 @@ var AISprite = function(game, x, y, key, frame) {
 
     this.action_chaseplayer = function()
     {
-	if ( this.path.length > 1 && 
+	if ( this.path.length > 0 && 
 	     this.path_index >= this.path.length &&
 	     hasState(this, STATE_RUNNINGTOREPORT) ) {
 	    delState(this, STATE_RUNNINGTOREPORT);
@@ -410,8 +410,10 @@ var AISprite = function(game, x, y, key, frame) {
 		var aiSprites = game.state.states.game.aiSprites;
 		this.target = nearestInGroup(this, aiSprites, "townsfolk-guard");
 	    } else if ( hasState(this, STATE_RUNNINGTOLIGHT) == false ) {
-		if ( this.target.rotation_timer !== null )
+		if ( this.target.rotation_timer !== null ) {
 		    this.target.rotation_timer.stop();
+		    this.target.rotation_timer = null;
+		}
 		this.target.path_purge();
 		this.target.setAwarenessEffect(STATE_ALERTED);
 		this.target.target = this.lastSawPlayerAt;
