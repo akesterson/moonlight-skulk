@@ -83,7 +83,7 @@ function nearestWalkableTile(spr)
 		     (y == starty) ||
 		     (y == endy) ) {
 		    console.log(pathfinder_grid);
-		    if ( pathfinder_grid.nodes[x][y].walkable == true ) {
+		    if ( pathfinder_grid.nodes[y][x].walkable == true ) {
 			console.log([x, y]);
 			return [x, y];
 		    }
