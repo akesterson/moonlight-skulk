@@ -355,7 +355,7 @@ var AISprite = function(game, x, y, key, frame) {
 	    }
 	} else {
 	    if ( this.path_set(target, this.blocked(true), maxsteps, useNearestWalkable) == true ) {
-		if ( (visual == false) || (this.canSeeSprite(target, false) == false )) {
+		if ( (visual == true) && (this.canSeeSprite(target, false) == false )) {
 		    this.path_purge();
 		    this.path_tween_stop();
 		} else {
