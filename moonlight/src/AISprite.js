@@ -409,7 +409,8 @@ var AISprite = function(game, x, y, key, frame) {
 		var aiSprites = game.state.states.game.aiSprites;
 		this.target = nearestInGroup(this, aiSprites, "townsfolk-guard");
 	    } else if ( hasState(this, STATE_RUNNINGTOLIGHT) == false ) {
-		this.target.rotation_timer.stop();
+		if ( this.target.rotation_timer !== null )
+		    this.target.rotation_timer.stop();
 		this.target.setAwarenessEffect(STATE_ALERTED);
 		this.target.target = this.lastSawPlayerAt;
 		addState(this.target, STATE_RUNNINGTOREPORT);
