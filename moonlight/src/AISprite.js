@@ -351,7 +351,8 @@ var AISprite = function(game, x, y, key, frame) {
 
 	if ( this.path_index >= this.path.length ) {
 	    this.path_tween_stop();
-	    if ( (visual == true) && (this.canSeeSprite(target, false) == true )) {
+	    if ( ((visual == true) && (this.canSeeSprite(target, false) == true )) ||
+		 (visual == false)) {
 		this.setAwarenessEffect(alertedState);
 		this.path_set(target, true, maxsteps, useNearestWalkable);
 		this.path_tween_start(movingstate);
