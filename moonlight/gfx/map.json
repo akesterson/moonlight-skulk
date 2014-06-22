@@ -856,7 +856,7 @@
         }, 
         {
          "firstgid":3865,
-         "image":"D:\/Applications\/SteamLibrary\/SteamApps\/common\/RPGVXAce\/rtp\/Graphics\/Characters\/!Door1.png",
+         "image":"./tiles/Doors.png",
          "imageheight":256,
          "imagewidth":384,
          "margin":0,
@@ -871,7 +871,7 @@
         }, 
         {
          "firstgid":3961,
-         "image":"tiles\/bigtop.png",
+         "image":"./tiles/bigtop.png",
          "imageheight":608,
          "imagewidth":448,
          "margin":0,
@@ -886,7 +886,7 @@
         }, 
         {
          "firstgid":4227,
-         "image":"tiles\/002-Woods01.png",
+         "image":"./tiles/002-Woods01.png",
          "imageheight":800,
          "imagewidth":256,
          "margin":0,
