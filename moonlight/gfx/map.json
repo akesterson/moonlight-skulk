@@ -325,6 +325,100 @@
                  "width":0,
                  "x":158,
                  "y":830
+                }, 
+                {
+                 "gid":3544,
+                 "height":0,
+                 "name":"BigTopCustomer2",
+                 "properties":
+                    {
+                     "sprite_group":"townsfolk-male",
+                     "sprite_name":"townsfolk-male-3"
+                    },
+                 "type":"AI",
+                 "visible":true,
+                 "width":0,
+                 "x":613,
+                 "y":581
+                }, 
+                {
+                 "gid":3544,
+                 "height":0,
+                 "name":"BigTopCustomer2",
+                 "properties":
+                    {
+                     "sprite_canmove":"true",
+                     "sprite_group":"townsfolk-female",
+                     "sprite_name":"townsfolk-female-2"
+                    },
+                 "type":"AI",
+                 "visible":true,
+                 "width":0,
+                 "x":771,
+                 "y":610
+                }, 
+                {
+                 "gid":3544,
+                 "height":0,
+                 "name":"HousingPerson1",
+                 "properties":
+                    {
+                     "sprite_canmove":"true",
+                     "sprite_group":"townsfolk-female",
+                     "sprite_name":"townsfolk-female-4"
+                    },
+                 "type":"AI",
+                 "visible":true,
+                 "width":0,
+                 "x":564,
+                 "y":678
+                }, 
+                {
+                 "gid":3544,
+                 "height":0,
+                 "name":"BigTopCustomer2",
+                 "properties":
+                    {
+                     "sprite_group":"townsfolk-male",
+                     "sprite_name":"townsfolk-male-3"
+                    },
+                 "type":"AI",
+                 "visible":true,
+                 "width":0,
+                 "x":660,
+                 "y":664
+                }, 
+                {
+                 "gid":3544,
+                 "height":0,
+                 "name":"BigTopCustomer2",
+                 "properties":
+                    {
+                     "sprite_canmove":"true",
+                     "sprite_group":"townsfolk-female",
+                     "sprite_name":"townsfolk-female-2"
+                    },
+                 "type":"AI",
+                 "visible":true,
+                 "width":0,
+                 "x":718,
+                 "y":699
+                }, 
+                {
+                 "gid":3544,
+                 "height":0,
+                 "name":"HousingPerson1",
+                 "properties":
+                    {
+                     "sprite_canmove":"true",
+                     "sprite_group":"townsfolk-female",
+                     "sprite_name":"townsfolk-female-4"
+                    },
+                 "type":"AI",
+                 "visible":true,
+                 "width":0,
+                 "x":623,
+                 "y":737
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -601,7 +695,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "image":"./tiles/009-CastleTown01.png",
+         "image":"tiles\/009-CastleTown01.png",
          "imageheight":960,
          "imagewidth":256,
          "margin":0,
@@ -616,7 +710,7 @@
         }, 
         {
          "firstgid":241,
-         "image":"./tiles/010-CastleTown02.png",
+         "image":"tiles\/010-CastleTown02.png",
          "imageheight":736,
          "imagewidth":256,
          "margin":0,
@@ -631,7 +725,7 @@
         }, 
         {
          "firstgid":425,
-         "image":"./tiles/025-Castle01.png",
+         "image":"tiles\/025-Castle01.png",
          "imageheight":896,
          "imagewidth":256,
          "margin":0,
@@ -646,7 +740,7 @@
         }, 
         {
          "firstgid":649,
-         "image":"./tiles/026-Castle02.png",
+         "image":"tiles\/026-Castle02.png",
          "imageheight":800,
          "imagewidth":256,
          "margin":0,
@@ -661,7 +755,7 @@
         }, 
         {
          "firstgid":849,
-         "image":"./tiles/027-Castle03.png",
+         "image":"tiles\/027-Castle03.png",
          "imageheight":800,
          "imagewidth":256,
          "margin":0,
@@ -676,7 +770,7 @@
         }, 
         {
          "firstgid":1049,
-         "image":"./tiles/028-Church01.png",
+         "image":"tiles\/028-Church01.png",
          "imageheight":1088,
          "imagewidth":256,
          "margin":0,
@@ -691,7 +785,7 @@
         }, 
         {
          "firstgid":1321,
-         "image":"./tiles/029-Church02.png",
+         "image":"tiles\/029-Church02.png",
          "imageheight":1056,
          "imagewidth":256,
          "margin":0,
@@ -706,7 +800,7 @@
         }, 
         {
          "firstgid":1585,
-         "image":"./tiles/034-Bridge01.png",
+         "image":"tiles\/034-Bridge01.png",
          "imageheight":960,
          "imagewidth":256,
          "margin":0,
@@ -721,7 +815,7 @@
         }, 
         {
          "firstgid":1825,
-         "image":"./tiles/035-Ruins01.png",
+         "image":"tiles\/035-Ruins01.png",
          "imageheight":896,
          "imagewidth":256,
          "margin":0,
@@ -736,7 +830,7 @@
         }, 
         {
          "firstgid":2049,
-         "image":"./tiles/037-Fort01.png",
+         "image":"tiles\/037-Fort01.png",
          "imageheight":960,
          "imagewidth":256,
          "margin":0,
@@ -751,7 +845,7 @@
         }, 
         {
          "firstgid":2289,
-         "image":"./tiles/038-Fort02.png",
+         "image":"tiles\/038-Fort02.png",
          "imageheight":832,
          "imagewidth":256,
          "margin":0,
@@ -766,7 +860,7 @@
         }, 
         {
          "firstgid":2497,
-         "image":"./tiles/039-Tower01.png",
+         "image":"tiles\/039-Tower01.png",
          "imageheight":1056,
          "imagewidth":256,
          "margin":0,
@@ -781,7 +875,7 @@
         }, 
         {
          "firstgid":2761,
-         "image":"./tiles/040-Tower02.png",
+         "image":"tiles\/040-Tower02.png",
          "imageheight":960,
          "imagewidth":256,
          "margin":0,
@@ -796,7 +890,7 @@
         }, 
         {
          "firstgid":3001,
-         "image":"./tiles/041-EvilCastle01.png",
+         "image":"tiles\/041-EvilCastle01.png",
          "imageheight":960,
          "imagewidth":256,
          "margin":0,
@@ -811,7 +905,7 @@
         }, 
         {
          "firstgid":3241,
-         "image":"./tiles/042-EvilCastle02.png",
+         "image":"tiles\/042-EvilCastle02.png",
          "imageheight":832,
          "imagewidth":256,
          "margin":0,
@@ -826,7 +920,7 @@
         }, 
         {
          "firstgid":3449,
-         "image":"./tiles/048-Sewer01.png",
+         "image":"tiles\/048-Sewer01.png",
          "imageheight":768,
          "imagewidth":256,
          "margin":0,
@@ -841,7 +935,7 @@
         }, 
         {
          "firstgid":3641,
-         "image":"./tiles/004-Mountain01.png",
+         "image":"tiles\/004-Mountain01.png",
          "imageheight":896,
          "imagewidth":256,
          "margin":0,
@@ -856,7 +950,7 @@
         }, 
         {
          "firstgid":3865,
-         "image":"./tiles/Doors.png",
+         "image":"tiles\/Doors.png",
          "imageheight":256,
          "imagewidth":384,
          "margin":0,
@@ -871,7 +965,7 @@
         }, 
         {
          "firstgid":3961,
-         "image":"./tiles/bigtop.png",
+         "image":"tiles\/bigtop.png",
          "imageheight":608,
          "imagewidth":448,
          "margin":0,
@@ -886,7 +980,7 @@
         }, 
         {
          "firstgid":4227,
-         "image":"./tiles/002-Woods01.png",
+         "image":"tiles\/002-Woods01.png",
          "imageheight":800,
          "imagewidth":256,
          "margin":0,
