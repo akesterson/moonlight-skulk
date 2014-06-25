@@ -82,7 +82,7 @@ GameState.prototype.create = function()
 
     this.shadowTexture = game.add.bitmapData(game.world.width, game.world.height);
     // drop this lower to make the map darker
-    this.shadowTextureColor = 'rgb(60, 60, 60)';
+    this.shadowTextureColor = [60, 60, 60];
     this.shadowSprite = game.add.image(0, 0, this.shadowTexture);
 
     this.shadowSprite.blendMode = Phaser.blendModes.MULTIPLY;
@@ -125,7 +125,8 @@ GameState.prototype.create = function()
 }
 
 GameState.prototype.updateShadowTexture = function() {
-    this.shadowTexture.context.fillStyle = this.shadowTextureColor;
+    var cv = this.shadowTextureColor;
+    this.shadowTexture.context.fillStyle = "rgb(" + cv[0] + "," + cv[1] + "," + cv[2] + ")";
     this.shadowTexture.context.fillRect(0, 0, game.world.width, game.world.height);
 
     this.staticLights.forEach(function(light) {
@@ -202,6 +203,7 @@ GameState.prototype.check_input = function()
 }
 
 GameState.prototype.update_player_lightmeter = function() {
+    player.lightmeter = (Number(array_average(this.shadowTextureColor)) / 255.0);
     lightValue = 0;
     this.staticLights.forEach(function(light) {
 	var left = player.x;
@@ -221,11 +223,9 @@ GameState.prototype.update_player_lightmeter = function() {
 	    lightValue = lv;
 	}
     }, this)
-    player.lightmeter = lightValue;
-    this.lightbar_crop.width = Math.min(
-	this.lightbar_image.width, 
-	((this.lightbar_image.width /2) + ((this.lightbar_image.width/2)* lightValue))
-    );
+    player.lightmeter += lightValue;
+    player.lightmeter = Math.min(player.lightmeter, 1.0);
+    this.lightbar_crop.width = ((this.lightbar_image.width) * player.lightmeter);
     this.lightbar.crop(this.lightbar_crop);
 }
 

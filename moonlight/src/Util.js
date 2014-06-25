@@ -13,6 +13,13 @@ function array_unique(arr) {
     return a;
 }
 
+function array_average(arr) {
+    return arr.reduce(function (a,b) { 
+	return (a + b);
+    }) / arr.length;
+}
+
+
 function stringSize(str, font)
 {
     var width = 0;
