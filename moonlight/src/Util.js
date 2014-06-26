@@ -103,7 +103,7 @@ function nearestWalkableTile(spr)
 
     for ( var i = 1 ; i < 100 ; i++ ) {
 	var rv = _walkable_inner(i);
-	if ( rv !== null ) {
+	if ( isSet(rv) ) {
 	    console.log("Found near walkable tile");
 	    console.log([rv] + [spr.x / 32, spr.y / 32]);
 	    return rv

@@ -48,7 +48,7 @@ var AISprite = function(game, x, y, key, frame) {
 	}
 
 	var viewrect = this.viewRectangle();
-	if ( viewrect == null ) {
+	if ( isSet(viewrect) == false ) {
 	    return false;
 	}
 	var sprrect = positiveRectangle(spr.x, spr.y, 32, 32);
@@ -64,7 +64,7 @@ var AISprite = function(game, x, y, key, frame) {
 
     this.startAwarenessTimer = function() {
 	this.awareness_change_enabled = false;
-	if ( this.awareness_timer !== null )
+	if ( isSet(this.awareness_timer) )
 	    this.awareness_timer.stop();
 	this.awareness_timer = game.time.create(false);
 	this.awareness_timer.add(this.sprite_awareness_duration, 
@@ -94,7 +94,7 @@ var AISprite = function(game, x, y, key, frame) {
 	this.startAwarenessTimer();
 	setAwarenessState(this, state);
 
-	if ( this.awareness_effect !== null ) {
+	if ( isSet(this.awareness_effect) ) {
 	    this.awareness_effect.alive = false;
 	    this.awareness_effect.destroy();
 	    this.awareness_effect = null;
@@ -138,7 +138,7 @@ var AISprite = function(game, x, y, key, frame) {
     }
 
     this.clearWordBubble = function() {
-	if ( this.bubble_text !== null )
+	if ( isSet(this.bubble_text) )
 	    this.clear_bubble = true;
 	this.enable_word_bubble = false;
 	this.timer = game.time.create(false);
@@ -148,7 +148,7 @@ var AISprite = function(game, x, y, key, frame) {
 
     this.setWordBubble = function()
     {
-	if ( this.bubble_text !== null || 
+	if ( isSet(this.bubble_text) || 
 	     this.sprite_group == undefined || 
 	     this.enable_world_bubble == false) {
 	    return;
@@ -336,7 +336,7 @@ var AISprite = function(game, x, y, key, frame) {
 	this.animations.stop();
 	this.animations.play(getMovingAnimationName(this));		
 	this.animations.stop();
-	if ( this.rotation_timer !== null ) {
+	if ( isSet(this.rotation_timer) ) {
 	    this.rotation_timer.stop();
 	    this.rotation_timer = null;
 	}
@@ -358,7 +358,7 @@ var AISprite = function(game, x, y, key, frame) {
 		this.path_set(target, true, maxsteps, useNearestWalkable);
 		this.path_tween_start(movingstate);
 	    } else {
-		if ( this.rotation_timer == null ) {
+		if ( isSet(this.rotation_timer) == false ) {
 		    this.rotation_timer = game.time.create(false);
 		    timerev = this.rotation_timer.add(250, this.turnUnseenDirection, this);
 		    this.rotation_timer.start()
@@ -406,26 +406,27 @@ var AISprite = function(game, x, y, key, frame) {
     this.action_reportplayer = function()
     {
 	if ( (this.path.length < 1) || this.path_index >= this.path.length) {
-	    if ( this.target == null && 
+	    if ( isSet(this.target) == false && 
 		 hasState(this, STATE_RUNNINGTOLIGHT) == false ) {
 		var aiSprites = game.state.states.game.aiSprites;
 		this.target = nearestInGroup(this, aiSprites, "townsfolk-guard");
 	    } else if ( hasState(this, STATE_RUNNINGTOLIGHT) == false ) {
-		if ( this.target.rotation_timer !== null ) {
-		    this.target.rotation_timer.stop();
-		    this.target.rotation_timer = null;
+		if ( isSet(this.target) ) {
+		    if ( isSet(this.target.rotation_timer) ) {
+			this.target.rotation_timer.stop();
+			this.target.rotation_timer = null;
+		    }
+		    if ( isSet(this.target.sprite_group) ) {
+			this.target.path_purge();
+			this.target.setAwarenessEffect(STATE_ALERTED);
+			this.target.target = this.lastSawPlayerAt;
+			addState(this.target, STATE_RUNNINGTOREPORT);
+		    }
 		}
-		this.target.path_purge();
-		this.target.setAwarenessEffect(STATE_ALERTED);
-		this.target.target = this.lastSawPlayerAt;
-		addState(this.target, STATE_RUNNINGTOREPORT);
-
 		this.path_tween_stop();
 		this.path_purge();
 		var staticLights = game.state.states.game.staticLights;		
 		this.target = nearestInGroup(this, staticLights);
-		console.log("Running to the nearest light");
-		console.log(this.target);
 		addState(this, STATE_RUNNINGTOLIGHT);		
 	    } else {
 		this.awareness_timer.stop();
@@ -437,7 +438,7 @@ var AISprite = function(game, x, y, key, frame) {
 		return;
 	    }
 	}
-	if ( this.target !== null ) {
+	if ( isSet(this.target) ) {
 	    this.chasetarget(this.target,
 			     STATE_ALERTED, 
 			     STATE_MOVING | STATE_RUNNING,
@@ -469,7 +470,7 @@ var AISprite = function(game, x, y, key, frame) {
     {
 	if ( this.ready_to_update == false )
 	    return;
-	if ( this.awareness_effect !== null ) {
+	if ( isSet(this.awareness_effect) ) {
 	    if ( this.awareness_effect.alive == false ) {
 		this.awareness_effect.destroy();
 		this.awareness_effect = null;
@@ -479,7 +480,7 @@ var AISprite = function(game, x, y, key, frame) {
 	    }
 	}
 
-	if ( this.bubble_text !== null ) {
+	if ( isSet(this.bubble_text) ) {
 	    if ( this.clear_bubble == true ) {
 		this.bubble_text.destroy();
 		this.bubble_sprite.destroy();
@@ -505,7 +506,7 @@ var AISprite = function(game, x, y, key, frame) {
     }
 
     this.update_new_values = function() {
-	if ( this.timer !== null )
+	if ( isSet(this.timer) )
 	    this.timer.stop();
 	this.animations.destroy();
 	this.clearWordBubble();	

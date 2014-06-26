@@ -29,8 +29,8 @@ SoundSprite.prototype = Object.create(Phaser.Sprite.prototype);
 SoundSprite.prototype.constructor = Light;
 
 SoundSprite.prototype.update_new_values = function() {
-    if ( this.sound_key == null ) {
-	if ( this.sound !== null ) {
+    if ( isSet(this.sound_key) == false ) {
+	if ( isSet(this.sound) ) {
 	    this.sound.stop();
 	}
 	return;
@@ -42,7 +42,7 @@ SoundSprite.prototype.update_new_values = function() {
     this.sound_forcerestart = parseBoolean(this.sound_forcerestart);
     this.sound_nofade = parseBoolean(this.sound_nofade);
 
-    if ( this.sound !== null )
+    if ( isSet(this.sound) )
 	this.sound.stop();
     this.sound = game.add.audio(this.sound_key, this.sound_volume, this.sound_loop);
     this.sound.play(
