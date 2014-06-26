@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/akesterson/moonlight-skulk.png?label=ready&title=Ready)](https://waffle.io/akesterson/moonlight-skulk)
 moonlight-skulk
 ===============
 
