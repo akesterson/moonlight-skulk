@@ -261,34 +261,37 @@ var AISprite = function(game, x, y, key, frame) {
 
     this.path_tween_start = function(movingstate)
     {
-	movingState = (typeof movementState == undefined ? movementState : (STATE_MOVING | STATE_RUNNING));
+	var movingstate = (typeof movingstate == 'undefined' ? (STATE_MOVING | STATE_RUNNING) : movingstate);
 	this.path_tweens = [];
 	prevpos = [this.x, this.y]
 	for ( var i = 0; 
 	      i < this.path.length ; 
 	      i++ ) {
 	    pl = this.path[i];
-	    movingstate = STATE_MOVING | STATE_RUNNING;
+	    var stepstate = movingstate;
 	    if ( pl.end.x < prevpos[0]) {
-		movingstate = movingstate | STATE_FACE_LEFT;
+		stepstate = stepstate | STATE_FACE_LEFT;
 	    } else if ( pl.end.x > prevpos[0] ) {
-		movingstate = movingstate | STATE_FACE_RIGHT;
+		stepstate = stepstate | STATE_FACE_RIGHT;
 	    }
 	    if ( pl.end.y < prevpos[1] ) {
-		movingstate = movingstate | STATE_FACE_UP;
+		stepstate = stepstate | STATE_FACE_UP;
 	    } else if ( pl.end.y > prevpos[1] ) {
-		movingstate = movingstate | STATE_FACE_DOWN;
+		stepstate = stepstate | STATE_FACE_DOWN;
 	    }
 	    prevpos = [pl.end.x, pl.end.y];
 	    tween = game.add.tween(this);
-	    tween.movingstate = movingstate;
+	    tween.stepstate = stepstate;
 	    this.path_tweens.push(tween);
+	    var tweenspeed = TWEEN_DURATION_PERPIXEL_WALKING;
+	    if ( (stepstate & STATE_RUNNING) == STATE_RUNNING ) 
+		tweenspeed = TWEEN_DURATION_PERPIXEL_RUNNING;
 	    tween.to(
 		{x: (pl.end.x), y: (pl.end.y)},
-		(TWEEN_DURATION_PERPIXEL_RUNNING * pl.length),
+		(tweenspeed * pl.length),
 		null);
 	    tween.onStart.add(function() {
-		setMovingState(this._object, this.movingstate);
+		setMovingState(this._object, this.stepstate);
 		this._object.animations.play(getMovingAnimationName(this._object));
 	    }, tween);
 	    tween.onComplete.add(function() {
@@ -298,7 +301,7 @@ var AISprite = function(game, x, y, key, frame) {
 		this._object.animations.stop();
 	    }, tween);
 	    if ( i > 0 ) {
-		this.path_tweens[i-1].onComplete.add(tween.start, 
+		this.path_tweens[i-1].onComplete.add(tween.start,
 						     tween);
 	    }
 	}
