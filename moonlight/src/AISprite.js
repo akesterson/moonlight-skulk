@@ -347,6 +347,11 @@ var AISprite = function(game, x, y, key, frame) {
 	alertedState = (typeof alertedState == 'undefined' ? STATE_ALERTED : alertedState);
 	visual = (typeof visual == 'undefined' ? false : visual);
 	movingstate = (typeof alertedState == 'undefined' ? STATE_NONE : movingstate);
+	var rotation_times = {};
+	rotation_times["" + STATE_UNAWARE] = 5000;
+	rotation_times["" + STATE_CONCERNED] = 1000;
+	rotation_times["" + STATE_ALERTED] = 250;
+	rotation_times["" + STATE_LOSTHIM] = 1000;
 	if ( game.physics.arcade.collide(this, target) )
 	    return;
 
@@ -358,9 +363,12 @@ var AISprite = function(game, x, y, key, frame) {
 		this.path_set(target, true, maxsteps, useNearestWalkable);
 		this.path_tween_start(movingstate);
 	    } else {
-		if ( isSet(this.rotation_timer) == false ) {
+		if ( this.rotation_timer == null ) {
 		    this.rotation_timer = game.time.create(false);
-		    timerev = this.rotation_timer.add(250, this.turnUnseenDirection, this);
+		    timerev = this.rotation_timer.add(
+			rotation_times["" + getAwarenessState(this)], 
+			this.turnUnseenDirection, 
+			this);
 		    this.rotation_timer.start()
 		}
 	    }
