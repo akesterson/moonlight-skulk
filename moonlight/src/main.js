@@ -2,7 +2,7 @@
 var pathfinder = null;
 var pathfinder_grid = null;
 
-var game = new Phaser.Game(640, 480, Phaser.AUTO, '');
+var game = new Phaser.Game(SCREEN_WIDTH, SCREEN_HEIGHT, Phaser.AUTO, '');
 
 game.state.add('boot', Boot, false);
 game.state.add('preloader', Preloader, false);

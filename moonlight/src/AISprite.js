@@ -461,7 +461,26 @@ var AISprite = function(game, x, y, key, frame) {
     this.action_huntplayer = function()
     {
 	console.log("I AM HUNTING FOR THE PLAYER");
-	setSpriteMovement(this);
+	if ( this.path.length < 1 ||
+	     this.path_index >= this.path.length ) {
+	    var curmap = game.state.states.game.map;
+	    var intgridx = parseInt(this.state_changed_at.x/32);
+	    var intgridy = parseInt(this.state_changed_at.y/32);
+	    var boundleft = Math.max(0, (intgridx - this.hunt_radius));
+	    var boundtop = Math.max(0, (intgridy - this.hunt_radius));
+	    var boundright = Math.min(curmap.width, (intgridx + this.hunt_radius));
+	    var boundbottom = Math.min(curmap.height, (intgridy + this.hunt_radius));
+	    var destx = game.rnd.integerInRange(boundleft, boundright);
+	    var desty = game.rnd.integerInRange(boundtop, boundbottom);
+	    this.target = new Phaser.Sprite(game, destx*32, desty*32, null);
+	}
+	if ( isSet(this.target) ) {
+	    this.chasetarget(this.target,
+			     STATE_NONE,
+			     STATE_MOVING,
+			     false
+			    );
+	}
     }
 
     this.action_wander = function()
@@ -523,6 +542,7 @@ var AISprite = function(game, x, y, key, frame) {
 	this.clearWordBubble();	
 	this.state = STATE_UNAWARE;
 	this.state_changed_at = new Phaser.Point(this.x, this.y);
+	this.hunt_radius = parseInt(this.hunt_radius);
 	this.sprite_can_see_lightmeter = Number(this.sprite_can_see_lightmeter);
 	this.sprite_canmove = parseBoolean(this.sprite_canmove);
 	this.sprite_awareness_duration = parseInt(this.sprite_awareness_duration);
@@ -567,6 +587,7 @@ var AISprite = function(game, x, y, key, frame) {
     this.path = [];
     this.state_changed_at = new Phaser.Point(this.x, this.y);
     this.target = null;
+    this.hunt_radius = 5;
     this.path_tweens = [];
     this.path_maximum_steps = 4;
     this.awareness_change_enabled = true;
