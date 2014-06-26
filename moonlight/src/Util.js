@@ -83,13 +83,13 @@ function nearestWalkableTile(spr)
 	var startx = parseInt(Math.max((spr.x / 32) - (1 * multiplier), 0));
 	var starty = parseInt(Math.max((spr.y / 32) - (1 * multiplier), 0));
 	var endx = parseInt(Math.min((spr.x / 32) + 1 + (1 * multiplier), game.state.states.game.map.width));
-	var endy = parseInt(Math.min((spr.y / 32) + 1 + (1 * multiplier), game.state.states.game.map.width));
+	var endy = parseInt(Math.min((spr.y / 32) + 1 + (1 * multiplier), game.state.states.game.map.height));
 	
 	for ( var x = startx ; x <= endx ; x++ ) {
 	    for ( var y = starty ; y <= endy ; y++ ) {
-		if ( (x == startx && y == starty) ||
-		     (x == startx && y == endy) ||
-		     (y == starty) ||
+		if ( (x == startx ) ||
+		     (x == endx ) ||
+		     (y == starty ) ||
 		     (y == endy) ) {
 		    if ( grid.nodes[y][x].walkable == true ) {
 			console.log([x, y]);
@@ -120,6 +120,18 @@ function addAnimation(obj, anim)
 {
     a = moonlightSettings['animations'][anim]
     obj.animations.add(anim, a['frames'], a['speed'], a['loop'])
+}
+
+function getAwarenessState(spr)
+{
+    if ( hasState(spr, STATE_UNAWARE) )
+	return STATE_UNAWARE;
+    if ( hasState(spr, STATE_CONCERNED) )
+	return STATE_CONCERNED;
+    if ( hasState(spr, STATE_ALERTED) )
+	return STATE_ALERTED;
+    if ( hasState(spr, STATE_LOSTHIM) )
+	return STATE_LOSTHIM;
 }
 
 function getFaceState(spr)
@@ -211,6 +223,14 @@ function parseBoolean(val)
     return ( val == 'true' || val == true );
 }
 
+function getMovingAnimationName(spr)
+{
+    var sprbase = "bipedwalk";
+    if ( hasState(spr, STATE_RUNNING) )
+	sprbase = "bipedrun";
+    return sprbase + spriteFacing(spr);
+}
+
 function setSpriteMovement(spr, velocity)
 {
     var x = 0;
@@ -266,7 +286,23 @@ function gridWithAISprites()
     var aiSprites = game.state.states.game.aiSprites;
     for ( var i = 0 ; i < aiSprites.length ; i++ ) {
 	var spr = aiSprites.getChildAt(i);
-	grid.nodes[parseInt(spr.y/32)][parseInt(spr.x/32)].walkable = false;
+	// --- We have to normalize the (x,y) because this may be
+	// called before the sprites are rebounded back inside the map,
+	// and these references will go out of bounds
+	var normx = Math.min(parseInt(spr.x/32), 0);
+	var normy = Math.min(parseInt(spr.y/32), 0);
+	grid.nodes[normy][normx].walkable = false;
     }
     return grid;
+}
+
+function stringifyInt(x)
+{
+    return ("" + x);
+}
+
+function isSet(x)
+{
+    return ( (typeof x !== 'undefined') && 
+	     ( x !== null ) );
 }
