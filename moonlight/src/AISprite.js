@@ -90,6 +90,7 @@ var AISprite = function(game, x, y, key, frame) {
 	     state != STATE_ALERTED ) {
 	    return;
 	}
+	this.state_changed_at = new Phaser.Point(this.x, this.y);
 	this.startAwarenessTimer();
 	setAwarenessState(this, state);
 
@@ -288,12 +289,12 @@ var AISprite = function(game, x, y, key, frame) {
 		null);
 	    tween.onStart.add(function() {
 		setMovingState(this._object, this.movingstate);
-		this._object.animations.play("bipedrun" + spriteFacing(this._object));
+		this._object.animations.play(getMovingAnimationName(this._object));
 	    }, tween);
 	    tween.onComplete.add(function() {
 		this._object.path_index += 1;
 		setMovingState(this._object, getFaceState(this._object));
-		this._object.animations.play("bipedrun" + spriteFacing(this._object));		
+		this._object.animations.play(getMovingAnimationName(this._object));		
 		this._object.animations.stop();
 	    }, tween);
 	    if ( i > 0 ) {
@@ -318,7 +319,7 @@ var AISprite = function(game, x, y, key, frame) {
 			  STATE_FACE_RIGHT, STATE_FACE_UP];
 	setMovingState(this, directions[game.rnd.integerInRange(0, 3)]);
 	this.animations.stop();
-	this.animations.play("bipedrun" + spriteFacing(this));		
+	this.animations.play(getMovingAnimationName(this));		
 	this.animations.stop();
     }
 
@@ -333,7 +334,7 @@ var AISprite = function(game, x, y, key, frame) {
 	}
 	setMovingState(this, newdirection);
 	this.animations.stop();
-	this.animations.play("bipedrun" + spriteFacing(this));		
+	this.animations.play(getMovingAnimationName(this));		
 	this.animations.stop();
 	if ( this.rotation_timer !== null ) {
 	    this.rotation_timer.stop();
@@ -509,6 +510,7 @@ var AISprite = function(game, x, y, key, frame) {
 	this.animations.destroy();
 	this.clearWordBubble();	
 	this.state = STATE_UNAWARE;
+	this.state_changed_at = new Phaser.Point(this.x, this.y);
 	this.sprite_can_see_lightmeter = Number(this.sprite_can_see_lightmeter);
 	this.sprite_canmove = parseBoolean(this.sprite_canmove);
 	this.sprite_awareness_duration = parseInt(this.sprite_awareness_duration);
@@ -551,6 +553,7 @@ var AISprite = function(game, x, y, key, frame) {
     pathfinder_grid = [];
     this.walkables = [];
     this.path = [];
+    this.state_changed_at = new Phaser.Point(this.x, this.y);
     this.target = null;
     this.path_tweens = [];
     this.path_maximum_steps = 4;
