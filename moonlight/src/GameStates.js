@@ -23,7 +23,7 @@ GameState.prototype.create = function()
 	    );
 	    if ( lp['inject_sprites'] == true ) {
 		this.aiSprites = game.add.group();
-		this.aiSprites.debug = false;
+		this.aiSprites.debug = true;
 		this.map.createFromObjects('AI', 3544, 'player', 0, true, false, this.aiSprites, AISprite);
 		this.aiSprites.forEach(function(spr) {
 		    spr.update_new_values();
@@ -259,7 +259,7 @@ GameState.prototype.update = function()
 	if ( x.collide_with_player == false )
 	    return;
 	if ( x.canSeeSprite(player, false) == true ) {
-	    x.lastSawPlayerAt = new Phaser.Point(player.x, player.y);
+	    x.lastSawPlayerAt = new Phaser.Sprite(game, player.x, player.y, null);
 	    if ( this.physics.arcade.collide(x, player) ) {
 		x.setAwarenessEffect(STATE_ALERTED);
 	    } else if ( player.lightmeter >= x.sprite_can_see_lightmeter ) {
@@ -269,7 +269,9 @@ GameState.prototype.update = function()
 	    }
 	    return;
 	} else {
-	    if ( hasState(x, STATE_LOSTHIM) == false ) {
+	    if ( this.physics.arcade.collide(x, player) ) {
+		x.setAwarenessEffect(STATE_CONCERNED);
+	    } else if ( hasState(x, STATE_LOSTHIM) == false ) {
 		x.setAwarenessEffect(STATE_LOSTHIM);
 	    } else {
 		x.setAwarenessEffect(STATE_UNAWARE);
@@ -286,9 +288,9 @@ GameState.prototype.update = function()
     if ( this.aiSprites.debug == true ) {
     	function _draw_viewrect(x) {
     	    var r = x.viewRectangle();
-    	    if ( isSet(r) ) 
+    	    if ( isSet(r) == false ) 
     		return;
-    	    this.shadowTexture.context.fillStyle = 'rgb(128, 128, 128)';
+    	    this.shadowTexture.context.fillStyle = 'rgb(128, 128, 255)';
     	    this.shadowTexture.context.fillRect(r.left, 
     						r.top, 
     						r.width,
@@ -297,7 +299,7 @@ GameState.prototype.update = function()
     	this.aiSprites.forEach(_draw_viewrect, this);
     	function _draw_aipath(x) {
     	    var p = x.path;
-    	    if ( isSet(p) )
+    	    if ( isSet(p) == false)
     		return;
     	    this.shadowTexture.context.fillStyle = 'rgb(255, 128, 128)';
     	    p.forEach(function(r) {

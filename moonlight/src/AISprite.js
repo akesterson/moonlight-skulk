@@ -76,6 +76,9 @@ var AISprite = function(game, x, y, key, frame) {
     this.setAwarenessEffect = function(state) {
 	var animkey = "";
 
+	if ( state == STATE_NONE )
+	    return;
+
 	if ( hasState(this, state) == true ) {
 	    // restart the awareness timer
 	    this.startAwarenessTimer();
@@ -248,7 +251,6 @@ var AISprite = function(game, x, y, key, frame) {
 	    gridWithAISprites()
 	);
 	prevpoint = [this.x, this.y];
-	console.log("New path has at most " + maxsteps + " steps in it");
 	for ( var i = 0 ; i < Math.min(maxsteps, tpath.length) ; i++ ) {
 	    if ( (prevpoint[0]+prevpoint[1]) == ((tpath[i][0]*32)+(tpath[i][1]*32)) )
 		continue;
@@ -335,6 +337,7 @@ var AISprite = function(game, x, y, key, frame) {
 	while ( this.seen_directions.indexOf(newdirection) !== -1 ) {
 	    newdirection = directions[game.rnd.integerInRange(0, 3)];
 	}
+	this.seen_directions.push(newdirection);
 	setMovingState(this, newdirection);
 	this.animations.stop();
 	this.animations.play(getMovingAnimationName(this));		
@@ -350,11 +353,6 @@ var AISprite = function(game, x, y, key, frame) {
 	alertedState = (typeof alertedState == 'undefined' ? STATE_ALERTED : alertedState);
 	visual = (typeof visual == 'undefined' ? false : visual);
 	movingstate = (typeof alertedState == 'undefined' ? STATE_NONE : movingstate);
-	var rotation_times = {};
-	rotation_times["" + STATE_UNAWARE] = 5000;
-	rotation_times["" + STATE_CONCERNED] = 1000;
-	rotation_times["" + STATE_ALERTED] = 250;
-	rotation_times["" + STATE_LOSTHIM] = 1000;
 	if ( game.physics.arcade.collide(this, target) )
 	    return;
 
@@ -366,14 +364,7 @@ var AISprite = function(game, x, y, key, frame) {
 		this.path_set(target, true, maxsteps, useNearestWalkable);
 		this.path_tween_start(movingstate);
 	    } else {
-		if ( this.rotation_timer == null ) {
-		    this.rotation_timer = game.time.create(false);
-		    timerev = this.rotation_timer.add(
-			rotation_times["" + getAwarenessState(this)], 
-			this.turnUnseenDirection, 
-			this);
-		    this.rotation_timer.start()
-		}
+		this.startTimedRotation();
 	    }
 	} else {
 	    if ( this.path_set(target, this.blocked(true), maxsteps, useNearestWalkable) == true ) {
@@ -431,6 +422,7 @@ var AISprite = function(game, x, y, key, frame) {
 			this.target.path_purge();
 			this.target.setAwarenessEffect(STATE_ALERTED);
 			this.target.target = this.lastSawPlayerAt;
+			this.target.lastSawPlayerAt = this.lastSawPlayerAt;
 			addState(this.target, STATE_RUNNINGTOREPORT);
 		    }
 		}
@@ -443,8 +435,10 @@ var AISprite = function(game, x, y, key, frame) {
 		this.awareness_timer.stop();
 		this.awareness_change_enabled = true;
 		this.setAwarenessEffect(STATE_LOSTHIM);
+		setMovingState(this, STATE_NONE);
 		this.turnRandomDirection();
 		this.target = null;
+		this.path_purge();
 		delState(this, STATE_RUNNINGTOLIGHT);
 		return;
 	    }
@@ -458,22 +452,57 @@ var AISprite = function(game, x, y, key, frame) {
 	}
     }
 
+    this.random_huntable_target = function(hunt_radius) {
+	hunt_radius = (typeof hunt_radius == 'undefined' ? this.hunt_radius : hunt_radius);
+	var curmap = game.state.states.game.map;
+	var intgridx = parseInt(this.state_changed_at.x/32);
+	var intgridy = parseInt(this.state_changed_at.y/32);
+	var boundleft = Math.max(0, (intgridx - hunt_radius));
+	var boundtop = Math.max(0, (intgridy - hunt_radius));
+	var boundright = Math.min(curmap.width, (intgridx + hunt_radius));
+	var boundbottom = Math.min(curmap.height, (intgridy + hunt_radius));
+	var destx = game.rnd.integerInRange(boundleft, boundright);
+	var desty = game.rnd.integerInRange(boundtop, boundbottom);
+	return new Phaser.Sprite(game, destx*32, desty*32, null);
+    }
+
+    this.startTimedRotation = function() {
+	var rotation_times = {};
+	rotation_times["" + STATE_UNAWARE] = 5000;
+	rotation_times["" + STATE_CONCERNED] = 1000;
+	rotation_times["" + STATE_ALERTED] = 250;
+	rotation_times["" + STATE_LOSTHIM] = 1000;
+	if ( isSet(this.rotation_timer) == false ) {
+	    this.rotation_timer = game.time.create(false);
+	    timerev = this.rotation_timer.add(
+		rotation_times["" + getAwarenessState(this)], 
+		this.turnUnseenDirection, 
+		this);
+	    this.rotation_timer.start()
+	}
+    }
+
     this.action_huntplayer = function()
     {
-	console.log("I AM HUNTING FOR THE PLAYER");
-	if ( this.path.length < 1 ||
-	     this.path_index >= this.path.length ) {
-	    var curmap = game.state.states.game.map;
-	    var intgridx = parseInt(this.state_changed_at.x/32);
-	    var intgridy = parseInt(this.state_changed_at.y/32);
-	    var boundleft = Math.max(0, (intgridx - this.hunt_radius));
-	    var boundtop = Math.max(0, (intgridy - this.hunt_radius));
-	    var boundright = Math.min(curmap.width, (intgridx + this.hunt_radius));
-	    var boundbottom = Math.min(curmap.height, (intgridy + this.hunt_radius));
-	    var destx = game.rnd.integerInRange(boundleft, boundright);
-	    var desty = game.rnd.integerInRange(boundtop, boundbottom);
-	    this.target = new Phaser.Sprite(game, destx*32, desty*32, null);
-	}
+	if ( hasState(this, STATE_LOOKINGFORTARGET) == false && 
+	     this.path.length < 1 ) {
+	    this.target = this.random_huntable_target() 
+	} else if ( hasState(this, STATE_LOOKINGFORTARGET) ) {
+	    if ( this.seen_directions.length < 4 ) {
+		this.startTimedRotation();
+	    } else {
+		this.seen_directions = [];
+		delState(this, STATE_LOOKINGFORTARGET);
+		this.target = this.random_huntable_target() 
+	    }
+	} else if ( this.path.length > 0 && 
+		    this.path_index >= this.path.length ) {
+	    this.path_tween_stop();
+	    setMovingState(this, getFaceState(this));
+	    setSpriteMovement(this);
+	    this.target = null;
+	    addState(this, STATE_LOOKINGFORTARGET);
+	} 
 	if ( isSet(this.target) ) {
 	    this.chasetarget(this.target,
 			     STATE_NONE,
@@ -487,6 +516,14 @@ var AISprite = function(game, x, y, key, frame) {
     {
 	var newstate = STATE_NONE;
 	if ( this.sprite_canmove == false) {
+	    if ( this.x !== this.origin.x ||
+		 this.y !== this.origin.y ) {
+		this.chasetarget(this.origin,
+				 STATE_NONE,
+				 STATE_MOVING,
+				 false,
+				 1000);
+	    }
 	    return;
 	}
 	if ( game.rnd.integerInRange(0, 100) < 95 )
@@ -597,7 +634,7 @@ var AISprite = function(game, x, y, key, frame) {
     this.awareness_timer = null;
     this.lastSawPlayerAt = null;
     this.seen_directions = [];
-    this.sprite_awareness_duration = 60000;
+    this.sprite_awareness_duration = 30000;
     this.sprite_canmove = 'true';
     this.collide_with_player = 'true';
     this.collide_with_map = 'true';
@@ -605,7 +642,7 @@ var AISprite = function(game, x, y, key, frame) {
     this.view_distance = 32 * 5;
     this.timer = null;
     this.rotation_timer = null;
-    this.origin = new Phaser.Point(x, y);
+    this.origin = new Phaser.Point(x/32, y/32);
     this.bubble_immediate = false;
     this.bubble_text = null;
     this.enable_word_bubble = false;

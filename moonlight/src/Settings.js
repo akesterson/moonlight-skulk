@@ -275,42 +275,42 @@ var moonlightSettings = {
 	    'loop': false
 	},
 	'bipedwalkdown': {
-	    'frames': [1, 2, 0],
+	    'frames': [1, 0, 1, 2],
 	    'speed': 4,
 	    'loop': true
 	},
 	'bipedwalkleft': {
-	    'frames': [4, 5, 3],
+	    'frames': [4, 3, 4, 5],
 	    'speed': 4,
 	    'loop': true
 	},
 	'bipedwalkright': {
-	    'frames': [7, 8, 6],
+	    'frames': [7, 6, 7, 8],
 	    'speed': 4,
 	    'loop': true
 	},
 	'bipedwalkup': {
-	    'frames': [10, 11, 9],
+	    'frames': [10, 9, 10, 11],
 	    'speed': 4,
 	    'loop': true
 	},
 	'bipedrundown': {
-	    'frames': [1, 2, 0],
+	    'frames': [1, 0, 1, 2],
 	    'speed': 12,
 	    'loop': true
 	},
 	'bipedrunleft': {
-	    'frames': [4, 5, 3],
+	    'frames': [4, 3, 4, 5],
 	    'speed': 12,
 	    'loop': true
 	},
 	'bipedrunright': {
-	    'frames': [7, 8, 6],
+	    'frames': [7, 6, 7, 8],
 	    'speed': 12,
 	    'loop': true
 	},
 	'bipedrunup': {
-	    'frames': [10, 11, 9],
+	    'frames': [10, 9, 10, 11],
 	    'speed': 12,
 	    'loop': true
 	},
