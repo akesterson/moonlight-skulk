@@ -23,7 +23,7 @@ GameState.prototype.create = function()
 	    );
 	    if ( lp['inject_sprites'] == true ) {
 		this.aiSprites = game.add.group();
-		this.aiSprites.debug = true;
+		this.aiSprites.debug = false;
 		this.map.createFromObjects('AI', 3544, 'player', 0, true, false, this.aiSprites, AISprite);
 		this.aiSprites.forEach(function(spr) {
 		    spr.update_new_values();
