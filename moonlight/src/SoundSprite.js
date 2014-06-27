@@ -54,8 +54,9 @@ SoundSprite.prototype.update_new_values = function() {
 }
 
 SoundSprite.prototype.adjust_relative_to = function(spr) {
+    var adjustment = 1.0 - Number(parseInt(getDOMValue("uiMusicVolume"))) / 100.0;
     if ( this.sound_nofade == true ) {
-	this.sound.volume = this.sound_volume;
+	this.sound.volume = Math.min(0, this.sound_volume - adjustment);
 	return;
     }
 
@@ -72,7 +73,7 @@ SoundSprite.prototype.adjust_relative_to = function(spr) {
 
     var hyp = Math.sqrt(Number(xd * xd) + Number(yd * yd));    
 
-    this.sound.volume = (1.0 - Number(hyp / this.sound_distance));
+    this.sound.volume = (1.0 - adjustment - Number(hyp / this.sound_distance));
     // Math.max doesn't work here??
     if ( this.sound.volume < 0 )
 	this.sound.volume = 0;    

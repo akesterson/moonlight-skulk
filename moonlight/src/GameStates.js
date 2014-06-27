@@ -126,7 +126,11 @@ GameState.prototype.create = function()
 
 GameState.prototype.updateShadowTexture = function() {
     var cv = this.shadowTextureColor;
-    this.shadowTexture.context.fillStyle = "rgb(" + cv[0] + "," + cv[1] + "," + cv[2] + ")";
+    var uigamma = parseInt(getDOMValue("uiGamma"));
+    this.shadowTexture.context.fillStyle = ("rgb(" + (cv[0]+uigamma) + 
+					    "," + (cv[1]+uigamma) + 
+					    "," + (cv[2]+uigamma) + ")"
+					   );
     this.shadowTexture.context.fillRect(0, 0, game.world.width, game.world.height);
 
     this.staticLights.forEach(function(light) {
@@ -203,7 +207,8 @@ GameState.prototype.check_input = function()
 }
 
 GameState.prototype.update_player_lightmeter = function() {
-    player.lightmeter = (Number(array_average(this.shadowTextureColor)) / 255.0);
+    var avg_shadow = Number(array_average(this.shadowTextureColor));
+    player.lightmeter = ((avg_shadow) / 255.0);
     lightValue = 0;
     this.staticLights.forEach(function(light) {
 	var left = player.x;

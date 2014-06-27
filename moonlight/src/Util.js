@@ -306,3 +306,7 @@ function isSet(x)
     return ( (typeof x !== 'undefined') && 
 	     ( x !== null ) );
 }
+
+function getDOMValue(name) {
+    return document.getElementById(name).value
+}

@@ -1,0 +1,18 @@
+body {
+    margin: 0;
+    background-color: #000000;
+    color: #c8c8c8;
+    text-align: center;
+    width: 800px;
+    align: center;
+}
+
+#uiGameContainer {
+    position: absolute;
+}
+
+#uiGameDisplay {
+    position: absolute;
+    top: 60px;
+    left: 55px;
+}
