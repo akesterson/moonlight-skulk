@@ -124,6 +124,13 @@ GameState.prototype.create = function()
     this.fpsText = this.game.add.text(
         20, 20, '', { font: '16px Arial', fill: '#ffffff' }, this.uigroup
     );
+
+    this.score = 0;
+    this.scoreText = this.game.add.text(
+        SCREEN_WIDTH - 80, SCREEN_HEIGHT - 40, '', 
+	{ font: '16px Arial', fill: '#ffffff' }, this.uigroup
+    );
+
     this.lightbox = this.game.add.image(game.camera.width / 2 - 50,
 					game.camera.height - 40,
 					'lightbox',
@@ -345,6 +352,7 @@ GameState.prototype.update = function()
         this.fpsText.setText(game.time.fps + ' FPS');
     }
     this.clockText.setText("" + this.clock.getHours() + ":" + this.clock.getMinutes() + ":" + this.clock.getSeconds());
+    this.scoreText.setText("" + this.score);
 }
 
 function Boot()
