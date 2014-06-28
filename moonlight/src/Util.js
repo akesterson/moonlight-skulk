@@ -78,12 +78,14 @@ function nearestInGroup(sprite, group, sprite_group) {
 function nearestWalkableTile(spr)
 {
     var grid = gridWithAISprites();
+    var sprgridx = parseInt(spr.x / 32);
+    var sprgridy = parseInt(spr.y / 32);
 
     function _walkable_inner(multiplier) {
-	var startx = parseInt(Math.max((spr.x / 32) - (1 * multiplier), 0));
-	var starty = parseInt(Math.max((spr.y / 32) - (1 * multiplier), 0));
-	var endx = parseInt(Math.min((spr.x / 32) + 1 + (1 * multiplier), game.state.states.game.map.width));
-	var endy = parseInt(Math.min((spr.y / 32) + 1 + (1 * multiplier), game.state.states.game.map.height));
+	var startx = parseInt(Math.max(sprgridx - (1 * multiplier), 0));
+	var starty = parseInt(Math.max(sprgridy - (1 * multiplier), 0));
+	var endx = parseInt(Math.min(sprgridx + 1 + (1 * multiplier), game.state.states.game.map.width));
+	var endy = parseInt(Math.min(sprgridy + 1 + (1 * multiplier), game.state.states.game.map.height));
 	
 	for ( var x = startx ; x <= endx ; x++ ) {
 	    for ( var y = starty ; y <= endy ; y++ ) {
@@ -92,7 +94,6 @@ function nearestWalkableTile(spr)
 		     (y == starty ) ||
 		     (y == endy) ) {
 		    if ( grid.nodes[y][x].walkable == true ) {
-			console.log([x, y]);
 			return [x, y];
 		    }
 		}
@@ -101,18 +102,15 @@ function nearestWalkableTile(spr)
 	return null;
     }
 
-    if ( grid.nodes[spr.y/32][spr.x/32].walkable == true ) 
-	return [spr.x/32, spr.y/32];
-
+    if ( grid.nodes[sprgridy][sprgridx].walkable == true ) 
+	return [sprgridx, sprgridy];
     for ( var i = 1 ; i < 100 ; i++ ) {
 	var rv = _walkable_inner(i);
 	if ( isSet(rv) ) {
-	    console.log("Found near walkable tile");
-	    console.log([rv] + [spr.x / 32, spr.y / 32]);
 	    return rv
 	}
     }
-    return [parseInt(spr.x / 32), parseInt(spr.y / 32)];
+    return [sprgridx, sprgridy];
 }
 
 function addAnimation(obj, anim)
