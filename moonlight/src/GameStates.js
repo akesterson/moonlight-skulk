@@ -1,6 +1,12 @@
 var GameState = function(game) {
 }
 
+GameState.prototype.updateClock = function()
+{
+    this.clock.setSeconds(this.clock.getSeconds() + 1);
+    this.clock.setMilliseconds(0);
+}
+
 GameState.prototype.create = function()
 {
     this.map = this.add.tilemap('map');
@@ -103,6 +109,18 @@ GameState.prototype.create = function()
 
     this.uigroup = game.add.group();
     this.game.time.advancedTiming = true;
+
+    this.clockText = this.game.add.text(
+	20, SCREEN_HEIGHT - 40, '', { font : '16px Arial', fill: '#ffffff' }, this.uigroup
+    );
+    this.clock = new Date();
+    this.clock.setHours(22, 0, 0, 0);
+    this.clockTimer = game.time.create(true);
+    this.clockTimer.repeat(DAYLIGHT_TIMER_REPEAT, 
+			   DAYLIGHT_TIMER_REPEATCOUNT,
+			   this.updateClock,
+			   this);
+    this.clockTimer.start();
     this.fpsText = this.game.add.text(
         20, 20, '', { font: '16px Arial', fill: '#ffffff' }, this.uigroup
     );
@@ -314,6 +332,7 @@ GameState.prototype.update = function()
     if (game.time.fps !== 0) {
         this.fpsText.setText(game.time.fps + ' FPS');
     }
+    this.clockText.setText("" + this.clock.getHours() + ":" + this.clock.getMinutes() + ":" + this.clock.getSeconds());
 }
 
 function Boot()
