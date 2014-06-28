@@ -270,6 +270,7 @@
                     {
                      "sprite_can_see_lightmeter":"0.15",
                      "sprite_canmove":"false",
+                     "sprite_facing":"down",
                      "sprite_group":"townsfolk-guard",
                      "sprite_name":"townsfolk-guard-2"
                     },
