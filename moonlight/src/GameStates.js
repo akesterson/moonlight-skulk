@@ -88,7 +88,7 @@ GameState.prototype.create = function()
 
     this.shadowTexture = game.add.bitmapData(game.world.width, game.world.height);
     // drop this lower to make the map darker
-    this.shadowTextureColor = [60, 60, 60];
+    this.shadowTextureColor = [20, 20, 20];
     this.shadowSprite = game.add.image(0, 0, this.shadowTexture);
 
     this.shadowSprite.blendMode = Phaser.blendModes.MULTIPLY;
@@ -114,7 +114,7 @@ GameState.prototype.create = function()
 	20, SCREEN_HEIGHT - 40, '', { font : '16px Arial', fill: '#ffffff' }, this.uigroup
     );
     this.clock = new Date();
-    this.clock.setHours(22, 0, 0, 0);
+    this.clock.setHours(20, 0, 0, 0);
     this.clockTimer = game.time.create(true);
     this.clockTimer.repeat(DAYLIGHT_TIMER_REPEAT, 
 			   DAYLIGHT_TIMER_REPEATCOUNT,
@@ -142,12 +142,24 @@ GameState.prototype.create = function()
     this.uigroup.setAll('fixedToCamera', true);	
 }
 
+GameState.prototype.getClockGamma = function() {
+    var clockgamma = 60 - this.clock.getMinutes();
+    if ( this.clock.getHours() >= 20 ) {
+	clockgamma += (23 - this.clock.getHours()) * 60;
+    } else {
+	clockgamma += this.clock.getHours() * 60;
+    }
+    clockgamma = parseInt(clockgamma / 6);
+    return clockgamma;
+}
+
 GameState.prototype.updateShadowTexture = function() {
     var cv = this.shadowTextureColor;
     var uigamma = parseInt(getDOMValue("uiGamma"));
-    this.shadowTexture.context.fillStyle = ("rgb(" + (cv[0]+uigamma) + 
-					    "," + (cv[1]+uigamma) + 
-					    "," + (cv[2]+uigamma) + ")"
+    var clockgamma = this.getClockGamma();
+    this.shadowTexture.context.fillStyle = ("rgb(" + (cv[0] + clockgamma + uigamma) + 
+					    "," + (cv[1] + clockgamma + uigamma) + 
+					    "," + (cv[2] + clockgamma + uigamma) + ")"
 					   );
     this.shadowTexture.context.fillRect(0, 0, game.world.width, game.world.height);
 
@@ -226,7 +238,7 @@ GameState.prototype.check_input = function()
 
 GameState.prototype.update_player_lightmeter = function() {
     var avg_shadow = Number(array_average(this.shadowTextureColor));
-    player.lightmeter = ((avg_shadow) / 255.0);
+    player.lightmeter = ((avg_shadow + this.getClockGamma()) / 255.0);
     lightValue = 0;
     this.staticLights.forEach(function(light) {
 	var left = player.x;
