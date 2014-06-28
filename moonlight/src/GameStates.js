@@ -23,7 +23,7 @@ GameState.prototype.create = function()
 	    );
 	    if ( lp['inject_sprites'] == true ) {
 		this.aiSprites = game.add.group();
-		this.aiSprites.debug = false;
+		this.aiSprites.debug = true;
 		this.map.createFromObjects('AI', 3544, 'player', 0, true, false, this.aiSprites, AISprite);
 		this.aiSprites.forEach(function(spr) {
 		    spr.update_new_values();
@@ -285,7 +285,7 @@ GameState.prototype.update = function()
     this.aiSprites.forEach(_inner_collide, this);
     this.updateShadowTexture();
 
-    if ( this.aiSprites.debug == true ) {
+    if ( this.aiSprites.debug == false ) {
     	function _draw_viewrect(x) {
     	    var r = x.viewRectangle();
     	    if ( isSet(r) == false ) 

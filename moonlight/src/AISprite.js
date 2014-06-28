@@ -514,15 +514,18 @@ var AISprite = function(game, x, y, key, frame) {
 
     this.action_wander = function()
     {
-	var newstate = STATE_NONE;
 	if ( this.sprite_canmove == false) {
 	    if ( this.x !== this.origin.x ||
 		 this.y !== this.origin.y ) {
 		this.chasetarget(this.origin,
 				 STATE_NONE,
 				 STATE_MOVING,
-				 false,
-				 1000);
+				 false);
+	    } else {
+		setMovingState(this, faceStateFromString(this.sprite_facing));
+		this.animations.stop();
+		this.animations.play(getMovingAnimationName(this));
+		this.animations.stop();
 	    }
 	    return;
 	}
@@ -597,7 +600,7 @@ var AISprite = function(game, x, y, key, frame) {
 	addAnimation(this, 'bipedrunright');
 	addAnimation(this, 'bipedrunup');
 	addAnimation(this, 'bipedrundown');
-	setMovingState(this, STATE_FACE_DOWN);
+	setMovingState(this, faceStateFromString(this.sprite_facing));
 	setSpriteMovement(this);
 	this.ready_to_update = true;
     }
@@ -620,6 +623,7 @@ var AISprite = function(game, x, y, key, frame) {
     game.physics.arcade.enable(this);
     this.body.immovable = true;
     pathfinder_grid = [];
+    this.sprite_facing = "down";
     this.walkables = [];
     this.path = [];
     this.state_changed_at = new Phaser.Point(this.x, this.y);
@@ -642,7 +646,7 @@ var AISprite = function(game, x, y, key, frame) {
     this.view_distance = 32 * 5;
     this.timer = null;
     this.rotation_timer = null;
-    this.origin = new Phaser.Point(x/32, y/32);
+    this.origin = new Phaser.Point(x, y);
     this.bubble_immediate = false;
     this.bubble_text = null;
     this.enable_word_bubble = false;

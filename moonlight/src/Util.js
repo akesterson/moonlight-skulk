@@ -101,6 +101,9 @@ function nearestWalkableTile(spr)
 	return null;
     }
 
+    if ( grid.nodes[spr.y/32][spr.x/32].walkable == true ) 
+	return [spr.x/32, spr.y/32];
+
     for ( var i = 1 ; i < 100 ; i++ ) {
 	var rv = _walkable_inner(i);
 	if ( isSet(rv) ) {
@@ -109,11 +112,7 @@ function nearestWalkableTile(spr)
 	    return rv
 	}
     }
-    //if ( multiplier >= 10 ) 
-    console.log("Couldn't find a near walkable tile");
-    console.log([spr.x / 32, spr.y / 32]);
     return [parseInt(spr.x / 32), parseInt(spr.y / 32)];
-    //return nearestWalkableTile(spr, multiplier + 1);
 }
 
 function addAnimation(obj, anim)
@@ -132,6 +131,15 @@ function getAwarenessState(spr)
 	return STATE_ALERTED;
     if ( hasState(spr, STATE_LOSTHIM) )
 	return STATE_LOSTHIM;
+}
+
+function faceStateFromString(face)
+{
+    var states = { "up": STATE_FACE_UP,
+		   "down": STATE_FACE_DOWN,
+		   "left": STATE_FACE_LEFT,
+		   "right": STATE_FACE_RIGHT };
+    return states[face.toLowerCase()];
 }
 
 function getFaceState(spr)
