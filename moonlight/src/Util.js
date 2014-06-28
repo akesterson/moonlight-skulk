@@ -81,6 +81,14 @@ function nearestWalkableTile(spr)
     var sprgridx = parseInt(spr.x / 32);
     var sprgridy = parseInt(spr.y / 32);
 
+    // Snap sprites outside the grid to the grid edge
+    if ( sprgridy > grid.nodes.length ) {
+	sprgridy = grid.nodes.length - 1;
+    }
+    if ( sprgridx > grid.nodes[sprgridy].length ) {
+	sprgridx = grid.nodes[sprgridy].length - 1;
+    }
+
     function _walkable_inner(multiplier) {
 	var startx = parseInt(Math.max(sprgridx - (1 * multiplier), 0));
 	var starty = parseInt(Math.max(sprgridy - (1 * multiplier), 0));
@@ -99,7 +107,7 @@ function nearestWalkableTile(spr)
 		}
 	    }   
 	}
-	return null;
+	throw "No walkable tile found near (" + spr.x + "," + spr.y + ")";
     }
 
     if ( grid.nodes[sprgridy][sprgridx].walkable == true ) 
