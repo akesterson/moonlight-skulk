@@ -316,3 +316,18 @@ function isSet(x)
 function getDOMValue(name) {
     return document.getElementById(name).value
 }
+
+function awardPlayerScoreByState(state) 
+{
+    switch ( state ) {
+	case STATE_ALERTED: {
+	    player.score += SCORE_ALERTED;
+	}
+	case STATE_CONCERNED: {
+	    player.score += SCORE_CONCERNED;
+	}
+	case STATE_LOSTHIM: {
+	    player.score += SCORE_LOSTHIM;
+	}
+    }
+}

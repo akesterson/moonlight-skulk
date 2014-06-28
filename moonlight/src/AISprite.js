@@ -93,6 +93,7 @@ var AISprite = function(game, x, y, key, frame) {
 	     state != STATE_ALERTED ) {
 	    return;
 	}
+	awardPlayerScoreByState(state);
 	this.state_changed_at = new Phaser.Point(this.x, this.y);
 	this.startAwarenessTimer();
 	setAwarenessState(this, state);

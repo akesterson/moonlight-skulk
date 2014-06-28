@@ -4,6 +4,8 @@ var GameState = function(game) {
 GameState.prototype.updateClock = function()
 {
     this.clock.setSeconds(this.clock.getSeconds() + 1);
+    if ( this.clock.getSeconds() == 59)
+	player.score += SCORE_PERSECOND;
     this.clock.setMilliseconds(0);
 }
 
@@ -35,6 +37,7 @@ GameState.prototype.create = function()
 		    spr.update_new_values();
 		}, this)
 		player = this.add.sprite((19 * 32), (21 * 32), 'player');
+		player.score = 0;
 		player.lightmeter = 0;
 
 	    };
@@ -125,7 +128,6 @@ GameState.prototype.create = function()
         20, 20, '', { font: '16px Arial', fill: '#ffffff' }, this.uigroup
     );
 
-    this.score = 0;
     this.scoreText = this.game.add.text(
         SCREEN_WIDTH - 80, SCREEN_HEIGHT - 40, '', 
 	{ font: '16px Arial', fill: '#ffffff' }, this.uigroup
@@ -300,7 +302,7 @@ GameState.prototype.update = function()
 	    if ( this.physics.arcade.collide(x, player) ) {
 		x.setAwarenessEffect(STATE_ALERTED);
 	    } else if ( player.lightmeter >= x.sprite_can_see_lightmeter ) {
-		x.setAwarenessEffect(STATE_ALERTED);
+ 		x.setAwarenessEffect(STATE_ALERTED);
 	    } else {
 		x.setAwarenessEffect(STATE_CONCERNED);
 	    }
@@ -352,7 +354,7 @@ GameState.prototype.update = function()
         this.fpsText.setText(game.time.fps + ' FPS');
     }
     this.clockText.setText("" + this.clock.getHours() + ":" + this.clock.getMinutes() + ":" + this.clock.getSeconds());
-    this.scoreText.setText("" + this.score);
+    this.scoreText.setText("" + player.score);
 }
 
 function Boot()
