@@ -169,6 +169,20 @@ var moonlightSettings = {
 	    'frames': 96
 	},
 	{
+	    'name': 'glint',
+	    'path': 'gfx/effects/glint.png',
+	    'width': 16,
+	    'height': 16,
+	    'frames': 12
+	},
+	{
+	    'name': 'treasure',
+	    'path': 'gfx/sprites/treasure.png',
+	    'width': 24,
+	    'height': 24,
+	    'frames': 368
+	},
+	{
 	    'name': 'balloon',
 	    'path': 'gfx/effects/Balloon.png',
 	    'width': 32,
@@ -254,6 +268,11 @@ var moonlightSettings = {
 	}
     ],
     'animations': {
+	'glint': {
+	    'frames': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+	    'speed': 12,
+	    'loop': false
+	},
 	'alerted': {
 	    'frames': [0, 1, 2, 3, 4, 5, 6, 7],
 	    'speed': 4,
@@ -329,5 +348,208 @@ var moonlightSettings = {
 	    'speed': 6,
 	    'loop': true
 	}
+    }
+};
+
+var moonlightTreasures = {
+    "silver ring with garnet": {
+	"x": 6,
+	"y": 1,
+	"value": 50
+    },
+    "gold hairpin": {
+	"x": 7,
+	"y": 1,
+	"value": 50
+    },
+    "gold ring with emerald": {
+	"x": 0,
+	"y": 2,
+	"value": 75
+    },
+    "silver bangles": {
+	"x": 1,
+	"y": 2,
+	"value": 50
+    },
+    "gold bracelets": {
+	"x": 2,
+	"y": 2,
+	"value": 75
+    },
+    "gold brooch with sapphire": {
+	"x": 3,
+	"y": 2,
+	"value": 75
+    },
+    "gold necklace with sapphire": {
+	"x": 4,
+	"y": 2,
+	"value": 75
+    },
+    "tonic": {
+	"x": 0,
+	"y": 3,
+	"value": 100
+    },
+    "antidote": {
+	"x": 1,
+	"y": 3,
+	"value": 100
+    },
+    "cure-all": {
+	"x": 2,
+	"y": 3,
+	"value": 100
+    },
+    "poison": {
+	"x": 3,
+	"y": 3,
+	"value": 150
+    },
+    "perfume": {
+	"x": 4,
+	"y": 3,
+	"value": 125
+    },
+    "spices": {
+	"x": 6,
+	"y": 3,
+	"value": 125
+    },
+    "Fresh Spinach": {
+	"x": 8,
+	"y": 3,
+	"value": 5
+    },
+    "Fresh Herbs": {
+	"x": 9,
+	"y": 3,
+	"value": 5
+    },
+    "Flowers": {
+	"x": 12,
+	"y": 3,
+	"value": 5
+    },
+    "Dirty Turnips": {
+	"x": 14,
+	"y": 3,
+	"value": 5
+    },
+    "Whiskey": {
+	"x": 12,
+	"y": 4,
+	"value": 10
+    },
+    "Map": {
+	"x": 7,
+	"y": 5,
+	"value": 15
+    },
+    "Official Documents": {
+	"x": 14,
+	"y": 5,
+	"value": 50
+    },
+    "Book": {
+	"x": 0,
+	"y": 5,
+	"value": 25
+    },
+    "Gift": {
+	"x": 3,
+	"y": 7,
+	"value": 50
+    },
+    "Bag of Money": {
+	"x": 6,
+	"y": 7,
+	"value": 100
+    },
+    "Purse": {
+	"x": 7,
+	"y": 7,
+	"value": 50
+    },
+    "Picnic Basket": {
+	"x": 9,
+	"y": 7,
+	"value": 25
+    },
+    "Jewelry Box": {
+	"x": 14,
+	"y": 7,
+	"value": 100
+    },
+    "Music Box": {
+	"x": 15,
+	"y": 6,
+	"value": 300
+    },
+    "Hourglass": {
+	"x": 8,
+	"y": 8,
+	"value": 100
+    },
+    "Holy Symbol": {
+	"x": 9,
+	"y": 8,
+	"value": 200
+    },
+    "Large Mirror": {
+	"x": 10,
+	"y": 8,
+	"value": 200
+    },
+    "Small Mirror": {
+	"x": 11,
+	"y": 8,
+	"value": 100
+    },
+    "Cat's Eye": {
+	"x": 4,
+	"y": 12,
+	"value": 200
+    },
+    "Pink Spinel": {
+	"x":  5,
+	"y": 12,
+	"value": 200
+    },
+    "Quartz": {
+	"x": 6,
+	"y": 12,
+	"value": 100
+    },
+    "Diamond": {
+	"x": 9,
+	"y": 12,
+	"value": 400
+    },
+    "Emerald": {
+	"x": 11,
+	"y": 12,
+	"value": 300
+    },
+    "Ruby": {
+	"x": 7,
+	"y": 13,
+	"value": 250
+    },
+    "Pearl": {
+	"x": 8,
+	"y": 13,
+	"value": 400
+    },
+    "Gold Bars": {
+	"x": 9,
+	"y": 13,
+	"value": 500
+    },
+    "Gold Coin": {
+	"x": 10,
+	"y": 13,
+	"value": 5
     }
 };

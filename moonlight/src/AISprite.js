@@ -73,6 +73,29 @@ var AISprite = function(game, x, y, key, frame) {
 	this.awareness_timer.start()
     }
 
+    this.runGlintEffect = function() {
+	if ( this.sprite_has_treasure == true ) {
+	    this.glint_effect = game.state.states.game.add.sprite(
+		this.x + 16,
+		this.y + 24,
+		'glint',
+		0,
+		game.state.states.game.aiSpriteEffects
+	    );
+	    addAnimation(this.glint_effect, 'glint');
+	    this.glint_effect.anchor.setTo(0.5, 0.5);
+	    this.glint_effect.play('glint', null, false, true);
+	    this.glint_timer = game.time.create(false);
+	    this.glint_timer.add(game.rnd.integerInRange(5000, 15000), 
+				 this.runGlintEffect, 
+				 this);
+	    tween = game.add.tween(this.glint_effect);
+	    tween.to({angle: 180}, 1000, null);
+	    tween.start();
+	    this.glint_timer.start();
+	}
+    }
+
     this.setAwarenessEffect = function(state) {
 	var animkey = "";
 
@@ -550,7 +573,13 @@ var AISprite = function(game, x, y, key, frame) {
 		this.awareness_effect.y = this.y - 16;
 	    }
 	}
-
+	if ( isSet(this.glint_effect) ) {
+	    if ( this.glint_effect.alive == true ) {
+		this.glint_effect.x = this.x + 16;
+		this.glint_effect.y = this.y + 24;
+	    }
+	}
+	
 	if ( isSet(this.bubble_text) ) {
 	    if ( this.clear_bubble == true ) {
 		this.bubble_text.destroy();
@@ -590,6 +619,10 @@ var AISprite = function(game, x, y, key, frame) {
 	this.collide_with_player = parseBoolean(this.collide_with_player);
 	this.collide_with_map = parseBoolean(this.collide_with_map);
 	this.carries_light = parseBoolean(this.carries_light);
+	this.sprite_has_treasure = parseBoolean(this.sprite_has_treasure);
+	if ( this.sprite_has_treasure ) {
+	    this.treasure = getRandomTreasure();
+	}
 
 	this.path_maximum_steps = parseInt(this.path_maximum_steps);
 	this.loadTexture(this.sprite_name, 0);
@@ -604,6 +637,7 @@ var AISprite = function(game, x, y, key, frame) {
 	setMovingState(this, faceStateFromString(this.sprite_facing));
 	setSpriteMovement(this);
 	this.ready_to_update = true;
+	this.runGlintEffect();
     }
 
     var spritenames_by_type = [
@@ -637,6 +671,8 @@ var AISprite = function(game, x, y, key, frame) {
     this.sprite_can_see_lightmeter = 0.3;
     this.awareness_effect = null;
     this.awareness_timer = null;
+    this.glint_effect = null;
+    this.glint_timer = null;
     this.lastSawPlayerAt = null;
     this.seen_directions = [];
     this.sprite_awareness_duration = 30000;
@@ -648,6 +684,7 @@ var AISprite = function(game, x, y, key, frame) {
     this.timer = null;
     this.rotation_timer = null;
     this.origin = new Phaser.Point(x, y);
+    this.sprite_has_treasure = [true, false][game.rnd.integerInRange(0, 1)];
     this.bubble_immediate = false;
     this.bubble_text = null;
     this.enable_word_bubble = false;

@@ -272,6 +272,7 @@
                      "sprite_canmove":"false",
                      "sprite_facing":"down",
                      "sprite_group":"townsfolk-guard",
+                     "sprite_has_treasure":"true",
                      "sprite_name":"townsfolk-guard-2"
                     },
                  "type":"AI",

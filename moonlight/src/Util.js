@@ -339,3 +339,10 @@ function awardPlayerScoreByState(state)
 	}
     }
 }
+
+function getRandomTreasure()
+{
+    var treasures = Object.keys(moonlightTreasures);
+    var treasure = treasures[game.rnd.integerInRange(0, treasures.length)];
+    return treasure;
+}

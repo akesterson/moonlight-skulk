@@ -36,6 +36,7 @@ GameState.prototype.create = function()
 		this.aiSprites.forEach(function(spr) {
 		    spr.update_new_values();
 		}, this)
+		this.aiSpriteEffects = game.add.group();
 		player = this.add.sprite((19 * 32), (21 * 32), 'player');
 		player.score = 0;
 		player.lightmeter = 0;
