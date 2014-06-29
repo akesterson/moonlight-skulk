@@ -36,7 +36,6 @@ GameState.prototype.create = function()
 		this.aiSprites.forEach(function(spr) {
 		    spr.update_new_values();
 		}, this)
-		this.aiSpriteEffects = game.add.group();
 		player = this.add.sprite((19 * 32), (21 * 32), 'player');
 		player.score = 0;
 		player.lightmeter = 0;
@@ -102,6 +101,8 @@ GameState.prototype.create = function()
     this.staticLights.forEach(function(light) {
 	light.update_new_values();
     }, this)
+
+    this.aiSpriteEffects = game.add.group();
 			     
     this.staticSounds = game.add.group();
     this.map.createFromObjects('Sounds', 11, 'player', 0, true, false, this.staticSounds, SoundSprite);

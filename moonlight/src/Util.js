@@ -107,7 +107,6 @@ function nearestWalkableTile(spr)
 		}
 	    }   
 	}
-	throw "No walkable tile found near (" + spr.x + "," + spr.y + ")";
     }
 
     if ( grid.nodes[sprgridy][sprgridx].walkable == true ) 

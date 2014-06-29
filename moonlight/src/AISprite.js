@@ -86,7 +86,7 @@ var AISprite = function(game, x, y, key, frame) {
 	    this.glint_effect.anchor.setTo(0.5, 0.5);
 	    this.glint_effect.play('glint', null, false, true);
 	    this.glint_timer = game.time.create(false);
-	    this.glint_timer.add(game.rnd.integerInRange(5000, 15000), 
+	    this.glint_timer.add(game.rnd.integerInRange(5000, 10000), 
 				 this.runGlintEffect, 
 				 this);
 	    tween = game.add.tween(this.glint_effect);
