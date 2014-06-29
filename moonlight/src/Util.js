@@ -252,7 +252,7 @@ function setSpriteMovement(spr, velocity)
     velocity = ( typeof velocity == undefined ? velocity : [SPEED_WALKING, 
 							    SPEED_RUNNING] );
 
-    spr.body.setSize(16, 16, 8, 16);
+    //spr.body.setSize(16, 16, 8, 16);
 
     if ( hasState(spr, STATE_RUNNING) ) {
 	if ( velocity !== false )

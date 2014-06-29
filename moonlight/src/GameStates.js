@@ -82,6 +82,7 @@ GameState.prototype.create = function()
 
     this.camera.follow(player, Phaser.Camera.FOLLOW_TOPDOWN);
     controls = game.input.keyboard.createCursorKeys();
+    controls.steal = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
     this.effectSprites = game.add.group();
     this.map.createFromObjects('EffectSprites', 5, 'player', 0, true, false, this.effectSprites, EffectSprite);
@@ -215,6 +216,10 @@ GameState.prototype.check_input = function()
     velocityMod = 0;
     var newstate = 0;
 
+    if ( controls.steal.justReleased() == true ) {
+	addState(player, STATE_STEALING);
+    }
+
     if ( controls.up.isDown) {
 	if ( controls.up.shiftKey ) {
 	    newstate = (STATE_FACE_UP | STATE_MOVING | STATE_RUNNING);
@@ -240,7 +245,7 @@ GameState.prototype.check_input = function()
 	    newstate = (STATE_FACE_RIGHT | STATE_MOVING );
 	}
     } else {
-	newstate = STATE_NONE;
+	newstate = getFaceState(player);
     }
 
     setMovingState(player, newstate);
@@ -301,9 +306,7 @@ GameState.prototype.update = function()
 	    return;
 	if ( x.canSeeSprite(player, false) == true ) {
 	    x.lastSawPlayerAt = new Phaser.Sprite(game, player.x, player.y, null);
-	    if ( this.physics.arcade.collide(x, player) ) {
-		x.setAwarenessEffect(STATE_ALERTED);
-	    } else if ( player.lightmeter >= x.sprite_can_see_lightmeter ) {
+	    if ( player.lightmeter >= x.sprite_can_see_lightmeter ) {
  		x.setAwarenessEffect(STATE_ALERTED);
 	    } else {
 		x.setAwarenessEffect(STATE_CONCERNED);
@@ -318,7 +321,39 @@ GameState.prototype.update = function()
 		x.setAwarenessEffect(STATE_UNAWARE);
 	    }
 	}
-	this.physics.arcade.collide(x, player);
+	if ( this.physics.arcade.collide(x, player) == true )
+	    x.setAwarenessEffect(STATE_ALERTED);
+	if ( hasState(player, STATE_STEALING) == true ) {
+	    delState(player, STATE_STEALING);
+	    var prevpos = player.body.position;
+	    player.body.position = new Phaser.Point();
+	    player.body.x = prevpos.x;
+	    player.body.y = prevpos.y;
+	    switch ( getFaceState(player) ) {
+		case STATE_FACE_LEFT: {
+		    player.body.x -= STEAL_DISTANCE;
+		    break;
+		}
+		case STATE_FACE_RIGHT: {
+		    player.body.x += STEAL_DISTANCE;
+		    break;
+		}
+		case STATE_FACE_DOWN: {
+		    player.body.y += STEAL_DISTANCE;
+		    break;
+		}
+		case STATE_FACE_UP: {
+		    player.body.y -= STEAL_DISTANCE;
+		    break;
+		}
+	    }
+	    if ( this.physics.arcade.collide(x, player) == true ) {
+		x.sprite_has_treasure = false;
+		player.score += moonlightTreasures[x.sprite_treasure]['value'];
+		x.sprite_treasure = null;
+	    }
+	    player.body.position = prevpos;
+	}
     }
 
     this.effectSprites.forEach(_inner_collide, this);

@@ -621,7 +621,7 @@ var AISprite = function(game, x, y, key, frame) {
 	this.carries_light = parseBoolean(this.carries_light);
 	this.sprite_has_treasure = parseBoolean(this.sprite_has_treasure);
 	if ( this.sprite_has_treasure ) {
-	    this.treasure = getRandomTreasure();
+	    this.sprite_treasure = getRandomTreasure();
 	}
 
 	this.path_maximum_steps = parseInt(this.path_maximum_steps);
