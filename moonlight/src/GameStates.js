@@ -67,6 +67,7 @@ GameState.prototype.create = function()
     pathfinder = new PF.AStarFinder({allowDiagonal: false});
     
     this.physics.arcade.enable(player);
+    player.body.setSize(16, 16, 8, 16);
     player.body.center = new Phaser.Point(player.body.width / 2, player.body.height + player.body.halfHeight);
     player.body.collideWorldBounds = true;
     //player.body.immovable = true;
@@ -334,11 +335,11 @@ GameState.prototype.update = function()
 	    player.body.y = prevpos.y;
 	    switch ( getFaceState(player) ) {
 		case STATE_FACE_LEFT: {
-		    player.body.x -= STEAL_DISTANCE;
+		    player.body.x -= (STEAL_DISTANCE + 8);
 		    break;
 		}
 		case STATE_FACE_RIGHT: {
-		    player.body.x += STEAL_DISTANCE;
+		    player.body.x += (STEAL_DISTANCE + 8);
 		    break;
 		}
 		case STATE_FACE_DOWN: {
@@ -346,7 +347,7 @@ GameState.prototype.update = function()
 		    break;
 		}
 		case STATE_FACE_UP: {
-		    player.body.y -= STEAL_DISTANCE;
+		    player.body.y -= (STEAL_DISTANCE * 2);
 		    break;
 		}
 	    }
