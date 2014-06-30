@@ -288,7 +288,9 @@
                  "properties":
                     {
                      "sprite_canmove":"true",
+                     "sprite_facing":"left",
                      "sprite_group":"townsfolk-female",
+                     "sprite_has_treasure":"true",
                      "sprite_name":"townsfolk-female-2"
                     },
                  "type":"AI",
@@ -303,7 +305,10 @@
                  "name":"BigTopCustomer2",
                  "properties":
                     {
+                     "sprite_canmove":"true",
+                     "sprite_facing":"right",
                      "sprite_group":"townsfolk-male",
+                     "sprite_has_treasure":"true",
                      "sprite_name":"townsfolk-male-3"
                     },
                  "type":"AI",
@@ -319,7 +324,9 @@
                  "properties":
                     {
                      "sprite_canmove":"true",
+                     "sprite_facing":"up",
                      "sprite_group":"townsfolk-female",
+                     "sprite_has_treasure":"true",
                      "sprite_name":"townsfolk-female-4"
                     },
                  "type":"AI",

@@ -114,6 +114,7 @@ GameState.prototype.create = function()
     this.bubble_group = game.add.group();
 
     this.uigroup = game.add.group();
+    this.recentlyStolenGroup = game.add.group();
     this.game.time.advancedTiming = true;
 
     this.clockText = this.game.add.text(
@@ -218,6 +219,8 @@ GameState.prototype.check_input = function()
 
     if ( controls.steal.justReleased() == true ) {
 	addState(player, STATE_STEALING);
+    } else {
+	delState(player, STATE_STEALING);
     }
 
     if ( controls.up.isDown) {
@@ -323,8 +326,8 @@ GameState.prototype.update = function()
 	}
 	if ( this.physics.arcade.collide(x, player) == true )
 	    x.setAwarenessEffect(STATE_ALERTED);
-	if ( hasState(player, STATE_STEALING) == true ) {
-	    delState(player, STATE_STEALING);
+	if ( hasState(player, STATE_STEALING) == true && 
+	     x.sprite_has_treasure == true ) {
 	    var prevpos = player.body.position;
 	    player.body.position = new Phaser.Point();
 	    player.body.x = prevpos.x;
@@ -348,9 +351,35 @@ GameState.prototype.update = function()
 		}
 	    }
 	    if ( this.physics.arcade.collide(x, player) == true ) {
+		delState(player, STATE_STEALING);
 		x.sprite_has_treasure = false;
-		player.score += moonlightTreasures[x.sprite_treasure]['value'];
+		var stolen = moonlightTreasures[x.sprite_treasure];
+		player.score += stolen['value'];
 		x.sprite_treasure = null;
+		if ( this.recentlyStolenGroup.total >= RECENTLYSTOLEN_MAX ) {
+		    this.recentlyStolenGroup.remove(
+			this.recentlyStolenGroup.getBottom(),
+			true);
+		}
+		this.recentlyStolenGroup.addAll('cameraOffset.x', 24);
+		var rs = game.add.sprite(
+		    SCREEN_OFFSET_RECENTLYSTOLEN.x + 12,
+		    SCREEN_OFFSET_RECENTLYSTOLEN.y + 12,
+		    'treasure',
+		    (stolen['y'] * TREASURE_SHEET_WIDTH) + stolen['x'],
+		    this.recentlyStolenGroup);
+		rs.anchor.setTo(0.5, 0.5);
+		rs.scale.x = 3;
+		rs.scale.y = 3;
+		rs.angle = 0;
+		tween = game.add.tween(rs);
+		tween.to({angle: 360}, 1000, null);
+		tween.onComplete.add(function(){this.angle=0;}, this);
+		tween.start();
+		tween = game.add.tween(rs.scale);
+		tween.to({x: 1, y: 1}, 1000, null);
+		tween.start();
+		rs.fixedToCamera = true;
 	    }
 	    player.body.position = prevpos;
 	}
