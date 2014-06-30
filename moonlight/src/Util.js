@@ -161,8 +161,11 @@ function getFaceState(spr)
 
 function getMoveState(spr)
 {
-    return ( hasState(spr, STATE_MOVING) ||
-	     hasState(spr, STATE_RUNNING) );
+    if ( hasState(spr, STATE_MOVING) == true )
+	return STATE_MOVING;
+    if ( hasState(spr, STATE_RUNNING) == true )
+	return STATE_RUNNING;
+    return STATE_NONE;
 }
 
 function delState(spr, state)
@@ -244,48 +247,67 @@ function getMovingAnimationName(spr)
     return sprbase + spriteFacing(spr);
 }
 
-function setSpriteMovement(spr, velocity)
+function setSpriteMovement(spr)
 {
     var x = 0;
     var y = 0;
     var dir = spriteFacing(spr);
-    velocity = ( typeof velocity == undefined ? velocity : [SPEED_WALKING, 
-							    SPEED_RUNNING] );
+    var speed = TWEEN_DURATION_PERTILE_WALKING;
 
-    //spr.body.setSize(16, 16, 8, 16);
+    if ( isSet(spr.movement_tween) == true ) {
+	return;
+    }
 
-    if ( hasState(spr, STATE_RUNNING) ) {
-	if ( velocity !== false )
-	    velocity = velocity[1];
-	spr.animations.play("bipedrun" + dir);
-    } else if ( hasState(spr, STATE_MOVING) ) {
-	if ( velocity !== false )
-	    velocity = velocity[0];
-	spr.animations.play("bipedwalk" + dir);
-    } else {
-	if ( velocity !== false ) {
-	    spr.body.velocity.x = 0;
-	    spr.body.velocity.y = 0;
-	}
+    // Face the correct direction even if we don't go there
+    spr.animations.play(getMovingAnimationName(spr));
+    spr.animations.stop();
+
+    var dest = {'x': spr.x, 'y': spr.y};
+
+    if ( dir == "left" ) {
+	dest['x'] = spr.x - TILE_WIDTH;
+    } else if ( dir == "right" ) {
+	dest['x'] = spr.x + TILE_WIDTH;
+    } else if ( dir == "up" ) {
+	dest['y'] = spr.y - TILE_HEIGHT;
+    } else if ( dir == "down" ) {
+	dest['y'] = spr.y + TILE_HEIGHT;
+    }
+    try {
+	var desttile = pathfinder_grid.nodes[parseInt(dest['y']/TILE_HEIGHT)][parseInt(dest['x']/TILE_WIDTH)];
+    } catch(err) {
+	// This likely means the map isn't ready yet
+	console.log(err);
+	return;
+    }
+
+    if ( getMoveState(spr) == STATE_NONE ) {
 	spr.animations.stop();
 	return;
     }
 
-    if ( velocity !== false ) {
-	if ( dir == "left" ) {
-	    spr.body.velocity.x = -(velocity * velocity);
-	    spr.body.velocity.y = 0;
-	} else if ( dir == "right" ) {
-	    spr.body.velocity.x = (velocity * velocity);
-	    spr.body.velocity.y = 0;
-	} else if ( dir == "up" ) {
-	    spr.body.velocity.x = 0;
-	    spr.body.velocity.y = -(velocity * velocity);
-	} else if ( dir == "down" ) {
-	    spr.body.velocity.x = 0;
-	    spr.body.velocity.y = (velocity * velocity);
-	}
+    if ( dest['x'] < 0 ||
+	 dest['x'] >= game.state.states.game.map.widthInPixels ||
+	 dest['y'] < 0 || 
+	 dest['y'] >= game.state.states.game.map.widthInPixels )
+	return;
+    if ( desttile.walkable == false ) 
+	return;
+
+    if ( spr == player )
+	console.log("Starting new tween");
+    spr.movement_tween = game.add.tween(spr);
+    if ( hasState(spr, STATE_RUNNING) ) {
+	speed = TWEEN_DURATION_PERTILE_RUNNING;
     }
+    spr.movement_tween.to(dest, speed, null);
+    spr.movement_tween.onStart.add(function() {
+	this.animations.play(getMovingAnimationName(this));
+    }, spr);
+    spr.movement_tween.onComplete.add(function() {
+	this.movement_tween = null;
+    }, spr);
+    spr.movement_tween.start();
 }
 
 function genericGridClone()

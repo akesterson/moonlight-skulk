@@ -36,7 +36,9 @@ GameState.prototype.create = function()
 		this.aiSprites.forEach(function(spr) {
 		    spr.update_new_values();
 		}, this)
-		player = this.add.sprite((19 * 32), (21 * 32), 'player');
+		//player = this.add.sprite((19 * 32), (21 * 32), 'player');
+		player = this.add.sprite((0 * 32), (10 * 32), 'player');
+		player.movement_tween = null;
 		player.score = 0;
 		player.lightmeter = 0;
 
@@ -212,15 +214,17 @@ GameState.prototype.updateShadowTexture = function() {
 
 GameState.prototype.check_input = function()
 {
-    player.body.velocity.x = 0;
-    player.body.velocity.y = 0;
     velocityMod = 0;
-    var newstate = 0;
+    var newstate = STATE_NONE;
 
     if ( controls.steal.justReleased() == true ) {
 	addState(player, STATE_STEALING);
     } else {
 	delState(player, STATE_STEALING);
+    }
+
+    if ( isSet(player.movement_tween) == true ) {
+	return;
     }
 
     if ( controls.up.isDown) {
