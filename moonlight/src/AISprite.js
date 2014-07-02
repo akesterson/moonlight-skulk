@@ -75,6 +75,8 @@ var AISprite = function(game, x, y, key, frame) {
 
     this.runGlintEffect = function() {
 	if ( this.sprite_has_treasure == true ) {
+	    if ( isSet(this.glint_effect) == true )
+		this.glint_effect.destroy();
 	    this.glint_effect = game.state.states.game.add.sprite(
 		this.x + 16,
 		this.y + 24,
@@ -143,6 +145,8 @@ var AISprite = function(game, x, y, key, frame) {
 
 	this.bubble_immediate = true;
 	this.clearWordBubble();
+	if ( isSet(this.awareness_effect) == true )
+	    this.awareness_effect.destroy();
 	this.awareness_effect = game.state.states.game.add.sprite(
 	    this.x + 16,
 	    this.y - 16,
@@ -206,6 +210,8 @@ var AISprite = function(game, x, y, key, frame) {
 	text = mylines[game.rnd.integerInRange(0, mylines.length-1)];
 	style = {font: '14px Arial Bold', fill: '#ffffff'}
 	this.text_size = stringSize(text, style['font']);
+	if ( isSet(this.bubble_sprite) == true )
+	    this.bubble_sprite.destroy();
 	this.bubble_sprite = game.add.sprite(this.x, this.y, 'wordbubble');
 	this.bubble_sprite.anchor.setTo(0.5, 1.0);
 	this.bubble_sprite.scale.x = Number((this.text_size[0] + 16) / bubbleimg.width);

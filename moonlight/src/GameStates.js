@@ -309,6 +309,8 @@ GameState.prototype.update = function()
 	if ( x.collide_with_player == false )
 	    return;
 	if ( x.canSeeSprite(player, false) == true ) {
+	    if ( isSet(x.lastSawPlayerAt) == true )
+		x.lastSawPlayerAt.destroy();
 	    x.lastSawPlayerAt = new Phaser.Sprite(game, player.x, player.y, null);
 	    if ( player.lightmeter >= x.sprite_can_see_lightmeter ) {
  		x.setAwarenessEffect(STATE_ALERTED);
@@ -375,7 +377,7 @@ GameState.prototype.update = function()
 		rs.angle = 0;
 		tween = game.add.tween(rs);
 		tween.to({angle: 360}, 1000, null);
-		tween.onComplete.add(function(){this.angle=0;}, this);
+		tween.onComplete.add(function(){this.angle=0;}, rs);
 		tween.start();
 		tween = game.add.tween(rs.scale);
 		tween.to({x: 1, y: 1}, 1000, null);
