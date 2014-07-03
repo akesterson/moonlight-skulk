@@ -10,11 +10,11 @@ var moonlightDialog = {
 		"I'm off to the pub to see the\nlads and chew the fat.",
 		"♪ ♫ Whistling ♪ ♫",
 		"Gods, I'm thirsty.",
-		"Oh, I'll kip well tonight for sure.",
-		"Well, at least it ain't raining.",
-		"I'd hang for a pint about now.",
-		"Oof. Those beans ain't doing me guts any good.",
-		"Knew I should'a bought my coat with me.",
+		"Oh, I'll kip well \ntonight for sure.",
+		"Well, at least it\nain't raining.",
+		"I'd hang for a pint\nabout now.",
+		"Oof. Those beans ain't\ndoing me guts any good.",
+		"Knew I should'a bought\nmy coat with me.",
 		"Just a few hours left...",
 		"I need some new boots."
 	    ],
@@ -66,12 +66,12 @@ var moonlightDialog = {
 		"Bloody wanker!",
 		"Where'd you go, grubber?",
 		"Yeah, you'd better hide.",
-		"That's right. Crawl back to your hole!",
+		"That's right. Crawl back\nto your hole!",
 		"Ha, I must of scared 'em away.",
 		"Huh. Guess they scarpered off.",
-		"Yeah, go pick on someone else then.",
+		"Yeah, go pick on someone\nelse then.",
 		"I'm chuffin' glad that's over!",
-		"Huh. Looks like the grubber ghosted."
+		"Huh. Looks like the\ngrubber ghosted."
 	    ]
 	},
 	"townsfolk-female" : {
@@ -81,15 +81,15 @@ var moonlightDialog = {
 		"It's always all itsy bitsy with\nthem boys at the Rub-a-Dub.",
 		"I need to get this shopping\nsorted out.",
 		"What a lovely evening. Perfect\nfor skulking, I would imagine.",
-		"'tis a hard life. Always has been.",
-		"What I wouldn't give for a warm bath...",
+		"'tis a hard life. Always\nhas been.",
+		"What I wouldn't give for\na warm bath...",
 		"Haven't had a day off in weeks.",
-		"I just need to save up a bit more coin...",
-		"Should probably stop nattering to meself.",
-		"Nothing good ever happens round 'ere.",
-		"Where's that chuffin' cat got to now?",
-		"Nobody ever listens to me, do they?",
-		"I picked the wrong day to quit tiffin'."
+		"I just need to save up a\nbit more coin...",
+		"Should probably stop\nnattering to meself.",
+		"Nothing good ever happens\nround 'ere.",
+		"Where's that chuffin'\ncat got to now?",
+		"Nobody ever listens to\nme, do they?",
+		"I picked the wrong day\nto quit tiffin'."
 	    ],
 	    "concerned" : [
 		"Wha… what’s that? Who’s there?",
@@ -99,11 +99,11 @@ var moonlightDialog = {
 		"What was that? This is how horror\ntheatre bits start…",
 		"What's that?",
 		"Did you see that?",
-		"I...I don't want no trouble, y'hear?",
+		"I...I don't want no\ntrouble, y'hear?",
 		"Someone peeping on me?",
 		"Who's that grubbing about?",
-		"If someone's there, come out now!",
-		"What's that trouble over there?",
+		"If someone's there,\ncome out now!",
+		"What's that trouble\nover there?",
 		"Who's there?",
 		"Um, hullo?",
 		"Uh oh..."
@@ -114,7 +114,7 @@ var moonlightDialog = {
 		"Guards! Guards!",
 		"What in the nine hells?",
 		"Get back or I'll swoon!",
-		"Help! He's after me virtue!"
+		"Help! He's after me virtue!",
 		"Oh, a peeper!",
 		"No, please!",
 		"Someone help!",
@@ -133,11 +133,11 @@ var moonlightDialog = {
 		"Ah, my heart can't take much more...",
 		"Oh, thank the Duke that's over...",
 		"I hope they don't come back!",
-		"Peepers everywhere in this chuffin' city.",
+		"Peepers everywhere in\nthis chuffin' city.",
 		"Why do peepers always find me?",
 		"I..I think it's safe now.",
 		"Maybe I just imagined it?",
-		"It was just some kid grubbing about."
+		"It was just some\nkid grubbing about."
 	    ]
 	},
 	"townsfolk-guard" : {
@@ -149,14 +149,14 @@ var moonlightDialog = {
 		"I am the law.",
 		"May Evil beware and may\nGood dress warmly and\neat plenty of fresh vegetables.",
 		"We're sworn to protect The City.",
-		"No gold. No glory. This job is no good.",
-		"Should of joined the army instead.",
+		"No gold. No glory.\nThis job is no good.",
+		"Should of joined\nthe army instead.",
 		"One more day 'til retirement.",
-		"I always draw the chuffin' night shift.",
-		"Blast, I left me flask at home!",
-		"I'm never drinking again, I swear.",
-		"Tomorrow. I'll quit tiffin' tomorrow.",
-		"I'll join the Duke's guard someday.",
+		"I always draw the\nchuffin' night shift.",
+		"Blast, I left me\nflask at home!",
+		"I'm never drinking\nagain, I swear.",
+		"Tomorrow. I'll quit\ntiffin' tomorrow.",
+		"I'll join the Duke's\nguard someday.",
 		"Well, better bored than busy."
 	    ],
 	    "concerned" : [
@@ -173,10 +173,10 @@ var moonlightDialog = {
 		"Who's that skulkin' there?",
 		"Someone's up to no good!",
 		"Trouble? At last!",
-		"I'll get to the bottom of this!",
+		"I'll get to the\nbottom of this!",
 		"I see you there, grubber!",
-		"I heard that, whoever you are!",
-		"Stop fooling and come out at once!"
+		"I heard that,\nwhoever you are!",
+		"Stop fooling and\ncome out at once!"
 	    ],
 	    "alerted" : [
 		"Surrender lawbreaker!",
@@ -190,13 +190,13 @@ var moonlightDialog = {
 		"Clear the area! Nobody\npanic! I'll catch him!",
 		"Halt in the name of the Duke!",
 		"Hold it, grubber!",
-		"I'll teach you a thing or two, trickster!",
+		"I'll teach you a\nthing or two, trickster!",
 		"Defend yourself, heathen!",
 		"Surrender, vagrant!",
 		"Code Ten! Code Ten!",
-		"In the name of the Duke, surrender!",
+		"In the name of\nthe Duke, surrender!",
 		"Fall before the law!",
-		"Run and you'll die tired, grubber!",
+		"Run and you'll only\ndie tired, grubber!",
 		"Don't try to flee, coward!",
 		"Now where'd you come from?"
 	    ],
@@ -208,9 +208,9 @@ var moonlightDialog = {
 		"I'll find you...eventually.",
 		"You'll turn up sooner or later...",
 		"Someone else's problem now.",
-		"I'll catch you next time, see if I don't.",
-		"The law will find thee later, grubber.",
-		"The Duke's rule will find you. Later.",
+		"I'll catch you next\ntime, see if I don't.",
+		"The law will find\nthee later, grubber.",
+		"The Duke's rule will\nfind you. Later.",
 		"I'd better keep an eye out...",
 		"This is ALL going in my report.",
 		"Hide if you can, vagrant.",
@@ -219,6 +219,70 @@ var moonlightDialog = {
 	}
     },
     "conversations": [
+	{
+	    "members": ["townsfolk-male", "townsfolk-male"],
+	    "starter": "",
+	    "lines": [
+		"'Allo me old china - wot\nsay we pop round the Jack\nfer a pigs ear?",
+		"Aye, we can rabbit on\nabout the trouble.",
+		"I could sure go fer some\nloop and tommy, and hearin\nbout them teapots of yours.",
+		"I cant go losin me Round\nthe Houses in the tank though.",
+		"Nah the Cows and Kissesll\nmurder me if Im not home\nwhen the dickory hits twelve."
+	    ]
+	},
+	{
+	    "members": ["townsfolk-female", "townsfolk-male"],
+	    "starter": "townsfolk-male",
+	    "lines": [
+		"Hey there. I was wondering\nif youd like to maybe go to\nthe Summer festival with me?",
+		"With you? To the festival?",
+		"Yeah. I mean, if youd want to",
+		"I'd rather have my head catch\non fire. Bugger off."
+	    ]
+	},
+	{
+	    "members": ["townsfolk-male", "townsfolk-guard"],
+	    "starter": "townsfolk-guard",
+	    "lines": [
+		"Move along citizen! There'll\nbe no loitering here.",
+		"Loitering? A man cant stand on\na public street no more?",
+		"Harassing a city official is\na crime punishable by flogging.",
+		"Oh, flog this, you sodding twert!"
+	    ]
+	},
+	{
+	    "members": ["townsfolk-female", "townsfolk-female"],
+	    "starter": "",
+	    "lines": [
+		"Have you heard about all\nthe burglaries lately?",
+		"Yeah, its madness. I don't\neven carry my purse anymore.",
+		"I hear Mr. Brintley had his\nown wig stolen off his head.",
+		"Eh, it wasnt like that furry\nmop was convincing anyone anyhow!"
+	    ]
+	},
+	{
+	    "members": ["townsfolk-female", "townsfolk-guard"],
+	    "starter": "",
+	    "lines": [
+		"Here, I baked some pies to thank\nyou guards for keeping us all safe.",
+		"Pie? Oh, I love pie!\n*Nom nom nom nom*",
+		"",
+		"*spit* *cough* *hack* *choke* *gag*",
+		"",
+		"Wha whats in this pie?! Its awful!",
+		"Oh, its turnip pie. Someone\nstole all my apples."
+	    ]
+	},
+	{
+	    "members": ["townsfolk-guard", "townsfolk-guard"],
+	    "starter": "",
+	    "lines": [
+		"Hey soldier, whatre you doing\nsitting down on the job?",
+		"Im polishing my sword, sergeant.",
+		"Excellent work soldier. Maintaining\nequipment is paramount to stopping evil.",
+		"Roger that sergeant. Im polishing\nmy steel for justice!"
+	    ],
+	},
 	{
 	    "members": ["townsfolk-female", "townsfolk-male"],
 	    "starter": "townsfolk-male",
@@ -242,7 +306,7 @@ var moonlightDialog = {
 		"Well, nice chatting.",
 		"Aye."
 	    ]
-	}
+	},
 	{
 	    "members": ["townsfolk-[fm]*", "townsfolk-[fm]*"],
 	    "starter": "",
@@ -250,32 +314,32 @@ var moonlightDialog = {
 		"Have you seen a cat around here?",
 		"This a joke? Heard it.",
 		"Excuse me?",
-		"About the cat and his Duke, right?",
-		"Um, no. I'm looking for my cat.",
-		"Oh, sorry. I've not seen it.",
+		"About the cat and\nhis Duke, right?",
+		"Um, no. I'm looking\nfor my cat.",
+		"Oh, sorry. I've not\nseen it.",
 		"Thanks anyway. ",
-		"Hang on, wanna hear a joke?"
+		"Hang on, wanna hear\na joke?"
 	    ]
 	},
 	{
 	    "members": ["townsfolk-[fm]*", "townsfolk-[fm]*"],
 	    "starter": "",
 	    "lines": [
-		"Have you seen a cat around here?",
-		"Afraid not. Did you lose one?",
+		"Have you seen a cat\naround here?",
+		"Afraid not. Did you\nlose one?",
 		"Yes, Mr Smidge ran away!",
-		"How terrible. I hope you find him soon!",
-		"So do I, or my kids will go hungry again."
+		"How terrible. I hope\nyou find him soon!",
+		"So do I, or my kids\nwill go hungry again."
 	    ]
 	},
 	{
 	    "members": ["townsfolk-[fm]*", "townsfolk-[fm]*"],
 	    "starter": "",
 	    "lines": [
-		"See the Duke raised our taxes again?",
+		"See the Duke raised our\ntaxes again?",
 		"Keep your voice down!",
 		"Why, what's wrong?",
-		"I saw the Duke earlier. He's nearby!",
+		"I saw the Duke earlier.\nHe's nearby!",
 		"Oh, right. Praise the Duke!"
 	    ]
 	},
@@ -284,10 +348,10 @@ var moonlightDialog = {
 	    "starter": "",
 	    "lines": [
 		"Nice weather, ain't it?",
-		"Can't you think of something new to say?",
-		"No. I'm worry I'm just going round in circles.",
+		"Can't you think of something\nnew to say?",
+		"No. I'm worry I'm just going\nround in circles.",
 		"Yeah, I know that feeling.",
-		"At least the weather is nice though."
+		"At least the weather is\nnice though."
 	    ]
 	},
 	{
@@ -295,9 +359,9 @@ var moonlightDialog = {
 	    "starter": "townsfolk-[fm]*",
 	    "lines": [
 		"Fancy a pint or three later?",
-		"Can't. Got the kids at home, ain't I?",
+		"Can't. Got the kids at\nhome, ain't I?",
 		"Bring 'em with.",
-		"Eh? You can't give booze ta babies!"
+		"Eh? You can't give booze\nta babies!",
 		"Never did me no harm.",
 		"If you say so, chuffer."
 	    ]
@@ -316,8 +380,8 @@ var moonlightDialog = {
 	    "members": ["townsfolk-[fm]*", "townsfolk-guard"],
 	    "starter": "townsfolk-[fm]*",
 	    "lines": [
-		"Want to buy a fine leather jacket?",
-		"It wouldn't fit over my armour.",
+		"Want to buy a fine\nleather jacket?",
+		"It wouldn't fit over\nmy armour.",
 		"Take the armour off.",
 		"What if I'm attacked?",
 		"Then you'll die looking good! "
@@ -327,7 +391,7 @@ var moonlightDialog = {
 	    "members": ["townsfolk-[fm]*", "townsfolk-guard"],
 	    "starter": "townsfolk-[fm]*",
 	    "lines": [
-		"Excuse me, have you seen a cat?",
+		"Excuse me, have you\nseen a cat?",
 		"A little ginger cat?",
 		"Yes!",
 		"Blue collar? Delicious flavour?",
@@ -353,10 +417,10 @@ var moonlightDialog = {
 	    "lines": [
 		"Anything to report?",
 		"Nothing to report!",
-		"Good! I'll note that in my report.",
-		"Do you have anything to report, Sir?",
-		"Only that you have nothing to report.",
-		"Great! I'll note that in my report!"
+		"Good! I'll note that\nin my report.",
+		"Do you have anything\nto report, Sir?",
+		"Only that you have\nnothing to report.",
+		"Great! I'll note that\nin my report!"
 	    ]
 	},
 	{
@@ -365,9 +429,9 @@ var moonlightDialog = {
 	    "lines": [
 		"Stay alert, soldier!",
 		"Yes, sir!",
-		"The Duke is near. We must be vigilant.",
+		"The Duke is near. We\nmust be vigilant.",
 		"Vigilant for the Duke, Sir?",
-		"Yes! How else will I get his autograph?"
+		"Yes! How else will I\nget his autograph?"
 	    ]
 	},
 	{
@@ -375,9 +439,9 @@ var moonlightDialog = {
 	    "starter": "",
 	    "lines": [
 		"Seen anything interesting?",
-		"Just this cat that keeps limping around.",
+		"Just this cat that keeps\nlimping around.",
 		"Limping?",
-		"Aye. Something took a bite out of it.",
+		"Aye. Something took a\nbite out of it.",
 		"Aw, the poor thing."
 	    ]
 	},
