@@ -122,7 +122,7 @@ GameState.prototype.create = function()
 	20, SCREEN_HEIGHT - 40, '', { font : '16px Arial', fill: '#ffffff' }, this.uigroup
     );
     this.clock = new Date();
-    this.clock.setHours(20, 0, 0, 0);
+    this.clock.setHours(20, 50, 0, 0);
     this.clockTimer = game.time.create(true);
     this.clockTimer.repeat(DAYLIGHT_TIMER_REPEAT, 
 			   DAYLIGHT_TIMER_REPEATCOUNT,
