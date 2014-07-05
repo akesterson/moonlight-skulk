@@ -357,7 +357,12 @@ GameState.prototype.update = function()
 		delState(player, STATE_STEALING);
 		x.sprite_has_treasure = false;
 		var stolen = moonlightTreasures[x.sprite_treasure];
-		player.score += stolen['value'];
+		if ( typeof stolen == 'undefined' ) {
+		    // You should put a trap here.
+		    console.log("Tried to steal undefined : " + x.sprite_treasure);
+		} else {
+		    player.score += stolen['value'];
+		}
 		x.sprite_treasure = null;
 		if ( this.recentlyStolenGroup.total >= RECENTLYSTOLEN_MAX ) {
 		    this.recentlyStolenGroup.remove(

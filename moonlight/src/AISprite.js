@@ -350,7 +350,7 @@ var AISprite = function(game, x, y, key, frame) {
 	    if ( hasBeenReset == true ) 
 		return;
 	    if ( game.physics.arcade.overlap(spr, this) ) {
-		var last = this.path[this.path.length() - 1];
+		var last = this.path[this.path.length - 1];
 		this.path_tween_stop();
 		hasBeenReset = true;
 	    }
