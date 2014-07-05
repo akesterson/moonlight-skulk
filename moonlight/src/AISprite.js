@@ -347,7 +347,7 @@ var AISprite = function(game, x, y, key, frame) {
 	var aiSprites = game.state.states.game.aiSprites;
 	var hasBeenReset = false;
 	aiSprites.forEach(function(spr) {
-	    if ( hasBeenReset == true ) 
+	    if ( hasBeenReset == true || spr == this) 
 		return;
 	    if ( game.physics.arcade.overlap(spr, this) ) {
 		var last = this.path[this.path.length - 1];
