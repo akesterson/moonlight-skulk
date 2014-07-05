@@ -327,6 +327,8 @@ var AISprite = function(game, x, y, key, frame) {
 		this._object.animations.play(getMovingAnimationName(this._object));
 	    }, tween);
 	    tween.onComplete.add(function() {
+		if ( this._object.resetPathOnCollision() == true )
+		    return;
 		this._object.path_index += 1;
 		setMovingState(this._object, getFaceState(this._object));
 		this._object.animations.play(getMovingAnimationName(this._object));		
@@ -339,6 +341,21 @@ var AISprite = function(game, x, y, key, frame) {
 	}
 	if ( this.path_tweens.length > 0 )
 	    this.path_tweens[0].start();
+    }
+
+    this.resetPathOnCollision = function() {
+	var aiSprites = game.state.states.game.aiSprites;
+	var hasBeenReset = false;
+	aiSprites.forEach(function(spr) {
+	    if ( hasBeenReset == true ) 
+		return;
+	    if ( game.physics.arcade.collide(spr, this) ) {
+		var last = this.path[this.path.length() - 1];
+		this.path_tween_stop();
+		hasBeenReset = true;
+	    }
+	}, this);
+	return hasBeenReset;
     }
 
     this.path_tween_stop = function()
@@ -570,6 +587,7 @@ var AISprite = function(game, x, y, key, frame) {
     {
 	if ( this.ready_to_update == false )
 	    return;
+
 	if ( isSet(this.awareness_effect) ) {
 	    if ( this.awareness_effect.alive == false ) {
 		this.awareness_effect.destroy();
@@ -617,6 +635,7 @@ var AISprite = function(game, x, y, key, frame) {
 	this.animations.destroy();
 	this.clearWordBubble();	
 	this.state = STATE_UNAWARE;
+	this.view_distance = parseInt(this.view_distance);
 	this.state_changed_at = new Phaser.Point(this.x, this.y);
 	this.hunt_radius = parseInt(this.hunt_radius);
 	this.sprite_can_see_lightmeter = Number(this.sprite_can_see_lightmeter);

@@ -269,7 +269,7 @@ var moonlightDialog = {
 		"",
 		"*spit* *cough* *hack* *choke* *gag*",
 		"",
-		"Wha whats in this pie?! Its awful!",
+		"Wha... whats in this\npie?! Its awful!",
 		"Oh, its turnip pie. Someone\nstole all my apples."
 	    ]
 	},

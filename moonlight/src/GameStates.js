@@ -319,7 +319,7 @@ GameState.prototype.update = function()
 	    }
 	    return;
 	} else {
-	    if ( this.physics.arcade.collide(x, player) ) {
+	    if ( this.physics.arcade.overlap(x, player) ) {
 		x.setAwarenessEffect(STATE_CONCERNED);
 	    } else if ( hasState(x, STATE_LOSTHIM) == false ) {
 		x.setAwarenessEffect(STATE_LOSTHIM);
@@ -327,7 +327,7 @@ GameState.prototype.update = function()
 		x.setAwarenessEffect(STATE_UNAWARE);
 	    }
 	}
-	if ( this.physics.arcade.collide(x, player) == true )
+	if ( this.physics.arcade.overlap(x, player) == true )
 	    x.setAwarenessEffect(STATE_ALERTED);
 	if ( hasState(player, STATE_STEALING) == true && 
 	     x.sprite_has_treasure == true ) {
@@ -353,7 +353,7 @@ GameState.prototype.update = function()
 		    break;
 		}
 	    }
-	    if ( this.physics.arcade.collide(x, player) == true ) {
+	    if ( this.physics.arcade.overlap(x, player) == true ) {
 		delState(player, STATE_STEALING);
 		x.sprite_has_treasure = false;
 		var stolen = moonlightTreasures[x.sprite_treasure];
@@ -388,7 +388,7 @@ GameState.prototype.update = function()
 	}
     }
 
-    this.effectSprites.forEach(_inner_collide, this);
+    // this.effectSprites.forEach(_inner_collide, this);
 
     this.aiSprites.forEach(_inner_collide, this);
     this.updateShadowTexture();
