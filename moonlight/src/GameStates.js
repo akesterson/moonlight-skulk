@@ -341,11 +341,11 @@ GameState.prototype.update = function()
 		    break;
 		}
 		case STATE_FACE_RIGHT: {
-		    player.body.x += (STEAL_DISTANCE + 8);
+		    player.body.width += (STEAL_DISTANCE + 8);
 		    break;
 		}
 		case STATE_FACE_DOWN: {
-		    player.body.y += STEAL_DISTANCE;
+		    player.body.height += STEAL_DISTANCE;
 		    break;
 		}
 		case STATE_FACE_UP: {
