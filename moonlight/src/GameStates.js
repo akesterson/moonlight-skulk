@@ -332,6 +332,8 @@ GameState.prototype.update = function()
 	if ( hasState(player, STATE_STEALING) == true && 
 	     x.sprite_has_treasure == true ) {
 	    var prevpos = player.body.position;
+	    var prevwidth = player.body.width;
+	    var prevheight = player.body.height;
 	    player.body.position = new Phaser.Point();
 	    player.body.x = prevpos.x;
 	    player.body.y = prevpos.y;
@@ -390,6 +392,8 @@ GameState.prototype.update = function()
 		rs.fixedToCamera = true;
 	    }
 	    player.body.position = prevpos;
+	    player.body.width = prevwidth;
+	    player.body.height = prevheight;
 	}
     }
 

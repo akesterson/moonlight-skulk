@@ -60,9 +60,7 @@ function nearestInGroup(sprite, group, sprite_group) {
     var nearest = null;
     var lastdist = 0.0;
     for ( var i = 0 ; i < group.length; i++ ) {
-	console.log("Checking distance to group[" + i + "]");
 	var spr = group.getChildAt(i);
-	console.log(spr);
 	if ( (typeof sprite_group !== undefined) &&
 	     spr.sprite_group !== sprite_group ) 
 	    continue;
@@ -342,6 +340,6 @@ function awardPlayerScoreByState(state)
 function getRandomTreasure()
 {
     var treasures = Object.keys(moonlightTreasures);
-    var treasure = treasures[game.rnd.integerInRange(0, treasures.length)];
+    var treasure = treasures[game.rnd.integerInRange(0, treasures.length-1)];
     return treasure;
 }
