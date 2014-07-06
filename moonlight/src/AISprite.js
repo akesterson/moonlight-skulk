@@ -98,8 +98,9 @@ var AISprite = function(game, x, y, key, frame) {
 	}
     }
 
-    this.setAwarenessEffect = function(state) {
+    this.setAwarenessEffect = function(state, force) {
 	var animkey = "";
+	force = (typeof force == 'undefined' ? false : force);
 
 	if ( state == STATE_NONE )
 	    return;
@@ -110,7 +111,7 @@ var AISprite = function(game, x, y, key, frame) {
 	    return;
 	} else if ( (state == STATE_LOSTHIM) && 
 		    (hasState(this, STATE_ALERTED) == false) &&
-		    (hasState(this, STATE_CONCERNED) == false) ) {
+		    (hasState(this, STATE_CONCERNED) == false)) {
 	    return;
 	} 
 
@@ -407,11 +408,17 @@ var AISprite = function(game, x, y, key, frame) {
 	    this.path_tween_stop();
 	    if ( ((visual == true) && (this.canSeeSprite(target, false) == true )) ||
 		 (visual == false)) {
+		
 		this.setAwarenessEffect(alertedState);
 		this.path_set(target, true, maxsteps, useNearestWalkable);
 		this.path_tween_start(movingstate);
 	    } else {
-		this.startTimedRotation();
+		if ( ( hasState(this, STATE_ALERTED) == true ) && 
+		     ( this.seen_directions.length < 4 ) ) {
+		    this.startTimedRotation();
+		} else if ( hasState(this, STATE_ALERTED) == true ) {
+		    this.action_huntplayer();
+		}
 	    }
 	} else {
 	    if ( this.path_set(target, this.blocked(true), maxsteps, useNearestWalkable) == true ) {
@@ -511,6 +518,14 @@ var AISprite = function(game, x, y, key, frame) {
 	var destx = game.rnd.integerInRange(boundleft, boundright);
 	var desty = game.rnd.integerInRange(boundtop, boundbottom);
 	return new Phaser.Sprite(game, destx*32, desty*32, null);
+    }
+
+    this.stopTimedRotation = function() {
+	if ( isSet(this.rotation_timer) == true ) {
+	    this.rotation_timer.stop();
+	    this.rotation_timer = null;
+	}
+	this.seen_directions = [];
     }
 
     this.startTimedRotation = function() {
