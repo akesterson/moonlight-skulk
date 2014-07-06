@@ -42,8 +42,8 @@ var AISprite = function(game, x, y, key, frame) {
 	if ( hasState(this, STATE_ALERTED) )
 	    vd = vd * 2;
 
-	var distance = (new Phaser.Line(spr.x, spr.y, this.x, this.y).length);
-	if ( distance > vd ) {
+	var viewline = new Phaser.Line(this.x, this.y, spr.x, spr.y);
+	if ( viewline.length > vd ) {
 	    return false;
 	}
 
@@ -53,8 +53,22 @@ var AISprite = function(game, x, y, key, frame) {
 	}
 	var sprrect = positiveRectangle(spr.x, spr.y, 32, 32);
 	if ( viewrect.intersects(sprrect) || viewrect.containsRect(sprrect) ) {
+	    var grid = gridWithAISprites();
+	    viewline = new Phaser.Line(viewline.start.x / 32,
+				       viewline.start.y / 32,
+				       viewline.end.x / 32,
+				       viewline.end.y / 32);
+	    var viewcoords = viewline.coordinatesOnLine(1);
+	    // Start the counter at 1 so we skip our own tile
+	    for ( var ctr = 1; ctr < viewcoords.length ; ctr++ ) {
+		var coord = [parseInt(viewcoords[ctr][0]),
+			     parseInt(viewcoords[ctr][1])];
+		if ( grid.nodes[coord[1]][coord[0]].walkable == false )
+		    return false;
+	    }
 	    return true;
 	}
+
 	return false;
     }
 
