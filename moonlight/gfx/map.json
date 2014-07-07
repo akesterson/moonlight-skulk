@@ -291,8 +291,7 @@
                      "sprite_facing":"left",
                      "sprite_group":"townsfolk-female",
                      "sprite_has_treasure":"true",
-                     "sprite_name":"townsfolk-female-2",
-                     "sprite_route":"BigTopRoute1"
+                     "sprite_name":"townsfolk-female-2"
                     },
                  "type":"AI",
                  "visible":true,
@@ -310,13 +309,14 @@
                      "sprite_facing":"right",
                      "sprite_group":"townsfolk-male",
                      "sprite_has_treasure":"true",
-                     "sprite_name":"townsfolk-male-3"
+                     "sprite_name":"townsfolk-male-3",
+                     "sprite_route":"BigTopRoute1"
                     },
                  "type":"AI",
                  "visible":true,
                  "width":0,
-                 "x":128,
-                 "y":320
+                 "x":160,
+                 "y":544
                 }, 
                 {
                  "gid":3544,
@@ -335,6 +335,25 @@
                  "width":0,
                  "x":160,
                  "y":832
+                }, 
+                {
+                 "gid":3544,
+                 "height":0,
+                 "name":"BigTopGuard",
+                 "properties":
+                    {
+                     "sprite_can_see_lightmeter":"0.15",
+                     "sprite_canmove":"false",
+                     "sprite_facing":"up",
+                     "sprite_group":"townsfolk-guard",
+                     "sprite_has_treasure":"true",
+                     "sprite_name":"townsfolk-guard-2"
+                    },
+                 "type":"AI",
+                 "visible":true,
+                 "width":0,
+                 "x":320,
+                 "y":608
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -616,35 +635,23 @@
                         }, 
                         {
                          "x":0,
-                         "y":128
-                        }, 
-                        {
-                         "x":-64,
-                         "y":192
-                        }, 
-                        {
-                         "x":-64,
-                         "y":320
-                        }, 
-                        {
-                         "x":96,
-                         "y":320
-                        }, 
-                        {
-                         "x":96,
-                         "y":128
-                        }, 
-                        {
-                         "x":128,
                          "y":32
                         }, 
                         {
-                         "x":128,
-                         "y":-64
+                         "x":64,
+                         "y":96
                         }, 
                         {
-                         "x":32,
-                         "y":-64
+                         "x":288,
+                         "y":96
+                        }, 
+                        {
+                         "x":352,
+                         "y":32
+                        }, 
+                        {
+                         "x":352,
+                         "y":0
                         }, 
                         {
                          "x":0,
@@ -657,8 +664,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":640,
-                 "y":160
+                 "x":160,
+                 "y":512
                 }],
          "opacity":1,
          "type":"objectgroup",

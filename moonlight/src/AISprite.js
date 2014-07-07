@@ -679,12 +679,14 @@ var AISprite = function(game, x, y, key, frame) {
 	    this.action_wander();
 	}
     }
-
+    
     this.update_new_values = function() {
 	if ( isSet(this.timer) )
 	    this.timer.stop();
 	this.animations.destroy();
 	this.clearWordBubble();	
+	this.origin.x = this.position.x;
+	this.origin.y = this.position.y;
 	this.state = STATE_UNAWARE;
 	this.view_distance = parseInt(this.view_distance);
 	this.state_changed_at = new Phaser.Point(this.x, this.y);
@@ -760,7 +762,7 @@ var AISprite = function(game, x, y, key, frame) {
     this.view_distance = 32 * 5;
     this.timer = null;
     this.rotation_timer = null;
-    this.origin = new Phaser.Point(x, y);
+    this.origin = new Phaser.Point(this.x, this.y);
     this.sprite_has_treasure = [true, false][game.rnd.integerInRange(0, 1)];
     this.bubble_immediate = false;
     this.bubble_text = null;
