@@ -605,11 +605,33 @@ var AISprite = function(game, x, y, key, frame) {
 	    }
 	    return;
 	}
-	if ( game.rnd.integerInRange(0, 100) < 95 )
-	    return;
-	this.turnUnseenDirection();
-	addState(this, STATE_MOVING);
-	setSpriteMovement(this);
+	if ( isSet(this.sprite_route) == true ) {
+	    if ( this.path.length > 0 && this.path_index >= this.path.length ) {
+		this.sprite_route_index += 1;
+		if ( this.sprite_route_index >= this.sprite_route.polyline.length )
+		    this.sprite_route_index = 0;
+		this.path_purge();
+	    }
+	    var dpoint = this.sprite_route.polyline[this.sprite_route_index];
+	    if ( isSet(this.target) == false ) {
+		this.target = new Phaser.Sprite(null, 
+						this.sprite_route.x + dpoint[0],
+						this.sprite_route.y + dpoint[1]);
+	    } else {
+		this.target.x = this.sprite_route.x + dpoint[0];
+		this.target.y = this.sprite_route.y + dpoint[1];
+	    }
+	    this.chasetarget(this.target,
+			     STATE_NONE,
+			     STATE_MOVING,
+			     false);	    
+	}
+
+	// if ( game.rnd.integerInRange(0, 100) < 95 )
+	//     return;
+	// this.turnUnseenDirection();
+	// addState(this, STATE_MOVING);
+	// setSpriteMovement(this);
     }
 
     this.update = function()
@@ -677,8 +699,9 @@ var AISprite = function(game, x, y, key, frame) {
 	if ( this.sprite_has_treasure ) {
 	    this.sprite_treasure = getRandomTreasure();
 	}
-
 	this.path_maximum_steps = parseInt(this.path_maximum_steps);
+	if ( isSet(this.sprite_route) == true )
+	    this.sprite_route = getRouteByName(this.sprite_route);
 	this.loadTexture(this.sprite_name, 0);
 	addAnimation(this, 'bipedwalkleft');
 	addAnimation(this, 'bipedwalkright');
@@ -745,6 +768,8 @@ var AISprite = function(game, x, y, key, frame) {
     this.body.collideWorldBounds = true;
     this.sprite_name = "townsfolk-male-1";
     this.sprite_group = "townsfolk-male";
+    this.sprite_route = null;
+    this.sprite_route_index = 0;
     this.update_new_values();
 }
 

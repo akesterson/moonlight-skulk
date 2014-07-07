@@ -343,3 +343,13 @@ function getRandomTreasure()
     var treasure = treasures[game.rnd.integerInRange(0, treasures.length-1)];
     return treasure;
 }
+
+function getRouteByName(name)
+{
+    var routes = game.state.states.game.map.collision.Routes;
+    for ( var i = 0 ; i < routes.length ; i++ ) {
+	if ( routes[i]['name'] == name ) 
+	    return routes[i];
+    }
+    throw("Could not locate path " + name);
+}
