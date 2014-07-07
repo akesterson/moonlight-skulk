@@ -502,7 +502,7 @@ var AISprite = function(game, x, y, key, frame) {
 	    } else {
 		this.awareness_timer.stop();
 		this.awareness_change_enabled = true;
-		this.setAwarenessEffect(STATE_LOSTHIM);
+		this.setAwarenessEffect(STATE_CONCERNED);
 		setMovingState(this, STATE_NONE);
 		this.turnRandomDirection();
 		this.target = null;
