@@ -606,20 +606,30 @@ var AISprite = function(game, x, y, key, frame) {
 	    return;
 	}
 	if ( isSet(this.sprite_route) == true ) {
-	    if ( this.path.length > 0 && this.path_index >= this.path.length ) {
+	    if ( this.path.length > 0 && 
+		 this.path_index >= this.path.length && 
+		 isSet(this.target) &&
+		 this.x == this.target.x &&
+		 this.y == this.target.y ) {
 		this.sprite_route_index += 1;
-		if ( this.sprite_route_index >= this.sprite_route.polyline.length )
-		    this.sprite_route_index = 0;
 		this.path_purge();
 	    }
+	    if ( this.sprite_route_index >= this.sprite_route.polyline.length )
+		this.sprite_route_index = 0;
 	    var dpoint = this.sprite_route.polyline[this.sprite_route_index];
-	    if ( isSet(this.target) == false ) {
+	    if ( isSet(this.target) == false )  {
 		this.target = new Phaser.Sprite(null, 
 						this.sprite_route.x + dpoint[0],
 						this.sprite_route.y + dpoint[1]);
 	    } else {
-		this.target.x = this.sprite_route.x + dpoint[0];
-		this.target.y = this.sprite_route.y + dpoint[1];
+		if ( isSet(this.target.sprite_group) == true ) {
+		    this.target = new Phaser.Sprite(null, 
+						    this.sprite_route.x + dpoint[0],
+						    this.sprite_route.y + dpoint[1]);
+		} else {
+		    this.target.x = this.sprite_route.x + dpoint[0];
+		    this.target.y = this.sprite_route.y + dpoint[1];
+		}
 	    }
 	    this.chasetarget(this.target,
 			     STATE_NONE,
