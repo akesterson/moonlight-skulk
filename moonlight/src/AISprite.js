@@ -342,8 +342,9 @@ var AISprite = function(game, x, y, key, frame) {
 		this._object.animations.play(getMovingAnimationName(this._object));
 	    }, tween);
 	    tween.onComplete.add(function() {
-		if ( this._object.resetPathOnCollision() == true )
+		if ( this._object.resetPathOnCollision() == true ) {
 		    return;
+		}
 		this._object.path_index += 1;
 		setMovingState(this._object, getFaceState(this._object));
 		this._object.animations.play(getMovingAnimationName(this._object));		
@@ -367,6 +368,7 @@ var AISprite = function(game, x, y, key, frame) {
 	    if ( game.physics.arcade.overlap(spr, this) ) {
 		var last = this.path[this.path.length - 1];
 		this.path_tween_stop();
+		this.path_purge();
 		hasBeenReset = true;
 	    }
 	}, this);
@@ -379,6 +381,7 @@ var AISprite = function(game, x, y, key, frame) {
 	    x.stop();
 	    game.tweens.remove(x);
 	}, this);
+	this.path_tweens = [];
     }
 
     this.turnRandomDirection = function() {
@@ -461,7 +464,7 @@ var AISprite = function(game, x, y, key, frame) {
 			     STATE_MOVING | STATE_RUNNING,
 			     false,
 			     1000,
-			     false);
+			     true);
 	} else { 
 	    this.chasetarget(player,
 			     STATE_ALERTED, 
@@ -683,7 +686,7 @@ var AISprite = function(game, x, y, key, frame) {
 	    } else {
 		this.action_reportplayer();
 	    }
-	} else if ( hasAnyState(this, [STATE_CONCERNED, STATE_LOSTHIM]) ) {
+	} else if ( hasState(this, [STATE_CONCERNED]) ) {
 	    this.action_huntplayer();
 	} else {
 	    this.action_wander();
