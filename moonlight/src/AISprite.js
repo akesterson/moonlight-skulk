@@ -459,7 +459,7 @@ var AISprite = function(game, x, y, key, frame) {
 	    this.target = player;
 	}
 	if ( hasState(this, STATE_RUNNINGTOREPORT) ) {
-	    this.chasetarget(this.target, 
+	    this.chasetarget(this.lastSawPlayerAt, 
 			     STATE_ALERTED, 
 			     STATE_MOVING | STATE_RUNNING,
 			     false,
