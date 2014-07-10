@@ -299,7 +299,7 @@ GameState.prototype.update = function()
     }
     this.staticSounds.forEach(_fix_audio_relative, this);
 
-    function _inner_collide(x) {
+    function _player_collide(x) {
 	if ( x.collide_with_map == true ) {
 	    for ( var ln in this.map_collision_layers ) {
 		layer = this.map_collision_layers[ln];
@@ -397,9 +397,9 @@ GameState.prototype.update = function()
 	}
     }
 
-    // this.effectSprites.forEach(_inner_collide, this);
+    // this.effectSprites.forEach(_player_collide, this);
 
-    this.aiSprites.forEach(_inner_collide, this);
+    this.aiSprites.forEach(_player_collide, this);
     this.updateShadowTexture();
 
     if ( this.aiSprites.debug == false ) {

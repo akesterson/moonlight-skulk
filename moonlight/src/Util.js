@@ -353,3 +353,79 @@ function getRouteByName(name)
     }
     throw("Could not locate path " + name);
 }
+
+function matchAny(regexes, str)
+{
+    for ( var i = 0; i < regexes.length; i++ ) {
+	if ( regexes[i].test(str) == true )
+	    return true;
+    }
+    return false;
+}
+
+function matchPair(regexes, str1, str2)
+{
+    return (( regexes[0].test(str1) && regexes[1].test(str2))  ||
+	    ( regexes[0].test(str2) && regexes[1].test(str1))
+	   );
+}
+
+function conversationCandidates(obj1, obj2)
+{
+    candidates = [];
+
+    moonlightDialog['conversations'].forEach(function(convo) {
+	if ( matchPair(convo['members'], obj1.sprite_group, obj2.sprite_group) == false )
+	    return;
+	candidates.push(convo)
+    }, this);
+    if ( candidates.length < 1 )
+	throw "Unable to find conversation for " + obj1.sprite_group + " and " + obj2.sprite_group;
+    return candidates;
+}
+
+function purgeConversation(obj1, obj2)
+{
+    obj1.conversation_partner = null;
+    obj1.current_conversation = null;
+    obj1.conversation_index = 0;
+    delState(obj1, STATE_CONVERSING);
+    delState(obj1, STATE_CONVERSING_YOURTURN);
+    obj2.conversation_partner = null;
+    obj2.current_conversation = null;
+    obj2.conversation_index = 0;
+    delState(obj2, STATE_CONVERSING);
+    delState(obj2, STATE_CONVERSING_YOURTURN);
+    obj1.clearWordBubble();
+    obj2.clearWordBubble();
+}
+
+function setConversation(obj1, obj2)
+{
+    obj1.conversation_partner = obj2;
+    obj2.conversation_partner = obj1;
+    obj1.conversation_index = 0;
+    obj2.conversation_index = 0;
+    var starter = null;
+    var finisher = null;
+    var candidates = conversationCandidates(obj1, obj2);
+    var convo = candidates[game.rnd.integerInRange(0, candidates.length-1)];
+    if ( convo['starter'] !== "" && convo['starter'] == obj1.sprite_group ) {
+	starter = obj1;
+	finisher = obj2;
+    } else if ( convo['starter'] !== "" && convo['starter'] == obj2.sprite_group ) {
+	starter = obj2;
+	finisher = obj1;
+    } else {
+	starter = obj1;
+	finisher = obj2;
+    }
+    obj1.current_conversation = convo;
+    obj2.current_conversation = convo;
+    starter.conversation_index = 0;
+    finisher.conversation_index = 1;
+    addState(starter, STATE_CONVERSING_YOURTURN);
+    starter.clearWordBubble(false);
+    finisher.clearWordBubble(false);
+    starter.enableWordBubble();
+}

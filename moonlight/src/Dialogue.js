@@ -220,7 +220,7 @@ var moonlightDialog = {
     },
     "conversations": [
 	{
-	    "members": ["townsfolk-male", "townsfolk-male"],
+	    "members": [/townsfolk-male/, /townsfolk-male/],
 	    "starter": "",
 	    "lines": [
 		"'Allo me old china - wot\nsay we pop round the Jack\nfer a pigs ear?",
@@ -231,7 +231,7 @@ var moonlightDialog = {
 	    ]
 	},
 	{
-	    "members": ["townsfolk-female", "townsfolk-male"],
+	    "members": [/townsfolk-female/, /townsfolk-male/],
 	    "starter": "townsfolk-male",
 	    "lines": [
 		"Hey there. I was wondering\nif youd like to maybe go to\nthe Summer festival with me?",
@@ -241,7 +241,7 @@ var moonlightDialog = {
 	    ]
 	},
 	{
-	    "members": ["townsfolk-male", "townsfolk-guard"],
+	    "members": [/townsfolk-male/, /townsfolk-guard/],
 	    "starter": "townsfolk-guard",
 	    "lines": [
 		"Move along citizen! There'll\nbe no loitering here.",
@@ -251,7 +251,7 @@ var moonlightDialog = {
 	    ]
 	},
 	{
-	    "members": ["townsfolk-female", "townsfolk-female"],
+	    "members": [/townsfolk-female/, /townsfolk-female/],
 	    "starter": "",
 	    "lines": [
 		"Have you heard about all\nthe burglaries lately?",
@@ -261,7 +261,7 @@ var moonlightDialog = {
 	    ]
 	},
 	{
-	    "members": ["townsfolk-female", "townsfolk-guard"],
+	    "members": [/townsfolk-female/, /townsfolk-guard/],
 	    "starter": "",
 	    "lines": [
 		"Here, I baked some pies to thank\nyou guards for keeping us all safe.",
@@ -274,7 +274,7 @@ var moonlightDialog = {
 	    ]
 	},
 	{
-	    "members": ["townsfolk-guard", "townsfolk-guard"],
+	    "members": [/townsfolk-guard/, /townsfolk-guard/],
 	    "starter": "",
 	    "lines": [
 		"Hey soldier, whatre you doing\nsitting down on the job?",
@@ -284,7 +284,7 @@ var moonlightDialog = {
 	    ],
 	},
 	{
-	    "members": ["townsfolk-female", "townsfolk-male"],
+	    "members": [/townsfolk-female/, /townsfolk-male/],
 	    "starter": "townsfolk-male",
 	    "lines": [
 		"You look like you need looking after, dear.",
@@ -296,7 +296,7 @@ var moonlightDialog = {
 	    ]
 	},
 	{
-	    "members": ["townsfolk-[fm]*", "townsfolk-[fm]*"],
+	    "members": [/townsfolk-[fm]*/, /townsfolk-[fm]*/],
 	    "starter": "",
 	    "lines": [
 		"Alright.",
@@ -308,7 +308,7 @@ var moonlightDialog = {
 	    ]
 	},
 	{
-	    "members": ["townsfolk-[fm]*", "townsfolk-[fm]*"],
+	    "members": [/townsfolk-[fm]*/, /townsfolk-[fm]*/],
 	    "starter": "",
 	    "lines": [
 		"Have you seen a cat around here?",
@@ -322,7 +322,7 @@ var moonlightDialog = {
 	    ]
 	},
 	{
-	    "members": ["townsfolk-[fm]*", "townsfolk-[fm]*"],
+	    "members": [/townsfolk-[fm]*/, /townsfolk-[fm]*/],
 	    "starter": "",
 	    "lines": [
 		"Have you seen a cat\naround here?",
@@ -333,7 +333,7 @@ var moonlightDialog = {
 	    ]
 	},
 	{
-	    "members": ["townsfolk-[fm]*", "townsfolk-[fm]*"],
+	    "members": [/townsfolk-[fm]*/, /townsfolk-[fm]*/],
 	    "starter": "",
 	    "lines": [
 		"See the Duke raised our\ntaxes again?",
@@ -344,7 +344,7 @@ var moonlightDialog = {
 	    ]
 	},
 	{
-	    "members": ["townsfolk-[fm]*", "townsfolk-[fm]*"],
+	    "members": [/townsfolk-[fm]*/, /townsfolk-[fm]*/],
 	    "starter": "",
 	    "lines": [
 		"Nice weather, ain't it?",
@@ -355,7 +355,7 @@ var moonlightDialog = {
 	    ]
 	},
 	{
-	    "members": ["townsfolk-[fm]*", "townsfolk-guard"],
+	    "members": [/townsfolk-[fm]*/, /townsfolk-guard/],
 	    "starter": "townsfolk-[fm]*",
 	    "lines": [
 		"Fancy a pint or three later?",
@@ -367,7 +367,7 @@ var moonlightDialog = {
 	    ]
 	},
 	{
-	    "members": ["townsfolk-[fm]*", "townsfolk-guard"],
+	    "members": [/townsfolk-[fm]*/, /townsfolk-guard/],
 	    "starter": "townsfolk-[fm]*",
 	    "lines": [
 		"Do you like being a guard?",
@@ -377,7 +377,7 @@ var moonlightDialog = {
 	    ]
 	},
 	{
-	    "members": ["townsfolk-[fm]*", "townsfolk-guard"],
+	    "members": [/townsfolk-[fm]*/, /townsfolk-guard/],
 	    "starter": "townsfolk-[fm]*",
 	    "lines": [
 		"Want to buy a fine\nleather jacket?",
@@ -388,7 +388,7 @@ var moonlightDialog = {
 	    ]
 	},
 	{
-	    "members": ["townsfolk-[fm]*", "townsfolk-guard"],
+	    "members": [/townsfolk-[fm]*/, /townsfolk-guard/],
 	    "starter": "townsfolk-[fm]*",
 	    "lines": [
 		"Excuse me, have you\nseen a cat?",
@@ -400,7 +400,7 @@ var moonlightDialog = {
 	    ]
 	},
 	{
-	    "members": ["townsfolk-[fm]*", "townsfolk-guard"],
+	    "members": [/townsfolk-[fm]*/, /townsfolk-guard/],
 	    "starter": "townsfolk-[fm]*",
 	    "lines": [
 		"Is it true the Duke is here? ",
@@ -412,7 +412,7 @@ var moonlightDialog = {
 	    ]
 	},
 	{
-	    "members": ["townsfolk-guard", "townsfolk-guard"],
+	    "members": [/townsfolk-guard/, /townsfolk-guard/],
 	    "starter": "",
 	    "lines": [
 		"Anything to report?",
@@ -424,7 +424,7 @@ var moonlightDialog = {
 	    ]
 	},
 	{
-	    "members": ["townsfolk-guard", "townsfolk-guard"],
+	    "members": [/townsfolk-guard/, /townsfolk-guard/],
 	    "starter": "",
 	    "lines": [
 		"Stay alert, soldier!",
@@ -435,7 +435,7 @@ var moonlightDialog = {
 	    ]
 	},
 	{
-	    "members": ["townsfolk-guard", "townsfolk-guard"],
+	    "members": [/townsfolk-guard/, /townsfolk-guard/],
 	    "starter": "",
 	    "lines": [
 		"Seen anything interesting?",
@@ -446,7 +446,7 @@ var moonlightDialog = {
 	    ]
 	},
 	{
-	    "members": ["townsfolk-guard", "townsfolk-guard"],
+	    "members": [/townsfolk-guard/, /townsfolk-guard/],
 	    "starter": "",
 	    "lines": [
 		"What is it we're guarding anyway?",
@@ -458,7 +458,7 @@ var moonlightDialog = {
 	    ]
 	},
 	{
-	    "members": ["townsfolk-guard", "townsfolk-guard"],
+	    "members": [/townsfolk-guard/, /townsfolk-guard/],
 	    "starter": "",
 	    "lines": [
 		"Dammit. I lost my sandwich.",

@@ -138,6 +138,11 @@ var AISprite = function(game, x, y, key, frame) {
 	     this.target != player )
 	    this.target = null;
 
+	if ( hasState(this, STATE_CONVERSING) == true &&
+	     ( state == STATE_CONCERNED ||
+	       state == STATE_ALERTED ) )
+	    purgeConversation(this, this.conversation_partner);
+
 	awardPlayerScoreByState(state);
 	this.state_changed_at = new Phaser.Point(this.x, this.y);
 	this.startAwarenessTimer();
@@ -177,20 +182,39 @@ var AISprite = function(game, x, y, key, frame) {
 
     this.enableWordBubble = function() {
 	this.enable_word_bubble = true;
-	this.timer = game.time.create(false);
 	if ( this.bubble_immediate == true ) {
 	    this.bubble_immediate = false;
 	    this.setWordBubble();
 	} else {
-	    var timerdelta = 10000 + (game.rnd.integerInRange(0, 20) * 1000);
-	    timerev = this.timer.add(timerdelta, this.setWordBubble, this);
-	    this.timer.start()
+	    if ( isSet(this.conversation_partner) == true &&
+	         hasState(this, STATE_CONVERSING_YOURTURN) == true) {
+		this.setWordBubble();
+	    } else {
+		var timerdelta = 10000 + (game.rnd.integerInRange(0, 20) * 1000);
+		this.timer = game.time.create(false);
+		timerev = this.timer.add(timerdelta, this.setWordBubble, this);
+		this.timer.start()
+	    }
 	}
     }
 
-    this.clearWordBubble = function() {
-	if ( isSet(this.bubble_text) )
-	    this.clear_bubble = true;
+    this.clearWordBubble = function(autoadvance) {
+	autoadvance = (typeof autoadvance == 'undefined' ? true : autoadvance);
+	if ( isSet(this.bubble_text) ) {
+		this.bubble_text.destroy();
+		this.bubble_sprite.destroy();
+		this.bubble_text = null;
+		this.bubble_sprite = null;
+	} 
+	if ( isSet(this.conversation_partner) == true &&
+	     hasState(this, STATE_CONVERSING_YOURTURN) == true ) {
+	    delState(this, STATE_CONVERSING_YOURTURN);
+	    addState(this.conversation_partner, STATE_CONVERSING_YOURTURN);
+	    this.enable_word_bubble = false;
+	    if ( autoadvance == true )
+		this.conversation_partner.enableWordBubble();
+	    return;
+	}
 	this.enable_word_bubble = false;
 	this.timer = game.time.create(false);
 	timerev = this.timer.add(1000, this.enableWordBubble, this);
@@ -199,7 +223,7 @@ var AISprite = function(game, x, y, key, frame) {
 
     this.setWordBubble = function()
     {
-	if ( isSet(this.bubble_text) || 
+	if ( isSet(this.bubble_text) == true || 
 	     this.sprite_group == undefined || 
 	     this.enable_world_bubble == false) {
 	    return;
@@ -225,9 +249,20 @@ var AISprite = function(game, x, y, key, frame) {
 	    }
 	}
 
-	var mylines = moonlightDialog['status'][this.sprite_group][aistate];
+	if ( isSet(this.conversation_partner) == true ) {
+	    if ( hasState(this, STATE_CONVERSING_YOURTURN) == false )
+		return;
+	    if ( this.conversation_index >= this.current_conversation['lines'].length ) {
+		purgeConversation(this, this.conversation_partner);
+		return;
+	    }
+	    var text = this.current_conversation['lines'][this.conversation_index];
+	    this.conversation_index += 2;
+	} else {
+	    var mylines = moonlightDialog['status'][this.sprite_group][aistate];
+	    var text = mylines[game.rnd.integerInRange(0, mylines.length-1)];
+	}
 	bubbleimg = game.cache.getImage('wordbubble');
-	text = mylines[game.rnd.integerInRange(0, mylines.length-1)];
 	style = {font: '14px Arial Bold', fill: '#ffffff'}
 	this.text_size = stringSize(text, style['font']);
 	if ( isSet(this.bubble_sprite) == true )
@@ -365,16 +400,29 @@ var AISprite = function(game, x, y, key, frame) {
     }
 
     this.resetPathOnCollision = function() {
+	if ( hasState(this, STATE_CONVERSING) == true )
+	    return true;
 	var aiSprites = game.state.states.game.aiSprites;
 	var hasBeenReset = false;
 	aiSprites.forEach(function(spr) {
 	    if ( hasBeenReset == true || spr == this) 
 		return;
 	    if ( game.physics.arcade.overlap(spr, this) ) {
-		var last = this.path[this.path.length - 1];
 		this.path_tween_stop();
 		this.path_purge();
 		hasBeenReset = true;
+		if ( spr.conversation_partner == null &&
+		     getAwarenessState(spr) == STATE_UNAWARE && 
+		     getAwarenessState(this) == STATE_UNAWARE &&
+		     game.rnd.integerInRange(0, 100) >= 50 ) {
+		    setMovingState(this, getFaceState(this));
+		    addState(this, STATE_CONVERSING);
+		    setConversation(spr, this);
+		    spr.path_tween_stop();
+		    spr.path_purge();
+		    addState(spr, STATE_CONVERSING);
+		    setMovingState(spr, getFaceState(spr));
+		}
 	    }
 	}, this);
 	return hasBeenReset;
@@ -674,15 +722,14 @@ var AISprite = function(game, x, y, key, frame) {
 	}
 	
 	if ( isSet(this.bubble_text) ) {
-	    if ( this.clear_bubble == true ) {
-		this.bubble_text.destroy();
-		this.bubble_sprite.destroy();
-		this.bubble_text = null;
-		this.bubble_sprite = null;
-		this.clear_bubble = false;
-	    } else {
+	    if ( isSet(this.bubble_sprite) == true ) {
 		this.snap_bubble_position();
 	    }
+	}
+
+	if ( hasState(this, STATE_CONVERSING) && 
+	     hasState(this, STATE_UNAWARE) ) {
+	    return;
 	}
 
 	if ( hasState(this, STATE_ALERTED) ) {
@@ -790,6 +837,9 @@ var AISprite = function(game, x, y, key, frame) {
     this.sprite_group = "townsfolk-male";
     this.sprite_route = null;
     this.sprite_route_index = 0;
+    this.current_conversation = null;
+    this.conversation_partner = null;
+    this.conversation_index = 0;
     this.update_new_values();
 }
 
