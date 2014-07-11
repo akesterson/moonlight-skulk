@@ -76,7 +76,7 @@ var AISprite = function(game, x, y, key, frame) {
 	this.awareness_change_enabled = true;
     }
 
-    this.enableAwarenessChange = function(state) {
+    this.enableConversation = function(state) {
 	delState(this, STATE_CONVERSATION_DISABLED);
     }
 
@@ -85,10 +85,28 @@ var AISprite = function(game, x, y, key, frame) {
 	if ( isSet(this.conversation_timer) )
 	    this.conversation_timer.stop();
 	this.conversation_timer = game.time.create(false);
-	this.conversation_timer.add(this.sprite_conversation_duration, 
-				 this.enableConversationChange, 
+	this.conversation_timer.add(30000, 
+				 this.enableConversation, 
 				 this);
 	this.conversation_timer.start()
+    }
+
+    this.enableCollision = function()
+    {
+	delState(this, STATE_COLLISION_DISABLED);
+    }
+
+    this.startCollisionTimer = function(duration)
+    {
+	duration = (typeof duration == 'undefined' ? 5000 : duration);
+	addState(this, STATE_COLLISION_DISABLED);
+	if ( isSet(this.collision_timer) )
+	    this.collision_timer.stop();
+	this.collision_timer = game.time.create(false);
+	this.collision_timer.add(duration, 
+				 this.enableCollision, 
+				 this);
+	this.collision_timer.start()
     }
 
     this.startAwarenessTimer = function() {
@@ -685,7 +703,7 @@ var AISprite = function(game, x, y, key, frame) {
 
     this.collide_with_AI = function(spr)
     {
-	if ( spr == this )
+	if ( spr == this || hasState(this, STATE_COLLISION_DISABLED) == true )
 	    return;
 
 	this.path_tween_stop();
@@ -708,6 +726,9 @@ var AISprite = function(game, x, y, key, frame) {
 	    spr.path_purge();
 	    addState(spr, STATE_CONVERSING);
 	    setMovingState(spr, getFaceState(spr));
+	} else {
+	    this.startCollisionTimer();
+	    spr.startCollisionTimer();
 	}
     }
 

@@ -400,6 +400,8 @@ function purgeConversation(obj1, obj2)
     obj2.clearWordBubble();
     obj1.startConversationTimer();
     obj2.startConversationTimer();
+    obj1.startCollisionTimer();
+    obj2.startCollisionTimer();
 }
 
 function setConversation(obj1, obj2)
