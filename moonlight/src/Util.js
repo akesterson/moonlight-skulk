@@ -398,6 +398,8 @@ function purgeConversation(obj1, obj2)
     delState(obj2, STATE_CONVERSING_YOURTURN);
     obj1.clearWordBubble();
     obj2.clearWordBubble();
+    obj1.startConversationTimer();
+    obj2.startConversationTimer();
 }
 
 function setConversation(obj1, obj2)

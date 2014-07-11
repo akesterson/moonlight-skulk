@@ -365,13 +365,13 @@
                      "sprite_facing":"right",
                      "sprite_group":"townsfolk-male",
                      "sprite_has_treasure":"true",
-                     "sprite_name":"townsfolk-male-3",
+                     "sprite_name":"townsfolk-male-1",
                      "sprite_route":"BigTopRoute2"
                     },
                  "type":"AI",
                  "visible":true,
                  "width":0,
-                 "x":576,
+                 "x":608,
                  "y":512
                 }],
          "opacity":1,

@@ -399,7 +399,14 @@ GameState.prototype.update = function()
 
     // this.effectSprites.forEach(_player_collide, this);
 
+    function _AI_collide(o1, o2)
+    {
+	o1.collide_with_AI(o2);
+    }
+
     this.aiSprites.forEach(_player_collide, this);
+    game.physics.arcade.overlap(this.aiSprites, this.aiSprites,
+				_AI_collide);
     this.updateShadowTexture();
 
     if ( this.aiSprites.debug == false ) {

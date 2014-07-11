@@ -76,6 +76,21 @@ var AISprite = function(game, x, y, key, frame) {
 	this.awareness_change_enabled = true;
     }
 
+    this.enableAwarenessChange = function(state) {
+	delState(this, STATE_CONVERSATION_DISABLED);
+    }
+
+    this.startConversationTimer = function() {
+	addState(this, STATE_CONVERSATION_DISABLED);
+	if ( isSet(this.conversation_timer) )
+	    this.conversation_timer.stop();
+	this.conversation_timer = game.time.create(false);
+	this.conversation_timer.add(this.sprite_conversation_duration, 
+				 this.enableConversationChange, 
+				 this);
+	this.conversation_timer.start()
+    }
+
     this.startAwarenessTimer = function() {
 	this.awareness_change_enabled = false;
 	if ( isSet(this.awareness_timer) )
@@ -140,8 +155,9 @@ var AISprite = function(game, x, y, key, frame) {
 
 	if ( hasState(this, STATE_CONVERSING) == true &&
 	     ( state == STATE_CONCERNED ||
-	       state == STATE_ALERTED ) )
+	       state == STATE_ALERTED ) ) {
 	    purgeConversation(this, this.conversation_partner);
+	}
 
 	awardPlayerScoreByState(state);
 	this.state_changed_at = new Phaser.Point(this.x, this.y);
@@ -382,9 +398,6 @@ var AISprite = function(game, x, y, key, frame) {
 		this._object.animations.play(getMovingAnimationName(this._object));
 	    }, tween);
 	    tween.onComplete.add(function() {
-		if ( this._object.resetPathOnCollision() == true ) {
-		    return;
-		}
 		this._object.path_index += 1;
 		setMovingState(this._object, getFaceState(this._object));
 		this._object.animations.play(getMovingAnimationName(this._object));		
@@ -399,40 +412,10 @@ var AISprite = function(game, x, y, key, frame) {
 	    this.path_tweens[0].start();
     }
 
-    this.resetPathOnCollision = function() {
-	if ( hasState(this, STATE_CONVERSING) == true )
-	    return true;
-	var aiSprites = game.state.states.game.aiSprites;
-	var hasBeenReset = false;
-	aiSprites.forEach(function(spr) {
-	    if ( hasBeenReset == true || spr == this) 
-		return;
-	    if ( game.physics.arcade.overlap(spr, this) ) {
-		this.path_tween_stop();
-		this.path_purge();
-		hasBeenReset = true;
-		if ( spr.conversation_partner == null &&
-		     getAwarenessState(spr) == STATE_UNAWARE && 
-		     getAwarenessState(this) == STATE_UNAWARE &&
-		     game.rnd.integerInRange(0, 100) >= 50 ) {
-		    setMovingState(this, getFaceState(this));
-		    addState(this, STATE_CONVERSING);
-		    setConversation(spr, this);
-		    spr.path_tween_stop();
-		    spr.path_purge();
-		    addState(spr, STATE_CONVERSING);
-		    setMovingState(spr, getFaceState(spr));
-		}
-	    }
-	}, this);
-	return hasBeenReset;
-    }
-
     this.path_tween_stop = function()
     {
 	this.path_tweens.forEach(function(x) {
 	    x.stop();
-	    game.tweens.remove(x);
 	}, this);
 	this.path_tweens = [];
     }
@@ -700,10 +683,40 @@ var AISprite = function(game, x, y, key, frame) {
 	// setSpriteMovement(this);
     }
 
+    this.collide_with_AI = function(spr)
+    {
+	if ( spr == this )
+	    return;
+
+	this.path_tween_stop();
+	this.path_purge();
+	spr.path_tween_stop();
+	spr.path_purge();
+	this.animations.stop();
+	spr.animations.stop();
+
+	if ( hasState(this, STATE_CONVERSATION_DISABLED) == false &&
+	     hasState(this, STATE_CONVERSATION_DISABLED) == false &&
+	     spr.conversation_partner == null &&
+	     getAwarenessState(spr) == STATE_UNAWARE && 
+	     getAwarenessState(this) == STATE_UNAWARE &&
+	     game.rnd.integerInRange(0, 100) >= 50 ) {
+	    setMovingState(this, getFaceState(this));
+	    addState(this, STATE_CONVERSING);
+	    setConversation(spr, this);
+	    spr.path_tween_stop();
+	    spr.path_purge();
+	    addState(spr, STATE_CONVERSING);
+	    setMovingState(spr, getFaceState(spr));
+	}
+    }
+
     this.update = function()
     {
 	if ( this.ready_to_update == false )
 	    return;
+	// if ( hasState(this, STATE_CONVERSING) == true && game.tweens.isTweening(this) )
+	//     throw "WHY THE FUCK AM I STILL TWEENING";
 
 	if ( isSet(this.awareness_effect) ) {
 	    if ( this.awareness_effect.alive == false ) {
@@ -815,6 +828,7 @@ var AISprite = function(game, x, y, key, frame) {
     this.sprite_can_see_lightmeter = 0.3;
     this.awareness_effect = null;
     this.awareness_timer = null;
+    this.conversation_timer = null;
     this.glint_effect = null;
     this.glint_timer = null;
     this.lastSawPlayerAt = null;
