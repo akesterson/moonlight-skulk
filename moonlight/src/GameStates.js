@@ -158,7 +158,7 @@ GameState.prototype.create = function()
 
     this.scoreText = this.game.add.text(
         SCREEN_WIDTH - 80, SCREEN_HEIGHT - 30, '', 
-	{ font: '16px Arial', fill: '#ffffff' }, this.uigrpoup
+	{ font: '16px Arial', fill: '#ffffff' }, this.uigroup
     );
 
     // this.lightbox = this.game.add.image(game.camera.width / 2 - 50,
