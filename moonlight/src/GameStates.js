@@ -150,10 +150,6 @@ GameState.prototype.create = function()
 						this.uigroup);
     this.hud_clockoverlay.anchor.setTo(0.5, 0.5);
     
-    this.fpsText = this.game.add.text(
-        20, 20, '', { font: '16px Arial', fill: '#ffffff' }, this.uigroup
-    );
-
     // this.clockText = this.game.add.text(
     // 	20, SCREEN_HEIGHT - 40, '', { font : '16px Arial', fill: '#ffffff' }, this.uigroup
     // );
@@ -163,21 +159,12 @@ GameState.prototype.create = function()
 	{ font: '16px Arial', fill: '#ffffff' }, this.uigroup
     );
 
-    // this.lightbox = this.game.add.image(game.camera.width / 2 - 50,
-    // 					game.camera.height - 40,
-    // 					'lightbox',
-    // 					0,
-    // 					this.uigroup);
-    // this.lightbar = this.game.add.image(this.lightbox.x + 3,
-    // 					this.lightbox.y + 3,
-    // 					'lightbar',
-    // 					0,
-    // 					this.uigroup);
-    this.lightbar_image = game.cache.getImage('lightbar');
-    this.lightbar_crop = positiveRectangle(0,
-					   0,
-					   this.lightbar_image.width,
-					   this.lightbar_image.height);
+    this.lightbar = this.game.add.sprite(255,
+    					hudoffset + 7 + 6,
+    					'lightbar',
+    					0,
+    					this.uigroup);
+    this.lightbar.anchor.setTo(0, 0.5)
     this.uigroup.setAll('fixedToCamera', true);	
 }
 
@@ -305,7 +292,8 @@ GameState.prototype.update_player_lightmeter = function() {
     }, this)
     player.lightmeter += lightValue;
     player.lightmeter = Math.min(player.lightmeter, 1.0);
-    this.lightbar_crop.width = ((this.lightbar_image.width) * player.lightmeter);
+    this.lightbar.scale.y = player.lightmeter;
+    //this.lightbar_crop.width = ((this.lightbar_image.width) * player.lightmeter);
     //this.lightbar.crop(this.lightbar_crop);
 }
 
@@ -459,9 +447,6 @@ GameState.prototype.update = function()
     	    }, this);
     	}
     	this.aiSprites.forEach(_draw_aipath, this);
-    }
-    if (game.time.fps !== 0) {
-        this.fpsText.setText(game.time.fps + ' FPS');
     }
     var clockhour = this.clock.getHours();
     if ( this.clock.getHours() > 12 ) 
