@@ -159,7 +159,7 @@ GameState.prototype.create = function()
 	{ font: '16px Arial', fill: '#ffffff' }, this.uigroup
     );
 
-    this.lightbar = this.game.add.sprite(255,
+    this.lightbar = this.game.add.sprite(256,
     					hudoffset + 7 + 6,
     					'lightbar',
     					0,
