@@ -118,9 +118,6 @@ GameState.prototype.create = function()
     this.recentlyStolenGroup = game.add.group();
     this.game.time.advancedTiming = true;
 
-    this.clockText = this.game.add.text(
-	20, SCREEN_HEIGHT - 40, '', { font : '16px Arial', fill: '#ffffff' }, this.uigroup
-    );
     this.clock = new Date();
     this.clock.setHours(20, 50, 0, 0);
     this.clockTimer = game.time.create(true);
@@ -129,25 +126,31 @@ GameState.prototype.create = function()
 			   this.updateClock,
 			   this);
     this.clockTimer.start();
+
+    this.hud = this.game.add.image(0, game.camera.height - 68, 'hud', 0, this.uigroup);
     this.fpsText = this.game.add.text(
         20, 20, '', { font: '16px Arial', fill: '#ffffff' }, this.uigroup
     );
 
+    this.clockText = this.game.add.text(
+	20, SCREEN_HEIGHT - 40, '', { font : '16px Arial', fill: '#ffffff' }, this.uigroup
+    );
+
     this.scoreText = this.game.add.text(
-        SCREEN_WIDTH - 80, SCREEN_HEIGHT - 40, '', 
+        SCREEN_WIDTH - 80, SCREEN_HEIGHT - 30, '', 
 	{ font: '16px Arial', fill: '#ffffff' }, this.uigroup
     );
 
-    this.lightbox = this.game.add.image(game.camera.width / 2 - 50,
-					game.camera.height - 40,
-					'lightbox',
-					0,
-					this.uigroup);
-    this.lightbar = this.game.add.image(this.lightbox.x + 3,
-					this.lightbox.y + 3,
-					'lightbar',
-					0,
-					this.uigroup);
+    // this.lightbox = this.game.add.image(game.camera.width / 2 - 50,
+    // 					game.camera.height - 40,
+    // 					'lightbox',
+    // 					0,
+    // 					this.uigroup);
+    // this.lightbar = this.game.add.image(this.lightbox.x + 3,
+    // 					this.lightbox.y + 3,
+    // 					'lightbar',
+    // 					0,
+    // 					this.uigroup);
     this.lightbar_image = game.cache.getImage('lightbar');
     this.lightbar_crop = positiveRectangle(0,
 					   0,
@@ -281,7 +284,7 @@ GameState.prototype.update_player_lightmeter = function() {
     player.lightmeter += lightValue;
     player.lightmeter = Math.min(player.lightmeter, 1.0);
     this.lightbar_crop.width = ((this.lightbar_image.width) * player.lightmeter);
-    this.lightbar.crop(this.lightbar_crop);
+    //this.lightbar.crop(this.lightbar_crop);
 }
 
 GameState.prototype.update = function()
@@ -371,7 +374,7 @@ GameState.prototype.update = function()
 			this.recentlyStolenGroup.getBottom(),
 			true);
 		}
-		this.recentlyStolenGroup.addAll('cameraOffset.x', 24);
+		this.recentlyStolenGroup.addAll('cameraOffset.x', 36);
 		var rs = game.add.sprite(
 		    SCREEN_OFFSET_RECENTLYSTOLEN.x + 12,
 		    SCREEN_OFFSET_RECENTLYSTOLEN.y + 12,

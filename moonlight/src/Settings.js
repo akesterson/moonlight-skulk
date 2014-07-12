@@ -152,6 +152,10 @@ var moonlightSettings = {
 	    'path': 'gfx/ui/lightbox.png'
 	},
 	{
+	    'name': 'hud',
+	    'path': 'gfx/ui/hud.png'
+	},
+	{
 	    'name': 'lightbar',
 	    'path': 'gfx/ui/lightbar.png'
 	},
