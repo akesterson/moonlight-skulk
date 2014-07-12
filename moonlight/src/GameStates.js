@@ -61,6 +61,14 @@ GameState.prototype.create = function()
 	}
     }
 
+    this.map_collision_layers.forEach(function(layer) {
+	layer.layer.data.forEach(function(row) {
+	    row.forEach(function(column) {
+		setTileProperties(column);
+	    }, this);
+	}, this);
+    }, this);
+
     pathfinder_grid = new PF.Grid(this.map.width,
 				  this.map.height,
 				  pfgrid);

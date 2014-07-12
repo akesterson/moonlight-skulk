@@ -347,7 +347,6 @@ function tilesFromCollisionLayers(x, y)
     var res = [];
     layers.forEach(function(layer) {
 	var tile = layer.getTiles(x, y, 1, 1)[0];
-	setTileProperties(tile);
 	res.push(tile);
     }, this);
     return res;
