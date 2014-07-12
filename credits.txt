@@ -12,6 +12,7 @@ Narrative/Dialog Writing:
 
 Graphics:
 
+    User Interface art - Peter Hann (@phannDOTde)
     Bigtop tileset - PandaMaru from an RPG Maker resource pack
     Door tileset - RPG Maker VX Ace
     Numbered tileset ([0-9]+-[a-z]+) : RPG Maker XP
