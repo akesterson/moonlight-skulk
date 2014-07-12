@@ -127,18 +127,38 @@ GameState.prototype.create = function()
 			   this);
     this.clockTimer.start();
 
-    this.hud = this.game.add.image(0, game.camera.height - 68, 'hud', 0, this.uigroup);
+    var hudoffset = game.camera.height - 68;
+    this.hud = this.game.add.image(0, hudoffset, 'hud', 0, this.uigroup);
+    this.hud_hourhand = this.game.add.sprite(39, 
+					     hudoffset + 36, 
+					     'clock_hourhand', 
+					     0, 
+					     this.uigroup);
+    this.hud_hourhand.anchor.setTo(0.5, 0.5);
+    this.hud_minutehand = this.game.add.sprite(39, 
+					       hudoffset + 36, 
+					       'clock_minutehand', 
+					       0, 
+					       this.uigroup);
+    this.hud_minutehand.anchor.setTo(0.5, 0.5);
+    this.hud_clockoverlay = this.game.add.image(39, 
+						hudoffset + 36, 
+						'clock_overlay', 
+						0, 
+						this.uigroup);
+    this.hud_clockoverlay.anchor.setTo(0.5, 0.5);
+    
     this.fpsText = this.game.add.text(
         20, 20, '', { font: '16px Arial', fill: '#ffffff' }, this.uigroup
     );
 
-    this.clockText = this.game.add.text(
-	20, SCREEN_HEIGHT - 40, '', { font : '16px Arial', fill: '#ffffff' }, this.uigroup
-    );
+    // this.clockText = this.game.add.text(
+    // 	20, SCREEN_HEIGHT - 40, '', { font : '16px Arial', fill: '#ffffff' }, this.uigroup
+    // );
 
     this.scoreText = this.game.add.text(
         SCREEN_WIDTH - 80, SCREEN_HEIGHT - 30, '', 
-	{ font: '16px Arial', fill: '#ffffff' }, this.uigroup
+	{ font: '16px Arial', fill: '#ffffff' }, this.uigrpoup
     );
 
     // this.lightbox = this.game.add.image(game.camera.width / 2 - 50,
@@ -441,7 +461,12 @@ GameState.prototype.update = function()
     if (game.time.fps !== 0) {
         this.fpsText.setText(game.time.fps + ' FPS');
     }
-    this.clockText.setText("" + this.clock.getHours() + ":" + this.clock.getMinutes() + ":" + this.clock.getSeconds());
+    var clockhour = this.clock.getHours();
+    if ( this.clock.getHours() > 12 ) 
+	clockhour -= 12;
+    this.hud_hourhand.frame = parseInt((5 * clockhour) + (0.083 * this.clock.getMinutes()));
+    this.hud_minutehand.frame = this.clock.getMinutes();
+    // this.clockText.setText("" + this.clock.getHours() + ":" + this.clock.getMinutes() + ":" + this.clock.getSeconds());
     this.scoreText.setText("" + player.score);
 }
 

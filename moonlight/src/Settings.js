@@ -156,6 +156,10 @@ var moonlightSettings = {
 	    'path': 'gfx/ui/hud.png'
 	},
 	{
+	    'name': 'clock_overlay',
+	    'path': 'gfx/ui/clock_overlay.png'
+	},
+	{
 	    'name': 'lightbar',
 	    'path': 'gfx/ui/lightbar.png'
 	},
@@ -165,6 +169,20 @@ var moonlightSettings = {
 	}
     ],
     'spritesheets': [
+	{
+	    'name': 'clock_minutehand',
+	    'path': 'gfx/ui/clock_minutehand.png',
+	    'width': 64,
+	    'height': 64,
+	    'frames': 60
+	},
+	{
+	    'name': 'clock_hourhand',
+	    'path': 'gfx/ui/clock_hourhand.png',
+	    'width': 64,
+	    'height': 64,
+	    'frames': 60
+	},
 	{
 	    'name': 'flame',
 	    'path': 'gfx/effects/flame.png',
