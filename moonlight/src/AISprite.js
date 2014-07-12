@@ -181,6 +181,7 @@ var AISprite = function(game, x, y, key, frame) {
 	this.state_changed_at = new Phaser.Point(this.x, this.y);
 	this.startAwarenessTimer();
 	setAwarenessState(this, state);
+	bubblegroup = game.state.states.game.bubble_group;
 
 	if ( isSet(this.awareness_effect) ) {
 	    this.awareness_effect.alive = false;
@@ -209,7 +210,10 @@ var AISprite = function(game, x, y, key, frame) {
 	this.awareness_effect = game.state.states.game.add.sprite(
 	    this.x + 16,
 	    this.y - 16,
-	    'balloon');
+	    'balloon',
+	    0,
+	    bubblegroup
+	);
 	addAnimation(this.awareness_effect, animkey);
 	this.awareness_effect.play(animkey, null, false, true);
     }
