@@ -303,8 +303,54 @@ function gridWithAISprites()
 	var normx = Math.max(parseInt(spr.x/32), 0);
 	var normy = Math.max(parseInt(spr.y/32), 0);
 	grid.nodes[normy][normx].walkable = false;
+	grid.nodes[normy][normx].isAISprite = true;
     }
     return grid;
+}
+
+function getTileTileset(tile) 
+{
+    var last = null;
+    game.state.states.game.map.tilesets.forEach(function(ts) {
+	if ( isSet(last) == false && ts.firstgid < tile.index ) {
+	    last = ts;
+	    return;
+	} else if ( isSet(last) == true &&
+		    ts.firstgid < tile.index &&
+		    ts.firstgid > last.firstgid ) {
+	    last = ts;
+	    return;
+	}
+    }, this);
+    return last;
+}
+
+function setTileProperties(tile)
+{
+    tile.properties = {};
+    if ( tile.index == -1 ) {
+	return;
+    }
+    var tileset = getTileTileset(tile);
+    // Great, our tileset doesn't have any properties.
+    if ( isSet(tileset.tileProperties) == false) {
+	return;
+    }
+    tile.properties = tileset.tileProperties[tile.index - tileset.firstgid];
+    if ( isSet(tile.properties) == false )
+	tile.properties = {};
+}
+
+function tilesFromCollisionLayers(x, y)
+{
+    layers = game.state.states.game.map_collision_layers;
+    var res = [];
+    layers.forEach(function(layer) {
+	var tile = layer.getTiles(x, y, 1, 1)[0];
+	setTileProperties(tile);
+	res.push(tile);
+    }, this);
+    return res;
 }
 
 function stringifyInt(x)

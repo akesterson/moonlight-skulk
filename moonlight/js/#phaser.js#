@@ -27360,6 +27360,9 @@ Phaser.BitmapData = function (game, key, width, height) {
     if (typeof width === 'undefined') { width = 100; }
     if (typeof height === 'undefined') { height = 100; }
 
+    console.log(typeof width);
+    console.log(typeof height);
+
     /**
     * @property {Phaser.Game} game - A reference to the currently running game.
     */

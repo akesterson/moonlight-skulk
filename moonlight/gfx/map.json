@@ -344,7 +344,7 @@
                     {
                      "sprite_can_see_lightmeter":"0.15",
                      "sprite_canmove":"false",
-                     "sprite_facing":"up",
+                     "sprite_facing":"down",
                      "sprite_group":"townsfolk-guard",
                      "sprite_has_treasure":"true",
                      "sprite_name":"townsfolk-guard-2"
@@ -352,8 +352,8 @@
                  "type":"AI",
                  "visible":true,
                  "width":0,
-                 "x":320,
-                 "y":608
+                 "x":672,
+                 "y":384
                 }, 
                 {
                  "gid":3544,
@@ -719,6 +719,25 @@
             },
          "spacing":0,
          "tileheight":32,
+         "tileproperties":
+            {
+             "107":
+                {
+                 "blocksvision":"false"
+                },
+             "109":
+                {
+                 "blocksvision":"false"
+                },
+             "110":
+                {
+                 "blocksvision":"false"
+                },
+             "111":
+                {
+                 "blocksvision":"false"
+                }
+            },
          "tilewidth":32
         }, 
         {
@@ -854,6 +873,13 @@
             },
          "spacing":0,
          "tileheight":32,
+         "tileproperties":
+            {
+             "121":
+                {
+                 "blocksvision":"false"
+                }
+            },
          "tilewidth":32
         }, 
         {

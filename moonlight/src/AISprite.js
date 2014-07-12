@@ -63,8 +63,21 @@ var AISprite = function(game, x, y, key, frame) {
 	    for ( var ctr = 1; ctr < viewcoords.length ; ctr++ ) {
 		var coord = [parseInt(viewcoords[ctr][0]),
 			     parseInt(viewcoords[ctr][1])];
-		if ( grid.nodes[coord[1]][coord[0]].walkable == false )
-		    return false;
+		if ( grid.nodes[coord[1]][coord[0]].walkable == false ) {
+		    if ( grid.nodes[coord[1]][coord[0]].isAISprite == true )
+			return false;
+
+		    tiles = tilesFromCollisionLayers(coord[0] * TILE_WIDTH,
+						     coord[1] * TILE_HEIGHT);
+		    for ( var i = 0; i < tiles.length ; i++ ) {
+			// Default behavior is for all colliding tiles to block vision,
+			// they have to set property 'blocksvision' == false to prevent it
+			if ( (tiles[i].index != -1 && 
+			      isSet(tiles[i].properties['blocksvision']) == false) || 
+			     parseBoolean(tiles[i].properties['blocksvision']) == true )
+			    return false;
+		    }
+		}
 	    }
 	    return true;
 	}
