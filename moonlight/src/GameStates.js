@@ -322,9 +322,7 @@ GameState.prototype.update = function()
 	if ( x.collide_with_player == false )
 	    return;
 	if ( x.canSeeSprite(player, false) == true ) {
-	    if ( isSet(x.lastSawPlayerAt) == true )
-		x.lastSawPlayerAt.destroy();
-	    x.lastSawPlayerAt = new Phaser.Sprite(game, player.x, player.y, null);
+	    x.sawPlayer(game, player);
 	    if ( player.lightmeter >= x.sprite_can_see_lightmeter ) {
  		x.setAwarenessEffect(STATE_ALERTED);
 	    } else {
@@ -340,8 +338,10 @@ GameState.prototype.update = function()
 		x.setAwarenessEffect(STATE_UNAWARE);
 	    }
 	}
-	if ( this.physics.arcade.overlap(x, player) == true )
+	if ( this.physics.arcade.overlap(x, player) == true ) {
+	    x.sawPlayer(game, player);
 	    x.setAwarenessEffect(STATE_ALERTED);
+	}
 	if ( hasState(player, STATE_STEALING) == true && 
 	     x.sprite_has_treasure == true ) {
 	    var prevpos = player.body.position;

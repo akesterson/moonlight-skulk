@@ -737,6 +737,13 @@ var AISprite = function(game, x, y, key, frame) {
 	}
     }
 
+    this.sawPlayer = function(game, player)
+    {
+	if ( isSet(this.lastSawPlayerAt) == true )
+	    this.lastSawPlayerAt.destroy();
+	this.lastSawPlayerAt = new Phaser.Sprite(game, player.x, player.y, null);
+    }
+
     this.update = function()
     {
 	if ( this.ready_to_update == false )
