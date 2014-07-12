@@ -293,6 +293,7 @@ GameState.prototype.update_player_lightmeter = function() {
     player.lightmeter += lightValue;
     player.lightmeter = Math.min(player.lightmeter, 1.0);
     this.lightbar.scale.y = player.lightmeter;
+    this.lightbar.alpha = 0.5 + (player.lightmeter / 2);
     //this.lightbar_crop.width = ((this.lightbar_image.width) * player.lightmeter);
     //this.lightbar.crop(this.lightbar_crop);
 }
