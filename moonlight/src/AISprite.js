@@ -301,11 +301,12 @@ var AISprite = function(game, x, y, key, frame) {
 	this.text_size = stringSize(text, style['font']);
 	if ( isSet(this.bubble_sprite) == true )
 	    this.bubble_sprite.destroy();
-	this.bubble_sprite = game.add.sprite(this.x, this.y, 'wordbubble');
+	var bubblegroup = game.state.states.game.bubble_group;
+	this.bubble_sprite = game.add.sprite(this.x, this.y, 'wordbubble', 0, bubblegroup);
 	this.bubble_sprite.anchor.setTo(0.5, 1.0);
 	this.bubble_sprite.scale.x = Number((this.text_size[0] + 16) / bubbleimg.width);
 	this.bubble_sprite.scale.y = Number((this.text_size[1] + 16) / bubbleimg.height);
-	this.bubble_text = game.add.text(this.x, this.y, text, style);
+	this.bubble_text = game.add.text(this.x, this.y, text, style, bubblegroup);
 	this.snap_bubble_position();
 
 	this.timer = game.time.create(false);

@@ -127,6 +127,8 @@ GameState.prototype.create = function()
 			   this);
     this.clockTimer.start();
 
+    game.camera.deadzone.height -= 68;
+
     var hudoffset = game.camera.height - 68;
     this.hud = this.game.add.image(0, hudoffset, 'hud', 0, this.uigroup);
     this.hud_hourhand = this.game.add.sprite(39, 
