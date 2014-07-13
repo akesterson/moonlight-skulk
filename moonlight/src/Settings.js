@@ -148,6 +148,10 @@ var moonlightSettings = {
     ],
     'images': [
 	{
+	    'name': 'gameover',
+	    'path': 'gfx/ui/gameover.png'
+	},
+	{
 	    'name': 'hud',
 	    'path': 'gfx/ui/hud.png'
 	},

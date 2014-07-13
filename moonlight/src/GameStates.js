@@ -466,6 +466,34 @@ GameState.prototype.update = function()
     this.scoreText.setText("" + player.score);
 }
 
+GameState.prototype.shutdown = function()
+{
+    this.aiSprites.setAll('ready_to_update', false);
+    this.aiSprites.destroy();
+    this.aiSprites = null;
+    this.uigroup.destroy();
+    this.uigroup = null;
+    this.recentlyStolenGroup.destroy();
+    this.clock = null;
+    this.clockTimer.stop();
+    this.bubble_group.destroy();
+    this.effectSprites.destroy();
+    this.shadowTextureColor = null;
+    this.staticSounds.forEach(function(x) {
+	x.sound.stop();
+	game.sound.remove(x);
+    }, this);
+    this.map_collision_layers.forEach(function(x) {
+	x.destroy();
+    }, this);
+    this.map.destroy();
+    pathfinder_grid = null;
+    pathfinder = null;
+    this.shadowSprite.destroy();
+    this.staticLights.destroy();
+    this.staticSounds.destroy();
+}
+
 var Boot = function(game) {
 }
 
@@ -565,7 +593,8 @@ var EndScreen = function(game) {
 
 EndScreen.prototype.create = function()
 {
-    this.scoreText = this.game.add.text(
-        320, 240, 'GAME OVER', 
-	{ font: '32px Arial', fill: '#ffffff' });
+    this.gameOverText = game.add.image((640/2),
+				       (480/2),
+				       'gameover');
+    this.gameOverText.anchor.setTo(0.5, 0.5);
 }

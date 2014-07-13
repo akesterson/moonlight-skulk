@@ -524,6 +524,11 @@ var AISprite = function(game, x, y, key, frame) {
 
     this.action_chaseplayer = function()
     {
+	if ( game.physics.arcade.overlap(this, player) ) {
+	    game.state.start('endscreen');
+	    return;
+	}
+
 	if ( this.path.length > 0 && 
 	     this.path_index >= this.path.length &&
 	     hasState(this, STATE_RUNNINGTOREPORT) ) {
@@ -761,8 +766,6 @@ var AISprite = function(game, x, y, key, frame) {
     {
 	if ( this.ready_to_update == false )
 	    return;
-	// if ( hasState(this, STATE_CONVERSING) == true && game.tweens.isTweening(this) )
-	//     throw "WHY THE FUCK AM I STILL TWEENING";
 
 	if ( isSet(this.awareness_effect) ) {
 	    if ( this.awareness_effect.alive == false ) {
