@@ -469,6 +469,18 @@ GameState.prototype.update = function()
 GameState.prototype.shutdown = function()
 {
     this.aiSprites.setAll('ready_to_update', false);
+    this.aiSprites.forEach(function(x) {
+	if ( isSet(x.awareness_timer) == true )
+	    x.awareness_timer.stop();
+	if ( isSet(x.glint_timer) == true )
+	    x.glint_timer.stop();
+	if ( isSet(x.conversation_timer) == true )
+	    x.conversation_timer.stop();
+	if ( isSet(x.rotation_timer) == true )
+	    x.rotation_timer.stop();
+	if ( isSet(x.timer) == true )
+	    x.timer.stop();
+    }, this);
     this.aiSprites.destroy();
     this.aiSprites = null;
     this.uigroup.destroy();
@@ -594,7 +606,36 @@ var EndScreen = function(game) {
 EndScreen.prototype.create = function()
 {
     this.gameOverText = game.add.image((640/2),
-				       (480/2),
+				       100,
 				       'gameover');
     this.gameOverText.anchor.setTo(0.5, 0.5);
+    this.startGameButton = game.add.button((640 / 2),
+					   200,
+					   'newgamebtn',
+					   this.startGameClicked,
+					   this,
+					   1,
+					   0);
+    this.startGameButton.anchor.setTo(0.5, 0.5);
+    this.creditsButton = game.add.button((640 / 2),
+					 300,
+					 'creditsbtn',
+					 this.creditsClicked,
+					 this,
+					 1,
+					 0);
+    this.creditsButton.anchor.setTo(0.5, 0.5);
+}
+
+EndScreen.prototype.startGameClicked = function()
+{
+    this.startGameButton.destroy();
+    this.creditsButton.destroy();
+    this.gameOverText.destroy();
+    game.state.start('game', true, false);
+}
+
+EndScreen.prototype.creditsClicked = function()
+{
+    console.log("Roll the credits dumbass");
 }
