@@ -466,11 +466,6 @@ GameState.prototype.update = function()
     this.scoreText.setText("" + player.score);
 }
 
-function Boot()
-{
-    Phaser.State.call(game, this);
-}
-
 var Boot = function(game) {
 }
 
@@ -525,11 +520,52 @@ Preloader.prototype.create = function()
 {
     function goalready() {
 	this.preloadBar.destroy();
-	game.state.start('game', true, false);
+	game.state.start('startscreen', true, false);
     }
 
     var tween = this.add.tween(this.preloadBar).to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
     tween.onComplete.add(goalready, this);
 }
 
+var StartScreen = function(game) {
+}
 
+StartScreen.prototype.create = function()
+{
+    this.startGameButton = game.add.button((640 / 2) - (224/2),
+					   100,
+					   'newgamebtn',
+					   this.startGameClicked,
+					   this,
+					   1,
+					   0);
+    this.creditsButton = game.add.button((640 / 2) - (182/2),
+					 200,
+					 'creditsbtn',
+					 this.creditsClicked,
+					 this,
+					 1,
+					 0);
+}
+
+StartScreen.prototype.startGameClicked = function()
+{
+    this.startGameButton.destroy();
+    this.creditsButton.destroy();
+    game.state.start('game', true, false);
+}
+
+StartScreen.prototype.creditsClicked = function()
+{
+    console.log("Roll the credits dumbass");
+}
+
+var EndScreen = function(game) {
+}
+
+EndScreen.prototype.create = function()
+{
+    this.scoreText = this.game.add.text(
+        320, 240, 'GAME OVER', 
+	{ font: '32px Arial', fill: '#ffffff' });
+}

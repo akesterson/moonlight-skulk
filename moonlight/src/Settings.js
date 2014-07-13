@@ -166,6 +166,20 @@ var moonlightSettings = {
     ],
     'spritesheets': [
 	{
+	    'name': 'newgamebtn',
+	    'path': 'gfx/ui/newgamebtn.png',
+	    'width': 224,
+	    'height': 64,
+	    'frames': 2
+	},
+	{
+	    'name': 'creditsbtn',
+	    'path': 'gfx/ui/creditsbtn.png',
+	    'width': 182,
+	    'height': 64,
+	    'frames': 2
+	},
+	{
 	    'name': 'clock_minutehand',
 	    'path': 'gfx/ui/clock_minutehand.png',
 	    'width': 64,
