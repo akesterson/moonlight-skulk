@@ -152,14 +152,6 @@ var moonlightSettings = {
 	    'path': 'gfx/ui/font-32px.png'
 	},
 	{
-	    'name': 'font-16px',
-	    'path': 'gfx/ui/font-16px.png'
-	},
-	{
-	    'name': 'font-8px',
-	    'path': 'gfx/ui/font-8px.png'
-	},
-	{
 	    'name': 'gameover',
 	    'path': 'gfx/ui/gameover.png'
 	},
@@ -170,10 +162,6 @@ var moonlightSettings = {
 	{
 	    'name': 'clock_overlay',
 	    'path': 'gfx/ui/clock_overlay.png'
-	},
-	{
-	    'name': 'lightbar',
-	    'path': 'gfx/ui/lightbar.png'
 	},
 	{
 	    'name': 'wordbubble',
@@ -316,6 +304,12 @@ var moonlightSettings = {
 	}
     ],
     'animations': {
+	'spingears': {
+	    'frames': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+	    'speed': 2,
+	    'loop': true,
+	    'reverse': true
+	},
 	'glint': {
 	    'frames': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
 	    'speed': 12,

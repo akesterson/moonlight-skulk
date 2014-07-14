@@ -511,7 +511,12 @@ var Boot = function(game) {
 
 Boot.prototype.preload = function()
 {
-    game.load.image('preloader', 'gfx/ui/preloader.png');
+    game.load.image('background', 'gfx/ui/background.png');
+    game.load.image('font-16px', 'gfx/ui/font-16px.png');
+    game.load.image('font-8px', 'gfx/ui/font-8px.png');
+    game.load.image('lightbar', 'gfx/ui/lightbar.png');
+    game.load.image('loadingtube', 'gfx/ui/loadingtube.png');
+    game.load.spritesheet('gears', 'gfx/ui/gears.png', 128, 128, 10);
 };
 
 Boot.prototype.create = function()
@@ -527,11 +532,28 @@ var Preloader = function(game) {
 
 Preloader.prototype.preload = function()
 {
-    this.preloadBar = game.add.sprite(0, 0, 'preloader');
-    this.preloadBar.anchor.setTo(0.5, 0.5);
-    this.preloadBar.x = game.camera.x + (game.camera.width / 2);
-    this.preloadBar.y = game.camera.y + (game.camera.width / 2);
-    game.load.setPreloadSprite(this.preloadBar, 0);
+    this.background = game.add.image(0, 0, 'background');
+    this.loadingText = textImage(game.world.centerX, 
+				 game.world.centerY, 
+				 "Loading...",
+				FONTSIZE_MEDIUM);
+    this.loadingText.anchor.setTo(0.5, 0.5);
+    this.creditText = textImage(game.world.centerX,
+				 480 - 16,
+				 "Featuring Art by Peter Hann (www.peter-hann.com)",
+				 FONTSIZE_SMALL);
+    this.creditText.anchor.setTo(0.5, 0.5);
+    this.preloadTube = game.add.image(game.world.centerX, 280, 'loadingtube');
+    this.preloadTube.anchor.setTo(0.5, 0.5);
+    this.loadingGears = game.add.sprite(game.world.centerX - (193/2) - 72,
+					game.world.centerY - 112,
+					'gears');
+    addAnimation(this.loadingGears, 'spingears');
+    this.loadingGears.animations.play('spingears');
+    this.lightbar = game.add.image(game.world.centerX - (193/2) + 32, 
+				   280 - 18, 
+				   'lightbar');
+    game.load.setPreloadSprite(this.lightbar, 0);
 
     for (var k in moonlightSettings['map']['tilesets']) {
 	var ts = moonlightSettings['map']['tilesets'][k];
@@ -559,11 +581,20 @@ Preloader.prototype.preload = function()
 Preloader.prototype.create = function()
 {
     function goalready() {
-	this.preloadBar.destroy();
+	this.lightbar.destroy();
+	this.background.destroy();
+	this.preloadTube.destroy();
+	this.loadingText.destroy();
+	this.loadingGears.destroy();
 	game.state.start('startscreen', true, false);
     }
 
-    var tween = this.add.tween(this.preloadBar).to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
+    var tween = this.add.tween(this.lightbar).to({ alpha: 0 }, 5000, Phaser.Easing.Linear.None, true);
+    tween = this.add.tween(this.preloadTube).to({ alpha: 0 }, 4500, Phaser.Easing.Linear.None, true);
+    tween = this.add.tween(this.loadingText).to({ alpha: 0 }, 4000, Phaser.Easing.Linear.None, true);
+    tween = this.add.tween(this.creditText).to({ alpha: 0 }, 4000, Phaser.Easing.Linear.None, true);
+    tween = this.add.tween(this.loadingGears).to({ alpha: 0 }, 4000, Phaser.Easing.Linear.None, true);
+    tween = this.add.tween(this.background).to({ alpha: 0 }, 3500, Phaser.Easing.Linear.None, true);
     tween.onComplete.add(goalready, this);
 }
 
@@ -572,6 +603,7 @@ var StartScreen = function(game) {
 
 StartScreen.prototype.create = function()
 {
+    this.background = game.add.image(0, 0, 'background');
     this.labeltext = bitmapText("(C) 2014 Andrew Kesterson - http://akesterson.itch.io/",
 				FONTSIZE_SMALL);
     this.linkButton = game.add.button(game.world.centerX,
@@ -597,6 +629,14 @@ StartScreen.prototype.create = function()
     					 1,
     					 0);
     this.creditsButton.anchor.setTo(0.5, 0.5);
+    this.startGameButton.alpha = 0;
+    this.creditsButton.alpha = 0;
+    this.linkButton.alpha = 0;
+
+    var tween = this.add.tween(this.startGameButton).to({ alpha: 1.0 }, 3000, Phaser.Easing.Linear.None, true);
+    tween = this.add.tween(this.creditsButton).to({ alpha: 1.0 }, 3000, Phaser.Easing.Linear.None, true);
+    tween = this.add.tween(this.linkButton).to({ alpha: 1.0 }, 3000, Phaser.Easing.Linear.None, true);
+    tween = this.add.tween(this.background).to({ alpha: 1.0 }, 3000, Phaser.Easing.Linear.None, true);
 }
 
 StartScreen.prototype.linkClicked = function()
@@ -608,6 +648,9 @@ StartScreen.prototype.startGameClicked = function()
 {
     this.startGameButton.destroy();
     this.creditsButton.destroy();
+    this.background.destroy();
+    this.linkButton.destroy();
+    this.labeltext.destroy();
     game.state.start('game', true, false);
 }
 

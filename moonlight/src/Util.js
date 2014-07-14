@@ -121,7 +121,7 @@ function nearestWalkableTile(spr)
 function addAnimation(obj, anim)
 {
     a = moonlightSettings['animations'][anim]
-    obj.animations.add(anim, a['frames'], a['speed'], a['loop'])
+    obj.animations.add(anim, a['frames'], a['speed'], a['loop']);
 }
 
 function getAwarenessState(spr)
