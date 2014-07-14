@@ -841,7 +841,8 @@ var AISprite = function(game, x, y, key, frame) {
 	addAnimation(this, 'bipedrunup');
 	addAnimation(this, 'bipedrundown');
 	setMovingState(this, faceStateFromString(this.sprite_facing));
-	setSpriteMovement(this);
+	this.animations.play(getMovingAnimationName(this));
+	this.animations.stop();
 	this.ready_to_update = true;
 	this.runGlintEffect();
     }

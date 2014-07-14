@@ -339,25 +339,6 @@
                 {
                  "gid":3544,
                  "height":0,
-                 "name":"BigTopGuard",
-                 "properties":
-                    {
-                     "sprite_can_see_lightmeter":"0.15",
-                     "sprite_canmove":"false",
-                     "sprite_facing":"down",
-                     "sprite_group":"townsfolk-guard",
-                     "sprite_has_treasure":"true",
-                     "sprite_name":"townsfolk-guard-2"
-                    },
-                 "type":"AI",
-                 "visible":true,
-                 "width":0,
-                 "x":672,
-                 "y":384
-                }, 
-                {
-                 "gid":3544,
-                 "height":0,
                  "name":"BigTopCustomer2",
                  "properties":
                     {
