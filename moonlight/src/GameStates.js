@@ -91,6 +91,7 @@ GameState.prototype.create = function()
 
     this.camera.follow(player, Phaser.Camera.FOLLOW_TOPDOWN);
     controls = game.input.keyboard.createCursorKeys();
+    controls.run = game.input.keyboard.addKey(Phaser.Keyboard.SHIFT);
     controls.steal = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
     this.effectSprites = game.add.group();
@@ -245,25 +246,25 @@ GameState.prototype.check_input = function()
     }
 
     if ( controls.up.isDown) {
-	if ( controls.up.shiftKey ) {
+	if ( controls.run.isDown ) {
 	    newstate = (STATE_FACE_UP | STATE_MOVING | STATE_RUNNING);
 	} else {
 	    newstate = (STATE_FACE_UP | STATE_MOVING );
 	}
     } else if ( controls.down.isDown ) {
-	if ( controls.down.shiftKey ) {
+	if ( controls.run.isDown ) {
 	    newstate = (STATE_FACE_DOWN | STATE_MOVING | STATE_RUNNING);
 	} else {
 	    newstate = (STATE_FACE_DOWN | STATE_MOVING );
 	}
     } else if ( controls.left.isDown ) {
-	if ( controls.left.shiftKey ) {
+	if ( controls.run.isDown ) {
 	    newstate = (STATE_FACE_LEFT | STATE_MOVING | STATE_RUNNING);
 	} else {
 	    newstate = (STATE_FACE_LEFT | STATE_MOVING );
 	}
     } else if ( controls.right.isDown ) {
-	if ( controls.right.shiftKey ) {
+	if ( controls.run.isDown ) {
 	    newstate = (STATE_FACE_RIGHT | STATE_MOVING | STATE_RUNNING);
 	} else {
 	    newstate = (STATE_FACE_RIGHT | STATE_MOVING );
