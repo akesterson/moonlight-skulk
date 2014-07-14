@@ -4,8 +4,6 @@ var GameState = function(game) {
 GameState.prototype.updateClock = function()
 {
     this.clock.setSeconds(this.clock.getSeconds() + 1);
-    if ( this.clock.getSeconds() == 59)
-	player.score += SCORE_PERSECOND;
     this.clock.setMilliseconds(0);
 }
 
@@ -164,7 +162,7 @@ GameState.prototype.create = function()
     // );
 
     this.scoreTextBitmap = bitmapText('', FONTSIZE_MEDIUM);
-    this.scoreText = this.game.add.image(516, 
+    this.scoreText = this.game.add.image(484, 
 					 480 - 68 + 31, 
 					 this.scoreTextBitmap, 
 					 0,
