@@ -20,7 +20,7 @@ GameState.prototype.create = function()
     for (var ln in moonlightSettings['map']['layers']) {
 	lp = moonlightSettings['map']['layers'][ln];
 	if ( lp['type'] == "tiles" ) {
-	    layer = this.map.createLayer(ln);	    
+	    layer = this.map.createLayer(ln);
 	    this.map.setCollisionBetween(
 		lp['collisionBetween'][0],
 		lp['collisionBetween'][1],
@@ -29,7 +29,10 @@ GameState.prototype.create = function()
 	    );
 	    if ( lp['inject_sprites'] == true ) {
 		this.aiSprites = game.add.group();
-		this.aiSprites.debug = true;
+		this.aiSprites.debug = false;
+		this.aiSpriteEffects = game.add.group();
+		this.staticSounds = game.add.group();
+		this.bubble_group = game.add.group();
 		this.map.createFromObjects('AI', 3544, 'player', 0, true, false, this.aiSprites, AISprite);
 		this.aiSprites.forEach(function(spr) {
 		    spr.update_new_values();
@@ -71,7 +74,7 @@ GameState.prototype.create = function()
 				  this.map.height,
 				  pfgrid);
     pathfinder = new PF.AStarFinder({allowDiagonal: false});
-    
+
     this.physics.arcade.enable(player);
     player.body.setSize(16, 16, 8, 16);
     player.body.center = new Phaser.Point(player.body.width / 2, player.body.height + player.body.halfHeight);
@@ -111,15 +114,11 @@ GameState.prototype.create = function()
 	light.update_new_values();
     }, this)
 
-    this.aiSpriteEffects = game.add.group();
-			     
-    this.staticSounds = game.add.group();
+
     this.map.createFromObjects('Sounds', 11, 'player', 0, true, false, this.staticSounds, SoundSprite);
     this.staticSounds.forEach(function(snd) {
 	snd.update_new_values();
     }, this)
-
-    this.bubble_group = game.add.group();
 
     this.uigroup = game.add.group();
     this.recentlyStolenGroup = game.add.group();
@@ -128,7 +127,7 @@ GameState.prototype.create = function()
     this.clock = new Date();
     this.clock.setHours(20, 00, 0, 0);
     this.clockTimer = game.time.create(true);
-    this.clockTimer.repeat(DAYLIGHT_TIMER_REPEAT, 
+    this.clockTimer.repeat(DAYLIGHT_TIMER_REPEAT,
 			   DAYLIGHT_TIMER_REPEATCOUNT,
 			   this.updateClock,
 			   this);
@@ -138,33 +137,33 @@ GameState.prototype.create = function()
 
     var hudoffset = game.camera.height - 68;
     this.hud = this.game.add.image(0, hudoffset, 'hud', 0, this.uigroup);
-    this.hud_hourhand = this.game.add.sprite(39, 
-					     hudoffset + 36, 
-					     'clock_hourhand', 
-					     0, 
+    this.hud_hourhand = this.game.add.sprite(39,
+					     hudoffset + 36,
+					     'clock_hourhand',
+					     0,
 					     this.uigroup);
     this.hud_hourhand.anchor.setTo(0.5, 0.5);
-    this.hud_minutehand = this.game.add.sprite(39, 
-					       hudoffset + 36, 
-					       'clock_minutehand', 
-					       0, 
+    this.hud_minutehand = this.game.add.sprite(39,
+					       hudoffset + 36,
+					       'clock_minutehand',
+					       0,
 					       this.uigroup);
     this.hud_minutehand.anchor.setTo(0.5, 0.5);
-    this.hud_clockoverlay = this.game.add.image(39, 
-						hudoffset + 36, 
-						'clock_overlay', 
-						0, 
+    this.hud_clockoverlay = this.game.add.image(39,
+						hudoffset + 36,
+						'clock_overlay',
+						0,
 						this.uigroup);
     this.hud_clockoverlay.anchor.setTo(0.5, 0.5);
-    
+
     // this.clockText = this.game.add.text(
     // 	20, SCREEN_HEIGHT - 40, '', { font : '16px Arial', fill: '#ffffff' }, this.uigroup
     // );
 
     this.scoreTextBitmap = bitmapText('', FONTSIZE_MEDIUM);
-    this.scoreText = this.game.add.image(484, 
-					 480 - 68 + 31, 
-					 this.scoreTextBitmap, 
+    this.scoreText = this.game.add.image(484,
+					 480 - 68 + 31,
+					 this.scoreTextBitmap,
 					 0,
 					 this.uigroup);
 
@@ -174,7 +173,7 @@ GameState.prototype.create = function()
     					0,
     					this.uigroup);
     this.lightbar.anchor.setTo(0, 0.5)
-    this.uigroup.setAll('fixedToCamera', true);	
+    this.uigroup.setAll('fixedToCamera', true);
 }
 
 GameState.prototype.getClockGamma = function() {
@@ -192,8 +191,8 @@ GameState.prototype.updateShadowTexture = function() {
     var cv = this.shadowTextureColor;
     var uigamma = parseInt(getDOMValue("uiGamma"));
     var clockgamma = this.getClockGamma();
-    this.shadowTexture.context.fillStyle = ("rgb(" + (cv[0] + clockgamma + uigamma) + 
-					    "," + (cv[1] + clockgamma + uigamma) + 
+    this.shadowTexture.context.fillStyle = ("rgb(" + (cv[0] + clockgamma + uigamma) +
+					    "," + (cv[1] + clockgamma + uigamma) +
 					    "," + (cv[2] + clockgamma + uigamma) + ")"
 					   );
     this.shadowTexture.context.fillRect(0, 0, game.world.width, game.world.height);
@@ -316,7 +315,7 @@ GameState.prototype.update = function()
 	layer = this.map_collision_layers[ln];
 	this.physics.arcade.collide(player, layer);
     }
-    
+
     function _fix_audio_relative(x) {
 	x.adjust_relative_to(player);
     }
@@ -352,7 +351,7 @@ GameState.prototype.update = function()
 	    x.sawPlayer(game, player);
 	    x.setAwarenessEffect(STATE_ALERTED);
 	}
-	if ( hasState(player, STATE_STEALING) == true && 
+	if ( hasState(player, STATE_STEALING) == true &&
 	     x.sprite_has_treasure == true ) {
 	    var prevpos = player.body.position;
 	    var prevwidth = player.body.width;
@@ -432,14 +431,14 @@ GameState.prototype.update = function()
 				_AI_collide);
     this.updateShadowTexture();
 
-    if ( this.aiSprites.debug == false ) {
+    if ( this.aiSprites.debug == true ) {
     	function _draw_viewrect(x) {
     	    var r = x.viewRectangle();
-    	    if ( isSet(r) == false ) 
+    	    if ( isSet(r) == false )
     		return;
     	    this.shadowTexture.context.fillStyle = 'rgb(128, 128, 255)';
-    	    this.shadowTexture.context.fillRect(r.left, 
-    						r.top, 
+    	    this.shadowTexture.context.fillRect(r.left,
+    						r.top,
     						r.width,
     						r.height);
     	}
@@ -450,8 +449,8 @@ GameState.prototype.update = function()
     		return;
     	    this.shadowTexture.context.fillStyle = 'rgb(255, 128, 128)';
     	    p.forEach(function(r) {
-    		this.shadowTexture.context.fillRect(r.start.x, 
-    						    r.start.y, 
+    		this.shadowTexture.context.fillRect(r.start.x,
+    						    r.start.y,
     						    r.end.x - r.start.x,
     						    r.end.y - r.start.y);
     	    }, this);
@@ -459,7 +458,7 @@ GameState.prototype.update = function()
     	this.aiSprites.forEach(_draw_aipath, this);
     }
     var clockhour = this.clock.getHours();
-    if ( this.clock.getHours() > 12 ) 
+    if ( this.clock.getHours() > 12 )
 	clockhour -= 12;
     this.hud_hourhand.frame = parseInt((5 * clockhour) + (0.083 * this.clock.getMinutes()));
     this.hud_minutehand.frame = this.clock.getMinutes();
@@ -483,6 +482,8 @@ GameState.prototype.shutdown = function()
     }, this);
     this.aiSprites.destroy();
     this.aiSprites = null;
+    this.aiSpriteEffects.destroy();
+    this.aiSpriteEffects = null;
     this.uigroup.destroy();
     this.uigroup = null;
     this.recentlyStolenGroup.destroy();
@@ -533,8 +534,8 @@ var Preloader = function(game) {
 Preloader.prototype.preload = function()
 {
     this.background = game.add.image(0, 0, 'background');
-    this.loadingText = textImage(game.world.centerX, 
-				 game.world.centerY, 
+    this.loadingText = textImage(game.world.centerX,
+				 game.world.centerY,
 				 "Loading...",
 				FONTSIZE_MEDIUM);
     this.loadingText.anchor.setTo(0.5, 0.5);
@@ -550,8 +551,8 @@ Preloader.prototype.preload = function()
 					'gears');
     addAnimation(this.loadingGears, 'spingears');
     this.loadingGears.animations.play('spingears');
-    this.lightbar = game.add.image(game.world.centerX - (193/2) + 32, 
-				   280 - 18, 
+    this.lightbar = game.add.image(game.world.centerX - (193/2) + 32,
+				   280 - 18,
 				   'lightbar');
     game.load.setPreloadSprite(this.lightbar, 0);
 
