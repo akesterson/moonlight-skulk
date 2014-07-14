@@ -300,10 +300,12 @@ function gridWithAISprites()
 	// --- We have to normalize the (x,y) because this may be
 	// called before the sprites are rebounded back inside the map,
 	// and these references will go out of bounds
-	var normx = Math.max(parseInt(spr.x/32), 0);
-	var normy = Math.max(parseInt(spr.y/32), 0);
-	grid.nodes[normy][normx].walkable = false;
-	grid.nodes[normy][normx].isAISprite = true;
+	if ( getMoveState(spr) == false ) {
+	    var normx = Math.max(parseInt(spr.x/32), 0);
+	    var normy = Math.max(parseInt(spr.y/32), 0);
+	    grid.nodes[normy][normx].walkable = false;
+	    grid.nodes[normy][normx].isAISprite = true;
+	}
     }
     return grid;
 }
