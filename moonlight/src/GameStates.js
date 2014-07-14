@@ -572,20 +572,36 @@ var StartScreen = function(game) {
 
 StartScreen.prototype.create = function()
 {
-    this.startGameButton = game.add.button((640 / 2) - (224/2),
-					   100,
-					   'newgamebtn',
-					   this.startGameClicked,
-					   this,
-					   1,
-					   0);
-    this.creditsButton = game.add.button((640 / 2) - (182/2),
-					 200,
-					 'creditsbtn',
-					 this.creditsClicked,
-					 this,
-					 1,
-					 0);
+    this.labeltext = bitmapText("(C) 2014 Andrew Kesterson - http://akesterson.itch.io/",
+				FONTSIZE_SMALL);
+    this.linkButton = game.add.button(game.world.centerX,
+				      460,
+				      this.labeltext,
+				      this.linkClicked,
+				      this);
+    this.linkButton.anchor.setTo(0.5, 0.5);
+
+    this.startGameButton = game.add.button(game.world.centerX,
+    					   100,
+    					   'newgamebtn',
+    					   this.startGameClicked,
+    					   this,
+    					   1,
+    					   0);
+    this.startGameButton.anchor.setTo(0.5, 0.5);
+    this.creditsButton = game.add.button(game.world.centerX,
+    					 200,
+    					 'creditsbtn',
+    					 this.creditsClicked,
+    					 this,
+    					 1,
+    					 0);
+    this.creditsButton.anchor.setTo(0.5, 0.5);
+}
+
+StartScreen.prototype.linkClicked = function()
+{
+    window.open("http://akesterson.itch.io/");
 }
 
 StartScreen.prototype.startGameClicked = function()

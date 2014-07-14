@@ -148,6 +148,18 @@ var moonlightSettings = {
     ],
     'images': [
 	{
+	    'name': 'font-32px',
+	    'path': 'gfx/ui/font-32px.png'
+	},
+	{
+	    'name': 'font-16px',
+	    'path': 'gfx/ui/font-16px.png'
+	},
+	{
+	    'name': 'font-8px',
+	    'path': 'gfx/ui/font-8px.png'
+	},
+	{
 	    'name': 'gameover',
 	    'path': 'gfx/ui/gameover.png'
 	},

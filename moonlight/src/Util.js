@@ -478,3 +478,22 @@ function setConversation(obj1, obj2)
     finisher.clearWordBubble(false);
     starter.enableWordBubble();
 }
+
+function textImage(x, y, str, size, align)
+{
+    var text = bitmapText(str, size, align);
+    return game.add.image(x, y, text);
+}
+
+function bitmapText(str, size, align)
+{
+    size = ( typeof size == 'undefined' ? FONTSIZE_SMALL : size);
+    align = ( typeof align == 'undefined' ? Phaser.RetroFont.ALIGN_LEFT : align );
+    var textobj =  game.add.retroFont('font-' + size + 'px',
+     				      size,
+				      size * 2,
+				      Phaser.RetroFont.TEXT_SET1,
+				      16);
+    textobj.setText(str, true, 0, 0, align, true);
+    return textobj;
+}
