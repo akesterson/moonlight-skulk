@@ -163,10 +163,12 @@ GameState.prototype.create = function()
     // 	20, SCREEN_HEIGHT - 40, '', { font : '16px Arial', fill: '#ffffff' }, this.uigroup
     // );
 
-    this.scoreText = this.game.add.text(
-        SCREEN_WIDTH - 80, SCREEN_HEIGHT - 30, '', 
-	{ font: '16px Arial', fill: '#ffffff' }, this.uigroup
-    );
+    this.scoreTextBitmap = bitmapText('', FONTSIZE_MEDIUM);
+    this.scoreText = this.game.add.image(516, 
+					 480 - 68 + 31, 
+					 this.scoreTextBitmap, 
+					 0,
+					 this.uigroup);
 
     this.lightbar = this.game.add.sprite(256,
     					hudoffset + 7 + 6,
@@ -463,8 +465,7 @@ GameState.prototype.update = function()
 	clockhour -= 12;
     this.hud_hourhand.frame = parseInt((5 * clockhour) + (0.083 * this.clock.getMinutes()));
     this.hud_minutehand.frame = this.clock.getMinutes();
-    // this.clockText.setText("" + this.clock.getHours() + ":" + this.clock.getMinutes() + ":" + this.clock.getSeconds());
-    this.scoreText.setText("" + player.score);
+    this.scoreTextBitmap.setText("$ " + player.score);
 }
 
 GameState.prototype.shutdown = function()
