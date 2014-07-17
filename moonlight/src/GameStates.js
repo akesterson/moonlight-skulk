@@ -540,7 +540,7 @@ Preloader.prototype.preload = function()
     this.loadingText.anchor.setTo(0.5, 0.5);
     this.creditText = textImage(game.world.centerX,
 				 480 - 16,
-				 "Featuring Art by Peter Hann (www.peter-hann.com)",
+				 "Featuring Art by Peter Hann (www.phann.de)",
 				 FONTSIZE_SMALL);
     this.creditText.anchor.setTo(0.5, 0.5);
     this.preloadTube = game.add.image(game.world.centerX, 280, 'loadingtube');
